@@ -1,0 +1,33 @@
+# Tipos generales del Impuesto sobre Transmisiones Patrimoniales (ITP), en %,
+# para vivienda de segunda mano, por comunidad / ciudad autónoma (19 en total).
+#
+# Año de referencia: SIN VERIFICAR. Copiados tal cual de la app de escritorio
+# (RentabilidadController.ITP_MAP) en octubre de 2026, que no indica de qué año
+# son. Revisar contra la normativa autonómica vigente y actualizar aquí: la API
+# los lee al arrancar, no hace falta tocar código.
+#
+# Son tipos generales: no recogen tipos reducidos (jóvenes, familia numerosa,
+# VPO...) ni tramos por valor del inmueble.
+gestionap:
+  itp:
+    anio-referencia: "sin verificar (copiado de escritorio, 2026-10)"
+    comunidades:
+      - { nombre: "Andalucía",            tipo: 7.0 }
+      - { nombre: "Aragón",               tipo: 8.0 }
+      - { nombre: "Asturias",             tipo: 8.0 }
+      - { nombre: "Baleares",             tipo: 8.0 }
+      - { nombre: "Canarias",             tipo: 6.5 }
+      - { nombre: "Cantabria",            tipo: 10.0 }
+      - { nombre: "Castilla-La Mancha",   tipo: 9.0 }
+      - { nombre: "Castilla y León",      tipo: 8.0 }
+      - { nombre: "Cataluña",             tipo: 10.0 }
+      - { nombre: "Ceuta",                tipo: 6.0 }
+      - { nombre: "Comunitat Valenciana", tipo: 10.0 }
+      - { nombre: "Extremadura",          tipo: 8.0 }
+      - { nombre: "Galicia",              tipo: 10.0 }
+      - { nombre: "La Rioja",             tipo: 7.0 }
+      - { nombre: "Madrid",               tipo: 6.0 }
+      - { nombre: "Melilla",              tipo: 6.0 }
+      - { nombre: "Murcia",               tipo: 8.0 }
+      - { nombre: "Navarra",              tipo: 6.0 }
+      - { nombre: "País Vasco",           tipo: 4.0 }

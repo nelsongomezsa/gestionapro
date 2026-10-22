@@ -1,0 +1,26 @@
+# Perfil prod: todo por variables de entorno. Si falta alguna, la app no arranca.
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USER:}
+    password: ${MAIL_PASS:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+gestionap:
+  jwt:
+    secret: ${JWT_SECRET}
+  mail:
+    remitente: ${MAIL_FROM:${MAIL_USER:}}
+
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:false}
+  api-docs:
+    enabled: ${SWAGGER_ENABLED:false}
