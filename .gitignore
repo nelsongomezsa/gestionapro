@@ -8,3 +8,8 @@ target/
 # Configuración local con secretos
 api/src/main/resources/application-local.yml
 .env
+# Xcode (el proyecto se genera con XcodeGen desde ios/project.yml)
+ios/*.xcodeproj/
+ios/build/
+xcuserdata/
+DerivedData/

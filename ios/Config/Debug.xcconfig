@@ -1,0 +1,3 @@
+// Debug: API local. En el simulador "localhost" es el propio Mac.
+// (El "/$()/" evita que xcconfig trate "//" como comentario.)
+API_BASE_URL = http:/$()/localhost:8080
