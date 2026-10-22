@@ -1,0 +1,104 @@
+CONTRATO DE ARRENDAMIENTO DE HABITACIÓN EN PISO COMPARTIDO
+
+REUNIDOS:
+De una parte, como ARRENDADOR: {{ARRENDADOR_NOMBRE}}, mayor de edad, con DNI {{ARRENDADOR_DNI}}, con domicilio a efectos de notificaciones en {{DIRECCION_PISO}}, {{CIUDAD}}.
+
+De otra parte, como ARRENDATARIO: {{ARRENDATARIO_NOMBRE}}, mayor de edad, con DNI {{ARRENDATARIO_DNI}}.
+
+Ambas partes se reconocen capacidad legal suficiente para contratar y, libre y voluntariamente,
+
+EXPONEN:
+Que el ARRENDADOR es propietario del inmueble sito en {{DIRECCION_PISO}}, {{CIUDAD}}, y desea arrendar la habitación número {{NUMERO_HABITACION}} del mismo.
+
+CLÁUSULAS:
+
+PRIMERA - OBJETO
+El ARRENDADOR cede en arrendamiento al ARRENDATARIO el uso exclusivo de la HABITACIÓN Nº {{NUMERO_HABITACION}}, situada en el inmueble de {{DIRECCION_PISO}}, {{CIUDAD}}, con acceso compartido a las zonas comunes del piso (cocina, baño/s, salón y pasillos). El presente contrato NO incluye el uso exclusivo de la vivienda completa sino únicamente de la habitación descrita y el uso compartido de las zonas comunes.
+
+SEGUNDA - DURACIÓN
+El presente contrato tendrá una duración de UN (1) AÑO, comenzando el {{FECHA_INICIO}} y finalizando el {{FECHA_FIN}}. Al vencimiento, si ninguna de las partes comunica su voluntad de no renovar con un mínimo de 30 días de antelación, el contrato se prorrogará automáticamente por períodos mensuales. El inquilino podrá desistir del contrato comunicándolo con 30 días de antelación. Si el desistimiento se produce antes de los 6 meses, el arrendatario deberá abonar los meses restantes hasta cumplir los 6 meses o una indemnización equivalente.
+
+TERCERA - RENTA
+La renta mensual pactada es de {{RENTA_MENSUAL}} euros ({{RENTA_MENSUAL}} €/mes), que deberá abonarse dentro de los primeros 5 días de cada mes. El pago se realizará mediante transferencia bancaria o domiciliación. El impago de dos mensualidades consecutivas o tres alternadas será causa de resolución inmediata del contrato. La renta podrá actualizarse anualmente conforme al IPC o el índice de referencia legal vigente.
+
+CUARTA - FIANZA
+A la firma del presente contrato, el ARRENDATARIO entrega al ARRENDADOR la cantidad de {{FIANZA}} euros en concepto de fianza, equivalente a UNA mensualidad. Dicha fianza será devuelta en el plazo máximo de 30 días tras la entrega de las llaves y previa comprobación del estado de la habitación. Podrán deducirse de la fianza los desperfectos causados por mal uso, rentas pendientes o facturas sin abonar.
+
+QUINTA - SUMINISTROS Y GASTOS
+{{SUMINISTROS_INCLUIDOS}} El ARRENDATARIO se compromete a hacer un uso responsable de los suministros. El consumo abusivo o desproporcionado podrá ser repercutido al arrendatario. Los gastos de comunidad, IBI y seguro del inmueble corren a cargo del ARRENDADOR.
+
+SEXTA - USO DE ZONAS COMUNES
+El ARRENDATARIO tendrá derecho al uso compartido de las zonas comunes del piso (cocina, baño, salón y pasillos) con el resto de inquilinos. Queda prohibido: ocupar más espacio del acordado en zonas comunes, dejar objetos personales en zonas de paso, realizar fiestas o reuniones sin consentimiento previo del arrendador, alterar el orden y la convivencia. La limpieza de zonas comunes es responsabilidad de todos los inquilinos de forma rotatoria.
+
+SÉPTIMA - OBLIGACIONES DEL ARRENDATARIO
+El arrendatario se obliga a: mantener la habitación en perfecto estado de limpieza y conservación, no realizar obras ni modificaciones sin autorización escrita, no subarrendar ni ceder el uso a terceros bajo ningún concepto, no introducir animales de compañía salvo autorización expresa y por escrito, respetar el descanso de los demás inquilinos (silencio entre 22:00 y 8:00), no realizar actividades molestas, ilícitas o que perturben la convivencia, comunicar de inmediato cualquier avería o desperfecto.
+
+OCTAVA - INVENTARIO Y ESTADO DE LA HABITACIÓN
+La habitación se entrega con el siguiente mobiliario y equipamiento: cama, colchón, armario, escritorio y silla. El estado de entrega es el reflejado en el Anexo I adjunto al presente contrato. El arrendatario deberá devolver la habitación en el mismo estado, salvo el desgaste natural por uso ordinario.
+
+NOVENA - PROHIBICIONES ESPECÍFICAS
+Queda expresamente prohibido: fumar dentro de la habitación o zonas comunes del piso, almacenar sustancias peligrosas o inflamables, realizar actividades comerciales o profesionales en la habitación, cambiar las cerraduras sin autorización, instalar aparatos de gran consumo eléctrico sin autorización.
+
+DÉCIMA - ACCESO DEL ARRENDADOR
+El ARRENDADOR podrá acceder a la habitación arrendada previo aviso con al menos 24 horas de antelación, salvo en caso de emergencia o causa de fuerza mayor que requiera actuación inmediata.
+
+UNDÉCIMA - RESOLUCIÓN DEL CONTRATO
+Serán causas de resolución inmediata: impago de dos o más mensualidades, subarriendo no autorizado, daños graves al inmueble, actividades ilegales o molestas, incumplimiento reiterado de las normas de convivencia. En caso de resolución por causa imputable al arrendatario, este perderá la fianza y responderá de los daños causados.
+
+DUODÉCIMA - PROTECCIÓN DE DATOS
+Los datos personales de ambas partes serán tratados conforme al Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018, utilizándose exclusivamente para la gestión del presente contrato.
+
+DECIMOCUARTA - GARANTÍAS Y SOLVENCIA
+El ARRENDATARIO declara disponer de ingresos mensuales netos mínimos equivalentes a tres veces la renta mensual pactada. A requerimiento del ARRENDADOR, deberá acreditar dicha solvencia mediante nóminas, declaración de la renta o contrato de trabajo. El ARRENDATARIO autoriza al ARRENDADOR a consultar ficheros de información crediticia (ASNEF, RAI) para verificar el cumplimiento de sus obligaciones económicas. En caso de que el ARRENDATARIO no disponga de solvencia suficiente, el ARRENDADOR podrá exigir un aval bancario o personal como garantía adicional equivalente a DOS mensualidades adicionales.
+
+DECIMOQUINTA - PENALIZACIÓN POR RETRASO EN EL PAGO
+El impago de la renta en el plazo establecido (primeros 5 días del mes) generará automáticamente un recargo del 5% sobre la mensualidad impagada por cada semana de retraso. Transcurridos 15 días sin abonar la renta, el ARRENDADOR podrá iniciar el procedimiento de desahucio por impago sin necesidad de requerimiento previo adicional. El ARRENDATARIO renuncia expresamente al beneficio de excusión.
+
+DECIMOSEXTA - REVISIÓN ANUAL DE LA RENTA
+La renta mensual pactada se revisará anualmente en la fecha de aniversario del contrato conforme a la variación del Índice de Precios al Consumo (IPC) publicado por el Instituto Nacional de Estadística, o el índice de referencia para la actualización de rentas que establezca la legislación vigente en cada momento. La actualización se notificará al ARRENDATARIO con al menos 30 días de antelación.
+
+DECIMOSÉPTIMA - EMPADRONAMIENTO
+Queda expresamente PROHIBIDO el empadronamiento del ARRENDATARIO en el domicilio objeto del presente contrato sin autorización previa y por escrito del ARRENDADOR. El incumplimiento de esta cláusula será causa de resolución inmediata del contrato con pérdida de la fianza.
+
+DECIMOCTAVA - LLAVES Y ACCESOS
+En el momento de la firma del presente contrato, el ARRENDADOR entrega al ARRENDATARIO UN (1) juego de llaves del piso y de la habitación. Queda expresamente prohibido realizar copias de las llaves sin autorización escrita del ARRENDADOR. En caso de pérdida de llaves, el ARRENDATARIO asumirá íntegramente el coste del cambio de cerradura. A la finalización del contrato, el ARRENDATARIO deberá devolver todas las llaves entregadas. El incumplimiento de cualquiera de estas obligaciones facultará al ARRENDADOR a descontar el importe correspondiente de la fianza.
+
+DECIMONOVENA - NORMAS DE CONVIVENCIA DETALLADAS
+El ARRENDATARIO se compromete expresamente a cumplir las siguientes normas de convivencia: a) HORARIO DE SILENCIO: Queda prohibido producir ruidos molestos entre las 22:00 y las 8:00 horas en días laborables, y entre las 00:00 y las 10:00 en festivos y fines de semana. b) VISITAS: Las visitas de terceros al piso deberán respetar el horario de silencio y no podrán pernoctar sin autorización previa del ARRENDADOR. Queda prohibido el uso de la habitación como alojamiento turístico o para terceras personas no autorizadas. c) LIMPIEZA: La limpieza de las zonas comunes se realizará de forma rotatoria entre todos los inquilinos del piso. El ARRENDADOR podrá requerir la limpieza si detecta condiciones insalubres. d) COCINA: Cada inquilino limpiará los utensilios y la zona de cocina tras su uso. Cada inquilino dispondrá de un espacio asignado en la nevera y armarios. e) BAÑO: El baño se dejará limpio tras cada uso. No se dejarán objetos personales fuera del espacio asignado. f) TEMPERATURA: La temperatura se fijará por consenso, no pudiendo superar 21 grados en invierno ni bajar de 24 en verano con aire acondicionado. g) INTERNET: La contraseña del WiFi es de uso exclusivo de los inquilinos. Queda prohibido facilitar el acceso a terceros no autorizados.
+
+VIGÉSIMA - MASCOTAS
+Queda PROHIBIDA la tenencia de animales de compañía en la habitación y zonas comunes del piso sin autorización expresa y por escrito del ARRENDADOR. En caso de autorización, el ARRENDATARIO deberá abonar un depósito adicional de UNA mensualidad en concepto de garantía por posibles daños causados por el animal. Dicho depósito será devuelto a la finalización del contrato si no se han producido daños. El ARRENDATARIO será responsable de todos los daños causados por su mascota.
+
+VIGÉSIMA PRIMERA - CORRESPONDENCIA Y PAQUETERÍA
+El ARRENDADOR no se responsabiliza de la correspondencia, paquetes o envíos dirigidos al ARRENDATARIO en el domicilio arrendado. El ARRENDATARIO deberá gestionar directamente la recepción de sus envíos. Los paquetes no recogidos en un plazo de 7 días podrán ser devueltos al remitente.
+
+VIGÉSIMA SEGUNDA - DAÑOS Y RESPONSABILIDAD
+El ARRENDATARIO será responsable de todos los daños causados en la habitación y en las zonas comunes del piso por él mismo, sus visitas o sus pertenencias. Los daños por mal uso serán valorados por un técnico designado por el ARRENDADOR y su importe será descontado de la fianza o reclamado judicialmente si supera su cuantía. No se considerarán daños el desgaste normal por uso ordinario y correcto.
+
+VIGÉSIMA TERCERA - SEGURO DEL HOGAR
+Se recomienda encarecidamente al ARRENDATARIO la contratación de un seguro de hogar para inquilinos que cubra su responsabilidad civil y los daños a sus pertenencias. El ARRENDADOR dispondrá de seguro del inmueble que cubre la estructura pero NO las pertenencias del inquilino.
+
+VIGÉSIMA CUARTA - RESOLUCIÓN ANTICIPADA POR EL ARRENDATARIO
+Si el ARRENDATARIO desea resolver el contrato antes de su vencimiento, deberá comunicarlo con un mínimo de 30 días de antelación mediante escrito fehaciente. Si la resolución se produce antes de transcurridos 6 meses desde el inicio del contrato, el ARRENDATARIO deberá abonar en concepto de indemnización una cantidad equivalente a los meses que resten hasta completar los 6 primeros meses del contrato. Transcurridos los 6 primeros meses, bastará con el preaviso de 30 días sin penalización adicional.
+
+VIGÉSIMA QUINTA - JURISDICCIÓN
+Para cualquier controversia derivada del presente contrato, las partes se someten expresamente a los Juzgados y Tribunales de {{CIUDAD}}, renunciando a cualquier otro fuero que pudiera corresponderles.
+
+FIRMA:
+En {{CIUDAD}}, a {{FECHA_HOY}}.
+
+EL ARRENDADOR:::{{ARRENDADOR_NOMBRE}}:::DNI: {{ARRENDADOR_DNI}}
+EL ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}:::DNI: {{ARRENDATARIO_DNI}}
+
+ANEXO I - INVENTARIO DE LA HABITACIÓN Nº {{NUMERO_HABITACION}}
+Estado en el momento de la entrega: BUENO
+- Cama:______________
+- Colchón:______________
+- Armario:______________
+- Escritorio:______________
+- Silla:______________
+- Otros:______________
+
+Conforme:
+ARRENDADOR:::{{ARRENDADOR_NOMBRE}}
+ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}
