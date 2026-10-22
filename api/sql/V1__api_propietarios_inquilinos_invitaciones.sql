@@ -38,7 +38,7 @@ ALTER TABLE Usuarios
 
 -- DNI del propietario: lo necesita el contrato en PDF (ARRENDADOR_DNI), que
 -- antes llevaba "00000000A" escrito a mano. Opcional: si falta, el PDF
--- deja el hueco en blanco.
+-- muestra "—" en su lugar.
 ALTER TABLE Usuarios
     ADD COLUMN dni VARCHAR(20) NULL AFTER email;
 
