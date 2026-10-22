@@ -1,0 +1,10 @@
+# Maven
+target/
+# IDE / SO
+.idea/
+*.iml
+.vscode/
+.DS_Store
+# Configuración local con secretos
+api/src/main/resources/application-local.yml
+.env

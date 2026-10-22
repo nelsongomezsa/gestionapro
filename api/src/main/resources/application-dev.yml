@@ -1,0 +1,17 @@
+# Perfil dev: MariaDB local de XAMPP, la misma BD que usa la app de escritorio.
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/gestion_alquileres_pro
+    username: root
+    password: ""
+  jpa:
+    show-sql: false
+
+gestionap:
+  jwt:
+    # Solo para desarrollo local. En prod se exige JWT_SECRET.
+    secret: dev-secret-gestionapro-api-no-usar-en-produccion-0123456789
+
+logging:
+  level:
+    com.gestionap.api: DEBUG

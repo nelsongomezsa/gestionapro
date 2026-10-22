@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gestionapro-api
+  profiles:
+    default: dev
+  config:
+    import: classpath:itp-rates.yml
+  jpa:
+    open-in-view: false
+    hibernate:
+      # El esquema lo gestiona la app de escritorio + las migraciones de db/migration,
+      # que se aplican a mano. La API solo comprueba que sus entidades encajan.
+      ddl-auto: validate
+      naming:
+        # Las tablas y columnas ya existen con nombres propios (Pisos, id_piso...):
+        # se usan tal cual vienen en @Table/@Column.
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  jackson:
+    default-property-inclusion: non_null
+
+gestionap:
+  jwt:
+    expiracion: 8h
+  invitaciones:
+    validez: 7d
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+server:
+  error:
+    include-stacktrace: never
