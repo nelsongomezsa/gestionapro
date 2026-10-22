@@ -1,0 +1,51 @@
+diff --git a/src/main/java/com/gestionap/controller/LoginController.java b/src/main/java/com/gestionap/controller/LoginController.java
+index 4d181ed..1b27e42 100644
+--- a/src/main/java/com/gestionap/controller/LoginController.java
++++ b/src/main/java/com/gestionap/controller/LoginController.java
+@@ -58,6 +58,12 @@ public class LoginController implements Initializable {
+                 return;
+             }
+ 
++            if (usuario.getRol() == Usuario.Rol.inquilino) {
++                mostrarError("Las cuentas de inquilino solo pueden acceder desde la app móvil.");
++                txtPassword.clear();
++                return;
++            }
++
+             Session.getInstance().iniciarSesion(usuario);
+             abrirPanelPrincipal();
+ 
+diff --git a/src/main/java/com/gestionap/controller/UsuariosController.java b/src/main/java/com/gestionap/controller/UsuariosController.java
+index caf74de..5f862a8 100644
+--- a/src/main/java/com/gestionap/controller/UsuariosController.java
++++ b/src/main/java/com/gestionap/controller/UsuariosController.java
+@@ -180,6 +180,11 @@ public class UsuariosController implements Initializable {
+     private void cambiarRol() {
+         Usuario sel = tablaUsuarios.getSelectionModel().getSelectedItem();
+         if (sel == null) { mostrarAviso("Selecciona un usuario."); return; }
++        if (sel.getRol() == Usuario.Rol.inquilino) {
++            // Ascender a un inquilino le daría acceso completo al escritorio.
++            mostrarAviso("Las cuentas de inquilino se gestionan desde la app móvil y no pueden cambiar de rol.");
++            return;
++        }
+         ChoiceDialog<String> dlg = new ChoiceDialog<>(sel.getRol().name(), "usuario", "admin");
+         dlg.setTitle("Cambiar Rol");
+         dlg.setHeaderText("Rol de " + sel.getNombre());
+diff --git a/src/main/java/com/gestionap/model/Usuario.java b/src/main/java/com/gestionap/model/Usuario.java
+index bded591..47d5ae5 100644
+--- a/src/main/java/com/gestionap/model/Usuario.java
++++ b/src/main/java/com/gestionap/model/Usuario.java
+@@ -2,7 +2,12 @@ package com.gestionap.model;
+ 
+ public class Usuario {
+ 
+-    public enum Rol { admin, usuario }
++    /**
++     * inquilino: cuentas creadas desde la app móvil (gestionapro-api) con un
++     * código de invitación. No pueden entrar en la app de escritorio (ver
++     * LoginController); está aquí solo para que leer esas filas no falle.
++     */
++    public enum Rol { admin, usuario, inquilino }
+ 
+     private int    idUsuario;
+     private String nombre;
