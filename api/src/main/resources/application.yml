@@ -1,8 +1,6 @@
 spring:
   application:
     name: gestionapro-api
-  profiles:
-    default: dev
   config:
     import: classpath:itp-rates.yml
   jpa:
