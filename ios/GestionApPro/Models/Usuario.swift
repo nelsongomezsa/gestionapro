@@ -1,0 +1,49 @@
+import Foundation
+
+/// GET /api/me y TokenResponse.usuario.
+struct Usuario: Codable, Equatable, Sendable {
+    let id: Int
+    let nombre: String
+    let email: String
+    let rol: Rol
+    /// Solo para INQUILINO.
+    let idInquilino: Int?
+}
+
+enum Rol: String, Codable, Sendable {
+    case admin = "ADMIN"
+    case propietario = "PROPIETARIO"
+    case inquilino = "INQUILINO"
+    /// Un rol que esta versión de la app no conoce: se trata como sin permisos de gestión.
+    case desconocido
+
+    init(from decoder: Decoder) throws {
+        let valor = try decoder.singleValueContainer().decode(String.self)
+        self = Rol(rawValue: valor) ?? .desconocido
+    }
+
+    var gestionaPisos: Bool { self == .admin || self == .propietario }
+
+    var nombreVisible: String {
+        switch self {
+        case .admin: "Administrador"
+        case .propietario: "Propietario"
+        case .inquilino: "Inquilino"
+        case .desconocido: "Desconocido"
+        }
+    }
+}
+
+/// POST /api/auth/login
+struct LoginRequest: Encodable, Sendable {
+    let email: String
+    let password: String
+}
+
+/// Respuesta de login y de registro.
+struct TokenResponse: Decodable, Sendable {
+    let token: String
+    let tipo: String
+    let expira: Date
+    let usuario: Usuario
+}
