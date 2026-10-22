@@ -1,0 +1,407 @@
+[
+  {
+    "id": 6,
+    "direccion": "Avenida del Puerto 34, 3º B",
+    "ciudad": {
+      "id": 3,
+      "nombre": "Valencia"
+    },
+    "numeroHabitaciones": 4,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 4,
+      "alquiladas": 2,
+      "disponibles": 1,
+      "mantenimiento": 1
+    },
+    "ingresosMensuales": 0,
+    "datosFinancieros": {
+      "precioCompra": 85000.00,
+      "itpPagado": 8500.00,
+      "gastosNotaria": 1200.00,
+      "gastosRegistro": 700.00,
+      "costeReforma": 7000.00,
+      "costeMobiliario": 3000.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 55000.00,
+      "tipoInteres": 2.80,
+      "plazoAnos": 20,
+      "cuotaMensualHipoteca": 299.55,
+      "gastoIbiAnual": 350.00,
+      "gastoComunidadMensual": 55.00,
+      "gastoSeguroAnual": 230.00,
+      "gastoMantenimientoAnual": 400.00,
+      "valorMercadoActual": 98000.00,
+      "fechaCompra": "2020-11-08",
+      "notas": "Avda del Puerto Valencia, zona costera. Solo 2/4 hab alquiladas — baja ocupación. Hipoteca fija 2.80% TIN a 20 años. Potencial alto si se optimiza ocupación. Revalorización +15%."
+    },
+    "metricas": {
+      "inversionTotal": 105400.00,
+      "cuotaMensualHipoteca": 299.55,
+      "gastosAnuales": 1640.00,
+      "rentabilidadBrutaPct": 0.0,
+      "rentabilidadNetaPct": -1.556,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -436.22,
+      "cashOnCashPct": -10.3862,
+      "capitalPropio": 50400.00,
+      "plusvaliaLatente": -7400.00
+    }
+  },
+  {
+    "id": 3,
+    "direccion": "Calle Fuencarral 87, 1º C",
+    "ciudad": {
+      "id": 1,
+      "nombre": "Madrid"
+    },
+    "numeroHabitaciones": 3,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 3,
+      "alquiladas": 2,
+      "disponibles": 1,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 900.00,
+    "datosFinancieros": {
+      "precioCompra": 98000.00,
+      "itpPagado": 5880.00,
+      "gastosNotaria": 1300.00,
+      "gastosRegistro": 800.00,
+      "costeReforma": 9500.00,
+      "costeMobiliario": 3500.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": false,
+      "importeHipoteca": 0.00,
+      "tipoInteres": 0.00,
+      "plazoAnos": 0,
+      "cuotaMensualHipoteca": 0.00,
+      "gastoIbiAnual": 420.00,
+      "gastoComunidadMensual": 65.00,
+      "gastoSeguroAnual": 260.00,
+      "gastoMantenimientoAnual": 380.00,
+      "valorMercadoActual": 118000.00,
+      "fechaCompra": "2019-06-10",
+      "notas": "Compra al contado con ahorros. Zona Fuencarral-Malasaña Madrid. 3 hab, menor coste → mejor ROE. Sin carga hipotecaria. Revalorización aprox +20% en 5 años."
+    },
+    "metricas": {
+      "inversionTotal": 118980.00,
+      "cuotaMensualHipoteca": 0,
+      "gastosAnuales": 1840.00,
+      "rentabilidadBrutaPct": 9.0772,
+      "rentabilidadNetaPct": 7.5307,
+      "calificacion": "EXCELENTE",
+      "cashFlowMensual": 746.67,
+      "cashOnCashPct": 7.5307,
+      "capitalPropio": 118980.00,
+      "plusvaliaLatente": -980.00,
+      "perAnios": 11.02
+    }
+  },
+  {
+    "id": 1,
+    "direccion": "Calle Mayor 15, 3º A",
+    "ciudad": {
+      "id": 1,
+      "nombre": "Madrid"
+    },
+    "numeroHabitaciones": 5,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 5,
+      "alquiladas": 4,
+      "disponibles": 1,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 1280.00,
+    "datosFinancieros": {
+      "precioCompra": 220000.00,
+      "itpPagado": 13200.00,
+      "gastosNotaria": 2500.00,
+      "gastosRegistro": 1500.00,
+      "costeReforma": 18000.00,
+      "costeMobiliario": 7500.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 154000.00,
+      "tipoInteres": 3.20,
+      "plazoAnos": 25,
+      "cuotaMensualHipoteca": 746.41,
+      "gastoIbiAnual": 950.00,
+      "gastoComunidadMensual": 140.00,
+      "gastoSeguroAnual": 520.00,
+      "gastoMantenimientoAnual": 700.00,
+      "valorMercadoActual": 255000.00,
+      "fechaCompra": "2020-09-15",
+      "notas": "Piso céntrico Madrid, zona Sol-Mayor. 5 hab reformadas, alta demanda. Hipoteca fija 3.20% TIN a 25 años. Plusvalía latente aprox 55.000€ desde compra."
+    },
+    "metricas": {
+      "inversionTotal": 262700.00,
+      "cuotaMensualHipoteca": 746.41,
+      "gastosAnuales": 3850.00,
+      "rentabilidadBrutaPct": 5.847,
+      "rentabilidadNetaPct": 4.3814,
+      "calificacion": "ACEPTABLE",
+      "cashFlowMensual": 212.76,
+      "cashOnCashPct": 2.3488,
+      "capitalPropio": 108700.00,
+      "plusvaliaLatente": -7700.00,
+      "perAnios": 17.1
+    }
+  },
+  {
+    "id": 7,
+    "direccion": "Calle Sierpes 22, 1º A",
+    "ciudad": {
+      "id": 4,
+      "nombre": "Sevilla"
+    },
+    "numeroHabitaciones": 2,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 2,
+      "alquiladas": 1,
+      "disponibles": 1,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 0,
+    "datosFinancieros": {
+      "precioCompra": 62000.00,
+      "itpPagado": 4960.00,
+      "gastosNotaria": 950.00,
+      "gastosRegistro": 550.00,
+      "costeReforma": 5500.00,
+      "costeMobiliario": 2200.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": false,
+      "importeHipoteca": 0.00,
+      "tipoInteres": 0.00,
+      "plazoAnos": 0,
+      "cuotaMensualHipoteca": 0.00,
+      "gastoIbiAnual": 270.00,
+      "gastoComunidadMensual": 45.00,
+      "gastoSeguroAnual": 190.00,
+      "gastoMantenimientoAnual": 300.00,
+      "valorMercadoActual": 72000.00,
+      "fechaCompra": "2021-05-25",
+      "notas": "Calle Sierpes Sevilla, centro histórico. Solo 1/2 hab alquilada — rentabilidad baja. Sin hipoteca. A REVISAR: aumentar ocupación o replantear estrategia. Revalorización +16%."
+    },
+    "metricas": {
+      "inversionTotal": 76160.00,
+      "cuotaMensualHipoteca": 0,
+      "gastosAnuales": 1300.00,
+      "rentabilidadBrutaPct": 0.0,
+      "rentabilidadNetaPct": -1.7069,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -108.33,
+      "cashOnCashPct": -1.7069,
+      "capitalPropio": 76160.00,
+      "plusvaliaLatente": -4160.00
+    }
+  },
+  {
+    "id": 5,
+    "direccion": "Carrer de Provença 144, 2º 2ª",
+    "ciudad": {
+      "id": 2,
+      "nombre": "Barcelona"
+    },
+    "numeroHabitaciones": 3,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 3,
+      "alquiladas": 2,
+      "disponibles": 1,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 580.00,
+    "datosFinancieros": {
+      "precioCompra": 185000.00,
+      "itpPagado": 18500.00,
+      "gastosNotaria": 2400.00,
+      "gastosRegistro": 1400.00,
+      "costeReforma": 11000.00,
+      "costeMobiliario": 5000.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 130000.00,
+      "tipoInteres": 3.20,
+      "plazoAnos": 25,
+      "cuotaMensualHipoteca": 630.08,
+      "gastoIbiAnual": 780.00,
+      "gastoComunidadMensual": 120.00,
+      "gastoSeguroAnual": 480.00,
+      "gastoMantenimientoAnual": 550.00,
+      "valorMercadoActual": 215000.00,
+      "fechaCompra": "2022-02-14",
+      "notas": "Carrer Provença, Eixample Barcelona. 2/3 hab alquiladas. Hipoteca fija 3.20% TIN a 25 años. Margen de mejora si se alquila 3ª hab (+600€/mes CF). Revalorización +16%."
+    },
+    "metricas": {
+      "inversionTotal": 223300.00,
+      "cuotaMensualHipoteca": 630.08,
+      "gastosAnuales": 3250.00,
+      "rentabilidadBrutaPct": 3.1169,
+      "rentabilidadNetaPct": 1.6614,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -320.91,
+      "cashOnCashPct": -4.1275,
+      "capitalPropio": 93300.00,
+      "plusvaliaLatente": -8300.00,
+      "perAnios": 32.08
+    }
+  },
+  {
+    "id": 8,
+    "direccion": "Gran Vía 18, 5º C",
+    "ciudad": {
+      "id": 5,
+      "nombre": "Bilbao"
+    },
+    "numeroHabitaciones": 3,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 3,
+      "alquiladas": 1,
+      "disponibles": 1,
+      "mantenimiento": 1
+    },
+    "ingresosMensuales": 0,
+    "datosFinancieros": {
+      "precioCompra": 145000.00,
+      "itpPagado": 5800.00,
+      "gastosNotaria": 2000.00,
+      "gastosRegistro": 1200.00,
+      "costeReforma": 10000.00,
+      "costeMobiliario": 4000.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 100000.00,
+      "tipoInteres": 3.10,
+      "plazoAnos": 30,
+      "cuotaMensualHipoteca": 427.02,
+      "gastoIbiAnual": 620.00,
+      "gastoComunidadMensual": 95.00,
+      "gastoSeguroAnual": 390.00,
+      "gastoMantenimientoAnual": 520.00,
+      "valorMercadoActual": 162000.00,
+      "fechaCompra": "2022-08-30",
+      "notas": "Gran Vía Bilbao. Solo 1/3 hab alquilada — cash flow NEGATIVO (-91€/mes). Hipoteca fija 3.10% TIN a 30 años. ACCIÓN URGENTE: alquilar las 2 hab vacías para cubrir hipoteca y gastos. Revalorización +12%."
+    },
+    "metricas": {
+      "inversionTotal": 168000.00,
+      "cuotaMensualHipoteca": 427.02,
+      "gastosAnuales": 2670.00,
+      "rentabilidadBrutaPct": 0.0,
+      "rentabilidadNetaPct": -1.5893,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -649.52,
+      "cashOnCashPct": -11.4621,
+      "capitalPropio": 68000.00,
+      "plusvaliaLatente": -6000.00
+    }
+  },
+  {
+    "id": 2,
+    "direccion": "Gran Vía 42, 2º B",
+    "ciudad": {
+      "id": 1,
+      "nombre": "Madrid"
+    },
+    "numeroHabitaciones": 4,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 4,
+      "alquiladas": 3,
+      "disponibles": 0,
+      "mantenimiento": 1
+    },
+    "ingresosMensuales": 480.00,
+    "datosFinancieros": {
+      "precioCompra": 165000.00,
+      "itpPagado": 9900.00,
+      "gastosNotaria": 2000.00,
+      "gastosRegistro": 1200.00,
+      "costeReforma": 12000.00,
+      "costeMobiliario": 5500.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 115000.00,
+      "tipoInteres": 3.00,
+      "plazoAnos": 25,
+      "cuotaMensualHipoteca": 545.34,
+      "gastoIbiAnual": 720.00,
+      "gastoComunidadMensual": 110.00,
+      "gastoSeguroAnual": 420.00,
+      "gastoMantenimientoAnual": 550.00,
+      "valorMercadoActual": 192000.00,
+      "fechaCompra": "2021-03-20",
+      "notas": "Gran Vía Madrid, zona premium. 4 hab, muy demandadas. Hipoteca fija 3.00% TIN a 25 años. Revalorización aprox +16% desde compra."
+    },
+    "metricas": {
+      "inversionTotal": 195600.00,
+      "cuotaMensualHipoteca": 545.34,
+      "gastosAnuales": 3010.00,
+      "rentabilidadBrutaPct": 2.9448,
+      "rentabilidadNetaPct": 1.4059,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -316.17,
+      "cashOnCashPct": -4.7072,
+      "capitalPropio": 80600.00,
+      "plusvaliaLatente": -3600.00,
+      "perAnios": 33.96
+    }
+  },
+  {
+    "id": 4,
+    "direccion": "Passeig de Gràcia 58, 4º 1ª",
+    "ciudad": {
+      "id": 2,
+      "nombre": "Barcelona"
+    },
+    "numeroHabitaciones": 6,
+    "idPropietario": 1,
+    "ocupacion": {
+      "total": 6,
+      "alquiladas": 5,
+      "disponibles": 0,
+      "mantenimiento": 1
+    },
+    "ingresosMensuales": 1420.00,
+    "datosFinancieros": {
+      "precioCompra": 420000.00,
+      "itpPagado": 42000.00,
+      "gastosNotaria": 4800.00,
+      "gastosRegistro": 2700.00,
+      "costeReforma": 35000.00,
+      "costeMobiliario": 15000.00,
+      "otrosGastosCompra": 0.00,
+      "tieneHipoteca": true,
+      "importeHipoteca": 300000.00,
+      "tipoInteres": 3.50,
+      "plazoAnos": 30,
+      "cuotaMensualHipoteca": 1347.13,
+      "gastoIbiAnual": 1800.00,
+      "gastoComunidadMensual": 250.00,
+      "gastoSeguroAnual": 950.00,
+      "gastoMantenimientoAnual": 1200.00,
+      "valorMercadoActual": 485000.00,
+      "fechaCompra": "2021-07-01",
+      "notas": "Passeig de Gràcia Barcelona, zona premium. 6 hab de lujo, 5 ocupadas. Hipoteca fija 3.50% TIN a 30 años. Mayor activo de la cartera. Plusvalía latente aprox 65.000€."
+    },
+    "metricas": {
+      "inversionTotal": 519500.00,
+      "cuotaMensualHipoteca": 1347.13,
+      "gastosAnuales": 6950.00,
+      "rentabilidadBrutaPct": 3.2801,
+      "rentabilidadNetaPct": 1.9423,
+      "calificacion": "A_REVISAR",
+      "cashFlowMensual": -506.30,
+      "cashOnCashPct": -2.7679,
+      "capitalPropio": 219500.00,
+      "plusvaliaLatente": -34500.00,
+      "perAnios": 30.49
+    }
+  }
+]

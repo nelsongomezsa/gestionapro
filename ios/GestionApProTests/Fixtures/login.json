@@ -1,0 +1,11 @@
+{
+  "token": "eyJhbGciOiJIUzM4NCJ9.ficticio-para-tests.firma",
+  "tipo": "Bearer",
+  "expira": "2026-10-22T17:09:19.399579Z",
+  "usuario": {
+    "id": 1,
+    "nombre": "Administrador",
+    "email": "admin@gestionap.com",
+    "rol": "ADMIN"
+  }
+}

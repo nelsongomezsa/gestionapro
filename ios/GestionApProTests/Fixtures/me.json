@@ -1,0 +1,6 @@
+{
+  "id": 1,
+  "nombre": "Administrador",
+  "email": "admin@gestionap.com",
+  "rol": "ADMIN"
+}
