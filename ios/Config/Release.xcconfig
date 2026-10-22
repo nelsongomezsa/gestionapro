@@ -1,0 +1,3 @@
+// Release: exige HTTPS (sin excepción ATS y comprobado al arrancar en AppConfig).
+// Cambia este valor por la URL real de la API desplegada.
+API_BASE_URL = https:/$()/api.gestionapro.example
