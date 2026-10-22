@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:gestionap;MODE=MySQL
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      # El esquema de test (schema.sql) es el de gestion_alquileres_pro tras la
+      # migración V1. La validación contra MariaDB real se hace al arrancar en dev.
+      ddl-auto: none
+  sql:
+    init:
+      mode: always
+
+gestionap:
+  jwt:
+    secret: test-secret-gestionapro-api-solo-para-tests-0123456789
