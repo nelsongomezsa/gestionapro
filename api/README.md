@@ -50,7 +50,7 @@ Requisitos: JDK 21+, Maven 3.9+, MariaDB de XAMPP en marcha.
 
 ```bash
 cd api
-mvn spring-boot:run              # perfil dev por defecto
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 - API: <http://localhost:8080>
@@ -58,9 +58,11 @@ mvn spring-boot:run              # perfil dev por defecto
 
 ### Perfiles
 
+No hay perfil por defecto: **la API no arranca sin un perfil activo explícito** (`--spring.profiles.active=...` o `SPRING_PROFILES_ACTIVE`). Así un despliegue no puede acabar usando por error la configuración de desarrollo, cuyo secreto JWT es público. En `prod`, si falta `JWT_SECRET` o tiene menos de 32 caracteres, tampoco arranca.
+
 | Perfil | Base de datos | Secretos |
 |---|---|---|
-| `dev` (por defecto) | `jdbc:mariadb://localhost:3306/gestion_alquileres_pro`, `root` sin contraseña (XAMPP) | JWT de desarrollo en `application-dev.yml`; email sin configurar |
+| `dev` | `jdbc:mariadb://localhost:3306/gestion_alquileres_pro`, `root` sin contraseña (XAMPP) | JWT de desarrollo en `application-dev.yml`; email sin configurar |
 | `prod` | Variables de entorno | Variables de entorno; Swagger desactivado salvo `SWAGGER_ENABLED=true` |
 
 Variables de `prod`:
@@ -147,7 +149,7 @@ curl -s localhost:8080/api/pisos -H "Authorization: Bearer $TOKEN"
 ## Tests
 
 ```bash
-mvn test     # 79 tests, H2 en memoria; no necesita MariaDB
+mvn test     # 83 tests, H2 en memoria; no necesita MariaDB
 ```
 
 - `CalculadoraFinancieraPisoTest`: los tests del escritorio, con los mismos valores esperados.
@@ -155,6 +157,7 @@ mvn test     # 79 tests, H2 en memoria; no necesita MariaDB
   `RentabilidadController` real del escritorio (ver `tools/GoldenRentabilidad.java`);
   coinciden con delta 0.
 - `ItpRatesTest`: `itp-rates.yml` = `ITP_MAP` del escritorio.
+- `ArranqueTest`: sin perfil activo, o en prod sin `JWT_SECRET` válido, la API no arranca.
 - Integración (MockMvc): login, JWT, aislamiento entre propietarios,
   invitaciones de un solo uso/caducadas, PDF por roles, errores JSON.
 
