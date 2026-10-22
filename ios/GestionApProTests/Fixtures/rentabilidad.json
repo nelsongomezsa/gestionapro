@@ -1,0 +1,20 @@
+{
+  "itpPct": 6.00,
+  "itpImporte": 12000.00,
+  "totalCompra": 233000.00,
+  "gastosMensuales": 260.00,
+  "gastosAnuales": 3120.00,
+  "alquilerAnual": 16800.00,
+  "hipoteca": 160000.00,
+  "capitalAportado": 73000.00,
+  "cuotaMensual": 775.49,
+  "interesesMensualesPromedio": 242.16,
+  "amortizacionMensualPromedio": 533.33,
+  "rentabilidadBrutaPct": 7.21,
+  "rentabilidadNetaPct": 5.87,
+  "cashFlowMensual": 364.51,
+  "cashFlowAnual": 4374.12,
+  "aniosRecuperacion": 16.69,
+  "plusvalia5Anios": 31854.81,
+  "plusvalia10Anios": 68783.28
+}

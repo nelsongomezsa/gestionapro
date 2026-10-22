@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-10-22T09:09:19.644162Z",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/pisos",
+  "errores": [
+    {
+      "campo": "idCiudad",
+      "mensaje": "no debe ser nulo"
+    },
+    {
+      "campo": "numeroHabitaciones",
+      "mensaje": "debe ser mayor que o igual a 1"
+    },
+    {
+      "campo": "direccion",
+      "mensaje": "no debe estar vacío"
+    }
+  ]
+}

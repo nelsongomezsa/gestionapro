@@ -1,0 +1,81 @@
+{
+  "anioReferencia": "sin verificar (copiado de escritorio, 2026-10)",
+  "comunidades": [
+    {
+      "nombre": "Andalucía",
+      "tipoPct": 7.0
+    },
+    {
+      "nombre": "Aragón",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Asturias",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Baleares",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Canarias",
+      "tipoPct": 6.5
+    },
+    {
+      "nombre": "Cantabria",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Castilla-La Mancha",
+      "tipoPct": 9.0
+    },
+    {
+      "nombre": "Castilla y León",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Cataluña",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Ceuta",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Comunitat Valenciana",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Extremadura",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Galicia",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "La Rioja",
+      "tipoPct": 7.0
+    },
+    {
+      "nombre": "Madrid",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Melilla",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Murcia",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Navarra",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "País Vasco",
+      "tipoPct": 4.0
+    }
+  ]
+}
