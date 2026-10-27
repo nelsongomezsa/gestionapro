@@ -9,8 +9,9 @@ spring:
 
 gestionap:
   jwt:
-    # Solo para desarrollo local. En prod se exige JWT_SECRET.
-    secret: dev-secret-gestionapro-api-no-usar-en-produccion-0123456789
+    # Se lee de la variable de entorno JWT_SECRET (mínimo 32 caracteres).
+    # Genera una en local con: export JWT_SECRET=$(openssl rand -base64 48)
+    secret: ${JWT_SECRET}
 
 logging:
   level:

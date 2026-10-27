@@ -14,4 +14,4 @@ spring:
 
 gestionap:
   jwt:
-    secret: test-secret-gestionapro-api-solo-para-tests-0123456789
+    secret: clave-de-tests-no-secreta-solo-para-mvn-test-0000

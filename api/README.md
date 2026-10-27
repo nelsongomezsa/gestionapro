@@ -50,6 +50,7 @@ Requisitos: JDK 21+, Maven 3.9+, MariaDB de XAMPP en marcha.
 
 ```bash
 cd api
+export JWT_SECRET=$(openssl rand -base64 48)   # clave solo para tu máquina
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
@@ -58,11 +59,11 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
 ### Perfiles
 
-No hay perfil por defecto: **la API no arranca sin un perfil activo explícito** (`--spring.profiles.active=...` o `SPRING_PROFILES_ACTIVE`). Así un despliegue no puede acabar usando por error la configuración de desarrollo, cuyo secreto JWT es público. En `prod`, si falta `JWT_SECRET` o tiene menos de 32 caracteres, tampoco arranca.
+No hay perfil por defecto: **la API no arranca sin un perfil activo explícito** (`--spring.profiles.active=...` o `SPRING_PROFILES_ACTIVE`). Así un despliegue no puede acabar usando por error la configuración de desarrollo. En `prod`, si falta `JWT_SECRET` o tiene menos de 32 caracteres, tampoco arranca.
 
 | Perfil | Base de datos | Secretos |
 |---|---|---|
-| `dev` | `jdbc:mariadb://localhost:3306/gestion_alquileres_pro`, `root` sin contraseña (XAMPP) | JWT de desarrollo en `application-dev.yml`; email sin configurar |
+| `dev` | `jdbc:mariadb://localhost:3306/gestion_alquileres_pro`, `root` sin contraseña (XAMPP) | `JWT_SECRET` desde variable de entorno (mínimo 32 caracteres); email sin configurar |
 | `prod` | Variables de entorno | Variables de entorno; Swagger desactivado salvo `SWAGGER_ENABLED=true` |
 
 Variables de `prod`:
