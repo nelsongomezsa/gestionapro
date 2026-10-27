@@ -13,3 +13,4 @@ ios/*.xcodeproj/
 ios/build/
 xcuserdata/
 DerivedData/
+out/
