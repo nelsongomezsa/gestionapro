@@ -2,6 +2,7 @@
 
 **API REST segura y app iOS para que propietarios e inquilinos consulten pisos, contratos y rentabilidad desde el móvil, sobre la misma base de datos que la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
 
+[![CI](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml/badge.svg)](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring%20Security-JWT-6DB33F?logo=springsecurity&logoColor=white)
