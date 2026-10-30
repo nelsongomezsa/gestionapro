@@ -93,7 +93,24 @@ class PanelIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.ingresos12Meses.length()").value(12))
                 .andExpect(jsonPath("$.incidencias6Meses.length()").value(6))
                 .andExpect(jsonPath("$.ocupacion.mantenimiento").value(1))
-                .andExpect(jsonPath("$.anioActual").value(hoy.getYear()));
+                .andExpect(jsonPath("$.anioActual").value(hoy.getYear()))
+                .andExpect(jsonPath("$.fechaComparada").value(hoy.minusYears(1).toString()));
+    }
+
+    @Test
+    void estadisticas_comparanConElAnioPasadoHastaLaMismaFecha() throws Exception {
+        LocalDate haceUnAnio = hoy.minusYears(1);
+        datos.pago(pagado, "300.00", haceUnAnio.withDayOfYear(1));
+        // Después de la misma fecha del año pasado: cuenta en el total, no en la comparación.
+        if (haceUnAnio.getDayOfYear() < haceUnAnio.lengthOfYear()) {
+            datos.pago(pagado, "9000.00", haceUnAnio.withDayOfYear(haceUnAnio.lengthOfYear()));
+        }
+        boolean hayPagoPosterior = haceUnAnio.getDayOfYear() < haceUnAnio.lengthOfYear();
+        // Los pagos del preparar() son de este mes y del anterior: solo cuentan si caen el año pasado (enero).
+        mvc.perform(get("/api/estadisticas").header("Authorization", token("ana@test.com")))
+                .andExpect(jsonPath("$.ingresosAnioAnteriorHastaHoy").value(hoy.getMonthValue() == 1 ? 1300.0 : 300.0))
+                .andExpect(jsonPath("$.ingresosAnioAnterior").value(
+                        (hoy.getMonthValue() == 1 ? 1300.0 : 300.0) + (hayPagoPosterior ? 9000.0 : 0.0)));
     }
 
     @Test

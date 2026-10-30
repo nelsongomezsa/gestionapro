@@ -72,9 +72,29 @@ struct DatoCompacto: View {
                 .font(Tema.Fuente.cifraPequena)
                 .foregroundStyle(tono?.color ?? Tema.Color.texto)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
         }
         .accessibilityElement(children: .combine)
+    }
+}
+
+/// Dos datos a izquierda y derecha; si no caben (texto grande), uno debajo del otro.
+/// Así las cifras nunca se encogen ni se cortan.
+struct ParDatos<Izquierda: View, Derecha: View>: View {
+    @ViewBuilder var izquierda: Izquierda
+    @ViewBuilder var derecha: Derecha
+
+    var body: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .top) {
+                izquierda
+                Spacer(minLength: Tema.Espacio.m)
+                derecha
+            }
+            VStack(alignment: .leading, spacing: Tema.Espacio.s) {
+                izquierda
+                derecha
+            }
+        }
     }
 }
 

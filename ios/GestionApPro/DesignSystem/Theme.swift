@@ -121,6 +121,12 @@ enum Tema {
         static let avatarGrande: CGFloat = 72
         /// Botones redondos de acción rápida (llamar, mensaje...): 44 pt, el mínimo táctil.
         static let botonRedondo: CGFloat = 44
+        /// Casilla de un día en el calendario mensual.
+        static let celdaCalendario: CGFloat = 48
+        /// Punto de leyenda o de marca en una casilla.
+        static let punto: CGFloat = 6
+        /// Gráfico circular (anillo) de una tarjeta.
+        static let anillo: CGFloat = 140
     }
 
     // MARK: Movimiento

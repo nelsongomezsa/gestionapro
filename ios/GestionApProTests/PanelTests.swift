@@ -21,11 +21,19 @@ struct PanelTests {
         #expect(d.proximosVencimientos.allSatisfy { $0.vencimiento != .normal })
     }
 
+    @Test func primeraMayuscula_soloLaPrimera() {
+        #expect(Formato.primeraMayuscula("jueves, 1 de octubre") == "Jueves, 1 de octubre")
+        #expect(Formato.primeraMayuscula("") == "")
+    }
+
     @Test func estadisticas() throws {
         let e = try Fixture.decodificar(Estadisticas.self, de: "estadisticas")
         #expect(e.ingresos12Meses.count == 12)
         #expect(e.incidencias6Meses.count == 6)
         #expect(e.ocupacion.alquiladas + e.ocupacion.disponibles + e.ocupacion.mantenimiento == e.ocupacion.habitaciones)
+        // La variación anual compara con el año pasado hasta la misma fecha.
+        #expect(e.ingresosAnioAnteriorHastaHoy <= e.ingresosAnioAnterior)
+        #expect(Calendar(identifier: .gregorian).component(.year, from: e.fechaComparada) == e.anioActual - 1)
     }
 
     @Test func calendario_cuadriculaQueEmpiezaEnLunes() throws {

@@ -59,8 +59,11 @@ public final class PanelDtos {
             Ocupacion ocupacion,
             List<ConteoMes> incidencias6Meses,
             BigDecimal ingresosAnioActual,
-            BigDecimal ingresosAnioAnterior,
-            @Schema(description = "Variación anual en %; ausente si el año anterior fue 0") Double variacionAnualPct,
+            @Schema(description = "Cobrado en todo el año anterior") BigDecimal ingresosAnioAnterior,
+            @Schema(description = "Cobrado el año anterior hasta la misma fecha que hoy") BigDecimal ingresosAnioAnteriorHastaHoy,
+            @Schema(description = "Fecha del año anterior hasta la que se compara") java.time.LocalDate fechaComparada,
+            @Schema(description = "Variación frente al año anterior hasta la misma fecha, en %; ausente si entonces fue 0")
+            Double variacionAnualPct,
             int anioActual) {}
 
     /** Estado de un día como en el escritorio: PAGADO, ESPERADO (días 1-5 aún por llegar), VENCIDO o NORMAL. */

@@ -103,6 +103,8 @@
   ],
   "ingresosAnioActual": 71850.00,
   "ingresosAnioAnterior": 10940.00,
+  "ingresosAnioAnteriorHastaHoy": 9120.00,
+  "fechaComparada": "2025-10-30",
   "variacionAnualPct": 556.76,
   "anioActual": 2026
 }

@@ -146,26 +146,46 @@ struct SelectorMes: View {
 }
 
 /// Lo cobrado en el mes frente a lo esperado (rentas de los contratos vigentes).
+/// Se usa en Cobros y en el Calendario.
 struct ResumenCobros: View {
-    let resumen: ResumenPagos
+    let nombreMes: String
+    let cobrado: Decimal
+    let esperado: Decimal
+    let pendiente: Decimal
+    var numeroPagos: Int? = nil
+
+    init(resumen: ResumenPagos) {
+        self.init(nombreMes: resumen.nombreMes, cobrado: resumen.cobrado, esperado: resumen.esperado,
+                  pendiente: resumen.pendiente, numeroPagos: resumen.numeroPagos)
+    }
+
+    init(nombreMes: String, cobrado: Decimal, esperado: Decimal, pendiente: Decimal, numeroPagos: Int? = nil) {
+        self.nombreMes = nombreMes
+        self.cobrado = cobrado
+        self.esperado = esperado
+        self.pendiente = pendiente
+        self.numeroPagos = numeroPagos
+    }
 
     private var progreso: Double {
-        resumen.esperado > 0 ? min(1, resumen.cobrado.double / resumen.esperado.double) : 0
+        esperado > 0 ? min(1, cobrado.double / esperado.double) : 0
     }
 
     var body: some View {
-        TarjetaHero(titulo: "Cobrado en \(resumen.nombreMes)", valor: Formato.euros(resumen.cobrado)) {
+        TarjetaHero(titulo: "Cobrado en \(nombreMes)", valor: Formato.euros(cobrado)) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: progreso, tono: .positivo)
-                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(resumen.esperado)) esperados")
+                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(esperado)) esperados")
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }
-            HStack(alignment: .top) {
-                DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(resumen.pendiente),
-                             tono: resumen.pendiente > 0 ? .aviso : .positivo)
-                Spacer()
-                DatoCompacto(titulo: "Pagos registrados", valor: "\(resumen.numeroPagos)")
+            ParDatos {
+                DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(pendiente),
+                             tono: pendiente > 0 ? .aviso : .positivo)
+            } derecha: {
+                if let numeroPagos {
+                    DatoCompacto(titulo: "Pagos registrados", valor: "\(numeroPagos)")
+                }
             }
         }
     }

@@ -188,9 +188,9 @@ struct InicioView: View {
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }
-            HStack(alignment: .top) {
+            ParDatos {
                 DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
-                Spacer()
+            } derecha: {
                 DatoCompacto(titulo: "Cash flow previsto", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
             }
             BotonSecundario(titulo: "Informe del mes", icono: "doc.richtext", cargando: generandoInforme) {
@@ -253,6 +253,12 @@ struct GraficoIngresos: View {
         meses.first { $0.etiqueta == seleccion } ?? meses.last
     }
 
+    /// Con más de 6 meses las etiquetas no caben: se muestra una de cada dos, acabando en el mes actual.
+    private var etiquetasEje: [String] {
+        guard meses.count > 6 else { return meses.map(\.etiqueta) }
+        return meses.enumerated().filter { (meses.count - 1 - $0.offset) % 2 == 0 }.map(\.element.etiqueta)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             if let m = elegido {
@@ -288,8 +294,12 @@ struct GraficoIngresos: View {
                 }
             }
             .chartXAxis {
-                AxisMarks { _ in
-                    AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                AxisMarks { valor in
+                    AxisValueLabel {
+                        if let e = valor.as(String.self), etiquetasEje.contains(e) {
+                            Text(e).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                        }
+                    }
                 }
             }
             .accessibilityLabel("Ingresos cobrados por mes")

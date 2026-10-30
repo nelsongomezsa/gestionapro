@@ -27,9 +27,9 @@ struct PisoDetalleView: View {
                 if let m = piso.metricas {
                     TarjetaHero(titulo: "Cash flow previsto al mes", valor: Formato.euros(m.cashFlowMensual),
                                 accesorio: AnyView((m.calificacion as Calificacion?).insignia)) {
-                        HStack(alignment: .top) {
+                        ParDatos {
                             DatoCompacto(titulo: "Ingresos previstos", valor: Formato.euros(piso.ingresosMensuales))
-                            Spacer()
+                        } derecha: {
                             DatoCompacto(titulo: "Hipoteca y gastos al mes",
                                          valor: Formato.euros(m.cuotaMensualHipoteca + m.gastosAnuales / 12))
                         }
@@ -100,9 +100,9 @@ struct PisoDetalleView: View {
                         Text("\(o.alquiladas) de \(o.total) alquiladas")
                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     }
-                    HStack(alignment: .top) {
+                    ParDatos {
                         DatoCompacto(titulo: "Disponibles", valor: "\(o.disponibles)")
-                        Spacer()
+                    } derecha: {
                         DatoCompacto(titulo: "En mantenimiento", valor: "\(o.mantenimiento)",
                                      tono: o.mantenimiento > 0 ? .aviso : nil)
                     }

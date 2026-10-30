@@ -95,10 +95,16 @@ public class PanelService {
     @Transactional(readOnly = true)
     public EstadisticasResponse estadisticas(UsuarioAutenticado actor) {
         Integer prop = acceso.filtroPropietario(actor);
-        YearMonth mes = YearMonth.now();
-        int anio = mes.getYear();
+        // Una sola fecha de referencia: año, mes y fecha comparada salen de ella (sin mezclar años en Nochevieja).
+        LocalDate hoy = LocalDate.now();
+        YearMonth mes = YearMonth.from(hoy);
+        int anio = hoy.getYear();
         BigDecimal esteAnio = suma(pagos.buscar(prop, null, LocalDate.of(anio, 1, 1), LocalDate.of(anio, 12, 31)));
         BigDecimal anioPasado = suma(pagos.buscar(prop, null, LocalDate.of(anio - 1, 1, 1), LocalDate.of(anio - 1, 12, 31)));
+        // La variación compara con el año pasado hasta la misma fecha (29 de febrero -> 28),
+        // no con el año completo: si no, cualquier año en curso parecería una caída.
+        LocalDate mismaFecha = hoy.minusYears(1);
+        BigDecimal anioPasadoHastaHoy = suma(pagos.buscar(prop, null, LocalDate.of(anio - 1, 1, 1), mismaFecha));
 
         YearMonth desde = mes.minusMonths(5);
         Map<YearMonth, Long> porMes = incidencias.buscar(prop, null, null, EnumSet.allOf(EstadoIncidencia.class)).stream()
@@ -108,7 +114,7 @@ public class PanelService {
                 .map(m -> new ConteoMes(m.toString(), Textos.mesCorto(m), porMes.getOrDefault(m, 0L))).toList();
 
         return new EstadisticasResponse(ingresosPorMes(prop, mes.minusMonths(11), mes), ocupacion(prop), incidencias6,
-                esteAnio, anioPasado, variacion(esteAnio, anioPasado), anio);
+                esteAnio, anioPasado, anioPasadoHastaHoy, mismaFecha, variacion(esteAnio, anioPasadoHastaHoy), anio);
     }
 
     /** Calendario del mes: estado de cada día como en el escritorio, pagos y fines de contrato. */

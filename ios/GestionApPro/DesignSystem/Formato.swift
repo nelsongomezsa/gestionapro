@@ -37,6 +37,11 @@ enum Formato {
         return f
     }
 
+    /// "jueves, 1 de octubre" -> "Jueves, 1 de octubre" (capitalized pondría "De" y "Octubre").
+    static func primeraMayuscula(_ texto: String) -> String {
+        texto.prefix(1).uppercased(with: locale) + texto.dropFirst()
+    }
+
     static func euros(_ valor: Decimal) -> String {
         moneda.string(from: valor as NSDecimalNumber) ?? "—"
     }

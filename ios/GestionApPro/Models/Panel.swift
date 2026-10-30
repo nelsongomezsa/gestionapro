@@ -114,6 +114,10 @@ struct Estadisticas: Decodable, Sendable {
     let incidencias6Meses: [ConteoMes]
     let ingresosAnioActual: Decimal
     let ingresosAnioAnterior: Decimal
+    /// Cobrado el año pasado hasta la misma fecha: la base de la variación.
+    let ingresosAnioAnteriorHastaHoy: Decimal
+    let fechaComparada: Date
+    /// Frente al año pasado hasta la misma fecha, en %.
     let variacionAnualPct: Double?
     let anioActual: Int
 }

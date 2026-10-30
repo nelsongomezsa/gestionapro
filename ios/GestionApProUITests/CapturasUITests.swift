@@ -331,7 +331,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "de octubre").exists ? r.elemento(contiene: "de octubre") : r.elemento(contiene: "1 de"))
         r.pausa(1)
         r.capturar("07-calendario")
-        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "1 de")).firstMatch.tap()
+        r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", ", 1 de ")).firstMatch.tap()
         r.pausa(1.5)
         r.capturar("08-calendario-dia")
         r.app.swipeDown(velocity: .fast)
@@ -625,6 +625,36 @@ extension CapturasUITests {
         r.pausa(1.5)
         r.capturar("10-habitacion-nueva")
         r.app.buttons["Cancelar"].tap()
+    }
+
+    @MainActor
+    func testRedisenoCalendarioEstadisticas() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Más")
+        r.app.buttons["Calendario"].tap()
+        r.esperar(r.elemento(contiene: "Cobrado en"))
+        r.pausa(1.5)
+        r.capturar("01-calendario")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("02-calendario-leyenda")
+        r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", ", 1 de ")).firstMatch.tap()
+        r.pausa(1.5)
+        r.capturar("03-calendario-dia")
+        r.app.swipeDown(velocity: .fast)
+        r.pausa(1)
+        r.atras()
+        r.app.buttons["Estadísticas"].tap()
+        r.esperar(r.elemento(contiene: "hasta hoy"))
+        r.pausa(2)
+        r.capturar("04-estadisticas")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("05-estadisticas-habitaciones")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("06-estadisticas-incidencias")
     }
 }
 

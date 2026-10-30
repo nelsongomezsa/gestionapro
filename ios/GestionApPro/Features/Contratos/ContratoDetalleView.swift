@@ -41,9 +41,9 @@ struct ContratoDetalleView: View {
                                     .font(Tema.Fuente.nota)
                                     .foregroundStyle(Tema.Color.textoSecundario)
                             }
-                            HStack(alignment: .top) {
+                            ParDatos {
                                 DatoCompacto(titulo: "Inicio", valor: c.fechaInicio.formatted(FormatoFecha.corta))
-                                Spacer()
+                            } derecha: {
                                 DatoCompacto(titulo: "Fin", valor: c.fechaFin.formatted(FormatoFecha.corta))
                             }
                         }

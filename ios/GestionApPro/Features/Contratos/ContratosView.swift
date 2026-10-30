@@ -11,10 +11,7 @@ struct ContratosView: View {
         @Bindable var vm = vm
         VistaCarga(estado: vm.estado, reintentar: { Task { await vm.cargar(con: sesion.api) } }) { _ in
             List {
-                Picker("Filtro", selection: $vm.filtro) {
-                    ForEach(FiltroContratos.allCases) { Text($0.nombre).tag($0) }
-                }
-                .pickerStyle(.segmented)
+                SelectorSegmentado(opciones: FiltroContratos.allCases.map { ($0, $0.nombre) }, seleccion: $vm.filtro)
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
 
