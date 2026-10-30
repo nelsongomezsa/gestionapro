@@ -27,6 +27,10 @@ public class Usuario {
     @Column(name = "dni", length = 20)
     private String dni;
 
+    /** Migración V2. IBAN para el QR de pago SEPA de sus inquilinos; opcional. */
+    @Column(name = "iban", length = 34)
+    private String iban;
+
     /** BCrypt; las filas antiguas pueden tener SHA-256 hex (ver LegacyPasswordEncoder). */
     @Column(name = "password_hash", nullable = false, length = 64)
     private String passwordHash;

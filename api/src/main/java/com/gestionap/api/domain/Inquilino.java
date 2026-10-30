@@ -37,6 +37,11 @@ public class Inquilino {
     @JoinColumn(name = "id_usuario", unique = true)
     private Usuario usuario;
 
+    /** Migración V2. Quién lo dio de alta; NULL si se creó desde el escritorio sin contrato. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_propietario")
+    private Usuario propietario;
+
     public String getNombreCompleto() {
         return nombre + " " + apellidos;
     }

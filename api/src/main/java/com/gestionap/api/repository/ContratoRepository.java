@@ -37,4 +37,47 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
     @EntityGraph(attributePaths = {"inquilino", "inquilino.usuario", "habitacion", "habitacion.piso",
             "habitacion.piso.ciudad", "habitacion.piso.propietario"})
     Optional<Contrato> findConDetallesById(Integer id);
+
+    /** Contratos activos hoy de un conjunto de habitaciones, con su inquilino. */
+    @Query("""
+            select c from Contrato c
+            join fetch c.inquilino
+            where c.habitacion.id in :idsHabitacion
+              and c.fechaInicio <= :hoy and c.fechaFin >= :hoy
+            """)
+    List<Contrato> activosDeHabitaciones(Collection<Integer> idsHabitacion, LocalDate hoy);
+
+    /** Contratos activos hoy de un conjunto de inquilinos, con habitación y piso. */
+    @Query("""
+            select c from Contrato c
+            join fetch c.habitacion h
+            join fetch h.piso p
+            join fetch p.ciudad
+            where c.inquilino.id in :idsInquilino
+              and c.fechaInicio <= :hoy and c.fechaFin >= :hoy
+            """)
+    List<Contrato> activosDeInquilinos(Collection<Integer> idsInquilino, LocalDate hoy);
+
+    /** Contratos de un inquilino visibles para un propietario (todos si idPropietario es null). */
+    @Query("""
+            select c from Contrato c
+            join fetch c.habitacion h
+            join fetch h.piso p
+            join fetch p.ciudad
+            join fetch p.propietario
+            where c.inquilino.id = :idInquilino
+              and (:idPropietario is null or p.propietario.id = :idPropietario)
+            order by c.fechaInicio desc
+            """)
+    List<Contrato> deInquilino(Integer idInquilino, Integer idPropietario);
+
+    boolean existsByHabitacionId(Integer idHabitacion);
+
+    boolean existsByInquilinoId(Integer idInquilino);
+
+    @Query("""
+            select count(c) > 0 from Contrato c
+            where c.habitacion.id = :idHabitacion and c.fechaInicio <= :hoy and c.fechaFin >= :hoy
+            """)
+    boolean habitacionTieneContratoActivo(Integer idHabitacion, LocalDate hoy);
 }
