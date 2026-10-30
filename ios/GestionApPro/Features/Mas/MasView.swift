@@ -57,7 +57,7 @@ struct MasView: View {
         switch seccion {
         case .perfil: PerfilView(usuario: usuario)
         case .inquilinos: InquilinosView()
-        case .contratos: PantallaPendiente(titulo: "Contratos", fase: "4C")
+        case .contratos: ContratosView()
         case .calendario: PantallaPendiente(titulo: "Calendario", fase: "4D")
         case .estadisticas: PantallaPendiente(titulo: "Estadísticas", fase: "4D")
         case .calculadora: CalculadoraView()

@@ -45,11 +45,8 @@ struct PestanasView: View {
             }
         } else {
             TabView {
-                NavigationStack {
-                    PantallaPendiente(titulo: "Mi alquiler", fase: "4C")
-                        .navigationTitle("Mi alquiler")
-                }
-                .tabItem { Label("Mi alquiler", systemImage: "key") }
+                MiAlquilerView()
+                    .tabItem { Label("Mi alquiler", systemImage: "key") }
                 NavigationStack { PerfilView(usuario: usuario) }
                     .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
             }
