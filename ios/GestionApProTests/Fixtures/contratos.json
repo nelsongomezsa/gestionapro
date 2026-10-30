@@ -1,0 +1,502 @@
+[
+  {
+    "id": 12,
+    "habitacion": {
+      "id": 15,
+      "numero": 3
+    },
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 12,
+      "nombre": "Elena Jiménez González",
+      "dni": "22345678M",
+      "telefono": "622 345 678",
+      "email": "elena.jimenez@example.com"
+    },
+    "fechaInicio": "2025-09-01",
+    "fechaFin": "2027-08-28",
+    "precioMensual": 700.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 302
+  },
+  {
+    "id": 4,
+    "habitacion": {
+      "id": 4,
+      "numero": 4
+    },
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 4,
+      "nombre": "Laura Martínez Fernández",
+      "dni": "45678901D",
+      "telefono": "645 678 901",
+      "email": "laura.martinez@example.com"
+    },
+    "fechaInicio": "2025-07-01",
+    "fechaFin": "2027-07-31",
+    "precioMensual": 700.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 274
+  },
+  {
+    "id": 9,
+    "habitacion": {
+      "id": 11,
+      "numero": 2
+    },
+    "piso": {
+      "id": 3,
+      "direccion": "Calle Fuencarral 87, 1º C",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 9,
+      "nombre": "Francisco Díaz López",
+      "dni": "90123456J",
+      "telefono": "690 123 456",
+      "email": "francisco.diaz@example.com"
+    },
+    "fechaInicio": "2025-07-01",
+    "fechaFin": "2027-06-30",
+    "precioMensual": 480.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 243
+  },
+  {
+    "id": 15,
+    "habitacion": {
+      "id": 19,
+      "numero": 1
+    },
+    "piso": {
+      "id": 5,
+      "direccion": "Carrer de Provença 144, 2º 2ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 15,
+      "nombre": "Pedro Ruiz Martínez",
+      "dni": "55678901Q",
+      "telefono": "655 678 901",
+      "email": "pedro.ruiz@example.com"
+    },
+    "fechaInicio": "2025-12-01",
+    "fechaFin": "2027-05-30",
+    "precioMensual": 580.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 212
+  },
+  {
+    "id": 10,
+    "habitacion": {
+      "id": 13,
+      "numero": 1
+    },
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 10,
+      "nombre": "Isabel Pérez Martínez",
+      "dni": "01234567K",
+      "telefono": "601 234 567",
+      "email": "isabel.perez@example.com"
+    },
+    "fechaInicio": "2025-06-01",
+    "fechaFin": "2027-05-30",
+    "precioMensual": 720.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 212
+  },
+  {
+    "id": 3,
+    "habitacion": {
+      "id": 3,
+      "numero": 3
+    },
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 3,
+      "nombre": "Antonio Rodríguez García",
+      "dni": "34567890C",
+      "telefono": "634 567 890",
+      "email": "antonio.rodriguez@example.com"
+    },
+    "fechaInicio": "2025-09-01",
+    "fechaFin": "2027-05-30",
+    "precioMensual": 580.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 212
+  },
+  {
+    "id": 8,
+    "habitacion": {
+      "id": 10,
+      "numero": 1
+    },
+    "piso": {
+      "id": 3,
+      "direccion": "Calle Fuencarral 87, 1º C",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 8,
+      "nombre": "Carmen Gómez García",
+      "dni": "89012345H",
+      "telefono": "689 012 345",
+      "email": "carmen.gomez@example.com"
+    },
+    "fechaInicio": "2025-11-01",
+    "fechaFin": "2027-04-30",
+    "precioMensual": 420.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 182
+  },
+  {
+    "id": 5,
+    "habitacion": {
+      "id": 6,
+      "numero": 1
+    },
+    "piso": {
+      "id": 2,
+      "direccion": "Gran Vía 42, 2º B",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 5,
+      "nombre": "Manuel González López",
+      "dni": "56789012E",
+      "telefono": "656 789 012",
+      "email": "manuel.gonzalez@example.com"
+    },
+    "fechaInicio": "2025-10-01",
+    "fechaFin": "2027-04-30",
+    "precioMensual": 480.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 182
+  },
+  {
+    "id": 14,
+    "habitacion": {
+      "id": 17,
+      "numero": 5
+    },
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 14,
+      "nombre": "Sofía Romero García",
+      "dni": "44567890P",
+      "telefono": "644 567 890",
+      "email": "sofia.romero@example.com"
+    },
+    "fechaInicio": "2025-10-01",
+    "fechaFin": "2027-03-30",
+    "precioMensual": 800.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 151
+  },
+  {
+    "id": 11,
+    "habitacion": {
+      "id": 14,
+      "numero": 2
+    },
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 11,
+      "nombre": "Juan Moreno Fernández",
+      "dni": "11234567L",
+      "telefono": "611 234 567",
+      "email": "juan.moreno@example.com"
+    },
+    "fechaInicio": "2025-07-01",
+    "fechaFin": "2027-03-30",
+    "precioMensual": 780.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 151
+  },
+  {
+    "id": 1,
+    "habitacion": {
+      "id": 1,
+      "numero": 1
+    },
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 1,
+      "nombre": "Carlos García Martínez",
+      "dni": "12345678A",
+      "telefono": "612 345 678",
+      "email": "carlos.garcia@example.com"
+    },
+    "fechaInicio": "2025-07-01",
+    "fechaFin": "2027-03-30",
+    "precioMensual": 550.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 151
+  },
+  {
+    "id": 2,
+    "habitacion": {
+      "id": 2,
+      "numero": 2
+    },
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 2,
+      "nombre": "María López Sánchez",
+      "dni": "23456789B",
+      "telefono": "623 456 789",
+      "email": "maria.lopez@example.com"
+    },
+    "fechaInicio": "2025-08-01",
+    "fechaFin": "2027-02-28",
+    "precioMensual": 620.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 121
+  },
+  {
+    "id": 13,
+    "habitacion": {
+      "id": 16,
+      "numero": 4
+    },
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 13,
+      "nombre": "Miguel Álvarez López",
+      "dni": "33456789N",
+      "telefono": "633 456 789",
+      "email": "miguel.alvarez@example.com"
+    },
+    "fechaInicio": "2025-08-01",
+    "fechaFin": "2027-01-31",
+    "precioMensual": 650.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 93
+  },
+  {
+    "id": 6,
+    "habitacion": {
+      "id": 7,
+      "numero": 2
+    },
+    "piso": {
+      "id": 2,
+      "direccion": "Gran Vía 42, 2º B",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 6,
+      "nombre": "Ana Fernández Martínez",
+      "dni": "67890123F",
+      "telefono": "667 890 123",
+      "email": "ana.fernandez@example.com"
+    },
+    "fechaInicio": "2025-08-01",
+    "fechaFin": "2027-01-31",
+    "precioMensual": 540.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 93
+  },
+  {
+    "id": 7,
+    "habitacion": {
+      "id": 8,
+      "numero": 3
+    },
+    "piso": {
+      "id": 2,
+      "direccion": "Gran Vía 42, 2º B",
+      "ciudad": "Madrid"
+    },
+    "inquilino": {
+      "id": 7,
+      "nombre": "José Sánchez Rodríguez",
+      "dni": "78901234G",
+      "telefono": "678 901 234",
+      "email": "jose.sanchez@example.com"
+    },
+    "fechaInicio": "2025-05-01",
+    "fechaFin": "2026-12-30",
+    "precioMensual": 650.00,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 61
+  },
+  {
+    "id": 20,
+    "habitacion": {
+      "id": 28,
+      "numero": 1
+    },
+    "piso": {
+      "id": 8,
+      "direccion": "Gran Vía 18, 5º C",
+      "ciudad": "Bilbao"
+    },
+    "inquilino": {
+      "id": 20,
+      "nombre": "Natalia Castro López",
+      "dni": "00123456W",
+      "telefono": "600 123 456",
+      "email": "natalia.castro@example.com"
+    },
+    "fechaInicio": "2025-11-01",
+    "fechaFin": "2026-11-28",
+    "precioMensual": 450.00,
+    "activo": true,
+    "vencimiento": "PROXIMO",
+    "diasRestantes": 29
+  },
+  {
+    "id": 19,
+    "habitacion": {
+      "id": 26,
+      "numero": 1
+    },
+    "piso": {
+      "id": 7,
+      "direccion": "Calle Sierpes 22, 1º A",
+      "ciudad": "Sevilla"
+    },
+    "inquilino": {
+      "id": 19,
+      "nombre": "Alejandro Morales Fernández",
+      "dni": "99012345V",
+      "telefono": "699 012 345",
+      "email": "alejandro.morales@example.com"
+    },
+    "fechaInicio": "2025-11-28",
+    "fechaFin": "2026-11-27",
+    "precioMensual": 300.00,
+    "activo": true,
+    "vencimiento": "PROXIMO",
+    "diasRestantes": 28
+  },
+  {
+    "id": 17,
+    "habitacion": {
+      "id": 22,
+      "numero": 1
+    },
+    "piso": {
+      "id": 6,
+      "direccion": "Avenida del Puerto 34, 3º B",
+      "ciudad": "Valencia"
+    },
+    "inquilino": {
+      "id": 17,
+      "nombre": "Andrés Flores Rodríguez",
+      "dni": "77890123S",
+      "telefono": "677 890 123",
+      "email": "andres.flores@example.com"
+    },
+    "fechaInicio": "2025-11-20",
+    "fechaFin": "2026-11-19",
+    "precioMensual": 380.00,
+    "activo": true,
+    "vencimiento": "PROXIMO",
+    "diasRestantes": 20
+  },
+  {
+    "id": 16,
+    "habitacion": {
+      "id": 20,
+      "numero": 2
+    },
+    "piso": {
+      "id": 5,
+      "direccion": "Carrer de Provença 144, 2º 2ª",
+      "ciudad": "Barcelona"
+    },
+    "inquilino": {
+      "id": 16,
+      "nombre": "Lucía Torres Sánchez",
+      "dni": "66789012R",
+      "telefono": "666 789 012",
+      "email": "lucia.torres@example.com"
+    },
+    "fechaInicio": "2025-11-15",
+    "fechaFin": "2026-11-14",
+    "precioMensual": 620.00,
+    "activo": true,
+    "vencimiento": "PROXIMO",
+    "diasRestantes": 15
+  },
+  {
+    "id": 18,
+    "habitacion": {
+      "id": 23,
+      "numero": 2
+    },
+    "piso": {
+      "id": 6,
+      "direccion": "Avenida del Puerto 34, 3º B",
+      "ciudad": "Valencia"
+    },
+    "inquilino": {
+      "id": 18,
+      "nombre": "Valentina Ortega García",
+      "dni": "88901234T",
+      "telefono": "688 901 234",
+      "email": "valentina.ortega@example.com"
+    },
+    "fechaInicio": "2025-11-01",
+    "fechaFin": "2026-11-10",
+    "precioMensual": 420.00,
+    "activo": true,
+    "vencimiento": "PROXIMO",
+    "diasRestantes": 11
+  }
+]

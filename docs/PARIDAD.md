@@ -57,8 +57,8 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 |---|---|---|---|---|---|
 | KPIs y métricas del piso | `GET /api/pisos/{id}` | ✔︎ | Detalle de piso | — | ✅ |
 | Habitaciones del piso | `GET /api/habitaciones?piso=` | ✔︎ | Detalle de piso → Habitaciones | 4B | ✅ |
-| Contratos del piso | ✚ `GET /api/contratos?piso=` | ✚ | Detalle de piso | 4C | ⏳ |
-| Últimos pagos del piso | ✚ `GET /api/pagos?piso=` | ✚ | Detalle de piso | 4C | ⏳ |
+| Contratos del piso | `GET /api/contratos?piso=` | ✔︎ | Detalle de piso | 4E | ⏳ |
+| Últimos pagos del piso | `GET /api/pagos?piso=` | ✚ | Detalle de piso | 4E | ⏳ |
 | Incidencias del piso | ✚ `GET /api/incidencias?piso=` | ✚ | Detalle de piso | 4E | ⏳ |
 | Gráfico de ingresos últimos 12 meses | ✚ `GET /api/pisos/{id}/ingresos` | ✚ | Detalle de piso (Swift Charts) | 4E | ⏳ |
 | Exportar PDF del piso | ✚ `GET /api/pisos/{id}/pdf` | ✚ | Detalle de piso → visor PDF | 4E | ⏳ |
@@ -89,24 +89,24 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista con filtro (todos / activos) y nivel de vencimiento (crítico ≤ 7 días) | ✚ `GET /api/contratos` | ✚ | Más → Contratos | 4C | ⏳ |
-| Nuevo contrato reservando la habitación en la misma transacción | ✚ `POST /api/contratos` | ✚ | Contratos → Nuevo | 4C | ⏳ |
-| Finalizar contrato y liberar la habitación | ✚ `POST /api/contratos/{id}/finalizar` | ✚ | Contratos (deslizar) | 4C | ⏳ |
-| Generar contrato LAU en PDF | `GET /api/contratos/{id}/pdf` | ✔︎ | Contrato → visor PDF con compartir/imprimir | 4C | ⏳ |
-| Recordatorio por email | — | | Contrato → hoja de Compartir | 4C | ⏳ |
-| Ver en el mapa | — | | Contrato → mapa (MapKit) | 4C | ⏳ |
-| Exportar la lista a PDF | — (se genera en el móvil) | | Contratos → visor PDF | 4C | ⏳ |
+| Lista con filtro (todos / activos) y nivel de vencimiento (crítico ≤ 7 días) | `GET /api/contratos` | ✔︎ | Más → Contratos | 4C | ✅ |
+| Nuevo contrato reservando la habitación en la misma transacción | `POST /api/contratos` | ✔︎ | Contratos → Nuevo | 4C | ✅ |
+| Finalizar contrato y liberar la habitación | `POST /api/contratos/{id}/finalizar` | ✔︎ | Contratos (deslizar) | 4C | ✅ |
+| Generar contrato LAU en PDF | `GET /api/contratos/{id}/pdf` | ✔︎ | Contrato → visor PDF con compartir/imprimir | 4C | ✅ |
+| Recordatorio por email | — | | Contrato → hoja de Compartir | 4C | ✅ |
+| Ver en el mapa | — | | Contrato → mapa (MapKit) | 4C | ✅ |
+| Exportar la lista a PDF | — (se genera en el móvil) | | Contratos → visor PDF | 4C | ✅ |
 
 ## Pagos (`PagosController`, `PagoDAO`)
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista con filtro por inquilino y buscador | ✚ `GET /api/pagos` | ✚ | Cobros | 4C | ⏳ |
-| Filtro por mes *(mejora pedida)* | ✚ `GET /api/pagos?mes=` | ✚ | Cobros | 4C | ⏳ |
-| Registrar pago | ✚ `POST /api/pagos` | ✚ | Cobros → Nuevo | 4C | ⏳ |
-| Eliminar pago | ✚ `DELETE /api/pagos/{id}` | ✚ | Cobros (deslizar) | 4C | ⏳ |
-| Totales: total y este mes | ✚ `GET /api/pagos/resumen` | ✚ | Cobros (cabecera) | 4C | ⏳ |
-| Pendientes del mes | ✚ `GET /api/pagos/resumen` | ✚ | Cobros (cabecera) | 4C | ⏳ |
+| Lista con filtro por inquilino y buscador | `GET /api/pagos` | ✔︎ | Cobros | 4C | ✅ |
+| Filtro por mes *(mejora pedida)* | `GET /api/pagos?mes=` | ✔︎ | Cobros | 4C | ✅ |
+| Registrar pago | `POST /api/pagos` | ✔︎ | Cobros → Nuevo | 4C | ✅ |
+| Eliminar pago | `DELETE /api/pagos/{id}` | ✔︎ | Cobros (deslizar) | 4C | ✅ |
+| Totales: total y este mes | `GET /api/pagos/resumen` | ✔︎ | Cobros (cabecera) | 4C | ✅ |
+| Pendientes del mes | `GET /api/pagos/resumen` | ✔︎ | Cobros (cabecera) | 4C | ✅ |
 
 ## Calendario (`CalendarioController`, `CalendarioDAO`)
 

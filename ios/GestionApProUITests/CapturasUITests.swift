@@ -159,6 +159,33 @@ struct Recorrido {
         return elemento
     }
 
+    func texto(empiezaPor prefijo: String) -> XCUIElement {
+        app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", prefijo)).firstMatch
+    }
+
+    /// Cierra la hoja de Compartir de iOS (botón Cerrar o deslizando hacia abajo).
+    func cerrarHojaCompartir() {
+        let cerrar = app.buttons.matching(NSPredicate(format: "label IN %@", ["Cerrar", "Close"])).firstMatch
+        if cerrar.waitForExistence(timeout: 2) { cerrar.tap() } else { app.swipeDown(velocity: .fast) }
+        pausa(1)
+    }
+
+    /// Cierra la app y entra con otra cuenta.
+    func relanzar(email: String, password: String) -> Recorrido {
+        app.terminate()
+        app.launchArguments = ["-reiniciarSesion"]
+        app.launch()
+        let campoEmail = app.textFields["Email"]
+        esperar(campoEmail)
+        campoEmail.tap()
+        campoEmail.typeText(email)
+        let campoPassword = app.secureTextFields["Contraseña"]
+        campoPassword.tap()
+        campoPassword.typeText(password)
+        app.buttons["Iniciar sesión"].tap()
+        return self
+    }
+
     func pestana(_ nombre: String) {
         app.tabBars.buttons[nombre].tap()
     }
@@ -177,6 +204,83 @@ struct Recorrido {
             try png.write(to: carpeta.appending(path: "\(nombre).png"))
         } catch {
             XCTFail("No se pudo guardar \(nombre): \(error)")
+        }
+    }
+}
+
+extension CapturasUITests {
+
+    @MainActor
+    func test4C() throws {
+        let r = try Recorrido.iniciar()
+        r.esperar(r.app.staticTexts["Cash flow mensual de la cartera"])
+
+        // Cobros
+        r.pestana("Cobros")
+        r.esperar(r.texto(empiezaPor: "Pendientes de cobro"))
+        r.pausa(1)
+        r.capturar("01-cobros")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-cobros-pagos")
+        r.app.swipeDown()
+
+        r.app.buttons["Registrar"].firstMatch.tap()
+        r.esperar(r.app.navigationBars["Registrar pago"])
+        r.pausa(1)
+        r.capturar("03-registrar-pago")
+        r.app.buttons["Cancelar"].tap()
+
+        r.app.buttons["Mes anterior"].tap()
+        r.pausa(2)
+        r.capturar("04-cobros-mes-anterior")
+
+        // Contratos
+        r.pestana("Más")
+        r.app.buttons["Contratos"].tap()
+        r.esperar(r.app.buttons["filaContrato"].firstMatch)
+        r.capturar("05-contratos")
+
+        r.app.buttons["Por vencer"].tap()
+        r.pausa(2)
+        r.capturar("06-contratos-por-vencer")
+        r.app.buttons["filaContrato"].firstMatch.swipeLeft()
+        r.pausa(1)
+        r.capturar("07-contrato-finalizar-deslizando")
+        r.app.buttons["filaContrato"].firstMatch.swipeRight()
+
+        r.app.buttons["filaContrato"].firstMatch.tap()
+        r.esperar(r.app.buttons["Contrato de arrendamiento (PDF)"])
+        r.capturar("08-contrato-detalle")
+
+        r.app.buttons["Contrato de arrendamiento (PDF)"].tap()
+        r.esperar(r.app.buttons["Imprimir"], timeout: 20)
+        r.pausa(2)
+        r.capturar("09-contrato-pdf")
+        r.app.buttons["Cerrar"].tap()
+
+        r.app.buttons["Enviar recordatorio de pago"].tap()
+        r.pausa(3)
+        r.capturar("10-recordatorio-compartir")
+        r.cerrarHojaCompartir()
+
+        r.atras()
+        r.app.buttons["Nuevo contrato"].tap()
+        r.esperar(r.app.navigationBars["Nuevo contrato"])
+        r.pausa(1)
+        r.capturar("11-nuevo-contrato")
+        r.app.buttons["Cancelar"].tap()
+
+        // Inquilino: su alquiler (solo si se pasan sus credenciales)
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
+            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.capturar("12-inquilino-mi-alquiler")
+            ri.pestana("Perfil")
+            ri.pausa(1)
+            ri.capturar("13-inquilino-perfil")
         }
     }
 }

@@ -1,0 +1,202 @@
+[
+  {
+    "id": 147,
+    "fechaPago": "2026-10-04",
+    "cantidad": 650.00,
+    "metodoPago": "transferencia",
+    "idContrato": 13,
+    "inquilino": {
+      "id": 13,
+      "nombre": "Miguel Álvarez López",
+      "dni": "33456789N",
+      "telefono": "633 456 789",
+      "email": "miguel.alvarez@example.com"
+    },
+    "numeroHabitacion": 4,
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    }
+  },
+  {
+    "id": 142,
+    "fechaPago": "2026-10-04",
+    "cantidad": 620.00,
+    "metodoPago": "transferencia",
+    "idContrato": 2,
+    "inquilino": {
+      "id": 2,
+      "nombre": "María López Sánchez",
+      "dni": "23456789B",
+      "telefono": "623 456 789",
+      "email": "maria.lopez@example.com"
+    },
+    "numeroHabitacion": 2,
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    }
+  },
+  {
+    "id": 144,
+    "fechaPago": "2026-10-03",
+    "cantidad": 540.00,
+    "metodoPago": "transferencia",
+    "idContrato": 6,
+    "inquilino": {
+      "id": 6,
+      "nombre": "Ana Fernández Martínez",
+      "dni": "67890123F",
+      "telefono": "667 890 123",
+      "email": "ana.fernandez@example.com"
+    },
+    "numeroHabitacion": 2,
+    "piso": {
+      "id": 2,
+      "direccion": "Gran Vía 42, 2º B",
+      "ciudad": "Madrid"
+    }
+  },
+  {
+    "id": 150,
+    "fechaPago": "2026-10-01",
+    "cantidad": 450.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 20,
+    "inquilino": {
+      "id": 20,
+      "nombre": "Natalia Castro López",
+      "dni": "00123456W",
+      "telefono": "600 123 456",
+      "email": "natalia.castro@example.com"
+    },
+    "numeroHabitacion": 1,
+    "piso": {
+      "id": 8,
+      "direccion": "Gran Vía 18, 5º C",
+      "ciudad": "Bilbao"
+    }
+  },
+  {
+    "id": 149,
+    "fechaPago": "2026-10-01",
+    "cantidad": 380.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 17,
+    "inquilino": {
+      "id": 17,
+      "nombre": "Andrés Flores Rodríguez",
+      "dni": "77890123S",
+      "telefono": "677 890 123",
+      "email": "andres.flores@example.com"
+    },
+    "numeroHabitacion": 1,
+    "piso": {
+      "id": 6,
+      "direccion": "Avenida del Puerto 34, 3º B",
+      "ciudad": "Valencia"
+    }
+  },
+  {
+    "id": 148,
+    "fechaPago": "2026-10-01",
+    "cantidad": 580.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 15,
+    "inquilino": {
+      "id": 15,
+      "nombre": "Pedro Ruiz Martínez",
+      "dni": "55678901Q",
+      "telefono": "655 678 901",
+      "email": "pedro.ruiz@example.com"
+    },
+    "numeroHabitacion": 1,
+    "piso": {
+      "id": 5,
+      "direccion": "Carrer de Provença 144, 2º 2ª",
+      "ciudad": "Barcelona"
+    }
+  },
+  {
+    "id": 146,
+    "fechaPago": "2026-10-01",
+    "cantidad": 780.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 11,
+    "inquilino": {
+      "id": 11,
+      "nombre": "Juan Moreno Fernández",
+      "dni": "11234567L",
+      "telefono": "611 234 567",
+      "email": "juan.moreno@example.com"
+    },
+    "numeroHabitacion": 2,
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    }
+  },
+  {
+    "id": 145,
+    "fechaPago": "2026-10-01",
+    "cantidad": 480.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 9,
+    "inquilino": {
+      "id": 9,
+      "nombre": "Francisco Díaz López",
+      "dni": "90123456J",
+      "telefono": "690 123 456",
+      "email": "francisco.diaz@example.com"
+    },
+    "numeroHabitacion": 2,
+    "piso": {
+      "id": 3,
+      "direccion": "Calle Fuencarral 87, 1º C",
+      "ciudad": "Madrid"
+    }
+  },
+  {
+    "id": 143,
+    "fechaPago": "2026-10-01",
+    "cantidad": 700.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 4,
+    "inquilino": {
+      "id": 4,
+      "nombre": "Laura Martínez Fernández",
+      "dni": "45678901D",
+      "telefono": "645 678 901",
+      "email": "laura.martinez@example.com"
+    },
+    "numeroHabitacion": 4,
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    }
+  },
+  {
+    "id": 141,
+    "fechaPago": "2026-10-01",
+    "cantidad": 550.00,
+    "metodoPago": "domiciliacion",
+    "idContrato": 1,
+    "inquilino": {
+      "id": 1,
+      "nombre": "Carlos García Martínez",
+      "dni": "12345678A",
+      "telefono": "612 345 678",
+      "email": "carlos.garcia@example.com"
+    },
+    "numeroHabitacion": 1,
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    }
+  }
+]

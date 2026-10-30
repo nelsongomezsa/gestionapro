@@ -1,0 +1,180 @@
+{
+  "mes": "2026-10",
+  "nombreMes": "octubre 2026",
+  "esperado": 11420.00,
+  "cobrado": 5730.00,
+  "pendiente": 5690.00,
+  "numeroPagos": 10,
+  "pendientes": [
+    {
+      "idContrato": 12,
+      "inquilino": {
+        "id": 12,
+        "nombre": "Elena Jiménez González",
+        "dni": "22345678M",
+        "telefono": "622 345 678",
+        "email": "elena.jimenez@example.com"
+      },
+      "numeroHabitacion": 3,
+      "piso": {
+        "id": 4,
+        "direccion": "Passeig de Gràcia 58, 4º 1ª",
+        "ciudad": "Barcelona"
+      },
+      "importe": 700.00
+    },
+    {
+      "idContrato": 10,
+      "inquilino": {
+        "id": 10,
+        "nombre": "Isabel Pérez Martínez",
+        "dni": "01234567K",
+        "telefono": "601 234 567",
+        "email": "isabel.perez@example.com"
+      },
+      "numeroHabitacion": 1,
+      "piso": {
+        "id": 4,
+        "direccion": "Passeig de Gràcia 58, 4º 1ª",
+        "ciudad": "Barcelona"
+      },
+      "importe": 720.00
+    },
+    {
+      "idContrato": 3,
+      "inquilino": {
+        "id": 3,
+        "nombre": "Antonio Rodríguez García",
+        "dni": "34567890C",
+        "telefono": "634 567 890",
+        "email": "antonio.rodriguez@example.com"
+      },
+      "numeroHabitacion": 3,
+      "piso": {
+        "id": 1,
+        "direccion": "Calle Mayor 15, 3º A",
+        "ciudad": "Madrid"
+      },
+      "importe": 580.00
+    },
+    {
+      "idContrato": 8,
+      "inquilino": {
+        "id": 8,
+        "nombre": "Carmen Gómez García",
+        "dni": "89012345H",
+        "telefono": "689 012 345",
+        "email": "carmen.gomez@example.com"
+      },
+      "numeroHabitacion": 1,
+      "piso": {
+        "id": 3,
+        "direccion": "Calle Fuencarral 87, 1º C",
+        "ciudad": "Madrid"
+      },
+      "importe": 420.00
+    },
+    {
+      "idContrato": 5,
+      "inquilino": {
+        "id": 5,
+        "nombre": "Manuel González López",
+        "dni": "56789012E",
+        "telefono": "656 789 012",
+        "email": "manuel.gonzalez@example.com"
+      },
+      "numeroHabitacion": 1,
+      "piso": {
+        "id": 2,
+        "direccion": "Gran Vía 42, 2º B",
+        "ciudad": "Madrid"
+      },
+      "importe": 480.00
+    },
+    {
+      "idContrato": 14,
+      "inquilino": {
+        "id": 14,
+        "nombre": "Sofía Romero García",
+        "dni": "44567890P",
+        "telefono": "644 567 890",
+        "email": "sofia.romero@example.com"
+      },
+      "numeroHabitacion": 5,
+      "piso": {
+        "id": 4,
+        "direccion": "Passeig de Gràcia 58, 4º 1ª",
+        "ciudad": "Barcelona"
+      },
+      "importe": 800.00
+    },
+    {
+      "idContrato": 7,
+      "inquilino": {
+        "id": 7,
+        "nombre": "José Sánchez Rodríguez",
+        "dni": "78901234G",
+        "telefono": "678 901 234",
+        "email": "jose.sanchez@example.com"
+      },
+      "numeroHabitacion": 3,
+      "piso": {
+        "id": 2,
+        "direccion": "Gran Vía 42, 2º B",
+        "ciudad": "Madrid"
+      },
+      "importe": 650.00
+    },
+    {
+      "idContrato": 19,
+      "inquilino": {
+        "id": 19,
+        "nombre": "Alejandro Morales Fernández",
+        "dni": "99012345V",
+        "telefono": "699 012 345",
+        "email": "alejandro.morales@example.com"
+      },
+      "numeroHabitacion": 1,
+      "piso": {
+        "id": 7,
+        "direccion": "Calle Sierpes 22, 1º A",
+        "ciudad": "Sevilla"
+      },
+      "importe": 300.00
+    },
+    {
+      "idContrato": 16,
+      "inquilino": {
+        "id": 16,
+        "nombre": "Lucía Torres Sánchez",
+        "dni": "66789012R",
+        "telefono": "666 789 012",
+        "email": "lucia.torres@example.com"
+      },
+      "numeroHabitacion": 2,
+      "piso": {
+        "id": 5,
+        "direccion": "Carrer de Provença 144, 2º 2ª",
+        "ciudad": "Barcelona"
+      },
+      "importe": 620.00
+    },
+    {
+      "idContrato": 18,
+      "inquilino": {
+        "id": 18,
+        "nombre": "Valentina Ortega García",
+        "dni": "88901234T",
+        "telefono": "688 901 234",
+        "email": "valentina.ortega@example.com"
+      },
+      "numeroHabitacion": 2,
+      "piso": {
+        "id": 6,
+        "direccion": "Avenida del Puerto 34, 3º B",
+        "ciudad": "Valencia"
+      },
+      "importe": 420.00
+    }
+  ]
+}

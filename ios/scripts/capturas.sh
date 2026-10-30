@@ -3,6 +3,7 @@
 #
 # Uso:  CAPTURAS_EMAIL=... CAPTURAS_PASSWORD=... ios/scripts/capturas.sh 4A [http://localhost:8081]
 # Necesita la API en marcha en esa URL (por defecto la de Debug, localhost:8080).
+# Opcional: CAPTURAS_INQUILINO_EMAIL y CAPTURAS_INQUILINO_PASSWORD para las pantallas del inquilino.
 set -uo pipefail
 
 fase=${1:?Indica la fase, p. ej. 4A}
@@ -35,6 +36,8 @@ for modo in claro oscuro; do
   TEST_RUNNER_CAPTURAS_DIR="$destino" \
   TEST_RUNNER_CAPTURAS_EMAIL="$CAPTURAS_EMAIL" \
   TEST_RUNNER_CAPTURAS_PASSWORD="$CAPTURAS_PASSWORD" \
+  TEST_RUNNER_CAPTURAS_INQUILINO_EMAIL="${CAPTURAS_INQUILINO_EMAIL:-}" \
+  TEST_RUNNER_CAPTURAS_INQUILINO_PASSWORD="${CAPTURAS_INQUILINO_PASSWORD:-}" \
   xcodebuild test -project GestionApPro.xcodeproj -scheme Capturas \
     -destination "platform=iOS Simulator,id=$udid" -derivedDataPath build \
     -only-testing:"GestionApProUITests/CapturasUITests/test$fase" "${extra[@]}" > "$log" 2>&1 &
