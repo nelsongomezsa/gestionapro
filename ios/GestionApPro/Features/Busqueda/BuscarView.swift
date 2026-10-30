@@ -20,6 +20,7 @@ struct BuscarView: View {
                 grupo("Incidencias", icono: "wrench.and.screwdriver", r.incidencias) { DestinoInicio.incidencia($0) }
             }
         }
+        .estiloLista()
         .overlay {
             if consulta.count < 2 {
                 EstadoVacio(icono: "magnifyingglass", titulo: "Buscar",
@@ -45,9 +46,9 @@ struct BuscarView: View {
                     NavigationLink(value: destino(r.id)) {
                         Label {
                             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                                Text(r.titulo).lineLimit(1)
+                                Text(r.titulo)
                                 if let s = r.subtitulo, !s.isEmpty {
-                                    Text(s).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                                    Text(s).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                                 }
                             }
                         } icon: {
@@ -56,6 +57,7 @@ struct BuscarView: View {
                     }
                 }
             }
+            .filaLista()
         }
     }
 

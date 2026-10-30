@@ -11,19 +11,23 @@ struct UsuariosView: View {
     var body: some View {
         VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { lista in
             List {
-                ForEach(lista) { u in
-                    FilaUsuario(usuario: u, esYo: u.id == sesion.usuario?.id)
-                        .contextMenu { if u.id != sesion.usuario?.id { acciones(de: u) } }
-                        .swipeActions(edge: .trailing) {
-                            if u.id != sesion.usuario?.id {
-                                Button(u.activo ? "Desactivar" : "Activar") {
-                                    Task { await enviar(.cambiarActivo(usuario: u.id, activo: !u.activo)) }
+                Section {
+                    ForEach(lista) { u in
+                        FilaUsuario(usuario: u, esYo: u.id == sesion.usuario?.id)
+                            .contextMenu { if u.id != sesion.usuario?.id { acciones(de: u) } }
+                            .swipeActions(edge: .trailing) {
+                                if u.id != sesion.usuario?.id {
+                                    Button(u.activo ? "Desactivar" : "Activar") {
+                                        Task { await enviar(.cambiarActivo(usuario: u.id, activo: !u.activo)) }
+                                    }
+                                    .tint(u.activo ? Tema.Color.negativoRelleno : Tema.Color.positivo)
                                 }
-                                .tint(u.activo ? Tema.Color.negativo : Tema.Color.positivo)
                             }
-                        }
+                    }
                 }
+                .filaLista()
             }
+            .estiloLista()
             .overlay { if lista.isEmpty { EstadoVacio(icono: "person.2", titulo: "Sin usuarios") } }
             .refreshable { await cargar() }
         }
@@ -81,20 +85,26 @@ struct FilaUsuario: View {
     let esYo: Bool
 
     var body: some View {
-        HStack(spacing: Tema.Espacio.s) {
-            AvatarIniciales(nombre: usuario.nombre, tamano: 40)
+        // Rol y estado bajo el email: así el email tiene todo el ancho y no se parte.
+        HStack(alignment: .top, spacing: Tema.Espacio.s) {
+            AvatarIniciales(nombre: usuario.nombre, tamano: Tema.Tamano.avatarFila)
                 .opacity(usuario.activo ? 1 : 0.4)
-            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
                 Text(esYo ? "\(usuario.nombre) (tú)" : usuario.nombre).font(Tema.Fuente.subtitulo)
-                Text(usuario.email).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                Text(usuario.email).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: Tema.Espacio.xxs) { insignias }
+                    VStack(alignment: .leading, spacing: Tema.Espacio.xxs) { insignias }
+                }
             }
-            Spacer()
-            VStack(alignment: .trailing, spacing: Tema.Espacio.xxs) {
-                InsigniaEstado(texto: usuario.rol.nombreVisible, tono: usuario.rol == .admin ? .primario : .neutro)
-                if !usuario.activo { InsigniaEstado(texto: "Inactivo", tono: .negativo) }
-            }
+            Spacer(minLength: 0)
         }
         .accessibilityElement(children: .combine)
+    }
+
+    @ViewBuilder private var insignias: some View {
+        InsigniaEstado(texto: usuario.rol.nombreVisible, tono: usuario.rol == .admin ? .primario : .neutro)
+        if !usuario.activo { InsigniaEstado(texto: "Inactivo", tono: .negativo) }
     }
 }
 
@@ -127,6 +137,7 @@ struct NuevoUsuarioView: View {
             } footer: {
                 Text("Mínimo 8 caracteres. Pásasela a la persona para que la cambie desde su perfil.")
             }
+            .filaLista()
             Section {
                 Picker("Rol", selection: $rol) {
                     Text(Rol.propietario.nombreVisible).tag(Rol.propietario)
@@ -136,10 +147,13 @@ struct NuevoUsuarioView: View {
             } footer: {
                 Text("Los inquilinos crean su cuenta con el código de invitación de su ficha.")
             }
+            .filaLista()
             if let error {
                 Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                .filaLista()
             }
         }
+        .estiloLista()
         .navigationTitle("Nuevo usuario")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }

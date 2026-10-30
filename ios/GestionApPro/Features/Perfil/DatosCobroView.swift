@@ -17,12 +17,13 @@ struct DatosCobroView: View {
                 TextField("IBAN", text: $iban, prompt: Text("ES00 0000 0000 0000 0000 0000"))
                     .textInputAutocapitalization(.characters)
                     .autocorrectionDisabled()
-                    .font(.body.monospaced())
+                    .font(Tema.Fuente.cuerpo.monospaced())
             } header: {
                 Text("Cuenta para los cobros")
             } footer: {
                 Text("Se usa en el QR de pago SEPA que generas para tus inquilinos. Se comprueban los dígitos de control.")
             }
+            .filaLista()
             Section {
                 TextField("DNI o NIE", text: $dni)
                     .textInputAutocapitalization(.characters)
@@ -32,10 +33,13 @@ struct DatosCobroView: View {
             } footer: {
                 Text("Aparece como arrendador en los contratos en PDF.")
             }
+            .filaLista()
             if let error {
                 Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                .filaLista()
             }
         }
+        .estiloLista()
         .navigationTitle("Datos de cobro")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }

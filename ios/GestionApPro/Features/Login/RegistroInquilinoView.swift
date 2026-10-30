@@ -26,11 +26,12 @@ struct RegistroInquilinoView: View {
                 TextField("Código de invitación", text: $codigo, prompt: Text("K7M2-QX9P-4TBW"))
                     .textInputAutocapitalization(.characters)
                     .autocorrectionDisabled()
-                    .font(.body.monospaced())
+                    .font(Tema.Fuente.cuerpo.monospaced())
                     .accessibilityIdentifier("campoCodigo")
             } footer: {
                 Text("Te lo da tu propietario. Caduca a los pocos días; si no funciona, pídele uno nuevo.")
             }
+            .filaLista()
             Section {
                 TextField("Email", text: $email)
                     .textContentType(.username)
@@ -46,10 +47,13 @@ struct RegistroInquilinoView: View {
                     Text("Mínimo 8 caracteres.")
                 }
             }
+            .filaLista()
             if let error {
                 Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                .filaLista()
             }
         }
+        .estiloLista()
         .navigationTitle("Crear mi cuenta")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }

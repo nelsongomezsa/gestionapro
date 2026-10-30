@@ -44,7 +44,6 @@ enum Tema {
         static let bordeHeroe = dinamico(claro: 0x0F1B33, oscuro: 0x2A3A5E)
 
         /// Cabeceras que aún no se han pasado a `TarjetaHero`; desaparece al rediseñar cada pantalla.
-        static let degradadoMarca = superficieHeroe
 
         /// Fondos de los iconos de sección (la pestaña Más): solo tonos de la marca.
         static let iconoAzul = fijo(0x1F5FE0)
@@ -72,6 +71,8 @@ enum Tema {
         static let cifra = Font.system(.title2, weight: .semibold).monospacedDigit()
         static let cifraMediana = Font.system(.title3, weight: .semibold).monospacedDigit()
         static let cifraPequena = Font.system(.headline, weight: .semibold).monospacedDigit()
+        /// Nombre de la app en el acceso.
+        static let tituloMarca = Font.largeTitle.weight(.bold)
         static let titulo = Font.title2.weight(.bold)
         static let tituloSeccion = Font.title3.weight(.semibold)
         static let subtitulo = Font.headline
@@ -117,6 +118,8 @@ enum Tema {
         static let alturaBarraProgreso: CGFloat = 6
         /// Avatar o casilla al principio de una fila de lista.
         static let avatarFila: CGFloat = 40
+        static let avatarMedio: CGFloat = 48
+        static let logo: CGFloat = 88
         /// Avatar de la cabecera de una ficha.
         static let avatarGrande: CGFloat = 72
         /// Botones redondos de acción rápida (llamar, mensaje...): 44 pt, el mínimo táctil.

@@ -12,16 +12,18 @@ struct LoginView: View {
         ScrollView {
             VStack(spacing: Tema.Espacio.l) {
                 VStack(spacing: Tema.Espacio.s) {
-                    Image(systemName: "building.2.fill")
-                        .font(.system(size: 40, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .frame(width: 88, height: 88)
-                        .background(Tema.Color.degradadoMarca, in: .rect(cornerRadius: 24))
+                    Image("Marca")
+                        .resizable()
+                        .frame(width: Tema.Tamano.logo, height: Tema.Tamano.logo)
+                        .clipShape(.rect(cornerRadius: Tema.Radio.tarjeta, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: Tema.Radio.tarjeta, style: .continuous)
+                            .strokeBorder(Tema.Color.bordeHeroe))
                         .accessibilityHidden(true)
                     Text("GestionAp PRO")
-                        .font(.largeTitle.bold())
+                        .font(Tema.Fuente.tituloMarca)
                     Text("Gestión de alquiler de habitaciones")
                         .foregroundStyle(Tema.Color.textoSecundario)
+                        .multilineTextAlignment(.center)
                 }
                 .padding(.top, Tema.Espacio.xl)
 
@@ -52,7 +54,7 @@ struct LoginView: View {
                         .padding(Tema.Espacio.m)
                 }
                 .background(Tema.Color.superficie, in: .rect(cornerRadius: Tema.Radio.grande))
-                .overlay(RoundedRectangle(cornerRadius: Tema.Radio.grande).strokeBorder(Tema.Color.borde, lineWidth: 0.5))
+                .overlay(RoundedRectangle(cornerRadius: Tema.Radio.grande).strokeBorder(Tema.Color.borde))
 
                 if let error = vm.error {
                     Label(error, systemImage: "exclamationmark.triangle.fill")

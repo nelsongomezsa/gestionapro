@@ -692,6 +692,87 @@ extension CapturasUITests {
         r.pausa(1.5)
         r.capturar("07-calculadora-detalle")
     }
+    @MainActor
+    func testRedisenoPerfilUsuarios() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        r.app.buttons["campana"].tap()
+        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-notificaciones")
+        r.atras()
+        r.app.buttons["botonBuscar"].tap()
+        let campo = r.app.searchFields.firstMatch
+        r.esperar(campo)
+        campo.tap()
+        campo.typeText("calle")
+        r.esperar(r.app.staticTexts["Contratos"])
+        r.pausa(1)
+        r.capturar("02-buscar-resultados")
+        r.app.buttons["Cancel"].firstMatch.tapSiExiste()
+        r.app.buttons["Cancelar"].firstMatch.tapSiExiste()
+        r.atras()
+
+        r.pestana("Más")
+        r.pausa(1)
+        r.capturar("03-mas")
+        r.desplazarHasta(r.app.buttons["Usuarios"]).tap()
+        r.esperar(r.texto(empiezaPor: "Gestor"))
+        r.pausa(1)
+        r.capturar("04-usuarios")
+        r.app.buttons["botonNuevoUsuario"].tap()
+        r.esperar(r.app.navigationBars["Nuevo usuario"])
+        r.capturar("05-usuario-nuevo")
+        r.app.buttons["Cancelar"].tap()
+        r.atras()
+
+        r.app.buttons["enlacePerfil"].tap()
+        r.esperar(r.app.navigationBars["Perfil"])
+        r.pausa(1)
+        r.capturar("06-perfil")
+        r.app.buttons["botonDatosCobro"].tap()
+        r.esperar(r.app.navigationBars["Datos de cobro"])
+        r.capturar("09-datos-cobro")
+        r.app.buttons["Cancelar"].tap()
+        r.desplazarHasta(r.app.buttons["enlaceMiActividad"])
+        r.pausa(1)
+        r.capturar("07-perfil-estadisticas")
+        r.app.buttons["enlaceMiActividad"].tap()
+        r.esperar(r.app.navigationBars["Mi actividad"])
+        r.pausa(1)
+        r.capturar("08-mi-actividad")
+    }
+    @MainActor
+    func testRedisenoLoginInquilino() throws {
+        let r = try Recorrido.iniciar(capturarLogin: true)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        let env = ProcessInfo.processInfo.environment
+        guard let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty,
+              let password = env["CAPTURAS_INQUILINO_PASSWORD"] else {
+            throw XCTSkip("Faltan CAPTURAS_INQUILINO_EMAIL o CAPTURAS_INQUILINO_PASSWORD")
+        }
+        let ri = r.relanzar(email: email, password: password)
+        ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+        ri.pausa(1)
+        ri.capturar("02-mi-alquiler")
+        ri.app.swipeUp()
+        ri.pausa(1)
+        ri.capturar("03-mi-alquiler-pagos")
+        ri.pestana("Perfil")
+        ri.esperar(ri.app.navigationBars["Perfil"])
+        ri.pausa(1)
+        ri.capturar("04-perfil-inquilino")
+
+        ri.app.terminate()
+        ri.app.launchArguments = ["-reiniciarSesion"]
+        ri.app.launch()
+        ri.app.buttons["botonTengoCodigo"].tap()
+        ri.esperar(ri.app.navigationBars["Crear mi cuenta"])
+        ri.pausa(1)
+        ri.capturar("05-registro-inquilino")
+    }
 }
 
 @MainActor

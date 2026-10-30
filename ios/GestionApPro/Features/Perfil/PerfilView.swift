@@ -27,10 +27,11 @@ struct PerfilView: View {
         List {
             Section {
                 VStack(spacing: Tema.Espacio.s) {
-                    AvatarIniciales(nombre: actual.nombre, tamano: 84)
+                    AvatarIniciales(nombre: actual.nombre, tamano: Tema.Tamano.avatarGrande)
                     VStack(spacing: Tema.Espacio.xxs) {
-                        Text(actual.nombre).font(Tema.Fuente.titulo)
+                        Text(actual.nombre).font(Tema.Fuente.titulo).multilineTextAlignment(.center)
                         Text(actual.email).foregroundStyle(Tema.Color.textoSecundario)
+                            .multilineTextAlignment(.center)
                     }
                     InsigniaEstado(texto: actual.rol.nombreVisible, tono: .primario, icono: "person.badge.shield.checkmark")
                 }
@@ -38,16 +39,15 @@ struct PerfilView: View {
                 .padding(.vertical, Tema.Espacio.s)
                 .listRowBackground(Color.clear)
             }
+            .filaLista()
 
             Section("Cuenta") {
-                LabeledContent("Nombre", value: actual.nombre)
-                LabeledContent("Email", value: actual.email)
-                LabeledContent("Rol", value: actual.rol.nombreVisible)
                 Button { hoja = .editar } label: { Label("Editar nombre y email", systemImage: "pencil") }
                     .accessibilityIdentifier("botonEditarPerfil")
                 Button { hoja = .password } label: { Label("Cambiar contraseña", systemImage: "key") }
                     .accessibilityIdentifier("botonCambiarPassword")
             }
+            .filaLista()
 
             if actual.rol.gestionaPisos {
                 Section {
@@ -59,6 +59,7 @@ struct PerfilView: View {
                 } footer: {
                     Text("IBAN para el QR de pago de tus inquilinos.")
                 }
+                .filaLista()
 
                 Section("Mis estadísticas") {
                     if let r = resumen {
@@ -73,6 +74,7 @@ struct PerfilView: View {
                         ProgressView().frame(maxWidth: .infinity)
                     }
                 }
+                .filaLista()
 
                 Section {
                     NavigationLink(value: DestinoPerfil.actividad) {
@@ -80,6 +82,7 @@ struct PerfilView: View {
                     }
                     .accessibilityIdentifier("enlaceMiActividad")
                 }
+                .filaLista()
             }
 
             Section {
@@ -90,19 +93,23 @@ struct PerfilView: View {
             } footer: {
                 Text("Automático sigue el modo claro u oscuro del iPhone.")
             }
+            .filaLista()
 
             Section {
                 Button("Cerrar sesión", role: .destructive) { confirmarSalida = true }
                     .frame(maxWidth: .infinity)
             }
+            .filaLista()
 
             #if DEBUG
             Section("Desarrollo") {
                 LabeledContent("Servidor", value: sesion.api.baseURL.absoluteString)
                     .font(Tema.Fuente.nota)
             }
+            .filaLista()
             #endif
         }
+        .estiloLista()
         .navigationTitle("Perfil")
         .navigationDestination(for: DestinoPerfil.self) { _ in
             ActividadView(soloMia: true)
@@ -156,10 +163,13 @@ struct EditarPerfilView: View {
             } footer: {
                 Text("El email es el que usas para iniciar sesión.")
             }
+            .filaLista()
             if let error {
                 Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                .filaLista()
             }
         }
+        .estiloLista()
         .navigationTitle("Editar perfil")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }
@@ -220,6 +230,7 @@ struct CambiarPasswordView: View {
                     .textContentType(.password)
                     .accessibilityIdentifier("campoPasswordActual")
             }
+            .filaLista()
             Section {
                 SecureField("Nueva contraseña", text: $nueva)
                     .textContentType(.newPassword)
@@ -234,10 +245,13 @@ struct CambiarPasswordView: View {
                     Text("Mínimo 8 caracteres.")
                 }
             }
+            .filaLista()
             if let error {
                 Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                .filaLista()
             }
         }
+        .estiloLista()
         .navigationTitle("Cambiar contraseña")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }

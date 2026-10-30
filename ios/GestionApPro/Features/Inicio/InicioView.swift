@@ -338,7 +338,8 @@ struct ActividadView: View {
 
     var body: some View {
         VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { lista in
-            List(lista) { FilaActividad(actividad: $0) }
+            List { Section { ForEach(lista) { FilaActividad(actividad: $0) } }.filaLista() }
+                .estiloLista()
                 .overlay { if lista.isEmpty { EstadoVacio(icono: "clock", titulo: "Sin actividad") } }
         }
         .navigationTitle(soloMia ? "Mi actividad" : "Actividad")

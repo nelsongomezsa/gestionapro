@@ -17,7 +17,7 @@ struct MasView: View {
                 Section {
                     NavigationLink(value: SeccionMas.perfil) {
                         HStack(spacing: Tema.Espacio.s) {
-                            AvatarIniciales(nombre: usuario.nombre, tamano: 48)
+                            AvatarIniciales(nombre: usuario.nombre, tamano: Tema.Tamano.avatarMedio)
                             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                 Text(usuario.nombre).font(Tema.Fuente.subtitulo)
                                 Text(usuario.email)
@@ -29,6 +29,7 @@ struct MasView: View {
                     }
                     .accessibilityIdentifier("enlacePerfil")
                 }
+                .filaLista()
 
                 Section("Gestión") {
                     enlace("Inquilinos", icono: "person.2", color: Tema.Color.iconoAzul, a: .inquilinos)
@@ -36,17 +37,21 @@ struct MasView: View {
                     enlace("Calendario", icono: "calendar", color: Tema.Color.iconoAzul, a: .calendario)
                     enlace("Estadísticas", icono: "chart.xyaxis.line", color: Tema.Color.iconoAzul, a: .estadisticas)
                 }
+                .filaLista()
 
                 Section("Herramientas") {
                     enlace("Calculadora de rentabilidad", icono: "function", color: Tema.Color.iconoMarino, a: .calculadora)
                 }
+                .filaLista()
 
                 if usuario.rol == .admin {
                     Section("Administración") {
                         enlace("Usuarios", icono: "person.badge.key", color: Tema.Color.iconoMarino, a: .usuarios)
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .navigationTitle("Más")
             .navigationDestination(for: SeccionMas.self) { destino(de: $0) }
         }

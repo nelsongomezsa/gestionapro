@@ -28,30 +28,34 @@ struct NotificacionesView: View {
                     EstadoVacio(icono: "bell.slash", titulo: "Sin avisos", mensaje: "Estás al día.")
                         .listRowBackground(Color.clear)
                 }
-                ForEach(visibles) { n in
-                    // Un botón y no un NavigationLink con un gesto añadido: el gesto anulaba la navegación.
-                    Button {
-                        Task { await marcar(n) }
-                        if let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
-                    } label: {
-                        HStack {
-                            FilaNotificacion(notificacion: n)
-                            if n.destino != nil {
-                                Image(systemName: "chevron.right").font(.caption.weight(.semibold))
-                                    .foregroundStyle(Tema.Color.textoSecundario)
+                Section {
+                    ForEach(visibles) { n in
+                        // Un botón y no un NavigationLink con un gesto añadido: el gesto anulaba la navegación.
+                        Button {
+                            Task { await marcar(n) }
+                            if let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
+                        } label: {
+                            HStack {
+                                FilaNotificacion(notificacion: n)
+                                if n.destino != nil {
+                                    Image(systemName: "chevron.right").font(Tema.Fuente.etiqueta)
+                                        .foregroundStyle(Tema.Color.textoSecundario)
+                                }
                             }
+                            .contentShape(.rect)
                         }
-                        .contentShape(.rect)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("filaNotificacion")
-                    .swipeActions {
-                        if !n.leida {
-                            Button("Leída", systemImage: "envelope.open") { Task { await marcar(n) } }.tint(Tema.Color.primario)
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("filaNotificacion")
+                        .swipeActions {
+                            if !n.leida {
+                                Button("Leída", systemImage: "envelope.open") { Task { await marcar(n) } }.tint(Tema.Color.primarioRelleno)
+                            }
                         }
                     }
                 }
+                .filaLista()
             }
+            .estiloLista()
         }
         .navigationTitle("Notificaciones")
         .toolbar {
@@ -115,20 +119,17 @@ struct FilaNotificacion: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: Tema.Espacio.s) {
-            Image(systemName: notificacion.icono)
-                .foregroundStyle(notificacion.tono.color)
-                .frame(width: 32, height: 32)
-                .background(notificacion.tono.color.opacity(0.14), in: .circle)
+            IconoEtiqueta(icono: notificacion.icono, tono: notificacion.tono)
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 HStack {
                     Text(notificacion.titulo).font(notificacion.leida ? Tema.Fuente.cuerpo : Tema.Fuente.subtitulo)
                     Spacer()
                     if !notificacion.leida {
-                        Circle().fill(Tema.Color.primario).frame(width: 8, height: 8).accessibilityLabel("Sin leer")
+                        Circle().fill(Tema.Color.primario).frame(width: Tema.Tamano.punto, height: Tema.Tamano.punto).accessibilityLabel("Sin leer")
                     }
                 }
                 if let d = notificacion.descripcion {
-                    Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
+                    Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                 }
                 Text(notificacion.fecha, format: .relative(presentation: .named).locale(Formato.locale))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
