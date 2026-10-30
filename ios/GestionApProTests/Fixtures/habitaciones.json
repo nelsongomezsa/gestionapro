@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "numero": 1,
+    "precio": 550.00,
+    "estado": "alquilada",
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilinoActual": {
+      "id": 1,
+      "nombre": "Carlos García Martínez"
+    },
+    "idContratoActivo": 1,
+    "diasAlquilada": 486
+  },
+  {
+    "id": 2,
+    "numero": 2,
+    "precio": 620.00,
+    "estado": "alquilada",
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilinoActual": {
+      "id": 2,
+      "nombre": "María López Sánchez"
+    },
+    "idContratoActivo": 2,
+    "diasAlquilada": 455
+  },
+  {
+    "id": 3,
+    "numero": 3,
+    "precio": 580.00,
+    "estado": "alquilada",
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilinoActual": {
+      "id": 3,
+      "nombre": "Antonio Rodríguez García"
+    },
+    "idContratoActivo": 3,
+    "diasAlquilada": 424
+  },
+  {
+    "id": 4,
+    "numero": 4,
+    "precio": 700.00,
+    "estado": "alquilada",
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    },
+    "inquilinoActual": {
+      "id": 4,
+      "nombre": "Laura Martínez Fernández"
+    },
+    "idContratoActivo": 4,
+    "diasAlquilada": 486
+  },
+  {
+    "id": 5,
+    "numero": 5,
+    "precio": 490.00,
+    "estado": "disponible",
+    "piso": {
+      "id": 1,
+      "direccion": "Calle Mayor 15, 3º A",
+      "ciudad": "Madrid"
+    }
+  }
+]

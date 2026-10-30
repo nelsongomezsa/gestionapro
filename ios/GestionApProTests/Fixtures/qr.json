@@ -1,0 +1,7 @@
+{
+  "payload": "BCD\n002\n1\nSCT\n\nAdministrador\nES9121000418450200051332\nEUR650.00\n\n\nAlquiler Hab.4 Miguel Álvarez López octubre 2026",
+  "beneficiario": "Administrador",
+  "iban": "ES91 2100 0418 4502 0005 1332",
+  "importe": 650.00,
+  "concepto": "Alquiler Hab.4 Miguel Álvarez López octubre 2026"
+}

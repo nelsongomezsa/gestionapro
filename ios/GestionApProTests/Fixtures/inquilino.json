@@ -1,0 +1,92 @@
+{
+  "id": 13,
+  "nombre": "Miguel",
+  "apellidos": "Álvarez López",
+  "dni": "33456789N",
+  "telefono": "633 456 789",
+  "email": "miguel.alvarez@example.com",
+  "tieneCuentaApp": false,
+  "contratoActivo": {
+    "id": 13,
+    "idHabitacion": 16,
+    "numeroHabitacion": 4,
+    "piso": {
+      "id": 4,
+      "direccion": "Passeig de Gràcia 58, 4º 1ª",
+      "ciudad": "Barcelona"
+    },
+    "fechaInicio": "2025-08-01",
+    "fechaFin": "2027-01-31",
+    "precioMensual": 650.00,
+    "activo": true,
+    "vencimiento": "NORMAL"
+  },
+  "contratos": [
+    {
+      "id": 13,
+      "idHabitacion": 16,
+      "numeroHabitacion": 4,
+      "piso": {
+        "id": 4,
+        "direccion": "Passeig de Gràcia 58, 4º 1ª",
+        "ciudad": "Barcelona"
+      },
+      "fechaInicio": "2025-08-01",
+      "fechaFin": "2027-01-31",
+      "precioMensual": 650.00,
+      "activo": true,
+      "vencimiento": "NORMAL"
+    }
+  ],
+  "pagos": [
+    {
+      "id": 147,
+      "idContrato": 13,
+      "fechaPago": "2026-10-04",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 134,
+      "idContrato": 13,
+      "fechaPago": "2026-09-05",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 115,
+      "idContrato": 13,
+      "fechaPago": "2026-08-05",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 95,
+      "idContrato": 13,
+      "fechaPago": "2026-07-05",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 77,
+      "idContrato": 13,
+      "fechaPago": "2026-06-04",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 58,
+      "idContrato": 13,
+      "fechaPago": "2026-05-05",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": 39,
+      "idContrato": 13,
+      "fechaPago": "2026-04-03",
+      "cantidad": 650.00,
+      "metodoPago": "transferencia"
+    }
+  ]
+}
