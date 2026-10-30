@@ -1,0 +1,108 @@
+{
+  "ingresos12Meses": [
+    {
+      "mes": "2025-11",
+      "etiqueta": "nov",
+      "importe": 0
+    },
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "importe": 0
+    },
+    {
+      "mes": "2026-01",
+      "etiqueta": "ene",
+      "importe": 0
+    },
+    {
+      "mes": "2026-02",
+      "etiqueta": "feb",
+      "importe": 0
+    },
+    {
+      "mes": "2026-03",
+      "etiqueta": "mar",
+      "importe": 5080.00
+    },
+    {
+      "mes": "2026-04",
+      "etiqueta": "abr",
+      "importe": 6340.00
+    },
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 9920.00
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 10520.00
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 5730.00
+    }
+  ],
+  "ocupacion": {
+    "habitaciones": 30,
+    "alquiladas": 20,
+    "disponibles": 6,
+    "mantenimiento": 4,
+    "porcentaje": 66.67,
+    "salud": "Ocupación media"
+  },
+  "incidencias6Meses": [
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "cantidad": 2
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "cantidad": 1
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "cantidad": 2
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "cantidad": 3
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "cantidad": 3
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "cantidad": 7
+    }
+  ],
+  "ingresosAnioActual": 71850.00,
+  "ingresosAnioAnterior": 10940.00,
+  "variacionAnualPct": 556.76,
+  "anioActual": 2026
+}

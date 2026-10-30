@@ -1,0 +1,248 @@
+{
+  "ocupacion": {
+    "habitaciones": 30,
+    "alquiladas": 20,
+    "disponibles": 6,
+    "mantenimiento": 4,
+    "porcentaje": 66.67,
+    "salud": "Ocupación media"
+  },
+  "inquilinos": 25,
+  "contratosActivos": 20,
+  "incidenciasPendientes": 5,
+  "incidenciasEnProceso": 7,
+  "cobradoMes": 5730.00,
+  "cobradoMesAnterior": 10520.00,
+  "tendenciaPct": -45.53,
+  "esperadoMes": 11420.00,
+  "cashFlowMensual": 5381.98,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 9920.00
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 11420.00
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 10520.00
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 5730.00
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "CONTRATOS_POR_VENCER",
+      "titulo": "5 contratos vencen próximamente",
+      "mensaje": "Valentina Ortega García, Lucía Torres Sánchez, Andrés Flores Rodríguez, Alejandro Morales Fernández, Natalia Castro López",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "INCIDENCIAS_PENDIENTES",
+      "titulo": "5 incidencias pendientes",
+      "mensaje": "Sin empezar a resolver",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "OCUPACION",
+      "titulo": "Ocupación media",
+      "mensaje": "6 habitaciones libres y 4 en mantenimiento",
+      "tono": "aviso"
+    }
+  ],
+  "proximosVencimientos": [
+    {
+      "id": 18,
+      "habitacion": {
+        "id": 23,
+        "numero": 2
+      },
+      "piso": {
+        "id": 6,
+        "direccion": "Avenida del Puerto 34, 3º B",
+        "ciudad": "Valencia"
+      },
+      "inquilino": {
+        "id": 18,
+        "nombre": "Valentina Ortega García",
+        "dni": "88901234T",
+        "telefono": "688 901 234",
+        "email": "valentina.ortega@example.com"
+      },
+      "fechaInicio": "2025-11-01",
+      "fechaFin": "2026-11-10",
+      "precioMensual": 420.00,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 11
+    },
+    {
+      "id": 16,
+      "habitacion": {
+        "id": 20,
+        "numero": 2
+      },
+      "piso": {
+        "id": 5,
+        "direccion": "Carrer de Provença 144, 2º 2ª",
+        "ciudad": "Barcelona"
+      },
+      "inquilino": {
+        "id": 16,
+        "nombre": "Lucía Torres Sánchez",
+        "dni": "66789012R",
+        "telefono": "666 789 012",
+        "email": "lucia.torres@example.com"
+      },
+      "fechaInicio": "2025-11-15",
+      "fechaFin": "2026-11-14",
+      "precioMensual": 620.00,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 15
+    },
+    {
+      "id": 17,
+      "habitacion": {
+        "id": 22,
+        "numero": 1
+      },
+      "piso": {
+        "id": 6,
+        "direccion": "Avenida del Puerto 34, 3º B",
+        "ciudad": "Valencia"
+      },
+      "inquilino": {
+        "id": 17,
+        "nombre": "Andrés Flores Rodríguez",
+        "dni": "77890123S",
+        "telefono": "677 890 123",
+        "email": "andres.flores@example.com"
+      },
+      "fechaInicio": "2025-11-20",
+      "fechaFin": "2026-11-19",
+      "precioMensual": 380.00,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 20
+    },
+    {
+      "id": 19,
+      "habitacion": {
+        "id": 26,
+        "numero": 1
+      },
+      "piso": {
+        "id": 7,
+        "direccion": "Calle Sierpes 22, 1º A",
+        "ciudad": "Sevilla"
+      },
+      "inquilino": {
+        "id": 19,
+        "nombre": "Alejandro Morales Fernández",
+        "dni": "99012345V",
+        "telefono": "699 012 345",
+        "email": "alejandro.morales@example.com"
+      },
+      "fechaInicio": "2025-11-28",
+      "fechaFin": "2026-11-27",
+      "precioMensual": 300.00,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 28
+    },
+    {
+      "id": 20,
+      "habitacion": {
+        "id": 28,
+        "numero": 1
+      },
+      "piso": {
+        "id": 8,
+        "direccion": "Gran Vía 18, 5º C",
+        "ciudad": "Bilbao"
+      },
+      "inquilino": {
+        "id": 20,
+        "nombre": "Natalia Castro López",
+        "dni": "00123456W",
+        "telefono": "600 123 456",
+        "email": "natalia.castro@example.com"
+      },
+      "fechaInicio": "2025-11-01",
+      "fechaFin": "2026-11-28",
+      "precioMensual": 450.00,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 29
+    }
+  ],
+  "actividadReciente": [
+    {
+      "id": 61,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:40:10+10:00"
+    },
+    {
+      "id": 60,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:36:49+10:00"
+    },
+    {
+      "id": 59,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:34:43+10:00"
+    },
+    {
+      "id": 58,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:33:35+10:00"
+    },
+    {
+      "id": 57,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:32:17+10:00"
+    },
+    {
+      "id": 56,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:30:43+10:00"
+    },
+    {
+      "id": 55,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:29:17+10:00"
+    },
+    {
+      "id": 54,
+      "accion": "LOGIN_API",
+      "descripcion": "Inicio de sesión desde la app móvil",
+      "fecha": "2026-10-30T12:25:24+10:00"
+    }
+  ]
+}

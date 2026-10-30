@@ -159,6 +159,10 @@ struct Recorrido {
         return elemento
     }
 
+    func elemento(contiene texto: String) -> XCUIElement {
+        app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS[c] %@", texto)).firstMatch
+    }
+
     func texto(empiezaPor prefijo: String) -> XCUIElement {
         app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH[c] %@", prefijo)).firstMatch
     }
@@ -282,5 +286,65 @@ extension CapturasUITests {
             ri.pausa(1)
             ri.capturar("13-inquilino-perfil")
         }
+    }
+}
+
+extension CapturasUITests {
+
+    @MainActor
+    func test4D() throws {
+        let r = try Recorrido.iniciar()
+
+        // Inicio
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(1)
+        r.capturar("01-inicio")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-inicio-alertas")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("03-inicio-actividad")
+        r.app.swipeDown()
+        r.app.swipeDown()
+
+        // Informe mensual
+        r.app.buttons["Informe del mes"].tap()
+        r.esperar(r.app.buttons["Imprimir"], timeout: 20)
+        r.pausa(2)
+        r.capturar("06-informe-mensual")
+        r.app.buttons["Cerrar"].tap()
+
+        // Notificaciones
+        r.app.buttons["campana"].tap()
+        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
+        r.capturar("04-notificaciones")
+        r.app.buttons["filaNotificacion"].firstMatch.tap()
+        r.pausa(3)
+        r.capturar("05-notificacion-abre-su-pantalla")
+        r.atras()
+        r.atras()
+
+        // Calendario
+        r.pestana("Más")
+        r.app.buttons["Calendario"].tap()
+        r.esperar(r.elemento(contiene: "de octubre").exists ? r.elemento(contiene: "de octubre") : r.elemento(contiene: "1 de"))
+        r.pausa(1)
+        r.capturar("07-calendario")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "1 de")).firstMatch.tap()
+        r.pausa(1.5)
+        r.capturar("08-calendario-dia")
+        r.app.swipeDown(velocity: .fast)
+        r.pausa(1)
+
+        // Estadísticas
+        r.atras()
+        r.app.buttons["Estadísticas"].tap()
+        r.esperar(r.elemento(contiene: "Tasa de ocupación"))
+        r.pausa(1.5)
+        r.capturar("09-estadisticas")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("10-estadisticas-graficos")
     }
 }

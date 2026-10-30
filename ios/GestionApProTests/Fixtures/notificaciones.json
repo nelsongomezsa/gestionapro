@@ -1,0 +1,146 @@
+[
+  {
+    "id": 239,
+    "tipo": "contrato_vence",
+    "titulo": "Contrato próximo a vencer",
+    "descripcion": "Contrato de María López Sánchez vence el 2026-08-31",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 2
+    }
+  },
+  {
+    "id": 202,
+    "tipo": "contrato_vence",
+    "titulo": "Contrato próximo a vencer",
+    "descripcion": "Contrato de Natalia Castro López vence el 2026-05-28",
+    "fecha": "2026-05-09T18:39:48+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 20
+    }
+  },
+  {
+    "id": 201,
+    "tipo": "contrato_vence",
+    "titulo": "Contrato próximo a vencer",
+    "descripcion": "Contrato de Alejandro Morales Fernández vence el 2026-05-27",
+    "fecha": "2026-05-09T18:39:48+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 19
+    }
+  },
+  {
+    "id": 263,
+    "tipo": "incidencia_antigua",
+    "titulo": "Incidencia sin resolver > 7 días",
+    "descripcion": "Calefacción no enciende, termostato no responde",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "INCIDENCIA",
+      "id": 20
+    }
+  },
+  {
+    "id": 262,
+    "tipo": "incidencia_antigua",
+    "titulo": "Incidencia sin resolver > 7 días",
+    "descripcion": "Persiana exterior rota, no sube ni baja",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "INCIDENCIA",
+      "id": 19
+    }
+  },
+  {
+    "id": 261,
+    "tipo": "incidencia_antigua",
+    "titulo": "Incidencia sin resolver > 7 días",
+    "descripcion": "Mancha de humedad en el techo del baño, posible filtración",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "INCIDENCIA",
+      "id": 18
+    }
+  },
+  {
+    "id": 267,
+    "tipo": "mantenimiento_largo",
+    "titulo": "Habitación en mantenimiento > 30 días",
+    "descripcion": "Hab. 3 — Gran Vía 18, 5º C",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "HABITACION",
+      "id": 30
+    }
+  },
+  {
+    "id": 266,
+    "tipo": "mantenimiento_largo",
+    "titulo": "Habitación en mantenimiento > 30 días",
+    "descripcion": "Hab. 4 — Avenida del Puerto 34, 3º B",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "HABITACION",
+      "id": 25
+    }
+  },
+  {
+    "id": 265,
+    "tipo": "mantenimiento_largo",
+    "titulo": "Habitación en mantenimiento > 30 días",
+    "descripcion": "Hab. 6 — Passeig de Gràcia 58, 4º 1ª",
+    "fecha": "2026-08-07T01:24:27+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "HABITACION",
+      "id": 18
+    }
+  },
+  {
+    "id": 277,
+    "tipo": "pago_pendiente",
+    "titulo": "Pago pendiente este mes",
+    "descripcion": "Valentina Ortega García no tiene pago registrado este mes",
+    "fecha": "2026-10-30T12:25:25+10:00",
+    "leida": true,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 18
+    }
+  },
+  {
+    "id": 276,
+    "tipo": "pago_pendiente",
+    "titulo": "Pago pendiente este mes",
+    "descripcion": "Lucía Torres Sánchez no tiene pago registrado este mes",
+    "fecha": "2026-10-30T12:25:25+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 16
+    }
+  },
+  {
+    "id": 275,
+    "tipo": "pago_pendiente",
+    "titulo": "Pago pendiente este mes",
+    "descripcion": "Alejandro Morales Fernández no tiene pago registrado este mes",
+    "fecha": "2026-10-30T12:25:25+10:00",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": 19
+    }
+  }
+]

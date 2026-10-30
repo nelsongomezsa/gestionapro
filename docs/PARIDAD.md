@@ -26,7 +26,7 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 | Menú lateral con 12 secciones | — | | Pestañas Inicio · Pisos · Cobros · Incidencias · Más | 4A | ✅ |
 | Usuarios visible solo para admin | `GET /api/me` | ✔︎ | Más → Usuarios (solo admin) | 4A | ✅ |
 | Búsqueda global | ✚ `GET /api/buscar?q=` | ✚ | Inicio → buscar | 4F | ⏳ |
-| Campana de notificaciones con contador | ✚ `GET /api/notificaciones`, `…/no-leidas/total` | ✚ | Inicio → campana | 4D | ⏳ |
+| Campana de notificaciones con contador | `GET /api/notificaciones` y `/no-leidas` | ✔︎ | Inicio → campana | 4D | ✅ |
 | Tema claro / oscuro | — | | Automático (sistema) | 4A | ✅ |
 | Atrás / historial (`HistorialNavegacion`) | — | | Navegación nativa de iOS | 4A | ➖ |
 
@@ -34,13 +34,13 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| KPIs: habitaciones, alquiladas, disponibles, mantenimiento, ocupación | ✚ `GET /api/dashboard` | ✚ | Inicio | 4D | ⏳ |
-| KPIs: inquilinos, contratos activos, incidencias pendientes, cobrado este mes | ✚ `GET /api/dashboard` | ✚ | Inicio | 4D | ⏳ |
-| Gráfico de ingresos cobrados, últimos 6 meses | ✚ `GET /api/dashboard` | ✚ | Inicio (Swift Charts) | 4D | ⏳ |
-| Alertas (baja ocupación, incidencias, «sistema saludable») | ✚ `GET /api/dashboard` | ✚ | Inicio | 4D | ⏳ |
-| Próximos vencimientos (30 días) | ✚ `GET /api/dashboard` | ✚ | Inicio | 4D | ⏳ |
-| Últimas actividades | ✚ `GET /api/actividad` | ✚ | Inicio | 4D | ⏳ |
-| Informe del mes en PDF (en el Escritorio) | ✚ `GET /api/informes/mensual.pdf` | ✚ | Inicio → visor PDF con compartir/imprimir | 4D | ⏳ |
+| KPIs: habitaciones, alquiladas, disponibles, mantenimiento, ocupación | `GET /api/dashboard` | ✔︎ | Inicio | 4D | ✅ |
+| KPIs: inquilinos, contratos activos, incidencias pendientes, cobrado este mes | `GET /api/dashboard` | ✔︎ | Inicio | 4D | ✅ |
+| Gráfico de ingresos cobrados, últimos 6 meses | `GET /api/dashboard` | ✔︎ | Inicio (Swift Charts) | 4D | ✅ |
+| Alertas (baja ocupación, incidencias, «sistema saludable») | `GET /api/dashboard` | ✔︎ | Inicio | 4D | ✅ |
+| Próximos vencimientos (30 días) | `GET /api/dashboard` | ✔︎ | Inicio | 4D | ✅ |
+| Últimas actividades | `GET /api/actividad` | ✔︎ | Inicio | 4D | ✅ |
+| Informe del mes en PDF (en el Escritorio) | `GET /api/informes/mensual` | ✔︎ | Inicio → visor PDF con compartir/imprimir | 4D | ✅ |
 
 ## Mis Pisos (`AnalisisPisosController`, `AnalisisPisoDAO`, `DatosPisoDAO`)
 
@@ -112,18 +112,18 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Vista mensual: esperado, pagado, vencido sin cobrar | ✚ `GET /api/calendario?mes=` | ✚ | Más → Calendario | 4D | ⏳ |
-| Totales del mes (esperado, cobrado, pendiente) | ✚ `GET /api/calendario?mes=` | ✚ | Calendario | 4D | ⏳ |
-| Detalle del día *(mejora pedida)* | ✚ `GET /api/calendario?mes=` | ✚ | Calendario → día | 4D | ⏳ |
+| Vista mensual: esperado, pagado, vencido sin cobrar | `GET /api/calendario?mes=` | ✔︎ | Más → Calendario | 4D | ✅ |
+| Totales del mes (esperado, cobrado, pendiente) | `GET /api/calendario?mes=` | ✔︎ | Calendario | 4D | ✅ |
+| Detalle del día *(mejora pedida)* | `GET /api/calendario?mes=` | ✔︎ | Calendario → día | 4D | ✅ |
 
 ## Estadísticas (`EstadisticasController`)
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Evolución de ingresos 12 meses (líneas) | ✚ `GET /api/estadisticas` | ✚ | Más → Estadísticas | 4D | ⏳ |
-| Habitaciones por estado (tarta) | ✚ `GET /api/estadisticas` | ✚ | Estadísticas | 4D | ⏳ |
-| Incidencias por mes, 6 meses (barras) | ✚ `GET /api/estadisticas` | ✚ | Estadísticas | 4D | ⏳ |
-| Ingresos año actual / anterior, variación, ocupación | ✚ `GET /api/estadisticas` | ✚ | Estadísticas | 4D | ⏳ |
+| Evolución de ingresos 12 meses (líneas) | `GET /api/estadisticas` | ✔︎ | Más → Estadísticas | 4D | ✅ |
+| Habitaciones por estado (tarta) | `GET /api/estadisticas` | ✔︎ | Estadísticas | 4D | ✅ |
+| Incidencias por mes, 6 meses (barras) | `GET /api/estadisticas` | ✔︎ | Estadísticas | 4D | ✅ |
+| Ingresos año actual / anterior, variación, ocupación | `GET /api/estadisticas` | ✔︎ | Estadísticas | 4D | ✅ |
 
 En escritorio estas consultas son globales y los meses dependen del idioma del servidor
 (`DATE_FORMAT '%b'`); en la API se filtran por propietario y los meses van siempre en español.
@@ -132,10 +132,10 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Generar avisos: contrato que vence, pago pendiente, incidencia antigua, mantenimiento largo | ✚ (al pedir la lista) | ✚ | — | 4D | ⏳ |
-| Lista, contador de no leídas | ✚ `GET /api/notificaciones` | ✚ | Inicio → campana | 4D | ⏳ |
-| Marcar como leída / todas leídas | ✚ `POST /api/notificaciones/{id}/leida`, `…/leidas` | ✚ | Notificaciones | 4D | ⏳ |
-| Al tocar, ir a su pantalla (`RutasNotificacion`) | — | | Contratos / Incidencias / Habitaciones | 4D | ⏳ |
+| Generar avisos: contrato que vence, pago pendiente, incidencia antigua, mantenimiento largo | (al pedir la lista) | ✔︎ | — | 4D | ✅ |
+| Lista, contador de no leídas | `GET /api/notificaciones` | ✔︎ | Inicio → campana | 4D | ✅ |
+| Marcar como leída / todas leídas | `POST /api/notificaciones/{id}/leida` y `/leidas` | ✔︎ | Notificaciones | 4D | ✅ |
+| Al tocar, ir a su pantalla (`RutasNotificacion`) | — | | Contratos / Incidencias / Habitaciones | 4D | ✅ |
 
 ## Incidencias (`IncidenciasController`, `IncidenciaDAO`)
 
