@@ -64,7 +64,7 @@ struct DatoCompacto: View {
     var tono: Tono? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
             Text(titulo)
                 .font(Tema.Fuente.nota)
                 .foregroundStyle(Tema.Color.textoSecundario)

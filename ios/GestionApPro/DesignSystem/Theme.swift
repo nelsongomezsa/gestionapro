@@ -5,7 +5,8 @@ import UIKit
 ///
 /// Identidad: azul marino profundo con azul eléctrico como acento (acción principal) y verde
 /// para lo positivo; rojo y ámbar solo para estados. Cada color tiene variante clara y oscura
-/// y cumple contraste WCAG AA sobre su superficie (comprobado al definirlos).
+/// y cumple contraste WCAG AA (4,5:1) sobre las superficies donde se usa: acento claro #1F5FE0
+/// (5,2:1 sobre el fondo) y oscuro #5C97FF (6,0:1 sobre la superficie).
 enum Tema {
 
     // MARK: Color
@@ -13,10 +14,11 @@ enum Tema {
     enum Color {
         /// Azul eléctrico: enlaces, iconos y acciones. Es el color de acento del catálogo.
         static let primario = SwiftUI.Color.accentColor
-        static let primarioSuave = dinamico(claro: 0xE6EEFE, oscuro: 0x1A2D52)
+        /// Fondo de los botones secundarios: el acento encima mantiene 4,9:1 (claro) y 5,2:1 (oscuro).
+        static let primarioSuave = dinamico(claro: 0xEDF2FD, oscuro: 0x15274A)
         /// Relleno de los botones principales: el mismo azul en los dos modos, para que el
-        /// texto blanco encima tenga contraste suficiente (4,8:1).
-        static let primarioRelleno = fijo(0x2F6BF0)
+        /// texto blanco encima tenga contraste suficiente (5,6:1).
+        static let primarioRelleno = fijo(0x1F5FE0)
         static let sobrePrimario = SwiftUI.Color.white
         /// Relleno de los botones destructivos (texto blanco encima).
         static let negativoRelleno = fijo(0xC62828)
@@ -42,12 +44,9 @@ enum Tema {
         /// Cabeceras que aún no se han pasado a `TarjetaHero`; desaparece al rediseñar cada pantalla.
         static let degradadoMarca = superficieHeroe
 
-        /// Fondos de los iconos de sección (la pestaña Más): tonos de la paleta, no del sistema.
-        static let iconoAzul = fijo(0x2F6BF0)
-        static let iconoVerde = fijo(0x15803D)
-        static let iconoAmbar = fijo(0xB45309)
-        static let iconoRojo = fijo(0xC62828)
-        static let iconoMarino = fijo(0x24304A)
+        /// Fondos de los iconos de sección (la pestaña Más): solo tonos de la marca.
+        static let iconoAzul = fijo(0x1F5FE0)
+        static let iconoMarino = fijo(0x2A3A5E)
 
         private static func dinamico(claro: UInt32, oscuro: UInt32) -> SwiftUI.Color {
             SwiftUI.Color(uiColor: UIColor { rasgos in
@@ -83,6 +82,8 @@ enum Tema {
     // MARK: Espaciado (escala fija 4 · 8 · 12 · 16 · 24 · 32)
 
     enum Espacio {
+        /// Solo entre líneas de texto de un mismo bloque (título y subtítulo).
+        static let linea: CGFloat = 2
         static let xxs: CGFloat = 4
         static let xs: CGFloat = 8
         static let s: CGFloat = 12

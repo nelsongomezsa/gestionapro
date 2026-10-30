@@ -26,7 +26,7 @@ struct CobrosView: View {
                         }
                         ForEach(r.pendientes.filter { vm.filtroInquilino == nil || $0.inquilino.id == vm.filtroInquilino }) { p in
                             HStack {
-                                VStack(alignment: .leading, spacing: 2) {
+                                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                     Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo)
                                     Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
                                         .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
@@ -151,7 +151,7 @@ struct ResumenCobros: View {
     }
 
     private func dato(_ titulo: String, _ valor: String) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
             Text(titulo).font(Tema.Fuente.nota).foregroundStyle(.white.opacity(0.8))
             Text(valor).font(Tema.Fuente.cifraPequena).foregroundStyle(.white)
         }
@@ -163,7 +163,7 @@ struct FilaPago: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(pago.inquilino.nombre).font(Tema.Fuente.subtitulo)
                 Text("\(pago.fechaPago.formatted(FormatoFecha.corta)) · \(pago.metodoPago.nombre) · Hab. \(pago.numeroHabitacion)")
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)

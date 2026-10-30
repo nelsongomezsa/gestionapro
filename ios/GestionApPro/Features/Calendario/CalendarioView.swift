@@ -46,7 +46,7 @@ struct CalendarioView: View {
     }
 
     private func totalCelda(_ titulo: String, _ importe: Decimal, _ tono: Tono) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
             Text(titulo).estiloEtiqueta()
             Text(Formato.euros(importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(tono == .neutro ? .primary : tono.color)
                 .lineLimit(1).minimumScaleFactor(0.6)
@@ -84,7 +84,7 @@ private struct CeldaDia: View {
     var body: some View {
         VStack(spacing: 3) {
             Text("\(numero)").font(.subheadline.weight(esHoy ? .bold : .regular)).monospacedDigit()
-            HStack(spacing: 2) {
+            HStack(spacing: Tema.Espacio.linea) {
                 if !dia.pagos.isEmpty { Circle().fill(Tema.Color.positivo).frame(width: 5, height: 5) }
                 if !dia.vencimientos.isEmpty { Circle().fill(Tema.Color.aviso).frame(width: 5, height: 5) }
             }

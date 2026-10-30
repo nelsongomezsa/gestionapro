@@ -18,7 +18,7 @@ struct MasView: View {
                     NavigationLink(value: SeccionMas.perfil) {
                         HStack(spacing: Tema.Espacio.s) {
                             AvatarIniciales(nombre: usuario.nombre, tamano: 48)
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                 Text(usuario.nombre).font(Tema.Fuente.subtitulo)
                                 Text(usuario.email)
                                     .font(Tema.Fuente.detalle)
@@ -31,19 +31,19 @@ struct MasView: View {
                 }
 
                 Section("Gestión") {
-                    enlace("Inquilinos", icono: "person.2", color: .blue, a: .inquilinos)
-                    enlace("Contratos", icono: "doc.text", color: .indigo, a: .contratos)
-                    enlace("Calendario", icono: "calendar", color: .red, a: .calendario)
-                    enlace("Estadísticas", icono: "chart.xyaxis.line", color: .teal, a: .estadisticas)
+                    enlace("Inquilinos", icono: "person.2", color: Tema.Color.iconoAzul, a: .inquilinos)
+                    enlace("Contratos", icono: "doc.text", color: Tema.Color.iconoAzul, a: .contratos)
+                    enlace("Calendario", icono: "calendar", color: Tema.Color.iconoAzul, a: .calendario)
+                    enlace("Estadísticas", icono: "chart.xyaxis.line", color: Tema.Color.iconoAzul, a: .estadisticas)
                 }
 
                 Section("Herramientas") {
-                    enlace("Calculadora de rentabilidad", icono: "function", color: .purple, a: .calculadora)
+                    enlace("Calculadora de rentabilidad", icono: "function", color: Tema.Color.iconoMarino, a: .calculadora)
                 }
 
                 if usuario.rol == .admin {
                     Section("Administración") {
-                        enlace("Usuarios", icono: "person.badge.key", color: .gray, a: .usuarios)
+                        enlace("Usuarios", icono: "person.badge.key", color: Tema.Color.iconoMarino, a: .usuarios)
                     }
                 }
             }
@@ -70,11 +70,7 @@ struct MasView: View {
             Label {
                 Text(titulo)
             } icon: {
-                Image(systemName: icono)
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .frame(width: 28, height: 28)
-                    .background(color.gradient, in: .rect(cornerRadius: 7))
+                IconoSeccion(icono: icono, relleno: color)
             }
         }
     }

@@ -11,7 +11,7 @@ struct TarjetaPiso: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text(piso.direccion)
                         .font(Tema.Fuente.subtitulo)
                         .fixedSize(horizontal: false, vertical: true)
@@ -24,7 +24,7 @@ struct TarjetaPiso: View {
             }
 
             HStack(alignment: .lastTextBaseline) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text("Cash flow mensual").estiloEtiqueta()
                     if let m = piso.metricas {
                         Text(Formato.euros(m.cashFlowMensual))
@@ -37,7 +37,7 @@ struct TarjetaPiso: View {
                     }
                 }
                 Spacer()
-                VStack(alignment: .trailing, spacing: 2) {
+                VStack(alignment: .trailing, spacing: Tema.Espacio.linea) {
                     Text("Rent. bruta").estiloEtiqueta()
                     Text(Formato.porcentaje(piso.metricas?.rentabilidadBrutaPct))
                         .font(Tema.Fuente.cifraPequena)

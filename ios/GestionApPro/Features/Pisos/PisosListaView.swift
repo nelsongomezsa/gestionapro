@@ -119,7 +119,7 @@ struct ResumenCarteraView: View {
     }
 
     private func dato(_ titulo: String, _ valor: String) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
             Text(titulo)
                 .font(Tema.Fuente.nota)
                 .foregroundStyle(.white.opacity(0.8))

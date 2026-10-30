@@ -53,7 +53,7 @@ struct InicioView: View {
                                            valor: "\(d.incidenciasPendientes + d.incidenciasEnProceso)",
                                            icono: "wrench.and.screwdriver",
                                            tono: d.incidenciasPendientes + d.incidenciasEnProceso > 0 ? .aviso : .positivo,
-                                           detalle: "\(d.incidenciasPendientes) sin empezar")
+                                           detalle: "\(d.incidenciasEnProceso) en curso")
                             }
                         }
 
@@ -61,12 +61,12 @@ struct InicioView: View {
                             GraficoIngresos(meses: d.ingresosUltimos6Meses).frame(height: 220)
                         }
 
-                        if !d.alertas.isEmpty {
+                        if !alertas(d).isEmpty {
                             SeccionTarjeta(titulo: "Alertas") {
-                                ForEach(d.alertas, id: \.self) { a in
+                                ForEach(alertas(d), id: \.self) { a in
                                     HStack(alignment: .top, spacing: Tema.Espacio.s) {
                                         IconoEtiqueta(icono: a.icono, tono: a.tonoVisual)
-                                        VStack(alignment: .leading, spacing: 2) {
+                                        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                             Text(a.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                                             if !a.mensaje.isEmpty {
                                                 Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
@@ -74,7 +74,7 @@ struct InicioView: View {
                                         }
                                     }
                                     .accessibilityElement(children: .combine)
-                                    if a != d.alertas.last { Divider().overlay(Tema.Color.borde) }
+                                    if a != alertas(d).last { Divider().overlay(Tema.Color.borde) }
                                 }
                             }
                         }
@@ -91,13 +91,13 @@ struct InicioView: View {
                                 NavigationLink(value: DestinoInicio.contrato(c.id)) {
                                     HStack(spacing: Tema.Espacio.s) {
                                         AvatarIniciales(nombre: c.inquilino.nombre, tamano: Tema.Tamano.icono)
-                                        VStack(alignment: .leading, spacing: 2) {
+                                        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                             // El nombre nunca se corta: pasa a dos líneas si hace falta.
                                             Text(c.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                                                 .lineLimit(2)
                                                 .fixedSize(horizontal: false, vertical: true)
                                             Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
-                                                .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                                                .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                                         }
                                         Spacer(minLength: Tema.Espacio.xs)
                                         InsigniaEstado(texto: c.diasRestantes == 0 ? "Hoy" : "\(c.diasRestantes) d", tono: c.vencimiento.tono)
@@ -199,6 +199,11 @@ struct InicioView: View {
         }
     }
 
+    /// La alerta de ocupación no se muestra: la tarjeta de Ocupación ya lo dice con su color.
+    private func alertas(_ d: Dashboard) -> [Alerta] {
+        d.alertas.filter { $0.tipo != "OCUPACION" }
+    }
+
     private var saludo: String {
         let nombre = sesion.usuario?.nombre.split(separator: " ").first.map(String.init) ?? ""
         return nombre.isEmpty ? "Inicio" : "Hola, \(nombre)"
@@ -251,7 +256,7 @@ struct GraficoIngresos: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             if let m = elegido {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text(m == meses.last ? "Este mes" : m.etiqueta.capitalized(with: Formato.locale))
                         .font(Tema.Fuente.nota)
                         .foregroundStyle(Tema.Color.textoSecundario)
@@ -267,6 +272,9 @@ struct GraficoIngresos: View {
                 BarMark(x: .value("Mes", m.etiqueta), y: .value("Cobrado", m.importe.double), width: .ratio(0.55))
                     .foregroundStyle(m == elegido ? Tema.Color.primario : Tema.Color.primario.opacity(0.35))
                     .clipShape(.rect(cornerRadius: Tema.Radio.pequeno / 2))
+                    // VoiceOver recorre los meses uno a uno (y ofrece el gráfico sonoro de Swift Charts).
+                    .accessibilityLabel(m.etiqueta.capitalized(with: Formato.locale))
+                    .accessibilityValue(Formato.euros(m.importe))
             }
             .chartXSelection(value: $seleccion)
             .chartYAxis {
@@ -284,9 +292,7 @@ struct GraficoIngresos: View {
                     AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 }
             }
-            .accessibilityElement(children: .ignore)
             .accessibilityLabel("Ingresos cobrados por mes")
-            .accessibilityValue(meses.map { "\($0.etiqueta): \(Formato.euros($0.importe))" }.joined(separator: ", "))
         }
     }
 }
@@ -297,7 +303,7 @@ struct FilaActividad: View {
     var body: some View {
         HStack(alignment: .top, spacing: Tema.Espacio.s) {
             IconoEtiqueta(icono: actividad.icono, tono: .primario)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(actividad.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                 if let d = actividad.descripcion, !d.isEmpty {
                     Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)

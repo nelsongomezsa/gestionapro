@@ -104,7 +104,7 @@ struct FilaHabitacion: View {
                 .frame(width: 40, height: 40)
                 .background(habitacion.estado.tono.color.opacity(0.14), in: .rect(cornerRadius: Tema.Radio.pequeno))
                 .foregroundStyle(habitacion.estado.tono.color)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 if let inquilino = habitacion.inquilinoActual {
                     Text(inquilino.nombre).font(Tema.Fuente.subtitulo)
                     if let dias = habitacion.diasAlquilada {
@@ -116,7 +116,7 @@ struct FilaHabitacion: View {
                 }
             }
             Spacer()
-            VStack(alignment: .trailing, spacing: 2) {
+            VStack(alignment: .trailing, spacing: Tema.Espacio.linea) {
                 Text(Formato.euros(habitacion.precio)).font(Tema.Fuente.cifraPequena)
                 Text("al mes").font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }

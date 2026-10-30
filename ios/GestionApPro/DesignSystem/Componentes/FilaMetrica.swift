@@ -16,7 +16,7 @@ struct FilaMetrica: View {
                     .frame(width: 22)
                     .accessibilityHidden(true)
             }
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(titulo)
                 if let nota {
                     Text(nota)

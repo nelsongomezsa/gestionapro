@@ -84,7 +84,7 @@ struct FilaUsuario: View {
         HStack(spacing: Tema.Espacio.s) {
             AvatarIniciales(nombre: usuario.nombre, tamano: 40)
                 .opacity(usuario.activo ? 1 : 0.4)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(esYo ? "\(usuario.nombre) (tú)" : usuario.nombre).font(Tema.Fuente.subtitulo)
                 Text(usuario.email).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
             }

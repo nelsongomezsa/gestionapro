@@ -119,7 +119,7 @@ struct FilaNotificacion: View {
                 .foregroundStyle(notificacion.tono.color)
                 .frame(width: 32, height: 32)
                 .background(notificacion.tono.color.opacity(0.14), in: .circle)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 HStack {
                     Text(notificacion.titulo).font(notificacion.leida ? Tema.Fuente.cuerpo : Tema.Fuente.subtitulo)
                     Spacer()

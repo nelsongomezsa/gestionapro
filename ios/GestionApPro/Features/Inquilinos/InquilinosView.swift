@@ -59,7 +59,7 @@ struct FilaInquilino: View {
     var body: some View {
         HStack(spacing: Tema.Espacio.s) {
             AvatarIniciales(nombre: inquilino.nombreCompleto, tamano: 40)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 HStack(spacing: Tema.Espacio.xxs) {
                     Text(inquilino.nombreCompleto).font(Tema.Fuente.subtitulo)
                     if inquilino.tieneCuentaApp {

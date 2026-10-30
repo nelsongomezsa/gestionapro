@@ -17,6 +17,21 @@ struct IconoEtiqueta: View {
     }
 }
 
+/// Icono blanco sobre un cuadrado de color sólido (listas de secciones, como Ajustes de iOS).
+struct IconoSeccion: View {
+    let icono: String
+    var relleno: Color = Tema.Color.iconoAzul
+
+    var body: some View {
+        Image(systemName: icono)
+            .font(.system(size: Tema.Tamano.iconoPequeno * 0.5, weight: .semibold))
+            .foregroundStyle(Tema.Color.sobrePrimario)
+            .frame(width: Tema.Tamano.iconoPequeno, height: Tema.Tamano.iconoPequeno)
+            .background(relleno, in: .rect(cornerRadius: Tema.Radio.pequeno))
+            .accessibilityHidden(true)
+    }
+}
+
 /// Bloque con título y tarjeta. El título puede llevar una acción a la derecha ("Ver todo").
 struct SeccionTarjeta<Contenido: View, Accion: View>: View {
     let titulo: String

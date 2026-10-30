@@ -15,7 +15,7 @@ struct TarjetaKPI: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             IconoEtiqueta(icono: icono, tono: tono, tamano: Tema.Tamano.iconoPequeno)
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(valor)
                     .font(Tema.Fuente.cifra)
                     .foregroundStyle(Tema.Color.texto)

@@ -44,7 +44,7 @@ struct BuscarView: View {
                 ForEach(lista, id: \.self) { r in
                     NavigationLink(value: destino(r.id)) {
                         Label {
-                            VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                                 Text(r.titulo).lineLimit(1)
                                 if let s = r.subtitulo, !s.isEmpty {
                                     Text(s).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
