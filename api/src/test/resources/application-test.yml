@@ -21,3 +21,5 @@ gestionap:
   indices:
     # Sin red en los tests: los valores se fijan en cada test.
     url: ""
+  archivos:
+    dir: ${java.io.tmpdir}/gestionap-archivos-test

@@ -164,3 +164,49 @@ CREATE TABLE ActualizacionesRenta (
     fecha_confirmacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uk_actualizacion_contrato_fecha UNIQUE (id_contrato, fecha_efecto)
 );
+
+-- V6: gastos, fotos de incidencias e inventarios.
+CREATE TABLE Gastos (
+    id_gasto       INT AUTO_INCREMENT PRIMARY KEY,
+    id_piso        INT NOT NULL REFERENCES Pisos (id_piso) ON DELETE CASCADE,
+    id_habitacion  INT REFERENCES Habitaciones (id_habitacion) ON DELETE SET NULL,
+    id_incidencia  INT UNIQUE REFERENCES Incidencias (id_incidencia) ON DELETE SET NULL,
+    categoria      VARCHAR(20) NOT NULL,
+    concepto       VARCHAR(200) NOT NULL,
+    importe        DECIMAL(10,2) NOT NULL,
+    fecha          DATE NOT NULL,
+    deducible      TINYINT(1) NOT NULL DEFAULT 1,
+    factura_ruta   VARCHAR(255),
+    factura_tipo   VARCHAR(50),
+    fecha_alta     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE FotosIncidencia (
+    id_foto        INT AUTO_INCREMENT PRIMARY KEY,
+    id_incidencia  INT NOT NULL REFERENCES Incidencias (id_incidencia) ON DELETE CASCADE,
+    ruta           VARCHAR(255) NOT NULL,
+    tipo           VARCHAR(50) NOT NULL,
+    id_usuario     INT REFERENCES Usuarios (id_usuario) ON DELETE SET NULL,
+    fecha          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Inventarios (
+    id_inventario  INT AUTO_INCREMENT PRIMARY KEY,
+    id_habitacion  INT NOT NULL REFERENCES Habitaciones (id_habitacion) ON DELETE CASCADE,
+    id_contrato    INT REFERENCES Contratos (id_contrato) ON DELETE SET NULL,
+    tipo           VARCHAR(10) NOT NULL,
+    fecha          DATE NOT NULL,
+    observaciones  TEXT,
+    fecha_alta     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ElementosInventario (
+    id_elemento    INT AUTO_INCREMENT PRIMARY KEY,
+    id_inventario  INT NOT NULL REFERENCES Inventarios (id_inventario) ON DELETE CASCADE,
+    nombre         VARCHAR(100) NOT NULL,
+    estado         VARCHAR(10) NOT NULL,
+    observaciones  VARCHAR(255),
+    foto_ruta      VARCHAR(255),
+    foto_tipo      VARCHAR(50),
+    orden          INT NOT NULL DEFAULT 0
+);

@@ -15,6 +15,10 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   jackson:
     default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
 
 gestionap:
   jwt:
@@ -32,6 +36,9 @@ gestionap:
     url: https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/
     irav: IRAV1
     ipc: IPC290750,IPC251856
+  archivos:
+    # Facturas y fotos (fuera de la base y del repositorio).
+    dir: ${GESTIONAP_ARCHIVOS_DIR:${user.home}/gestionap-archivos}
   renta:
     # Ninguna actualización supera el IRAV (LAU art. 18.1, redacción del RDL 29/2026).
     tope-irav: true
