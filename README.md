@@ -31,9 +31,15 @@ La app de escritorio solo se usa desde un ordenador. Esta API abre los mismos da
 - **Swagger UI** con autorización por token.
 
 **App iOS (SwiftUI)**
-- Login con el token guardado en el **Keychain**.
-- Pestañas según el rol: Mis Pisos, Calculadora y Perfil.
-- Lista de pisos con semáforo de rentabilidad, detalle de cada piso y gráfico con Swift Charts.
+- Login con el token guardado en el **Keychain**; un token caducado devuelve al login.
+- Pestañas **Inicio · Pisos · Cobros · Incidencias · Más** para propietarios y administradores.
+- **Inicio** con el resumen de la cartera: cash flow, ingresos del mes, ocupación y habitaciones libres.
+- **Pisos** en tarjetas con semáforo de rentabilidad, buscador, filtro por ciudad y orden; detalle con indicadores y métricas.
+- **Calculadora** con resumen que se recalcula al escribir, ITP por comunidad, desglose y gráfico con Swift Charts.
+- Sistema de diseño propio (morado de la marca, cifras con dígitos alineados) en modo claro y oscuro, con importes en formato español (`2.500,00 €`).
+
+Capturas en [`docs/capturas/`](docs/capturas/README.md) y avance frente al escritorio en [`docs/PARIDAD.md`](docs/PARIDAD.md).
+
 
 ## Stack
 
@@ -102,7 +108,7 @@ cd api && mvn test
 - Integración con MockMvc: login, JWT, aislamiento entre propietarios, invitaciones de un solo uso y caducadas, PDF por roles y errores JSON.
 - Arranque: sin perfil activo, o en producción sin un `JWT_SECRET` válido, la API no arranca.
 
-**App iOS:** compila en Debug y Release y sus tests compilan, pero **todavía no se han ejecutado** (falta instalar el runtime del simulador). Hasta entonces, la app iOS no está verificada.
+**App iOS:** 32 tests unitarios en verde en el simulador (decodificación con JSON reales de la API, `APIClient` con `URLProtocol` simulado, sesión y formatos), más un recorrido de UI que inicia sesión, comprueba los 8 pisos y guarda las capturas. Probada en el iPhone 18 Pro (iOS 27) contra la API en `dev`: login, pisos, calculadora y perfil, en modo claro y oscuro.
 
 ## Qué aprendí
 
@@ -113,8 +119,8 @@ cd api && mvn test
 
 ## Próximos pasos
 
-- Ejecutar los tests de iOS en el simulador y añadir capturas de la app.
-- Completar las pantallas del inquilino en iOS.
+- Completar la paridad con el escritorio (ver [`docs/PARIDAD.md`](docs/PARIDAD.md)): habitaciones, inquilinos, contratos, cobros, calendario, estadísticas, notificaciones, incidencias y usuarios.
+- Pantallas del inquilino en iOS.
 - Automatizar la migración con Flyway.
 
 ## App iOS: requisitos

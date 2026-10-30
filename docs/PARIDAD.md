@@ -23,11 +23,11 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Menú lateral con 12 secciones | — | | Pestañas Inicio · Pisos · Cobros · Incidencias · Más | 4A | ⏳ |
-| Usuarios visible solo para admin | `GET /api/me` | ✔︎ | Más → Usuarios (solo admin) | 4A | ⏳ |
+| Menú lateral con 12 secciones | — | | Pestañas Inicio · Pisos · Cobros · Incidencias · Más | 4A | ✅ |
+| Usuarios visible solo para admin | `GET /api/me` | ✔︎ | Más → Usuarios (solo admin) | 4A | ✅ |
 | Búsqueda global | ✚ `GET /api/buscar?q=` | ✚ | Inicio → buscar | 4F | ⏳ |
 | Campana de notificaciones con contador | ✚ `GET /api/notificaciones`, `…/no-leidas/total` | ✚ | Inicio → campana | 4D | ⏳ |
-| Tema claro / oscuro | — | | Automático (sistema) | 4A | ⏳ |
+| Tema claro / oscuro | — | | Automático (sistema) | 4A | ✅ |
 | Atrás / historial (`HistorialNavegacion`) | — | | Navegación nativa de iOS | 4A | ➖ |
 
 ## Dashboard (`DashboardController`, `DashboardDAO`)
@@ -46,8 +46,8 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista de pisos con métricas, semáforo y cash flow | `GET /api/pisos` | ✔︎ | Pisos (tarjetas, buscador, filtro por ciudad, orden) | 4A | ⏳ |
-| Resumen de la cartera | ✚ `GET /api/pisos/resumen` | ✚ | Pisos (cabecera) | 4A | ⏳ |
+| Lista de pisos con métricas, semáforo y cash flow | `GET /api/pisos` | ✔︎ | Pisos (tarjetas, buscador, filtro por ciudad, orden) | 4A | ✅ |
+| Resumen de la cartera | — (se calcula en el móvil con `GET /api/pisos`) | ✔︎ | Pisos e Inicio (cabecera) | 4A | ✅ |
 | Editar datos financieros del piso | `PUT /api/pisos/{id}` | ✔︎ | Detalle de piso → Editar datos financieros | 4E | ⏳ |
 | Mapa con todos los pisos *(mejora móvil)* | — (geocodificación en el móvil) | | Pisos → Mapa (MapKit) | 4E | ⏳ |
 
@@ -152,15 +152,15 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
 | Cálculo con ITP por comunidad, hipoteca, gastos y revalorización | `POST /api/calculadora/rentabilidad` | ✔︎ | Más → Calculadora | — | ✅ |
-| Resumen que se actualiza al escribir *(mejora pedida)* | `POST /api/calculadora/rentabilidad` | ✔︎ | Calculadora (cabecera) | 4A | ⏳ |
-| Limpiar formulario | — | | Calculadora | 4A | ⏳ |
+| Resumen que se actualiza al escribir *(mejora pedida)* | `POST /api/calculadora/rentabilidad` | ✔︎ | Calculadora (cabecera) | 4A | ✅ |
+| Limpiar formulario | — | | Calculadora | 4A | ✅ |
 | Exportar a PDF | — (se genera en el móvil) | | Resultado → visor PDF | 4E | ⏳ |
 
 ## Perfil (`PerfilController`)
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Información de la cuenta | `GET /api/me` | ✔︎ | Más → Perfil (avatar con iniciales) | 4A | ⏳ |
+| Información de la cuenta | `GET /api/me` | ✔︎ | Más → Perfil (avatar con iniciales) | 4A | ✅ |
 | Editar nombre y email | ✚ `PUT /api/me` | ✚ | Perfil → Editar | 4F | ⏳ |
 | Cambiar contraseña | ✚ `PUT /api/me/password` | ✚ | Perfil → Contraseña | 4F | ⏳ |
 | Mis estadísticas (contratos, pagos, incidencias) | ✚ `GET /api/me/estadisticas` | ✚ | Perfil | 4F | ⏳ |
