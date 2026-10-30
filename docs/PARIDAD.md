@@ -48,8 +48,8 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 |---|---|---|---|---|---|
 | Lista de pisos con métricas, semáforo y cash flow | `GET /api/pisos` | ✔︎ | Pisos (tarjetas, buscador, filtro por ciudad, orden) | 4A | ✅ |
 | Resumen de la cartera | — (se calcula en el móvil con `GET /api/pisos`) | ✔︎ | Pisos e Inicio (cabecera) | 4A | ✅ |
-| Editar datos financieros del piso | `PUT /api/pisos/{id}` | ✔︎ | Detalle de piso → Editar datos financieros | 4E | ⏳ |
-| Mapa con todos los pisos *(mejora móvil)* | — (geocodificación en el móvil) | | Pisos → Mapa (MapKit) | 4E | ⏳ |
+| Editar datos financieros del piso | `PUT /api/pisos/{id}` | ✔︎ | Detalle de piso → Editar datos financieros | 4E | ✅ |
+| Mapa con todos los pisos *(mejora móvil)* | — (se sitúan en el móvil) | | Pisos → Mapa (MapKit) | 4E | ✅ |
 
 ## Detalle de piso (`DetallePisoController`)
 
@@ -57,11 +57,11 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 |---|---|---|---|---|---|
 | KPIs y métricas del piso | `GET /api/pisos/{id}` | ✔︎ | Detalle de piso | — | ✅ |
 | Habitaciones del piso | `GET /api/habitaciones?piso=` | ✔︎ | Detalle de piso → Habitaciones | 4B | ✅ |
-| Contratos del piso | `GET /api/contratos?piso=` | ✔︎ | Detalle de piso | 4E | ⏳ |
-| Últimos pagos del piso | `GET /api/pagos?piso=` | ✚ | Detalle de piso | 4E | ⏳ |
-| Incidencias del piso | ✚ `GET /api/incidencias?piso=` | ✚ | Detalle de piso | 4E | ⏳ |
-| Gráfico de ingresos últimos 12 meses | ✚ `GET /api/pisos/{id}/ingresos` | ✚ | Detalle de piso (Swift Charts) | 4E | ⏳ |
-| Exportar PDF del piso | ✚ `GET /api/pisos/{id}/pdf` | ✚ | Detalle de piso → visor PDF | 4E | ⏳ |
+| Contratos del piso | `GET /api/contratos?piso=` | ✔︎ | Detalle de piso | 4E | ✅ |
+| Últimos pagos del piso | `GET /api/pagos?piso=` | ✔︎ | Detalle de piso | 4E | ✅ |
+| Incidencias del piso | `GET /api/incidencias?piso=` | ✔︎ | Detalle de piso | 4E | ✅ |
+| Gráfico de ingresos últimos 12 meses | `GET /api/pisos/{id}/ingresos` | ✔︎ | Detalle de piso (Swift Charts) | 4E | ✅ |
+| Exportar PDF del piso | `GET /api/pisos/{id}/pdf` | ✔︎ | Detalle de piso → visor PDF | 4E | ✅ |
 
 ## Habitaciones (`HabitacionesController`, `HabitacionDAO`)
 
@@ -141,11 +141,11 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista con filtro por estado | ✚ `GET /api/incidencias` | ✚ | Incidencias | 4E | ⏳ |
-| Nueva incidencia | ✚ `POST /api/incidencias` | ✚ | Incidencias → Nueva | 4E | ⏳ |
-| Avanzar estado (pendiente → en proceso → resuelta) | ✚ `PATCH /api/incidencias/{id}/estado` | ✚ | Incidencias (deslizar) | 4E | ⏳ |
-| Coste de reparación | ✚ `PATCH /api/incidencias/{id}` | ✚ | Detalle de incidencia | 4E | ⏳ |
-| Eliminar | ✚ `DELETE /api/incidencias/{id}` | ✚ | Incidencias (deslizar) | 4E | ⏳ |
+| Lista con filtro por estado | `GET /api/incidencias` | ✔︎ | Incidencias | 4E | ✅ |
+| Nueva incidencia | `POST /api/incidencias` | ✔︎ | Incidencias → Nueva | 4E | ✅ |
+| Avanzar estado (pendiente → en proceso → resuelta) | `PATCH /api/incidencias/{id}/estado` | ✔︎ | Incidencias (deslizar) | 4E | ✅ |
+| Coste de reparación | `PATCH /api/incidencias/{id}` | ✔︎ | Detalle de incidencia | 4E | ✅ |
+| Eliminar | `DELETE /api/incidencias/{id}` | ✔︎ | Incidencias (deslizar) | 4E | ✅ |
 
 ## Calculadora de rentabilidad (`RentabilidadController`)
 
@@ -154,7 +154,7 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 | Cálculo con ITP por comunidad, hipoteca, gastos y revalorización | `POST /api/calculadora/rentabilidad` | ✔︎ | Más → Calculadora | — | ✅ |
 | Resumen que se actualiza al escribir *(mejora pedida)* | `POST /api/calculadora/rentabilidad` | ✔︎ | Calculadora (cabecera) | 4A | ✅ |
 | Limpiar formulario | — | | Calculadora | 4A | ✅ |
-| Exportar a PDF | — (se genera en el móvil) | | Resultado → visor PDF | 4E | ⏳ |
+| Exportar a PDF | — (se genera en el móvil) | | Resultado → visor PDF | 4E | ✅ |
 
 ## Perfil (`PerfilController`)
 

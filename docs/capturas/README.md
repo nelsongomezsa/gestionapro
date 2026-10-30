@@ -9,6 +9,7 @@ Hechas en el simulador **iPhone 18 Pro (iOS 27)** contra la API en `dev`, con lo
 | [4B](4B/) | Habitaciones (lista, deslizar, alta), mapa del piso, inquilinos, ficha, QR de pago, invitación, datos de cobro |
 | [4C](4C/) | Cobros (resumen del mes, pendientes, registrar pago, mes anterior), contratos (filtros, finalizar deslizando, detalle, PDF, recordatorio, nuevo) y «Mi alquiler» del inquilino |
 | [4D](4D/) | Inicio (KPIs con tendencia, gráfico, alertas, vencimientos, actividad), informe mensual en PDF, notificaciones y su destino, calendario con detalle del día, estadísticas |
+| [4E](4E/) | Incidencias (lista, avanzar deslizando, detalle, nueva), detalle de piso con gráfico, contratos, pagos e incidencias, datos financieros, ficha y calculadora en PDF, mapa de todos los pisos, incidencias del inquilino |
 
 ## Cómo regenerarlas
 

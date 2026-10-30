@@ -348,3 +348,85 @@ extension CapturasUITests {
         r.capturar("10-estadisticas-graficos")
     }
 }
+
+extension CapturasUITests {
+
+    @MainActor
+    func test4E() throws {
+        let r = try Recorrido.iniciar()
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        // Incidencias
+        r.pestana("Incidencias")
+        r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
+        r.capturar("01-incidencias")
+        r.app.buttons["filaIncidencia"].firstMatch.swipeRight()
+        r.pausa(1)
+        r.capturar("02-incidencia-avanzar-deslizando")
+        // Deslizar en sentido contrario cierra las acciones; si quedan abiertas, el toque solo las cierra.
+        r.app.buttons["filaIncidencia"].firstMatch.swipeLeft()
+        r.pausa(1)
+        r.app.buttons["filaIncidencia"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Comunicada el"))
+        r.capturar("03-incidencia-detalle")
+        r.atras()
+        r.app.buttons["Nueva incidencia"].tap()
+        r.esperar(r.app.navigationBars["Nueva incidencia"])
+        r.capturar("04-incidencia-nueva")
+        r.app.buttons["Cancelar"].tap()
+
+        // Detalle de piso
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.pausa(2)
+        r.capturar("05-piso-detalle")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("06-piso-grafico-flujo")
+        r.app.swipeUp()
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("07-piso-contratos-pagos-incidencias")
+        r.desplazarHasta(r.app.buttons["editarDatosFinancieros"]).tap()
+        r.esperar(r.app.navigationBars["Datos financieros"])
+        r.capturar("08-datos-financieros")
+        r.app.buttons["Cancelar"].tap()
+        r.app.buttons["Exportar PDF"].tap()
+        r.esperar(r.app.buttons["Imprimir"], timeout: 20)
+        r.pausa(2)
+        r.capturar("09-piso-pdf")
+        r.app.buttons["Cerrar"].tap()
+
+        // Mapa de todos los pisos
+        r.atras()
+        r.app.buttons["Mapa"].tap()
+        r.pausa(8)
+        r.capturar("10-mapa-pisos")
+
+        // PDF de la calculadora
+        r.pestana("Más")
+        r.app.buttons["Calculadora de rentabilidad"].tap()
+        r.esperar(r.app.staticTexts["Rent. bruta"])
+        r.pausa(2)
+        r.desplazarHasta(r.app.buttons["Ver desglose completo"]).tap()
+        r.app.buttons["Exportar PDF"].tap()
+        r.esperar(r.app.buttons["Imprimir"], timeout: 10)
+        r.pausa(2)
+        r.capturar("11-calculadora-pdf")
+        r.app.buttons["Cerrar"].tap()
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
+            ri.pestana("Incidencias")
+            ri.pausa(2)
+            ri.capturar("12-inquilino-incidencias")
+            ri.app.buttons["Nueva incidencia"].tap()
+            ri.esperar(ri.app.navigationBars["Nueva incidencia"])
+            ri.capturar("13-inquilino-nueva-incidencia")
+        }
+    }
+}
