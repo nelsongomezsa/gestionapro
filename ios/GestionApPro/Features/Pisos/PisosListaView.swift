@@ -12,6 +12,7 @@ struct PisosListaView: View {
             .background(Tema.Color.fondo)
             .navigationTitle("Pisos")
             .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0) }
+            .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
             .toolbar { menuFiltros }
             .refreshable { await vm.cargar(con: sesion.api) }

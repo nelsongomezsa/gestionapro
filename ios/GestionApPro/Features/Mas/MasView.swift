@@ -1,5 +1,12 @@
 import SwiftUI
 
+/// Secciones de la pestaña "Más". Toda la navegación de la app es por valor
+/// (`navigationDestination(for:)`): mezclarla con enlaces de vista dentro de la misma pila
+/// hacía que algunos enlaces de las pantallas abiertas desde aquí no navegaran.
+enum SeccionMas: Hashable {
+    case perfil, inquilinos, contratos, calendario, estadisticas, calculadora, usuarios
+}
+
 /// Pestaña "Más": el resto de secciones del escritorio.
 struct MasView: View {
     let usuario: Usuario
@@ -8,7 +15,7 @@ struct MasView: View {
         NavigationStack {
             List {
                 Section {
-                    NavigationLink { PerfilView(usuario: usuario) } label: {
+                    NavigationLink(value: SeccionMas.perfil) {
                         HStack(spacing: Tema.Espacio.s) {
                             AvatarIniciales(nombre: usuario.nombre, tamano: 48)
                             VStack(alignment: .leading, spacing: 2) {
@@ -24,29 +31,42 @@ struct MasView: View {
                 }
 
                 Section("Gestión") {
-                    enlace("Inquilinos", icono: "person.2", color: .blue) { PantallaPendiente(titulo: "Inquilinos", fase: "4B") }
-                    enlace("Contratos", icono: "doc.text", color: .indigo) { PantallaPendiente(titulo: "Contratos", fase: "4C") }
-                    enlace("Calendario", icono: "calendar", color: .red) { PantallaPendiente(titulo: "Calendario", fase: "4D") }
-                    enlace("Estadísticas", icono: "chart.xyaxis.line", color: .teal) { PantallaPendiente(titulo: "Estadísticas", fase: "4D") }
+                    enlace("Inquilinos", icono: "person.2", color: .blue, a: .inquilinos)
+                    enlace("Contratos", icono: "doc.text", color: .indigo, a: .contratos)
+                    enlace("Calendario", icono: "calendar", color: .red, a: .calendario)
+                    enlace("Estadísticas", icono: "chart.xyaxis.line", color: .teal, a: .estadisticas)
                 }
 
                 Section("Herramientas") {
-                    enlace("Calculadora de rentabilidad", icono: "function", color: .purple) { CalculadoraView() }
+                    enlace("Calculadora de rentabilidad", icono: "function", color: .purple, a: .calculadora)
                 }
 
                 if usuario.rol == .admin {
                     Section("Administración") {
-                        enlace("Usuarios", icono: "person.badge.key", color: .gray) { PantallaPendiente(titulo: "Usuarios", fase: "4F") }
+                        enlace("Usuarios", icono: "person.badge.key", color: .gray, a: .usuarios)
                     }
                 }
             }
             .navigationTitle("Más")
+            .navigationDestination(for: SeccionMas.self) { destino(de: $0) }
         }
     }
 
-    private func enlace<Destino: View>(_ titulo: String, icono: String, color: Color,
-                                       @ViewBuilder destino: @escaping () -> Destino) -> some View {
-        NavigationLink(destination: destino) {
+    @ViewBuilder
+    private func destino(de seccion: SeccionMas) -> some View {
+        switch seccion {
+        case .perfil: PerfilView(usuario: usuario)
+        case .inquilinos: InquilinosView()
+        case .contratos: PantallaPendiente(titulo: "Contratos", fase: "4C")
+        case .calendario: PantallaPendiente(titulo: "Calendario", fase: "4D")
+        case .estadisticas: PantallaPendiente(titulo: "Estadísticas", fase: "4D")
+        case .calculadora: CalculadoraView()
+        case .usuarios: PantallaPendiente(titulo: "Usuarios", fase: "4F")
+        }
+    }
+
+    private func enlace(_ titulo: String, icono: String, color: Color, a seccion: SeccionMas) -> some View {
+        NavigationLink(value: seccion) {
             Label {
                 Text(titulo)
             } icon: {

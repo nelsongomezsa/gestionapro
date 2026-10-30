@@ -53,6 +53,19 @@ struct PisoDetalleView: View {
                         .tarjeta()
                 }
 
+                seccion("Gestión") {
+                    NavigationLink(value: DestinoPiso.habitaciones(piso.breve)) {
+                        FilaMetrica(titulo: "Habitaciones", valor: "\(piso.ocupacion.total)", icono: "bed.double")
+                    }
+                    .accessibilityIdentifier("enlaceHabitaciones")
+                    Divider()
+                    NavigationLink(value: DestinoPiso.mapa(piso.breve)) {
+                        FilaMetrica(titulo: "Ver en el mapa", valor: piso.ciudad.nombre, icono: "map")
+                    }
+                    .accessibilityIdentifier("enlaceMapa")
+                }
+                .buttonStyle(.plain)
+
                 seccion("Ocupación") {
                     FilaMetrica(titulo: "Habitaciones", valor: "\(piso.ocupacion.total)", icono: "bed.double")
                     Divider()
@@ -93,6 +106,22 @@ struct PisoDetalleView: View {
             Text(titulo).estiloEtiqueta().padding(.horizontal, Tema.Espacio.xxs)
             VStack(alignment: .leading, spacing: Tema.Espacio.s) { contenido() }
                 .tarjeta()
+        }
+    }
+}
+
+/// Pantallas que se abren desde el detalle de un piso. La pila de Pisos navega por valor
+/// (`navigationDestination(for:)`); mezclar ahí enlaces con la vista de destino escrita
+/// directamente hacía que algunos no navegaran.
+enum DestinoPiso: Hashable {
+    case habitaciones(PisoBreve)
+    case mapa(PisoBreve)
+
+    @MainActor @ViewBuilder
+    var vista: some View {
+        switch self {
+        case let .habitaciones(piso): HabitacionesView(piso: piso)
+        case let .mapa(piso): MapaDireccion(titulo: piso.direccion, direccion: piso.direccion, ciudad: piso.ciudad)
         }
     }
 }
