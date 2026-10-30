@@ -27,7 +27,9 @@ enum JSONCoding {
         let conZonaSinFraccion = Date.ISO8601FormatStyle()
         if let f = try? conZona.parse(texto) { return f }
         if let f = try? conZonaSinFraccion.parse(texto) { return f }
-        if let f = try? Date.ISO8601FormatStyle(timeZone: madrid).year().month().day()
+        // Solo "aaaa-mm-dd": este estilo también aceptaría el principio de una fecha con
+        // hora y devolvería la medianoche, adelantándose al caso LocalDateTime de abajo.
+        if texto.count == 10, let f = try? Date.ISO8601FormatStyle(timeZone: madrid).year().month().day()
             .dateSeparator(.dash).parse(texto) { return f }
         // LocalDateTime: se recorta la fracción de segundo y se interpreta en hora de Madrid.
         let sinFraccion = texto.split(separator: ".").first.map(String.init) ?? texto
