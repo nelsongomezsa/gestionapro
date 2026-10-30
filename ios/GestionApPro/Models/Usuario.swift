@@ -8,6 +8,9 @@ struct Usuario: Codable, Equatable, Sendable {
     let rol: Rol
     /// Solo para INQUILINO.
     let idInquilino: Int?
+    var dni: String? = nil
+    /// Con espacios cada 4 caracteres; lo usa el QR de pago de sus inquilinos.
+    var iban: String? = nil
 }
 
 enum Rol: String, Codable, Sendable {

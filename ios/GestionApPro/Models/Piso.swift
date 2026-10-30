@@ -78,3 +78,7 @@ enum Calificacion: String, Decodable, Sendable {
         self = Calificacion(rawValue: valor) ?? .desconocida
     }
 }
+
+extension Piso {
+    var breve: PisoBreve { PisoBreve(id: id, direccion: direccion, ciudad: ciudad.nombre) }
+}

@@ -66,6 +66,11 @@ final class SesionStore {
         estado = .conectado(respuesta.usuario)
     }
 
+    /// Tras editar el perfil (PATCH /api/me).
+    func actualizar(usuario: Usuario) {
+        if case .conectado = estado { estado = .conectado(usuario) }
+    }
+
     func cerrarSesion() {
         tokens.borrar()
         estado = .sinSesion

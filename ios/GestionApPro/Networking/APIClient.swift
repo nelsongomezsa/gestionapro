@@ -20,7 +20,10 @@ final class APIClient: Sendable {
     }
 
     func enviar<R>(_ endpoint: Endpoint<R>) async throws(APIError) -> R {
-        var peticion = URLRequest(url: baseURL.appending(path: endpoint.ruta))
+        var url = baseURL.appending(path: endpoint.ruta)
+        let parametros = endpoint.consulta.filter { $0.value != nil }
+        if !parametros.isEmpty { url.append(queryItems: parametros) }
+        var peticion = URLRequest(url: url)
         peticion.httpMethod = endpoint.metodo
         peticion.setValue("application/json", forHTTPHeaderField: "Accept")
         if let cuerpo = endpoint.cuerpo {
@@ -65,6 +68,10 @@ final class APIClient: Sendable {
             throw .respuesta(status: http.statusCode, cuerpo)
         }
 
+        // 204 No Content (borrados): no hay cuerpo que decodificar.
+        if let vacio = SinContenido() as? R, datos.isEmpty || http.statusCode == 204 {
+            return vacio
+        }
         do {
             return try decoder.decode(R.self, from: datos)
         } catch {
@@ -72,3 +79,6 @@ final class APIClient: Sendable {
         }
     }
 }
+
+/// Respuesta sin cuerpo (204), p. ej. al borrar.
+struct SinContenido: Decodable, Sendable {}
