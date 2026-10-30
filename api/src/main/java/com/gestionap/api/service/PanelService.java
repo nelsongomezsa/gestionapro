@@ -137,7 +137,13 @@ public class PanelService {
     /** Actividad reciente: el admin ve la de todos (como el escritorio); un propietario, la suya. */
     @Transactional(readOnly = true)
     public List<ActividadResponse> actividadReciente(UsuarioAutenticado actor, int limite) {
-        var lista = actor.esAdmin()
+        return actividadReciente(actor, limite, false);
+    }
+
+    /** Con soloMia, también el admin ve solo la suya (historial del perfil). */
+    @Transactional(readOnly = true)
+    public List<ActividadResponse> actividadReciente(UsuarioAutenticado actor, int limite, boolean soloMia) {
+        var lista = actor.esAdmin() && !soloMia
                 ? actividad.findAllByOrderByFechaDescIdDesc(Limit.of(limite))
                 : actividad.findByIdUsuarioOrderByFechaDescIdDesc(actor.id(), Limit.of(limite));
         return lista.stream().map(ActividadResponse::de).toList();

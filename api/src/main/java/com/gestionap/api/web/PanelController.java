@@ -53,11 +53,12 @@ public class PanelController {
         return panel.calendario(mes != null ? mes : YearMonth.now(), actor);
     }
 
-    @Operation(summary = "Actividad reciente: la de todos para el admin, la propia para un propietario")
+    @Operation(summary = "Actividad reciente: la de todos para el admin (salvo soloMia), la propia para un propietario")
     @GetMapping("/api/actividad")
     public List<ActividadResponse> actividad(@RequestParam(defaultValue = "20") int limite,
+                                             @RequestParam(defaultValue = "false") boolean soloMia,
                                              @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return panel.actividadReciente(actor, Math.clamp(limite, 1, 100));
+        return panel.actividadReciente(actor, Math.clamp(limite, 1, 100), soloMia);
     }
 
     @Operation(summary = "Informe mensual en PDF (resumen, contratos, pagos e incidencias)")
