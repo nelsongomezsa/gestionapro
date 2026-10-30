@@ -14,6 +14,7 @@ struct ContratoDetalleView: View {
     @State private var confirmarFin = false
     @State private var trabajando = false
     @State private var error: String?
+    @State private var modeloFianza = ModeloFianza()
 
     private var esGestor: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -52,6 +53,8 @@ struct ContratoDetalleView: View {
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
+
+                SeccionFianza(modelo: modeloFianza, idContrato: c.id, editable: esGestor)
 
                 Section("Documentos y avisos") {
                     Button { Task { await abrirPDF(c) } } label: {
@@ -109,6 +112,7 @@ struct ContratoDetalleView: View {
             }
         }
         .task { await cargar() }
+        .fianza(modeloFianza, contrato: id, renta: estado.valor?.precioMensual ?? 0, api: sesion.api)
         .visorPDF($documento)
         .hojaCompartir($compartir)
         .alertaError($error)

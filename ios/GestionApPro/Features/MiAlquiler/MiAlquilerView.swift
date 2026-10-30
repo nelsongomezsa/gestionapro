@@ -6,6 +6,7 @@ struct MiAlquilerView: View {
     @State private var estado: EstadoCarga<([Contrato], [Pago])> = .cargando
     @State private var documento: DocumentoPDF?
     @State private var error: String?
+    @State private var modeloFianza = ModeloFianza()
 
     var body: some View {
         NavigationStack {
@@ -37,6 +38,7 @@ struct MiAlquilerView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                         }
+                        SeccionFianza(modelo: modeloFianza, idContrato: c.id)
                         Section {
                             Button { Task { await abrirPDF(c) } } label: {
                                 Label("Ver contrato (PDF)", systemImage: "doc.text.magnifyingglass")
@@ -48,14 +50,20 @@ struct MiAlquilerView: View {
                                 Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario)
                             }
                             ForEach(pagos) { p in
-                                FilaMetrica(titulo: p.fechaPago.formatted(FormatoFecha.larga), valor: Formato.euros(p.cantidad),
-                                            nota: p.metodoPago.nombre)
+                                Button { Task { await abrirRecibo(p) } } label: {
+                                    FilaMetrica(titulo: p.fechaPago.formatted(FormatoFecha.larga), valor: Formato.euros(p.cantidad),
+                                                nota: [p.metodoPago.nombre, p.recibo.map { "recibo \($0)" }]
+                                                    .compactMap { $0 }.joined(separator: " · "))
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityHint("Abre el recibo en PDF")
                             }
                         } header: {
                             Text("Mis pagos")
                         } footer: {
                             if !pagos.isEmpty {
-                                Text(pagos.count == 1 ? "1 pago registrado" : "\(pagos.count) pagos registrados")
+                                Text((pagos.count == 1 ? "1 pago registrado" : "\(pagos.count) pagos registrados")
+                                     + ". Toca uno para ver su recibo.")
                             }
                         }
                         .filaLista()
@@ -72,7 +80,14 @@ struct MiAlquilerView: View {
             .task { await cargar() }
             .visorPDF($documento)
             .alertaError($error)
+            .fianza(modeloFianza, contrato: contratoPrincipal?.id, renta: contratoPrincipal?.precioMensual ?? 0, api: sesion.api)
         }
+    }
+
+    /// El contrato que se muestra: el activo o, si no hay, el último.
+    private var contratoPrincipal: Contrato? {
+        guard let contratos = estado.valor?.0 else { return nil }
+        return contratos.first(where: \.activo) ?? contratos.first
     }
 
     private func cargar() async {
@@ -83,6 +98,17 @@ struct MiAlquilerView: View {
         } catch let e as APIError {
             if case .noAutorizado = e { return }
             if estado.valor == nil { estado = .error(e.localizedDescription) } else { error = e.localizedDescription }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func abrirRecibo(_ p: Pago) async {
+        do {
+            documento = DocumentoPDF(titulo: "Recibo \(p.recibo ?? "")".trimmingCharacters(in: .whitespaces),
+                                     datos: try await sesion.api.descargar(Rutas.reciboPago(p.id)))
+            if p.recibo == nil { await cargar() }
+        } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription
         }

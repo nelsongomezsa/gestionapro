@@ -1,0 +1,19 @@
+{
+  "id": 3,
+  "idContrato": 13,
+  "inquilino": "Miguel Álvarez López",
+  "numeroHabitacion": 4,
+  "piso": { "id": 4, "direccion": "Passeig de Gràcia 58, 4º 1ª", "ciudad": "Barcelona" },
+  "importe": 650.00,
+  "fechaCobro": "2025-11-01",
+  "fechaDeposito": "2025-11-20",
+  "organismoDeposito": "Organismo autonómico",
+  "referenciaDeposito": "F-2025-118",
+  "fechaDevolucion": "2026-10-30",
+  "importeDevuelto": 550.00,
+  "motivoRetencion": "Pintura de la pared",
+  "notas": null,
+  "estado": "DEVUELTA_PARCIAL",
+  "pendienteDevolver": 0,
+  "retenido": 100.00
+}

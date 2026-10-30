@@ -122,3 +122,29 @@ CREATE TABLE actividad (
     descripcion VARCHAR(255),
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- V3: recibos numerados por propietario y año.
+CREATE TABLE Recibos (
+    id_recibo      INT AUTO_INCREMENT PRIMARY KEY,
+    id_pago        INT NOT NULL UNIQUE REFERENCES Pagos (id_pago) ON DELETE CASCADE,
+    id_propietario INT NOT NULL REFERENCES Usuarios (id_usuario),
+    anio           INT NOT NULL,
+    numero         INT NOT NULL,
+    fecha_emision  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_recibos_numero UNIQUE (id_propietario, anio, numero)
+);
+
+-- V4: fianzas por contrato.
+CREATE TABLE Fianzas (
+    id_fianza           INT AUTO_INCREMENT PRIMARY KEY,
+    id_contrato         INT NOT NULL UNIQUE REFERENCES Contratos (id_contrato) ON DELETE CASCADE,
+    importe             DECIMAL(8,2) NOT NULL,
+    fecha_cobro         DATE,
+    fecha_deposito      DATE,
+    organismo_deposito  VARCHAR(150),
+    referencia_deposito VARCHAR(100),
+    fecha_devolucion    DATE,
+    importe_devuelto    DECIMAL(8,2),
+    motivo_retencion    VARCHAR(255),
+    notas               TEXT
+);

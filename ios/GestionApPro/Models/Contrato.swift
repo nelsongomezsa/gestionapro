@@ -66,6 +66,13 @@ struct Pago: Decodable, Identifiable, Hashable, Sendable {
     let inquilino: InquilinoBreve
     let numeroHabitacion: Int
     let piso: PisoBreve
+    /// Número del recibo (2026-0007); nil si aún no se ha emitido (pagos del escritorio).
+    var recibo: String? = nil
+}
+
+/// POST /api/pagos/{id}/recibo/enviar
+struct EnvioRecibo: Decodable, Sendable {
+    let enviado: Bool
 }
 
 /// POST /api/pagos

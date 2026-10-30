@@ -43,4 +43,17 @@ public interface PagoRepository extends JpaRepository<Pago, Integer> {
             where pg.id = :id
             """)
     Optional<Pago> findConPisoById(Integer id);
+
+    /** Un pago con todo lo que necesita su recibo. */
+    @Query("""
+            select pg from Pago pg
+            join fetch pg.contrato c
+            join fetch c.inquilino
+            join fetch c.habitacion h
+            join fetch h.piso p
+            join fetch p.propietario
+            join fetch p.ciudad
+            where pg.id = :id
+            """)
+    Optional<Pago> findConDetallesById(Integer id);
 }

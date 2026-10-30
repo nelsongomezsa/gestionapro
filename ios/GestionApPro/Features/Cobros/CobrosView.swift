@@ -6,6 +6,8 @@ struct CobrosView: View {
     @State private var vm = CobrosViewModel()
     @State private var nuevoPago: PagoPrellenado?
     @State private var paraBorrar: Pago?
+    @State private var documento: DocumentoPDF?
+    @State private var aviso: String?
 
     var body: some View {
         @Bindable var vm = vm
@@ -62,8 +64,16 @@ struct CobrosView: View {
                             Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario)
                         }
                         ForEach(vm.pagosVisibles) { p in
-                            FilaPago(pago: p)
+                            // Tocar un pago abre su recibo; el menú permite enviarlo por email.
+                            Button { Task { await abrirRecibo(p) } } label: { FilaPago(pago: p) }
+                                .buttonStyle(.plain)
+                                .accessibilityHint("Abre el recibo en PDF")
+                                .accessibilityIdentifier("filaPago")
                                 .swipeActions { Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = p } }
+                                .contextMenu {
+                                    Button("Ver recibo", systemImage: "doc.text") { Task { await abrirRecibo(p) } }
+                                    Button("Enviar recibo por email", systemImage: "envelope") { Task { await enviarRecibo(p) } }
+                                }
                         }
                     } header: {
                         HStack {
@@ -104,6 +114,36 @@ struct CobrosView: View {
                 Button("Borrar", role: .destructive) { if let p = paraBorrar { Task { await vm.borrar(p, con: sesion.api) } } }
             }
             .alertaError($vm.error)
+            .visorPDF($documento)
+            .alert("Recibo", isPresented: Binding(get: { aviso != nil }, set: { if !$0 { aviso = nil } })) {
+                Button("Aceptar", role: .cancel) {}
+            } message: {
+                Text(aviso ?? "")
+            }
+        }
+    }
+
+    private func abrirRecibo(_ p: Pago) async {
+        do {
+            let datos = try await sesion.api.descargar(Rutas.reciboPago(p.id))
+            documento = DocumentoPDF(titulo: "Recibo \(p.recibo ?? "")".trimmingCharacters(in: .whitespaces), datos: datos)
+            // El número se asigna al pedirlo por primera vez: se recarga para mostrarlo en la fila.
+            if p.recibo == nil { await vm.cargar(con: sesion.api) }
+        } catch .noAutorizado {
+        } catch {
+            vm.error = error.localizedDescription
+        }
+    }
+
+    private func enviarRecibo(_ p: Pago) async {
+        do {
+            let r = try await sesion.api.enviar(.enviarRecibo(pago: p.id))
+            aviso = r.enviado
+                ? "Recibo enviado a \(p.inquilino.nombre)."
+                : "El email del servidor no está configurado. Abre el recibo y compártelo desde el visor."
+        } catch .noAutorizado {
+        } catch {
+            vm.error = error.localizedDescription
         }
     }
 
@@ -198,7 +238,8 @@ struct FilaPago: View {
         HStack(alignment: .top, spacing: Tema.Espacio.s) {
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(pago.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                Text("\(pago.fechaPago.formatted(FormatoFecha.corta)) · \(pago.metodoPago.nombre) · Hab. \(pago.numeroHabitacion)")
+                Text(([pago.fechaPago.formatted(FormatoFecha.corta), pago.metodoPago.nombre, "Hab. \(pago.numeroHabitacion)"]
+                      + (pago.recibo.map { ["Recibo \($0)"] } ?? [])).joined(separator: " · "))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }
             Spacer(minLength: Tema.Espacio.xs)

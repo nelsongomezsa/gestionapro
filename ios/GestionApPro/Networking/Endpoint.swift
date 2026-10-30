@@ -147,6 +147,33 @@ extension Endpoint where Respuesta == Contrato {
 
 enum Rutas {
     static func pdfContrato(_ id: Int) -> String { "/api/contratos/\(id)/pdf" }
+    static func reciboPago(_ id: Int) -> String { "/api/pagos/\(id)/recibo" }
+}
+
+// MARK: Fianzas
+
+extension Endpoint where Respuesta == Fianza {
+    static func fianza(contrato id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/fianza")
+    }
+
+    static func guardarFianza(contrato id: Int, _ req: FianzaRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/contratos/\(id)/fianza", cuerpo: json(req))
+    }
+
+    static func devolverFianza(contrato id: Int, _ req: DevolucionFianzaRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/contratos/\(id)/fianza/devolucion", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == ResumenFianzas {
+    static let fianzas = Endpoint(metodo: "GET", ruta: "/api/fianzas")
+}
+
+extension Endpoint where Respuesta == EnvioRecibo {
+    static func enviarRecibo(pago id: Int) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/pagos/\(id)/recibo/enviar")
+    }
 }
 
 // MARK: Pagos

@@ -31,14 +31,16 @@ public class PagoService {
     private final ContratoService contratoService;
     private final ControlAcceso acceso;
     private final ActividadService actividad;
+    private final ReciboService recibos;
 
     public PagoService(PagoRepository pagos, ContratoRepository contratos, ContratoService contratoService,
-                       ControlAcceso acceso, ActividadService actividad) {
+                       ControlAcceso acceso, ActividadService actividad, ReciboService recibos) {
         this.pagos = pagos;
         this.contratos = contratos;
         this.contratoService = contratoService;
         this.acceso = acceso;
         this.actividad = actividad;
+        this.recibos = recibos;
     }
 
     /** Lista, opcionalmente de un mes, de un inquilino y de un piso. */
@@ -46,11 +48,13 @@ public class PagoService {
     public List<PagoResponse> listar(YearMonth mes, Integer idInquilino, Integer idPiso, UsuarioAutenticado actor) {
         var alcance = acceso.alcance(actor);
         Integer inquilino = alcance.idInquilino() != null ? alcance.idInquilino() : idInquilino;
-        return pagos.buscar(alcance.idPropietario(), inquilino,
+        List<Pago> lista = pagos.buscar(alcance.idPropietario(), inquilino,
                         mes == null ? null : mes.atDay(1), mes == null ? null : mes.atEndOfMonth())
                 .stream()
                 .filter(p -> idPiso == null || p.getContrato().getHabitacion().getPiso().getId().equals(idPiso))
-                .map(PagoResponse::de).toList();
+                .toList();
+        var codigos = recibos.codigos(lista.stream().map(Pago::getId).toList());
+        return lista.stream().map(p -> PagoResponse.de(p, codigos.get(p.getId()))).toList();
     }
 
     /**
@@ -97,9 +101,11 @@ public class PagoService {
         p.setMetodoPago(req.metodoPago() != null ? req.metodoPago() : MetodoPago.transferencia);
         p.setFechaPago(req.fechaPago());
         pagos.save(p);
+        // El recibo se numera al registrar: así la numeración sigue el orden de cobro.
+        String recibo = recibos.asegurar(p).codigo();
         actividad.registrar(actor.id(), "REGISTRAR_PAGO",
                 c.getInquilino().getNombreCompleto() + " · " + req.cantidad().toPlainString() + " €");
-        return PagoResponse.de(p);
+        return PagoResponse.de(p, recibo);
     }
 
     @Transactional

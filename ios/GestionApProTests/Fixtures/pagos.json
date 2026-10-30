@@ -13,6 +13,7 @@
       "email": "miguel.alvarez@example.com"
     },
     "numeroHabitacion": 4,
+    "recibo": "2026-0012",
     "piso": {
       "id": 4,
       "direccion": "Passeig de Gràcia 58, 4º 1ª",

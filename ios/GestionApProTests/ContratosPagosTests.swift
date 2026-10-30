@@ -17,6 +17,9 @@ struct ContratosPagosTests {
     @Test func pagosDelMes() throws {
         let pagos = try Fixture.decodificar([Pago].self, de: "pagos")
         #expect(pagos.count == 10)
+        // El número de recibo es opcional: los pagos del escritorio no lo tienen hasta pedirlo.
+        #expect(pagos[0].recibo == "2026-0012")
+        #expect(pagos[1].recibo == nil)
         let mes = Calendar(identifier: .gregorian).dateComponents(in: TimeZone(identifier: "Europe/Madrid")!, from: pagos[0].fechaPago)
         #expect((mes.year, mes.month) == (2026, 10))
         #expect(pagos.allSatisfy { $0.cantidad > 0 })
@@ -87,5 +90,16 @@ struct APIClientDescargasTests {
             #expect(error.codigo == "NO_ENCONTRADO")
             #expect(error.errorDescription == "Contrato no encontrado")
         }
+    }
+
+    @Test("Fianza devuelta en parte: estado, retenido y nada pendiente")
+    func fianza() throws {
+        let f = try Fixture.decodificar(Fianza.self, de: "fianza")
+        #expect(f.estado == .devueltaParcial)
+        #expect(f.estado.nombre == "Devuelta en parte")
+        #expect(f.retenido == 100)
+        #expect(f.pendienteDevolver == 0)
+        #expect(f.fechaDevolucion != nil)
+        #expect(f.notas == nil)
     }
 }

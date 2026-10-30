@@ -813,6 +813,86 @@ extension CapturasUITests {
         r.app.buttons["Calculadora de rentabilidad"].tap()
         r.pausa(2.5)
     }
+    @MainActor
+    func testFase5Recibos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Cobros")
+        let fila = r.desplazarHasta(r.app.buttons["filaPago"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-cobros-pagos")
+        fila.tap()
+        r.esperar(r.app.buttons["Cerrar"], timeout: 20)
+        r.pausa(2)
+        r.capturar("02-recibo-pdf")
+        r.app.buttons["Cerrar"].tap()
+        r.pausa(1)
+        r.app.buttons["filaPago"].firstMatch.press(forDuration: 1.2)
+        r.pausa(1)
+        r.capturar("03-recibo-menu")
+        r.app.buttons["Enviar recibo por email"].tap()
+        r.pausa(2)
+        r.capturar("04-recibo-envio")
+        r.app.buttons["Aceptar"].firstMatch.tapSiExiste()
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.app.swipeUp()
+            ri.pausa(1)
+            ri.capturar("05-inquilino-pagos")
+            ri.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "€")).firstMatch.tap()
+            ri.esperar(ri.app.buttons["Cerrar"], timeout: 20)
+            ri.pausa(2)
+            ri.capturar("06-inquilino-recibo")
+        }
+    }
+    @MainActor
+    func testFase5Fianzas() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        // Un contrato distinto en cada modo: la fianza que se crea en claro ya no está "sin añadir" en oscuro.
+        let oscuro = ProcessInfo.processInfo.environment["CAPTURAS_DIR"]?.hasSuffix("oscuro") == true
+        r.pestana("Más")
+        r.app.buttons["Contratos"].tap()
+        r.esperar(r.app.buttons["filaContrato"].firstMatch)
+        r.app.buttons.matching(identifier: "filaContrato").element(boundBy: oscuro ? 1 : 0).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.pausa(1)
+        r.desplazarHasta(r.app.buttons["botonAnadirFianza"]).tap()
+        r.esperar(r.app.navigationBars["Nueva fianza"])
+        r.app.switches["interruptorDepositada"].switches.firstMatch.tap()
+        r.pausa(1)
+        r.capturar("01-fianza-nueva")
+        r.app.buttons["Guardar"].tap()
+        r.desplazarHasta(r.app.buttons["botonDevolverFianza"])
+        r.pausa(1)
+        r.capturar("02-fianza-en-contrato")
+        r.app.buttons["botonDevolverFianza"].tap()
+        let campo = r.app.textFields["campoImporteDevuelto"]
+        r.esperar(campo)
+        campo.tap()
+        campo.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 14) + "550")
+        // Al salir del campo se confirma el importe y aparece el motivo de la retención.
+        r.app.staticTexts["Fecha"].tap()
+        r.pausa(1)
+        let motivo = r.app.descendants(matching: .any).matching(identifier: "campoMotivo").firstMatch
+        r.esperar(motivo)
+        motivo.tap()
+        motivo.typeText("Pintura de la pared")
+        r.pausa(1)
+        r.capturar("03-fianza-devolucion")
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.desplazarHasta(ri.elemento(contiene: "Depósito"))
+            ri.pausa(1)
+            ri.capturar("04-inquilino-fianza")
+        }
+    }
 }
 
 @MainActor

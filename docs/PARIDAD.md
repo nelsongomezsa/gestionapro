@@ -185,3 +185,13 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 | Google Maps en el navegador | — | MapKit dentro de la app |
 | Atajos de teclado | No hay teclado físico | Gestos: deslizar para editar o borrar |
 | Exportación XML (`xml/`) | No forma parte de la interfaz de escritorio | — |
+
+## Más allá del escritorio (fase 5 en adelante)
+
+Funciones nuevas de la API y la app que el escritorio no tiene. Solo usan tablas nuevas
+(migraciones `api/sql/V3…` en adelante), así que el escritorio sigue funcionando igual.
+
+| Función | API | iOS | Migración |
+|---|---|---|---|
+| Recibos PDF numerados por propietario y año (2026-0001…) | `GET /api/pagos/{id}/recibo`, `POST /api/pagos/{id}/recibo/enviar` | Cobros: tocar un pago abre su recibo; menú para enviarlo por email. «Mi alquiler»: el inquilino abre los suyos | V3 |
+| Fianzas: importe, entrega, depósito en el organismo autonómico y devolución (con motivo si se retiene algo) | `GET/PUT /api/contratos/{id}/fianza`, `POST …/fianza/devolucion`, `GET /api/fianzas` | Sección «Fianza» en el detalle del contrato (editar y devolver) y en «Mi alquiler» (solo lectura) | V4 |

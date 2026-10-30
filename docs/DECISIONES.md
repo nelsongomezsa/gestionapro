@@ -12,3 +12,9 @@
 - Vídeo del recorrido con `xcrun simctl io recordVideo` y ffmpeg (540 px, H.264, 30 fps): 1,3 MB para 69 s.
 - Cobrado del año en Estadísticas: solo hasta hoy, para no mezclar pagos con fecha futura en la comparación.
 
+
+## Fase 5: recibos y fianzas (31-10-2026)
+- Recibos: serie por propietario y año en una tabla nueva (`Recibos`), no en `Pagos`, para no tocar el escritorio. El número se asigna al registrar el pago desde la API; un pago del escritorio lo recibe la primera vez que se pide su recibo (por eso la serie puede no seguir el orden de fechas en los pagos antiguos). La fila del propietario se bloquea durante la numeración y una clave única impide duplicados.
+- Email del recibo: opcional, con spring-boot-starter-mail. Sin MAIL_HOST la API responde `enviado=false` y la app invita a compartir el PDF.
+- Fianzas: "pendiente de devolver" es el importe entero mientras no se registra la devolución; lo que se retiene con motivo no cuenta como pendiente. El organismo de depósito es texto libre porque depende de la comunidad autónoma (no se fija ninguno ni sus plazos).
+- Migraciones V3 y V4 aplicadas a gestion_alquileres_pro el 31-10-2026 con copia previa en ~/gestionap-backups/.
