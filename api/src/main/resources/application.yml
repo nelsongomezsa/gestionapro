@@ -21,6 +21,14 @@ gestionap:
     expiracion: 8h
   invitaciones:
     validez: 7d
+  cobros:
+    # Salvo pacto, la renta se paga en los siete primeros días del mes (LAU, art. 17.2).
+    dia-limite: 7
+    # Recordatorio al inquilino desde estos días antes del límite.
+    dias-aviso: 3
+  recordatorios:
+    # Email de recordatorio a los inquilinos (solo si hay email configurado). "-" lo desactiva.
+    cron: "0 0 9 * * *"
 
 springdoc:
   swagger-ui:

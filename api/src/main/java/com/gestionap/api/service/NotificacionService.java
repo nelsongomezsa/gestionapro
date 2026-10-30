@@ -5,12 +5,14 @@ import com.gestionap.api.repository.*;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.web.ApiException;
 import com.gestionap.api.web.dto.NotificacionResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,11 @@ import java.util.stream.Collectors;
  * mes, incidencia sin resolver más de 7 días y habitación en mantenimiento más de 30 días.
  * Se generan al consultar (como al abrir la campana en el escritorio), solo con lo del
  * propietario, y no se repite un aviso que siga sin leer.
+ *
+ * Nuevo en la API (fase 5): "cobro vencido" para quien gestiona, pasado el día límite de pago
+ * sin ningún pago del mes, y para el inquilino un recordatorio unos días antes y un aviso si
+ * se pasa. El día límite por defecto es el 7: la LAU (art. 17.2) dice que, salvo pacto, la
+ * renta se paga "en los siete primeros días del mes".
  */
 @Service
 public class NotificacionService {
@@ -33,14 +40,32 @@ public class NotificacionService {
     private final PagoRepository pagos;
     private final IncidenciaRepository incidencias;
     private final HabitacionRepository habitaciones;
+    private final InquilinoRepository inquilinos;
+    private final int diaLimite;
+    private final int diasAviso;
 
     public NotificacionService(NotificacionRepository notificaciones, ContratoRepository contratos, PagoRepository pagos,
-                               IncidenciaRepository incidencias, HabitacionRepository habitaciones) {
+                               IncidenciaRepository incidencias, HabitacionRepository habitaciones,
+                               InquilinoRepository inquilinos,
+                               @Value("${gestionap.cobros.dia-limite:7}") int diaLimite,
+                               @Value("${gestionap.cobros.dias-aviso:3}") int diasAviso) {
         this.notificaciones = notificaciones;
         this.contratos = contratos;
         this.pagos = pagos;
         this.incidencias = incidencias;
         this.habitaciones = habitaciones;
+        this.inquilinos = inquilinos;
+        this.diaLimite = diaLimite;
+        this.diasAviso = diasAviso;
+    }
+
+    /** Día del mes en que vence la renta (el límite si el mes es más corto). */
+    public LocalDate vencimiento(YearMonth mes) {
+        return mes.atDay(Math.min(diaLimite, mes.lengthOfMonth()));
+    }
+
+    public int diasAviso() {
+        return diasAviso;
     }
 
     @Transactional
@@ -71,11 +96,18 @@ public class NotificacionService {
         return notificaciones.marcarTodasLeidas(actor.id());
     }
 
-    /** Solo para quien gestiona pisos; un inquilino no recibe estos avisos. */
+    /** Los del escritorio, solo para quien gestiona pisos; el inquilino recibe los suyos de pago. */
     void generar(UsuarioAutenticado actor) {
-        if (actor.rol() == Rol.INQUILINO) return;
+        generar(actor, LocalDate.now());
+    }
+
+    /** Con la fecha como parámetro para poder probar cada día del mes. */
+    void generar(UsuarioAutenticado actor, LocalDate hoy) {
+        if (actor.rol() == Rol.INQUILINO) {
+            generarInquilino(actor, hoy);
+            return;
+        }
         Integer prop = actor.esAdmin() ? null : actor.id();
-        LocalDate hoy = LocalDate.now();
         LocalDateTime inicioHoy = hoy.atStartOfDay();
         List<Contrato> activos = contratos.buscar(prop, null, null).stream().filter(c -> c.estaActivoEn(hoy)).toList();
 
@@ -89,10 +121,22 @@ public class NotificacionService {
         Set<Integer> conPagoEsteMes = pagos.buscar(prop, null, hoy.withDayOfMonth(1), hoy.withDayOfMonth(hoy.lengthOfMonth()))
                 .stream().map(p -> p.getContrato().getId()).collect(Collectors.toSet());
         String mes = hoy.getYear() + "_" + hoy.getMonthValue();
+        LocalDate vence = vencimiento(YearMonth.from(hoy));
         for (Contrato c : activos) {
-            if (!conPagoEsteMes.contains(c.getId())) {
+            // Pasado el día límite, "Cobro vencido" sustituye a "Pago pendiente" (no se avisa dos veces).
+            boolean vencido = hoy.isAfter(vence) && !c.getFechaInicio().isAfter(vence);
+            if (!conPagoEsteMes.contains(c.getId()) && !vencido) {
                 crearSiNoExiste(actor.id(), "pago_pendiente_" + c.getId() + "_" + mes, "pago_pendiente", "Pago pendiente este mes",
                         c.getInquilino().getNombreCompleto() + " no tiene pago registrado este mes", inicioHoy);
+            }
+        }
+
+        for (Contrato c : activos) {
+            // Solo si el contrato ya estaba en vigor el día límite (uno que empieza el 20 no debía pagar el 7).
+            if (hoy.isAfter(vence) && !c.getFechaInicio().isAfter(vence) && !conPagoEsteMes.contains(c.getId())) {
+                crearUnaVez(actor.id(), "cobro_vencido_" + c.getId() + "_" + mes, "cobro_vencido", "Cobro vencido",
+                        c.getInquilino().getNombreCompleto() + " · " + Textos.euros(c.getPrecioMensual())
+                                + ": vencía el " + vence.format(FECHA) + " (" + hace(hoy.toEpochDay() - vence.toEpochDay()) + ")");
             }
         }
 
@@ -116,6 +160,45 @@ public class NotificacionService {
         }
     }
 
+    /** Recordatorio antes del día límite y aviso si se pasa, sin ningún pago del mes. */
+    private void generarInquilino(UsuarioAutenticado actor, LocalDate hoy) {
+        Integer idInquilino = inquilinos.findByUsuarioId(actor.id()).map(Inquilino::getId).orElse(null);
+        if (idInquilino == null) return;
+        YearMonth mes = YearMonth.from(hoy);
+        LocalDate vence = vencimiento(mes);
+        String clave = mes.getYear() + "_" + mes.getMonthValue();
+        Set<Integer> conPago = pagos.buscar(null, idInquilino, mes.atDay(1), mes.atEndOfMonth()).stream()
+                .map(p -> p.getContrato().getId()).collect(Collectors.toSet());
+        for (Contrato c : contratos.buscar(null, idInquilino, null)) {
+            if (!c.estaActivoEn(hoy) || c.getFechaInicio().isAfter(vence) || conPago.contains(c.getId())) continue;
+            String renta = "La renta de " + Textos.mes(mes) + " (" + Textos.euros(c.getPrecioMensual()) + ")";
+            if (hoy.isAfter(vence)) {
+                crearUnaVez(actor.id(), "pago_atrasado_" + c.getId() + "_" + clave, "pago_atrasado", "Renta pendiente",
+                        renta + " vencía el " + vence.format(FECHA) + ". Si ya la has pagado, avisa a tu propietario.");
+            } else if (!hoy.isBefore(vence.minusDays(diasAviso))) {
+                crearUnaVez(actor.id(), "recordatorio_pago_" + c.getId() + "_" + clave, "recordatorio_pago", "Recuerda pagar la renta",
+                        renta + " vence el " + vence.format(FECHA) + ".");
+            }
+        }
+    }
+
+    boolean yaExiste(Integer idUsuario, String referencia) {
+        return notificaciones.existsByIdUsuarioAndReferencia(idUsuario, referencia);
+    }
+
+    /** Avisos que se dan una sola vez por referencia (uno por contrato y mes). */
+    void crearUnaVez(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion) {
+        if (notificaciones.existsByIdUsuarioAndReferencia(idUsuario, referencia)) return;
+        Notificacion n = new Notificacion();
+        n.setIdUsuario(idUsuario);
+        n.setReferencia(referencia);
+        n.setTipo(tipo);
+        n.setTitulo(titulo);
+        n.setDescripcion(descripcion);
+        n.setFecha(LocalDateTime.now());
+        notificaciones.save(n);
+    }
+
     private void crearSiNoExiste(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion,
                                  LocalDateTime inicioHoy) {
         if (notificaciones.existeVigente(idUsuario, referencia, inicioHoy)) return;
@@ -127,6 +210,10 @@ public class NotificacionService {
         n.setDescripcion(descripcion);
         n.setFecha(LocalDateTime.now());
         notificaciones.save(n);
+    }
+
+    private static String hace(long dias) {
+        return dias == 1 ? "hace 1 día" : "hace " + dias + " días";
     }
 
     private static String recortar(String s, int max) {

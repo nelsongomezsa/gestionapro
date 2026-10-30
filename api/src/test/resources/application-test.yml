@@ -15,3 +15,6 @@ spring:
 gestionap:
   jwt:
     secret: clave-de-tests-no-secreta-solo-para-mvn-test-0000
+  recordatorios:
+    # En los tests el envío se llama a mano con una fecha fija.
+    cron: "-"

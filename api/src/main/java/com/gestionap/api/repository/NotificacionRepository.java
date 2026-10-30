@@ -31,6 +31,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
             """)
     boolean existeVigente(Integer idUsuario, String referencia, LocalDateTime inicioDeHoy);
 
+    /** Para los avisos que se dan una sola vez (aunque ya se hayan leído). */
+    boolean existsByIdUsuarioAndReferencia(Integer idUsuario, String referencia);
+
     @Modifying
     @Query("update Notificacion n set n.leida = true where n.idUsuario = :idUsuario and n.leida = false")
     int marcarTodasLeidas(Integer idUsuario);

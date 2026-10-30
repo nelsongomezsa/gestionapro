@@ -172,6 +172,9 @@ struct Notificacion: Decodable, Identifiable, Hashable, Sendable {
         switch tipo {
         case "contrato_vence": "calendar.badge.exclamationmark"
         case "pago_pendiente": "eurosign.circle"
+        case "cobro_vencido", "pago_atrasado": "exclamationmark.circle"
+        case "recordatorio_pago": "calendar.badge.clock"
+        case "recordatorio_enviado": "envelope"
         case "incidencia_antigua": "wrench.and.screwdriver"
         case "mantenimiento_largo": "bed.double"
         default: "bell"
@@ -180,8 +183,9 @@ struct Notificacion: Decodable, Identifiable, Hashable, Sendable {
 
     var tono: Tono {
         switch tipo {
-        case "pago_pendiente", "incidencia_antigua": .negativo
-        case "contrato_vence": .aviso
+        case "pago_pendiente", "incidencia_antigua", "cobro_vencido", "pago_atrasado": .negativo
+        case "contrato_vence", "recordatorio_pago": .aviso
+        case "recordatorio_enviado": .primario
         default: .neutro
         }
     }

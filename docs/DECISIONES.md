@@ -18,3 +18,5 @@
 - Email del recibo: opcional, con spring-boot-starter-mail. Sin MAIL_HOST la API responde `enviado=false` y la app invita a compartir el PDF.
 - Fianzas: "pendiente de devolver" es el importe entero mientras no se registra la devolución; lo que se retiene con motivo no cuenta como pendiente. El organismo de depósito es texto libre porque depende de la comunidad autónoma (no se fija ninguno ni sus plazos).
 - Migraciones V3 y V4 aplicadas a gestion_alquileres_pro el 31-10-2026 con copia previa en ~/gestionap-backups/.
+- Avisos de cobro: el día límite es el 7 porque la LAU (Ley 29/1994, art. 17.2, BOE-A-1994-26003) fija que, salvo pacto, la renta se paga en los siete primeros días del mes; se cambia con `gestionap.cobros.dia-limite`. Pasado el límite, «Cobro vencido» sustituye a «Pago pendiente» para no repetir el aviso. El email de recordatorio queda anotado como aviso del propietario, que sirve también para no repetirlo.
+

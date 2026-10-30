@@ -151,7 +151,9 @@ class PanelIntegrationTest extends IntegrationTest {
         var lista = leer(cuerpo);
         var tipos = new java.util.HashSet<String>();
         lista.forEach(n -> tipos.add(n.get("tipo").asText()));
-        assertThat(tipos).containsExactlyInAnyOrder("contrato_vence", "pago_pendiente", "incidencia_antigua", "mantenimiento_largo");
+        // Pasado el día 7, "Cobro vencido" sustituye a "Pago pendiente" (se prueba con fecha fija en AvisosCobroTest).
+        String cobro = hoy.getDayOfMonth() > 7 ? "cobro_vencido" : "pago_pendiente";
+        assertThat(tipos).containsExactlyInAnyOrder("contrato_vence", cobro, "incidencia_antigua", "mantenimiento_largo");
         assertThat(lista.size()).isEqualTo(4);
         // Con zona horaria: sin ella el móvil la leía como hora de Madrid ("dentro de 9 horas").
         lista.forEach(n -> assertThat(n.get("fecha").asText()).matches(".*(Z|[+-]\\d{2}:\\d{2})$"));
@@ -183,7 +185,7 @@ class PanelIntegrationTest extends IntegrationTest {
             int id = n.get("destino").get("id").asInt();
             switch (n.get("tipo").asText()) {
                 case "contrato_vence" -> assertThat(pantalla + id).isEqualTo("CONTRATO" + pagado.getId());
-                case "pago_pendiente" -> assertThat(pantalla + id).isEqualTo("CONTRATO" + sinPagar.getId());
+                case "pago_pendiente", "cobro_vencido" -> assertThat(pantalla + id).isEqualTo("CONTRATO" + sinPagar.getId());
                 case "incidencia_antigua" -> assertThat(pantalla + id).isEqualTo("INCIDENCIA" + antigua.getId());
                 case "mantenimiento_largo" -> assertThat(pantalla + id).isEqualTo("HABITACION" + enMantenimiento.getId());
                 default -> throw new AssertionError(n);

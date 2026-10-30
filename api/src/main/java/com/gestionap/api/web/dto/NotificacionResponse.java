@@ -22,7 +22,8 @@ public record NotificacionResponse(
     /** pantalla: CONTRATO, INCIDENCIA o HABITACION. */
     public record Destino(String pantalla, Integer id) {}
 
-    private static final Pattern REFERENCIA = Pattern.compile("^(contrato_vence|pago_pendiente|incidencia_antigua|mantenimiento_largo)_(\\d+)");
+    private static final Pattern REFERENCIA = Pattern.compile(
+            "^(contrato_vence|pago_pendiente|cobro_vencido|recordatorio_enviado|pago_atrasado|recordatorio_pago|incidencia_antigua|mantenimiento_largo)_(\\d+)");
 
     public static NotificacionResponse de(Notificacion n) {
         return new NotificacionResponse(n.getId(), n.getTipo(), n.getTitulo(), n.getDescripcion(), Textos.conZona(n.getFecha()),
@@ -35,7 +36,8 @@ public record NotificacionResponse(
         Matcher m = REFERENCIA.matcher(referencia);
         if (!m.find()) return null;
         String pantalla = switch (m.group(1)) {
-            case "contrato_vence", "pago_pendiente" -> "CONTRATO";
+            case "contrato_vence", "pago_pendiente", "cobro_vencido", "recordatorio_enviado",
+                 "pago_atrasado", "recordatorio_pago" -> "CONTRATO";
             case "incidencia_antigua" -> "INCIDENCIA";
             default -> "HABITACION";
         };

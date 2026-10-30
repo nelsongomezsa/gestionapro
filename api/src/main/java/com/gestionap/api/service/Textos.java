@@ -1,6 +1,8 @@
 package com.gestionap.api.service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.YearMonth;
@@ -28,6 +30,11 @@ public final class Textos {
     }
 
     /** "octubre 2026". El escritorio usaba DATE_FORMAT/MMMM, que depende del idioma del servidor. */
+    /** 1.234,50 € */
+    public static String euros(BigDecimal importe) {
+        return NumberFormat.getCurrencyInstance(ES).format(importe);
+    }
+
     public static String mes(YearMonth mes) {
         return mes.getMonth().getDisplayName(TextStyle.FULL, ES) + " " + mes.getYear();
     }

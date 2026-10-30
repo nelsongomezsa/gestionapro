@@ -893,6 +893,25 @@ extension CapturasUITests {
             ri.capturar("04-inquilino-fianza")
         }
     }
+    @MainActor
+    func testFase5Avisos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.app.buttons["campana"].tap()
+        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-avisos-propietario")
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.app.buttons["campana"].tap()
+            ri.esperar(ri.app.navigationBars["Notificaciones"])
+            ri.pausa(1)
+            ri.capturar("02-avisos-inquilino")
+        }
+    }
 }
 
 @MainActor

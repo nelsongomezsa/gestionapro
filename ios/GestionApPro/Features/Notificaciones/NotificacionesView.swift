@@ -7,6 +7,8 @@ struct NotificacionesView: View {
     /// Abre la pantalla del aviso en la pila de Inicio.
     var abrir: (DestinoInicio) -> Void = { _ in }
     var alCambiar: () async -> Void = {}
+    /// false para el inquilino: sus avisos no llevan a otra pantalla.
+    var conDestinos = true
 
     @State private var estado: EstadoCarga<[Notificacion]> = .cargando
     @State private var soloNoLeidas = false
@@ -33,11 +35,11 @@ struct NotificacionesView: View {
                         // Un botón y no un NavigationLink con un gesto añadido: el gesto anulaba la navegación.
                         Button {
                             Task { await marcar(n) }
-                            if let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
+                            if conDestinos, let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
                         } label: {
                             HStack {
                                 FilaNotificacion(notificacion: n)
-                                if n.destino != nil {
+                                if conDestinos, n.destino != nil {
                                     Image(systemName: "chevron.right").font(Tema.Fuente.etiqueta)
                                         .foregroundStyle(Tema.Color.textoSecundario)
                                 }

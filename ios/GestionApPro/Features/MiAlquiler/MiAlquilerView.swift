@@ -7,6 +7,8 @@ struct MiAlquilerView: View {
     @State private var documento: DocumentoPDF?
     @State private var error: String?
     @State private var modeloFianza = ModeloFianza()
+    @State private var noLeidas = 0
+    @State private var verAvisos = false
 
     var body: some View {
         NavigationStack {
@@ -76,8 +78,25 @@ struct MiAlquilerView: View {
                 .estiloLista()
             }
             .navigationTitle("Mi alquiler")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button { verAvisos = true } label: {
+                        Image(systemName: noLeidas > 0 ? "bell.badge" : "bell")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(Tema.Color.negativo, Tema.Color.texto)
+                    }
+                    .accessibilityLabel(noLeidas > 0 ? "Avisos, \(noLeidas) sin leer" : "Avisos")
+                    .accessibilityIdentifier("campana")
+                }
+            }
+            .navigationDestination(isPresented: $verAvisos) {
+                NotificacionesView(alCambiar: { await contarNoLeidas() }, conDestinos: false)
+            }
             .refreshable { await cargar() }
-            .task { await cargar() }
+            .task {
+                await cargar()
+                await contarNoLeidas()
+            }
             .visorPDF($documento)
             .alertaError($error)
             .fianza(modeloFianza, contrato: contratoPrincipal?.id, renta: contratoPrincipal?.precioMensual ?? 0, api: sesion.api)
@@ -88,6 +107,10 @@ struct MiAlquilerView: View {
     private var contratoPrincipal: Contrato? {
         guard let contratos = estado.valor?.0 else { return nil }
         return contratos.first(where: \.activo) ?? contratos.first
+    }
+
+    private func contarNoLeidas() async {
+        if let total = try? await sesion.api.enviar(.notificacionesNoLeidas) { noLeidas = total.total }
     }
 
     private func cargar() async {
