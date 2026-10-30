@@ -28,12 +28,13 @@ public class PagoController {
         this.pagos = pagos;
     }
 
-    @Operation(summary = "Lista, opcionalmente de un mes (aaaa-mm) y de un inquilino")
+    @Operation(summary = "Lista, opcionalmente de un mes (aaaa-mm), de un inquilino y de un piso")
     @GetMapping
     public List<PagoResponse> listar(@Parameter(example = "2026-10") @RequestParam(required = false) YearMonth mes,
                                      @RequestParam(required = false) Integer inquilino,
+                                     @RequestParam(required = false) Integer piso,
                                      @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return pagos.listar(mes, inquilino, actor);
+        return pagos.listar(mes, inquilino, piso, actor);
     }
 
     @Operation(summary = "Esperado, cobrado y pendiente del mes, con los contratos sin pago")

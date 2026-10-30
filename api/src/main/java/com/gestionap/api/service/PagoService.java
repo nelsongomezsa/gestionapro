@@ -41,14 +41,16 @@ public class PagoService {
         this.actividad = actividad;
     }
 
-    /** Lista, opcionalmente de un mes y de un inquilino. */
+    /** Lista, opcionalmente de un mes, de un inquilino y de un piso. */
     @Transactional(readOnly = true)
-    public List<PagoResponse> listar(YearMonth mes, Integer idInquilino, UsuarioAutenticado actor) {
+    public List<PagoResponse> listar(YearMonth mes, Integer idInquilino, Integer idPiso, UsuarioAutenticado actor) {
         var alcance = acceso.alcance(actor);
         Integer inquilino = alcance.idInquilino() != null ? alcance.idInquilino() : idInquilino;
         return pagos.buscar(alcance.idPropietario(), inquilino,
                         mes == null ? null : mes.atDay(1), mes == null ? null : mes.atEndOfMonth())
-                .stream().map(PagoResponse::de).toList();
+                .stream()
+                .filter(p -> idPiso == null || p.getContrato().getHabitacion().getPiso().getId().equals(idPiso))
+                .map(PagoResponse::de).toList();
     }
 
     /**

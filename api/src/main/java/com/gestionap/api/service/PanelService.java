@@ -143,6 +143,20 @@ public class PanelService {
         return lista.stream().map(ActividadResponse::de).toList();
     }
 
+    /** Ingresos cobrados de un piso en los últimos 12 meses (gráfico del detalle de piso del escritorio). */
+    @Transactional(readOnly = true)
+    public List<ImporteMes> ingresosPiso(Integer idPiso, UsuarioAutenticado actor) {
+        acceso.pisoVisible(idPiso, actor);
+        YearMonth hasta = YearMonth.now();
+        YearMonth desde = hasta.minusMonths(11);
+        Map<YearMonth, BigDecimal> porMes = pagos.buscar(null, null, desde.atDay(1), hasta.atEndOfMonth()).stream()
+                .filter(p -> p.getContrato().getHabitacion().getPiso().getId().equals(idPiso))
+                .collect(Collectors.groupingBy(p -> YearMonth.from(p.getFechaPago()),
+                        Collectors.reducing(BigDecimal.ZERO, Pago::getCantidad, BigDecimal::add)));
+        return meses(desde, hasta)
+                .map(m -> new ImporteMes(m.toString(), Textos.mesCorto(m), porMes.getOrDefault(m, BigDecimal.ZERO))).toList();
+    }
+
     Ocupacion ocupacion(Integer prop) {
         Map<EstadoHabitacion, Long> porEstado = habitaciones.buscar(prop, null, null).stream()
                 .collect(Collectors.groupingBy(Habitacion::getEstado, () -> new EnumMap<>(EstadoHabitacion.class), Collectors.counting()));
