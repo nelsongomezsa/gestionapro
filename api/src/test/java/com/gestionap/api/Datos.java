@@ -20,11 +20,16 @@ public class Datos {
     private final HabitacionRepository habitaciones;
     private final InquilinoRepository inquilinos;
     private final ContratoRepository contratos;
+    private final PagoRepository pagos;
+    private final IncidenciaRepository incidencias;
     private final PasswordEncoder encoder;
 
     public Datos(UsuarioRepository usuarios, CiudadRepository ciudades, PisoRepository pisos,
                  HabitacionRepository habitaciones, InquilinoRepository inquilinos,
-                 ContratoRepository contratos, PasswordEncoder encoder) {
+                 ContratoRepository contratos, PagoRepository pagos, IncidenciaRepository incidencias,
+                 PasswordEncoder encoder) {
+        this.pagos = pagos;
+        this.incidencias = incidencias;
         this.usuarios = usuarios;
         this.ciudades = ciudades;
         this.pisos = pisos;
@@ -79,6 +84,29 @@ public class Datos {
         i.setDni(dni);
         i.setEmail(email);
         return inquilinos.save(i);
+    }
+
+    public Inquilino inquilinoDe(Usuario propietario, String dni) {
+        Inquilino i = inquilino(dni, null);
+        i.setPropietario(propietario);
+        return i;
+    }
+
+    public Pago pago(Contrato c, String cantidad, LocalDate fecha) {
+        Pago p = new Pago();
+        p.setContrato(c);
+        p.setCantidad(new BigDecimal(cantidad));
+        p.setFechaPago(fecha);
+        return pagos.save(p);
+    }
+
+    public Incidencia incidencia(Habitacion h, Inquilino i, String descripcion) {
+        Incidencia inc = new Incidencia();
+        inc.setHabitacion(h);
+        inc.setInquilino(i);
+        inc.setDescripcion(descripcion);
+        inc.setFecha(LocalDate.now());
+        return incidencias.save(inc);
     }
 
     public Contrato contratoActivo(Habitacion h, Inquilino i, String renta) {

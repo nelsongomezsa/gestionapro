@@ -9,4 +9,7 @@ public record UsuarioResponse(
         String email,
         Rol rol,
         @Schema(description = "Solo para INQUILINO: su registro en Inquilinos")
-        Integer idInquilino) {}
+        Integer idInquilino,
+        String dni,
+        @Schema(description = "IBAN para el QR de pago de sus inquilinos, con espacios cada 4 caracteres")
+        String iban) {}

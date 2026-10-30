@@ -2,7 +2,6 @@ package com.gestionap.api.service;
 
 import com.gestionap.api.domain.Invitacion;
 import com.gestionap.api.domain.Inquilino;
-import com.gestionap.api.repository.ContratoRepository;
 import com.gestionap.api.repository.InquilinoRepository;
 import com.gestionap.api.repository.InvitacionRepository;
 import com.gestionap.api.repository.UsuarioRepository;
@@ -34,19 +33,17 @@ public class InvitacionService {
 
     private final InquilinoRepository inquilinos;
     private final InvitacionRepository invitaciones;
-    private final ContratoRepository contratos;
     private final UsuarioRepository usuarios;
     private final EmailService email;
     private final ActividadService actividad;
     private final Duration validez;
 
     public InvitacionService(InquilinoRepository inquilinos, InvitacionRepository invitaciones,
-                             ContratoRepository contratos, UsuarioRepository usuarios,
+                             UsuarioRepository usuarios,
                              EmailService email, ActividadService actividad,
                              @Value("${gestionap.invitaciones.validez}") Duration validez) {
         this.inquilinos = inquilinos;
         this.invitaciones = invitaciones;
-        this.contratos = contratos;
         this.usuarios = usuarios;
         this.email = email;
         this.actividad = actividad;
@@ -55,15 +52,15 @@ public class InvitacionService {
 
     /**
      * Genera un código de un solo uso para que el inquilino cree su cuenta.
-     * Un propietario solo puede invitar a inquilinos con contrato en alguno de
-     * sus pisos (Inquilinos no tiene dueño propio). Las invitaciones
+     * Un propietario solo puede invitar a inquilinos visibles para él: los que dio de
+     * alta y los que tienen contrato en sus pisos. Las invitaciones
      * pendientes anteriores del mismo inquilino dejan de valer.
      */
     @Transactional
     public InvitacionResponse generar(Integer idInquilino, UsuarioAutenticado actor) {
         Inquilino inquilino = inquilinos.findById(idInquilino)
                 .orElseThrow(() -> ApiException.noEncontrado("Inquilino"));
-        if (!actor.esAdmin() && !contratos.inquilinoTieneContratoConPropietario(idInquilino, actor.id())) {
+        if (!actor.esAdmin() && !inquilinos.esVisiblePara(idInquilino, actor.id())) {
             // 404 y no 403: no se confirma que el inquilino exista a quien no es su propietario.
             throw ApiException.noEncontrado("Inquilino");
         }

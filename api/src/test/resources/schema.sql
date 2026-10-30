@@ -1,10 +1,11 @@
--- Esquema de gestion_alquileres_pro (MariaDB) DESPUÉS de la migración V1,
+-- Esquema de gestion_alquileres_pro (MariaDB) DESPUÉS de las migraciones V1 y V2,
 -- adaptado a H2: ENUM -> VARCHAR, sin ENGINE/CHARSET.
 CREATE TABLE Usuarios (
     id_usuario    INT AUTO_INCREMENT PRIMARY KEY,
     nombre        VARCHAR(100) NOT NULL,
     email         VARCHAR(100) NOT NULL UNIQUE,
     dni           VARCHAR(20),
+    iban          VARCHAR(34),
     password_hash VARCHAR(64)  NOT NULL,
     rol           VARCHAR(20)  NOT NULL DEFAULT 'usuario',
     activo        TINYINT(1)   NOT NULL DEFAULT 1
@@ -62,7 +63,8 @@ CREATE TABLE Inquilinos (
     dni          VARCHAR(20)  NOT NULL UNIQUE,
     telefono     VARCHAR(20),
     email        VARCHAR(100),
-    id_usuario   INT UNIQUE REFERENCES Usuarios (id_usuario) ON DELETE SET NULL
+    id_usuario   INT UNIQUE REFERENCES Usuarios (id_usuario) ON DELETE SET NULL,
+    id_propietario INT REFERENCES Usuarios (id_usuario) ON DELETE SET NULL
 );
 
 CREATE TABLE Contratos (
@@ -72,6 +74,24 @@ CREATE TABLE Contratos (
     fecha_inicio   DATE NOT NULL,
     fecha_fin      DATE NOT NULL,
     precio_mensual DECIMAL(8,2) NOT NULL
+);
+
+CREATE TABLE Pagos (
+    id_pago     INT AUTO_INCREMENT PRIMARY KEY,
+    id_contrato INT NOT NULL REFERENCES Contratos (id_contrato),
+    cantidad    DECIMAL(8,2) NOT NULL,
+    metodo_pago VARCHAR(20) NOT NULL DEFAULT 'transferencia',
+    fecha_pago  DATE NOT NULL
+);
+
+CREATE TABLE Incidencias (
+    id_incidencia    INT AUTO_INCREMENT PRIMARY KEY,
+    id_habitacion    INT NOT NULL REFERENCES Habitaciones (id_habitacion),
+    id_inquilino     INT NOT NULL REFERENCES Inquilinos (id_inquilino),
+    descripcion      VARCHAR(255) NOT NULL,
+    estado           VARCHAR(20) NOT NULL DEFAULT 'pendiente',
+    fecha            DATE NOT NULL,
+    coste_reparacion DECIMAL(8,2) DEFAULT 0.00
 );
 
 CREATE TABLE Invitaciones (
