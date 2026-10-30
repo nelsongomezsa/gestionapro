@@ -3,6 +3,7 @@ package com.gestionap.api.repository;
 import com.gestionap.api.domain.EstadoHabitacion;
 import com.gestionap.api.domain.Habitacion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
@@ -45,6 +46,14 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
             where h.id = :id
             """)
     Optional<Habitacion> findConPisoById(Integer id);
+
+    /**
+     * Cambia el estado solo si sigue siendo el esperado (como HabitacionDAO.reservar/liberar del
+     * escritorio): si otro usuario la alquiló a la vez, devuelve 0 y no se pisa.
+     */
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("update Habitacion h set h.estado = :nuevo where h.id = :id and h.estado = :actual")
+    int cambiarEstadoSi(Integer id, EstadoHabitacion actual, EstadoHabitacion nuevo);
 
     @Query("""
             select count(h) > 0 from Habitacion h

@@ -2,18 +2,24 @@ package com.gestionap.api.web;
 
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.ContratoService;
+import com.gestionap.api.web.dto.ContratoRequest;
+import com.gestionap.api.web.dto.ContratoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
-@Tag(name = "Contratos")
+@Tag(name = "Contratos", description = "Un PROPIETARIO ve los de sus pisos; un INQUILINO, solo los suyos")
 @RestController
 @RequestMapping("/api/contratos")
 public class ContratoController {
@@ -22,6 +28,37 @@ public class ContratoController {
 
     public ContratoController(ContratoService contratos) {
         this.contratos = contratos;
+    }
+
+    @Operation(summary = "Lista con estado y nivel de vencimiento (crítico ≤ 7 días)")
+    @GetMapping
+    public List<ContratoResponse> listar(@RequestParam(required = false) ContratoService.Filtro filtro,
+                                         @RequestParam(required = false) Integer piso,
+                                         @RequestParam(required = false) Integer inquilino,
+                                         @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return contratos.listar(filtro, piso, inquilino, actor);
+    }
+
+    @GetMapping("/{id}")
+    public ContratoResponse obtener(@PathVariable Integer id, @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return contratos.obtener(id, actor);
+    }
+
+    @Operation(summary = "Nuevo contrato; reserva la habitación en la misma transacción (409 si ya no está disponible)")
+    @PostMapping
+    @PreAuthorize("hasAnyRole('PROPIETARIO', 'ADMIN')")
+    public ResponseEntity<ContratoResponse> crear(@Valid @RequestBody ContratoRequest req,
+                                                  @AuthenticationPrincipal UsuarioAutenticado actor) {
+        ContratoResponse c = contratos.crear(req, actor);
+        var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(c.id()).toUri();
+        return ResponseEntity.created(uri).body(c);
+    }
+
+    @Operation(summary = "Finaliza hoy el contrato y libera la habitación")
+    @PostMapping("/{id}/finalizar")
+    @PreAuthorize("hasAnyRole('PROPIETARIO', 'ADMIN')")
+    public ContratoResponse finalizar(@PathVariable Integer id, @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return contratos.finalizar(id, actor);
     }
 
     @Operation(summary = "Contrato de arrendamiento en PDF",

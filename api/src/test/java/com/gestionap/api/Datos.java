@@ -109,6 +109,13 @@ public class Datos {
         return incidencias.save(inc);
     }
 
+    public Contrato contrato(Habitacion h, Inquilino i, String renta, LocalDate inicio, LocalDate fin) {
+        Contrato c = contratoActivo(h, i, renta);
+        c.setFechaInicio(inicio);
+        c.setFechaFin(fin);
+        return c;
+    }
+
     public Contrato contratoActivo(Habitacion h, Inquilino i, String renta) {
         Contrato c = new Contrato();
         c.setHabitacion(h);

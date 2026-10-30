@@ -71,6 +71,23 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
             """)
     List<Contrato> deInquilino(Integer idInquilino, Integer idPropietario);
 
+    /**
+     * Contratos visibles con todo lo necesario para listarlos. Filtros opcionales: propietario
+     * (null = admin), inquilino (para el rol INQUILINO o la ficha) y piso.
+     */
+    @Query("""
+            select c from Contrato c
+            join fetch c.inquilino i
+            join fetch c.habitacion h
+            join fetch h.piso p
+            join fetch p.ciudad
+            where (:idPropietario is null or p.propietario.id = :idPropietario)
+              and (:idInquilino is null or i.id = :idInquilino)
+              and (:idPiso is null or p.id = :idPiso)
+            order by c.fechaFin desc, c.id desc
+            """)
+    List<Contrato> buscar(Integer idPropietario, Integer idInquilino, Integer idPiso);
+
     boolean existsByHabitacionId(Integer idHabitacion);
 
     boolean existsByInquilinoId(Integer idInquilino);
