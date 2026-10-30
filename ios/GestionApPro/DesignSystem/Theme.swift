@@ -121,7 +121,10 @@ private struct EstiloTarjeta: ViewModifier {
             .padding(relleno)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Tema.Color.superficie, in: .rect(cornerRadius: Tema.Radio.tarjeta))
-            .overlay(RoundedRectangle(cornerRadius: Tema.Radio.tarjeta).strokeBorder(Tema.Color.borde, lineWidth: 0.5))
+            // El borde va encima: sin allowsHitTesting(false) se tragaba los toques de los
+            // enlaces y botones que hay dentro de la tarjeta.
+            .overlay(RoundedRectangle(cornerRadius: Tema.Radio.tarjeta).strokeBorder(Tema.Color.borde, lineWidth: 0.5)
+                .allowsHitTesting(false))
             .shadow(color: .black.opacity(esquema == .dark ? 0 : 0.05), radius: 8, y: 2)
     }
 }

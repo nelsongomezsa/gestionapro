@@ -61,3 +61,15 @@ struct VistaCarga<Valor, Contenido: View>: View {
         }
     }
 }
+
+extension View {
+    /// Aviso con el mensaje de error de una acción (guardar, borrar...).
+    func alertaError(_ mensaje: Binding<String?>) -> some View {
+        alert("No se pudo completar", isPresented: Binding(get: { mensaje.wrappedValue != nil },
+                                                           set: { if !$0 { mensaje.wrappedValue = nil } })) {
+            Button("Aceptar", role: .cancel) {}
+        } message: {
+            Text(mensaje.wrappedValue ?? "")
+        }
+    }
+}

@@ -30,6 +30,9 @@ struct FilaMetrica: View {
                 .foregroundStyle(tono?.color ?? .primary)
                 .multilineTextAlignment(.trailing)
         }
+        // Toda la fila es tocable, también el hueco del Spacer (importa cuando va dentro de un
+        // NavigationLink o Button con estilo .plain, que solo responde donde hay contenido).
+        .contentShape(.rect)
         .accessibilityElement(children: .combine)
     }
 }
