@@ -14,7 +14,7 @@ struct EstadisticasView: View {
                 VStack(alignment: .leading, spacing: Tema.Espacio.l) {
                     LazyVGrid(columns: columnas, spacing: Tema.Espacio.s) {
                         TarjetaKPI(titulo: "Ingresos \(e.anioActual)", valor: Formato.euros(e.ingresosAnioActual), icono: "eurosign",
-                                   tendencia: e.variacionAnualPct)
+                                   tendencia: e.variacionAnualPct, frenteA: "\(e.anioActual - 1)")
                         TarjetaKPI(titulo: "Ingresos \(e.anioActual - 1)", valor: Formato.euros(e.ingresosAnioAnterior),
                                    icono: "clock.arrow.circlepath", tono: .neutro)
                         TarjetaKPI(titulo: "Variación anual", valor: e.variacionAnualPct.map { Formato.porcentaje($0) } ?? "—",

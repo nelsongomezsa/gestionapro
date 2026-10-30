@@ -93,7 +93,12 @@ struct Dashboard: Decodable, Sendable {
     let incidenciasEnProceso: Int
     let cobradoMes: Decimal
     let cobradoMesAnterior: Decimal
-    /// Variación frente al mes anterior en %; nil si el anterior fue 0.
+    /// Cobrado el mes anterior hasta el mismo día que hoy: la base de la tendencia.
+    let cobradoMesAnteriorMismoDia: Decimal
+    let diaComparado: Int
+    /// "sept": mes con el que se compara.
+    let mesComparado: String
+    /// Variación frente al mes anterior hasta el mismo día, en %; nil si entonces fue 0.
     let tendenciaPct: Double?
     let esperadoMes: Decimal
     let cashFlowMensual: Decimal

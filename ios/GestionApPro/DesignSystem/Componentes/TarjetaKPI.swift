@@ -7,8 +7,10 @@ struct TarjetaKPI: View {
     var icono: String
     var tono: Tono = .primario
     var detalle: String? = nil
-    /// Variación en puntos porcentuales respecto al periodo anterior (p. ej. 4.5 = +4,5 %).
+    /// Variación en % respecto a otro periodo (p. ej. 4.5 = +4,5 %).
     var tendencia: Double? = nil
+    /// Con qué se compara la tendencia ("2025"): toda cifra comparativa lo dice.
+    var frenteA: String = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
@@ -26,7 +28,9 @@ struct TarjetaKPI: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 if let tendencia {
-                    InsigniaEstado(texto: Formato.porcentaje(abs(tendencia)), tono: Tono.signo(tendencia),
+                    InsigniaEstado(texto: frenteA.isEmpty ? Formato.porcentaje(abs(tendencia))
+                                                          : "\(Formato.porcentaje(abs(tendencia))) vs. \(frenteA)",
+                                   tono: Tono.signo(tendencia),
                                    icono: tendencia >= 0 ? "arrow.up.right" : "arrow.down.right")
                 } else if let detalle {
                     Text(detalle)
@@ -46,7 +50,7 @@ struct TarjetaKPI: View {
 
 #Preview {
     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-        TarjetaKPI(titulo: "Ingresos del mes", valor: "8.540,00 €", icono: "eurosign", tendencia: 4.2)
+        TarjetaKPI(titulo: "Ingresos del mes", valor: "8.540,00 €", icono: "eurosign", tendencia: 4.2, frenteA: "sept.")
         TarjetaKPI(titulo: "Ocupación", valor: "67 %", icono: "bed.double", tono: .aviso)
     }
     .padding()

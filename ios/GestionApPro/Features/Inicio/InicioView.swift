@@ -40,7 +40,8 @@ struct InicioView: View {
                         Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
                             GridRow {
                                 TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
-                                           icono: "chart.pie", tono: d.ocupacion.tono, detalle: d.ocupacion.salud)
+                                           icono: "chart.pie", tono: d.ocupacion.tono,
+                                           detalle: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones")
                                 TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
                                            icono: "door.left.hand.open", tono: .primario,
                                            detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
@@ -67,7 +68,9 @@ struct InicioView: View {
                                         IconoEtiqueta(icono: a.icono, tono: a.tonoVisual)
                                         VStack(alignment: .leading, spacing: 2) {
                                             Text(a.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                                            Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                                            if !a.mensaje.isEmpty {
+                                                Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                                            }
                                         }
                                     }
                                     .accessibilityElement(children: .combine)
@@ -89,13 +92,16 @@ struct InicioView: View {
                                     HStack(spacing: Tema.Espacio.s) {
                                         AvatarIniciales(nombre: c.inquilino.nombre, tamano: Tema.Tamano.icono)
                                         VStack(alignment: .leading, spacing: 2) {
+                                            // El nombre nunca se corta: pasa a dos líneas si hace falta.
                                             Text(c.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                                                .lineLimit(1)
+                                                .lineLimit(2)
+                                                .fixedSize(horizontal: false, vertical: true)
                                             Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
                                                 .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
                                         }
                                         Spacer(minLength: Tema.Espacio.xs)
-                                        InsigniaEstado(texto: c.diasRestantes == 0 ? "Hoy" : "\(c.diasRestantes) días", tono: c.vencimiento.tono)
+                                        InsigniaEstado(texto: c.diasRestantes == 0 ? "Hoy" : "\(c.diasRestantes) d", tono: c.vencimiento.tono)
+                                            .accessibilityLabel(c.diasRestantes == 0 ? "Vence hoy" : "Vence en \(c.diasRestantes) días")
                                         Image(systemName: "chevron.right").font(Tema.Fuente.nota.weight(.semibold))
                                             .foregroundStyle(Tema.Color.textoSecundario)
                                             .accessibilityHidden(true)
@@ -171,9 +177,10 @@ struct InicioView: View {
         let progreso = d.esperadoMes > 0 ? (d.cobradoMes / d.esperadoMes).double : 0
         return TarjetaHero(titulo: "Cobrado este mes", valor: Formato.euros(d.cobradoMes),
                            accesorio: d.tendenciaPct.map { t in
-                               AnyView(InsigniaEstado(texto: Formato.porcentaje(abs(t)), tono: Tono.signo(t),
+                               AnyView(InsigniaEstado(texto: "\(Formato.porcentaje(abs(t))) vs. \(d.mesComparado).",
+                                                      tono: Tono.signo(t),
                                                       icono: t >= 0 ? "arrow.up.right" : "arrow.down.right")
-                                   .accessibilityLabel("\(t >= 0 ? "Sube" : "Baja") un \(Formato.porcentaje(abs(t))) frente al mes anterior"))
+                                   .accessibilityLabel("\(t >= 0 ? "Sube" : "Baja") un \(Formato.porcentaje(abs(t))) frente a lo cobrado hasta el día \(d.diaComparado) del mes anterior"))
                            }) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: progreso, tono: .positivo)
@@ -184,7 +191,7 @@ struct InicioView: View {
             HStack(alignment: .top) {
                 DatoCompacto(titulo: "Pendiente", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
                 Spacer()
-                DatoCompacto(titulo: "Cash flow al mes", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
+                DatoCompacto(titulo: "Cash flow previsto", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
             }
             BotonSecundario(titulo: "Informe del mes", icono: "doc.richtext", cargando: generandoInforme) {
                 Task { await informe() }

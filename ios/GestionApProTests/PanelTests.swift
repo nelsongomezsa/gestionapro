@@ -13,6 +13,10 @@ struct PanelTests {
         #expect(d.ingresosUltimos6Meses.count == 6)
         #expect(d.ingresosUltimos6Meses.map(\.etiqueta) == ["may", "jun", "jul", "ago", "sept", "oct"])
         #expect(d.tendenciaPct != nil)
+        // La tendencia dice con qué compara: el mes anterior hasta el mismo día.
+        #expect(d.mesComparado == "sept")
+        #expect(d.diaComparado == 30)
+        #expect(d.cobradoMesAnteriorMismoDia <= d.cobradoMesAnterior)
         #expect(!d.alertas.isEmpty)
         #expect(d.proximosVencimientos.allSatisfy { $0.vencimiento != .normal })
     }
