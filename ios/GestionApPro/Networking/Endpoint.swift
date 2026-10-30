@@ -119,3 +119,60 @@ extension Endpoint where Respuesta == Usuario {
         Endpoint(metodo: "PATCH", ruta: "/api/me", cuerpo: json(req))
     }
 }
+
+// MARK: Contratos
+
+extension Endpoint where Respuesta == [Contrato] {
+    static func contratos(filtro: FiltroContratos = .todos, piso: Int? = nil, inquilino: Int? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/contratos",
+                 consulta: [URLQueryItem(name: "filtro", value: filtro.rawValue),
+                            URLQueryItem(name: "piso", value: piso.map(String.init)),
+                            URLQueryItem(name: "inquilino", value: inquilino.map(String.init))])
+    }
+}
+
+extension Endpoint where Respuesta == Contrato {
+    static func contrato(id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)")
+    }
+
+    static func crearContrato(_ req: ContratoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/contratos", cuerpo: json(req))
+    }
+
+    static func finalizarContrato(id: Int) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/contratos/\(id)/finalizar")
+    }
+}
+
+enum Rutas {
+    static func pdfContrato(_ id: Int) -> String { "/api/contratos/\(id)/pdf" }
+}
+
+// MARK: Pagos
+
+extension Endpoint where Respuesta == [Pago] {
+    static func pagos(mes: Mes? = nil, inquilino: Int? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos",
+                 consulta: [URLQueryItem(name: "mes", value: mes?.texto),
+                            URLQueryItem(name: "inquilino", value: inquilino.map(String.init))])
+    }
+}
+
+extension Endpoint where Respuesta == ResumenPagos {
+    static func resumenPagos(mes: Mes) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos/resumen", consulta: [URLQueryItem(name: "mes", value: mes.texto)])
+    }
+}
+
+extension Endpoint where Respuesta == Pago {
+    static func registrarPago(_ req: PagoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/pagos", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarPago(id: Int) -> Self {
+        Endpoint(metodo: "DELETE", ruta: "/api/pagos/\(id)")
+    }
+}
