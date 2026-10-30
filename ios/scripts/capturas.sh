@@ -52,6 +52,8 @@ for modo in claro oscuro; do
   grep -q "Test Suite 'Selected tests' passed" "$log" || fallos=1
   # Mitad de resolución: se leen bien en GitHub y el repositorio no crece de más.
   for f in "$destino"/*.png(N); do sips -Z 1311 "$f" >/dev/null; done
+  # Y comprimidas (paleta de colores): ocupan una cuarta parte sin diferencia visible.
+  command -v pngquant >/dev/null && pngquant --quality=70-95 --speed 1 --skip-if-larger --force --ext .png --strip "$destino"/*.png(N) 2>/dev/null
   ls "$destino" 2>/dev/null | wc -l | xargs echo "capturas:"
 done
 

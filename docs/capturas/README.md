@@ -11,6 +11,7 @@ Hechas en el simulador **iPhone 18 Pro (iOS 27)** contra la API en `dev`, con lo
 | [4D](4D/) | Inicio (KPIs con tendencia, gráfico, alertas, vencimientos, actividad), informe mensual en PDF, notificaciones y su destino, calendario con detalle del día, estadísticas |
 | [4E](4E/) | Incidencias (lista, avanzar deslizando, detalle, nueva), detalle de piso con gráfico, contratos, pagos e incidencias, datos financieros, ficha y calculadora en PDF, mapa de todos los pisos, incidencias del inquilino |
 | [4F](4F/) | Búsqueda global, gestión de usuarios (lista, desactivar deslizando, nuevo), perfil completo con mis estadísticas, editar nombre y email, cambiar contraseña, mi actividad y registro del inquilino con código |
+| [Rediseño](rediseno/) | Todas las pantallas con el sistema de diseño premium, en claro y oscuro, con la comparación antes/después |
 
 ## Cómo regenerarlas
 

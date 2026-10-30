@@ -71,7 +71,7 @@ struct DatoCompacto: View {
             Text(valor)
                 .font(Tema.Fuente.cifraPequena)
                 .foregroundStyle(tono?.color ?? Tema.Color.texto)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .accessibilityElement(children: .combine)
     }
@@ -114,7 +114,7 @@ struct BotonSecundario: View {
             .font(Tema.Fuente.detalle.weight(.semibold))
             .foregroundStyle(Tema.Color.primario)
             .padding(.horizontal, Tema.Espacio.m)
-            .frame(minHeight: 40)
+            .frame(minHeight: Tema.Tamano.botonRedondo)
             .background(Tema.Color.primarioSuave, in: .capsule)
             .contentShape(.capsule)
         }

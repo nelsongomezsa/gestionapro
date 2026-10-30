@@ -99,7 +99,8 @@ public class PanelService {
         LocalDate hoy = LocalDate.now();
         YearMonth mes = YearMonth.from(hoy);
         int anio = hoy.getYear();
-        BigDecimal esteAnio = suma(pagos.buscar(prop, null, LocalDate.of(anio, 1, 1), LocalDate.of(anio, 12, 31)));
+        // Hasta hoy: un pago con fecha futura no debe mezclarse con lo cobrado ni con la variación.
+        BigDecimal esteAnio = suma(pagos.buscar(prop, null, LocalDate.of(anio, 1, 1), hoy));
         BigDecimal anioPasado = suma(pagos.buscar(prop, null, LocalDate.of(anio - 1, 1, 1), LocalDate.of(anio - 1, 12, 31)));
         // La variación compara con el año pasado hasta la misma fecha (29 de febrero -> 28),
         // no con el año completo: si no, cualquier año en curso parecería una caída.

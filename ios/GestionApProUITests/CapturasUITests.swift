@@ -773,6 +773,46 @@ extension CapturasUITests {
         ri.pausa(1)
         ri.capturar("05-registro-inquilino")
     }
+    /// Recorrido para el vídeo (ios/scripts/video.sh): sin capturas, con pausas para verlo.
+    @MainActor
+    func testVideoRecorrido() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(2.5)
+        r.app.swipeUp()
+        r.pausa(2)
+        r.app.swipeDown()
+        r.pausa(1)
+
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.pausa(2)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.pausa(2)
+        r.app.swipeUp()
+        r.pausa(2)
+        r.atras()
+
+        r.pestana("Cobros")
+        r.pausa(2.5)
+        r.pestana("Incidencias")
+        r.pausa(2.5)
+
+        r.pestana("Más")
+        r.pausa(1.5)
+        r.app.buttons["Contratos"].tap()
+        r.pausa(2.5)
+        r.atras()
+        r.app.buttons["Calendario"].tap()
+        r.pausa(2.5)
+        r.atras()
+        r.app.buttons["Estadísticas"].tap()
+        r.pausa(2.5)
+        r.atras()
+        r.app.buttons["Calculadora de rentabilidad"].tap()
+        r.pausa(2.5)
+    }
 }
 
 @MainActor
