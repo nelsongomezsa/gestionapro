@@ -6,76 +6,119 @@ struct PisosListaView: View {
 
     var body: some View {
         NavigationStack {
-            contenido
-                .navigationTitle("Mis Pisos")
-                .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0) }
-                .refreshable { await vm.cargar(con: sesion.api) }
-                .task { await vm.cargar(con: sesion.api) }
+            VistaCarga(estado: vm.estado, reintentar: recargar) { _ in
+                contenido
+            }
+            .background(Tema.Color.fondo)
+            .navigationTitle("Pisos")
+            .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0) }
+            .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
+            .toolbar { menuFiltros }
+            .refreshable { await vm.cargar(con: sesion.api) }
+            .task { await vm.cargar(con: sesion.api) }
         }
     }
 
+    private func recargar() { Task { await vm.cargar(con: sesion.api) } }
+
     @ViewBuilder
     private var contenido: some View {
-        switch vm.estado {
-        case .cargando:
-            ProgressView("Cargando pisos…")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        case .vacio:
-            ScrollView {
-                ContentUnavailableView("Sin pisos", systemImage: "building.2",
-                                       description: Text("Todavía no tienes pisos dados de alta."))
-            }
-        case let .error(mensaje):
-            ScrollView {
-                ContentUnavailableView {
-                    Label("No se pudieron cargar los pisos", systemImage: "exclamationmark.triangle")
-                } description: {
-                    Text(mensaje)
-                } actions: {
-                    Button("Reintentar") { Task { await vm.cargar(con: sesion.api) } }
-                        .buttonStyle(.borderedProminent)
+        let pisos = vm.pisosVisibles
+        ScrollView {
+            LazyVStack(spacing: Tema.Espacio.s) {
+                ResumenCarteraView(resumen: vm.resumen)
+                    .padding(.bottom, Tema.Espacio.xs)
+
+                if pisos.isEmpty {
+                    if vm.estado.valor?.isEmpty == true {
+                        EstadoVacio(icono: "building.2", titulo: "Sin pisos",
+                                    mensaje: "Todavía no tienes pisos dados de alta.")
+                    } else {
+                        EstadoVacio(icono: "magnifyingglass", titulo: "Sin resultados",
+                                    mensaje: "Ningún piso coincide con la búsqueda o el filtro.",
+                                    accionTitulo: "Quitar filtros") {
+                            vm.busqueda = ""
+                            vm.ciudad = nil
+                        }
+                    }
+                } else {
+                    HStack {
+                        Text("\(pisos.count) \(pisos.count == 1 ? "piso" : "pisos")")
+                        if let ciudad = vm.ciudad { Text("· \(ciudad)") }
+                        Spacer()
+                        Text("Orden: \(vm.orden.rawValue)")
+                    }
+                    .estiloEtiqueta()
+                    .padding(.horizontal, Tema.Espacio.xxs)
+
+                    ForEach(pisos) { piso in
+                        NavigationLink(value: piso) { TarjetaPiso(piso: piso) }
+                            .accessibilityIdentifier("tarjetaPiso")
+                            .buttonStyle(.plain)
+                    }
                 }
             }
-        case let .cargado(pisos):
-            List(pisos) { piso in
-                NavigationLink(value: piso) { PisoFilaView(piso: piso) }
+            .padding(Tema.Espacio.m)
+        }
+    }
+
+    private var menuFiltros: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                Picker("Ciudad", selection: $vm.ciudad) {
+                    Text("Todas las ciudades").tag(String?.none)
+                    ForEach(vm.ciudades, id: \.self) { Text($0).tag(String?.some($0)) }
+                }
+                Picker("Ordenar por", selection: $vm.orden) {
+                    ForEach(PisosViewModel.Orden.allCases) { Text($0.rawValue).tag($0) }
+                }
+            } label: {
+                Label("Filtrar y ordenar",
+                      systemImage: vm.ciudad == nil ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
             }
         }
     }
 }
 
-struct PisoFilaView: View {
-    let piso: Piso
+/// Cabecera con los totales de la cartera.
+struct ResumenCarteraView: View {
+    let resumen: ResumenCartera
 
     var body: some View {
-        HStack(spacing: 12) {
-            SemaforoView(calificacion: piso.metricas?.calificacion)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(piso.direccion)
-                    .font(.headline)
+        VStack(alignment: .leading, spacing: Tema.Espacio.m) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
+                Text("Cash flow mensual de la cartera")
+                    .font(Tema.Fuente.detalle)
+                    .foregroundStyle(.white.opacity(0.85))
+                Text(Formato.euros(resumen.cashFlowMensual))
+                    .font(Tema.Fuente.cifraGrande)
+                    .foregroundStyle(.white)
+                    .minimumScaleFactor(0.6)
                     .lineLimit(1)
-                Text("\(piso.ciudad.nombre) · \(piso.ocupacion.alquiladas)/\(piso.ocupacion.total) hab. alquiladas")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
             }
-            Spacer(minLength: 8)
-            VStack(alignment: .trailing, spacing: 2) {
-                if let metricas = piso.metricas {
-                    Text(Formato.euros(metricas.cashFlowMensual))
-                        .font(.headline.monospacedDigit())
-                        .foregroundStyle(metricas.cashFlowMensual.colorSigno)
-                    Text("cash flow/mes")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Text("Sin datos")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
+            HStack {
+                dato("Ingresos/mes", Formato.euros(resumen.ingresosMensuales))
+                Spacer()
+                dato("Ocupación", Formato.porcentaje(resumen.ocupacion * 100))
+                Spacer()
+                dato("Libres", "\(resumen.disponibles)")
             }
         }
-        .padding(.vertical, 4)
+        .padding(Tema.Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Tema.Color.degradadoMarca, in: .rect(cornerRadius: Tema.Radio.tarjeta))
         .accessibilityElement(children: .combine)
+    }
+
+    private func dato(_ titulo: String, _ valor: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(titulo)
+                .font(Tema.Fuente.nota)
+                .foregroundStyle(.white.opacity(0.8))
+            Text(valor)
+                .font(Tema.Fuente.cifraPequena)
+                .foregroundStyle(.white)
+        }
     }
 }
 

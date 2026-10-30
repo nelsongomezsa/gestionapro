@@ -3,34 +3,45 @@ import SwiftUI
 struct PerfilView: View {
     @Environment(SesionStore.self) private var sesion
     let usuario: Usuario
+    @State private var confirmarSalida = false
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    LabeledContent("Nombre", value: usuario.nombre)
-                    LabeledContent("Email", value: usuario.email)
-                    LabeledContent("Rol", value: usuario.rol.nombreVisible)
-                }
-
-                if usuario.rol == .inquilino {
-                    Section {
-                        ContentUnavailableView("Próximamente", systemImage: "hammer",
-                                               description: Text("Pronto podrás ver aquí tu habitación, tu contrato y tus pagos."))
+        List {
+            Section {
+                VStack(spacing: Tema.Espacio.s) {
+                    AvatarIniciales(nombre: usuario.nombre, tamano: 84)
+                    VStack(spacing: Tema.Espacio.xxs) {
+                        Text(usuario.nombre).font(Tema.Fuente.titulo)
+                        Text(usuario.email).foregroundStyle(Tema.Color.textoSecundario)
                     }
+                    InsigniaEstado(texto: usuario.rol.nombreVisible, tono: .primario, icono: "person.badge.shield.checkmark")
                 }
-
-                Section {
-                    Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
-                }
-
-                Section {
-                    LabeledContent("Servidor", value: sesion.api.baseURL.absoluteString)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, Tema.Espacio.s)
+                .listRowBackground(Color.clear)
             }
-            .navigationTitle("Perfil")
+
+            Section("Cuenta") {
+                LabeledContent("Nombre", value: usuario.nombre)
+                LabeledContent("Email", value: usuario.email)
+                LabeledContent("Rol", value: usuario.rol.nombreVisible)
+            }
+
+            Section {
+                Button("Cerrar sesión", role: .destructive) { confirmarSalida = true }
+                    .frame(maxWidth: .infinity)
+            }
+
+            #if DEBUG
+            Section("Desarrollo") {
+                LabeledContent("Servidor", value: sesion.api.baseURL.absoluteString)
+                    .font(Tema.Fuente.nota)
+            }
+            #endif
+        }
+        .navigationTitle("Perfil")
+        .confirmationDialog("¿Cerrar sesión?", isPresented: $confirmarSalida, titleVisibility: .visible) {
+            Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
         }
     }
 }
