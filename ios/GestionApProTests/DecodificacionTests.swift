@@ -122,6 +122,7 @@ struct FormatoTests {
     @Test func euros() {
         #expect(sinEspaciosDuros(Formato.euros(Decimal(string: "85000.00")!)) == "85.000,00 €")
         #expect(sinEspaciosDuros(Formato.euros(Decimal(string: "-436.22")!)) == "-436,22 €")
+        #expect(sinEspaciosDuros(Formato.euros(Decimal(2500))) == "2.500,00 €", "es_ES no agrupa 4 cifras por defecto; aquí sí")
         #expect(Formato.euros(nil as Decimal?) == "—")
     }
 
@@ -129,5 +130,36 @@ struct FormatoTests {
         #expect(sinEspaciosDuros(Formato.porcentaje(7.6712)) == "7,67 %")
         #expect(sinEspaciosDuros(Formato.porcentaje(-10.3862)) == "-10,39 %")
         #expect(Formato.porcentaje(nil as Double?) == "—")
+    }
+}
+
+@Suite("Campo numérico")
+struct CampoNumericoTests {
+    @Test func leeLoQueEscribeUnUsuarioEspanol() {
+        let f = Formato.numeroEditable
+        #expect(f.number(from: "200.000")?.doubleValue == 200_000)
+        #expect(f.number(from: "2.500,5")?.doubleValue == 2_500.5)
+        #expect(f.number(from: "2500")?.doubleValue == 2_500)
+        #expect(f.number(from: "3,2")?.doubleValue == 3.2)
+        #expect(f.string(from: 2500) == "2.500")
+    }
+}
+
+@Suite("Formato en iOS 17")
+struct FormatoRespaldoTests {
+    /// iOS 17 no tiene minimumGroupingDigits: se usa de_DE para los números. Debe dar
+    /// exactamente lo mismo que el formato español corregido de iOS 18+.
+    @Test(arguments: [2_500.0, -436.22, 200_000.0, 0.0, 1_234_567.891])
+    func monedaIgualQueEnIOS18(_ valor: Double) {
+        let normal = Formato.formateador(.currency).string(from: NSNumber(value: valor))
+        let respaldo = Formato.formateador(.currency, forzarRespaldoIOS17: true).string(from: NSNumber(value: valor))
+        #expect(normal.map(sinEspaciosDuros) == respaldo.map(sinEspaciosDuros))
+    }
+
+    @Test func porcentajeYLecturaIgualesQueEnIOS18() {
+        let p = Formato.formateador(.percent, decimales: 2, minimoDecimales: 2, forzarRespaldoIOS17: true)
+        #expect(p.string(from: 0.076712).map(sinEspaciosDuros) == "7,67 %")
+        let d = Formato.formateador(.decimal, decimales: 2, forzarRespaldoIOS17: true)
+        #expect(d.number(from: "2.500,5")?.doubleValue == 2_500.5)
     }
 }
