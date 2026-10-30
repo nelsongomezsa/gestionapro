@@ -13,8 +13,9 @@ enum DestinoInicio: Hashable {
     case incidencia(Int)
 }
 
-/// Inicio (Dashboard del escritorio): KPIs, ingresos de 6 meses, alertas, vencimientos,
-/// actividad, informe mensual en PDF y campana de notificaciones.
+/// Inicio (Dashboard del escritorio): lo cobrado del mes como cifra principal, indicadores,
+/// ingresos de 6 meses, alertas, vencimientos, actividad, informe mensual en PDF,
+/// búsqueda global y campana de notificaciones.
 struct InicioView: View {
     @Environment(SesionStore.self) private var sesion
     @State private var estado: EstadoCarga<Dashboard> = .cargando
@@ -25,94 +26,109 @@ struct InicioView: View {
     @State private var generandoInforme = false
     @State private var error: String?
 
-    private let columnas = [GridItem(.flexible(), spacing: Tema.Espacio.s), GridItem(.flexible(), spacing: Tema.Espacio.s)]
+    /// Cuántas actividades se ven en Inicio; el resto, en "Ver todo".
+    private let actividadesVisibles = 4
 
     var body: some View {
         NavigationStack(path: $ruta) {
             VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { d in
                 ScrollView {
                     VStack(alignment: .leading, spacing: Tema.Espacio.l) {
-                        LazyVGrid(columns: columnas, spacing: Tema.Espacio.s) {
-                            TarjetaKPI(titulo: "Cobrado este mes", valor: Formato.euros(d.cobradoMes), icono: "eurosign",
-                                       detalle: "de \(Formato.euros(d.esperadoMes)) esperados", tendencia: d.tendenciaPct)
-                            TarjetaKPI(titulo: "Cash flow total", valor: Formato.euros(d.cashFlowMensual),
-                                       icono: "arrow.left.arrow.right", tono: Tono.signo(d.cashFlowMensual), detalle: "Al mes")
-                            TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje), icono: "chart.pie",
-                                       tono: d.ocupacion.tono, detalle: d.ocupacion.salud)
-                            TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
-                                       icono: "door.left.hand.open", tono: .neutro,
-                                       detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
+                        heroe(d)
+
+                        // Grid (no perezoso) para que las dos tarjetas de cada fila midan lo mismo.
+                        Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
+                            GridRow {
+                                TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
+                                           icono: "chart.pie", tono: d.ocupacion.tono, detalle: d.ocupacion.salud)
+                                TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
+                                           icono: "door.left.hand.open", tono: .primario,
+                                           detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
+                            }
+                            GridRow {
+                                TarjetaKPI(titulo: "Contratos activos", valor: "\(d.contratosActivos)", icono: "doc.text",
+                                           tono: .primario, detalle: "\(d.inquilinos) inquilinos")
+                                TarjetaKPI(titulo: "Incidencias abiertas",
+                                           valor: "\(d.incidenciasPendientes + d.incidenciasEnProceso)",
+                                           icono: "wrench.and.screwdriver",
+                                           tono: d.incidenciasPendientes + d.incidenciasEnProceso > 0 ? .aviso : .positivo,
+                                           detalle: "\(d.incidenciasPendientes) sin empezar")
+                            }
                         }
 
-                        seccion("Ingresos cobrados · últimos 6 meses") {
-                            GraficoIngresos(meses: d.ingresosUltimos6Meses).frame(height: 190)
+                        SeccionTarjeta(titulo: "Ingresos cobrados") {
+                            GraficoIngresos(meses: d.ingresosUltimos6Meses).frame(height: 220)
                         }
 
                         if !d.alertas.isEmpty {
-                            seccion("Alertas") {
+                            SeccionTarjeta(titulo: "Alertas") {
                                 ForEach(d.alertas, id: \.self) { a in
                                     HStack(alignment: .top, spacing: Tema.Espacio.s) {
-                                        Image(systemName: a.icono).foregroundStyle(a.tonoVisual.color).frame(width: 24)
+                                        IconoEtiqueta(icono: a.icono, tono: a.tonoVisual)
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text(a.titulo).font(Tema.Fuente.subtitulo)
+                                            Text(a.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                                             Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                                         }
                                     }
                                     .accessibilityElement(children: .combine)
-                                    if a != d.alertas.last { Divider() }
+                                    if a != d.alertas.last { Divider().overlay(Tema.Color.borde) }
                                 }
                             }
                         }
 
-                        seccion("Próximos vencimientos (30 días)") {
+                        SeccionTarjeta(titulo: "Próximos vencimientos") {
                             if d.proximosVencimientos.isEmpty {
-                                Label("Sin vencimientos en los próximos 30 días", systemImage: "checkmark.seal")
-                                    .foregroundStyle(Tema.Color.positivo)
+                                HStack(spacing: Tema.Espacio.s) {
+                                    IconoEtiqueta(icono: "checkmark.seal", tono: .positivo)
+                                    Text("Sin vencimientos en los próximos 30 días")
+                                        .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                                }
                             }
                             ForEach(d.proximosVencimientos) { c in
                                 NavigationLink(value: DestinoInicio.contrato(c.id)) {
-                                    HStack {
+                                    HStack(spacing: Tema.Espacio.s) {
+                                        AvatarIniciales(nombre: c.inquilino.nombre, tamano: Tema.Tamano.icono)
                                         VStack(alignment: .leading, spacing: 2) {
-                                            Text(c.inquilino.nombre).font(Tema.Fuente.subtitulo)
+                                            Text(c.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                                                .lineLimit(1)
                                             Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
                                                 .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
                                         }
-                                        Spacer()
-                                        InsigniaEstado(texto: c.diasRestantes == 0 ? "Hoy" : "\(c.diasRestantes) d", tono: c.vencimiento.tono)
-                                        Image(systemName: "chevron.right").font(.caption).foregroundStyle(Tema.Color.textoSecundario)
+                                        Spacer(minLength: Tema.Espacio.xs)
+                                        InsigniaEstado(texto: c.diasRestantes == 0 ? "Hoy" : "\(c.diasRestantes) días", tono: c.vencimiento.tono)
+                                        Image(systemName: "chevron.right").font(Tema.Fuente.nota.weight(.semibold))
+                                            .foregroundStyle(Tema.Color.textoSecundario)
+                                            .accessibilityHidden(true)
                                     }
                                     .contentShape(.rect)
                                 }
                                 .buttonStyle(.plain)
-                                if c != d.proximosVencimientos.last { Divider() }
+                                if c != d.proximosVencimientos.last { Divider().overlay(Tema.Color.borde) }
                             }
                         }
 
-                        seccion("Actividad reciente") {
+                        SeccionTarjeta(titulo: "Actividad reciente") {
+                            NavigationLink(value: DestinoInicio.actividad) { Text("Ver todo") }
+                                .accessibilityLabel("Ver toda la actividad")
+                        } contenido: {
                             if d.actividadReciente.isEmpty {
                                 Text("Sin actividad registrada todavía.").foregroundStyle(Tema.Color.textoSecundario)
                             }
-                            ForEach(d.actividadReciente) { a in
+                            let visibles = Array(d.actividadReciente.prefix(actividadesVisibles))
+                            ForEach(visibles) { a in
                                 FilaActividad(actividad: a)
-                                if a != d.actividadReciente.last { Divider() }
-                            }
-                            NavigationLink(value: DestinoInicio.actividad) {
-                                Text("Ver toda la actividad").font(Tema.Fuente.detalle)
+                                if a != visibles.last { Divider().overlay(Tema.Color.borde) }
                             }
                         }
                     }
-                    .padding(Tema.Espacio.m)
+                    .padding(.horizontal, Tema.Espacio.m)
+                    .padding(.bottom, Tema.Espacio.l)
                 }
                 .background(Tema.Color.fondo)
             }
+            .background(Tema.Color.fondo)
             .navigationTitle(saludo)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { Task { await informe() } } label: {
-                        if generandoInforme { ProgressView() } else { Label("Informe del mes", systemImage: "doc.richtext") }
-                    }
-                    .disabled(generandoInforme)
-                }
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: DestinoInicio.buscar) {
                         Label("Buscar", systemImage: "magnifyingglass")
@@ -121,16 +137,9 @@ struct InicioView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: DestinoInicio.notificaciones) {
-                        Image(systemName: noLeidas > 0 ? "bell.badge.fill" : "bell")
-                            .symbolRenderingMode(.multicolor)
-                            .overlay(alignment: .topTrailing) {
-                                if noLeidas > 0 {
-                                    Text(noLeidas > 99 ? "99+" : "\(noLeidas)")
-                                        .font(.caption2.bold()).foregroundStyle(.white)
-                                        .padding(.horizontal, 4).background(Tema.Color.negativo, in: .capsule)
-                                        .offset(x: 10, y: -8)
-                                }
-                            }
+                        Image(systemName: noLeidas > 0 ? "bell.badge" : "bell")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(Tema.Color.negativo, Tema.Color.texto)
                     }
                     .accessibilityLabel(noLeidas > 0 ? "Notificaciones, \(noLeidas) sin leer" : "Notificaciones")
                     .accessibilityIdentifier("campana")
@@ -156,6 +165,33 @@ struct InicioView: View {
         }
     }
 
+    /// Lo cobrado del mes frente a lo esperado: la cifra que más importa al abrir la app.
+    private func heroe(_ d: Dashboard) -> some View {
+        let pendiente = max(d.esperadoMes - d.cobradoMes, 0)
+        let progreso = d.esperadoMes > 0 ? (d.cobradoMes / d.esperadoMes).double : 0
+        return TarjetaHero(titulo: "Cobrado este mes", valor: Formato.euros(d.cobradoMes),
+                           accesorio: d.tendenciaPct.map { t in
+                               AnyView(InsigniaEstado(texto: Formato.porcentaje(abs(t)), tono: Tono.signo(t),
+                                                      icono: t >= 0 ? "arrow.up.right" : "arrow.down.right")
+                                   .accessibilityLabel("\(t >= 0 ? "Sube" : "Baja") un \(Formato.porcentaje(abs(t))) frente al mes anterior"))
+                           }) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                BarraProgreso(valor: progreso, tono: .positivo)
+                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(d.esperadoMes)) esperados")
+                    .font(Tema.Fuente.nota)
+                    .foregroundStyle(Tema.Color.textoSecundario)
+            }
+            HStack(alignment: .top) {
+                DatoCompacto(titulo: "Pendiente", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
+                Spacer()
+                DatoCompacto(titulo: "Cash flow al mes", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
+            }
+            BotonSecundario(titulo: "Informe del mes", icono: "doc.richtext", cargando: generandoInforme) {
+                Task { await informe() }
+            }
+        }
+    }
+
     private var saludo: String {
         let nombre = sesion.usuario?.nombre.split(separator: " ").first.map(String.init) ?? ""
         return nombre.isEmpty ? "Inicio" : "Hola, \(nombre)"
@@ -166,7 +202,7 @@ struct InicioView: View {
             async let d = sesion.api.enviar(.dashboard)
             async let n = sesion.api.enviar(.notificacionesNoLeidas)
             let (dashboard, total) = try await (d, n)
-            estado = .cargado(dashboard)
+            withAnimation(Tema.Movimiento.suave) { estado = .cargado(dashboard) }
             noLeidas = total.total
         } catch let e as APIError {
             if case .noAutorizado = e { return }
@@ -192,34 +228,59 @@ struct InicioView: View {
             self.error = error.localizedDescription
         }
     }
-
-    private func seccion<Contenido: View>(_ titulo: String, @ViewBuilder contenido: () -> Contenido) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-            Text(titulo).estiloEtiqueta().padding(.horizontal, Tema.Espacio.xxs)
-            VStack(alignment: .leading, spacing: Tema.Espacio.s) { contenido() }.tarjeta()
-        }
-    }
 }
 
-/// Barras de ingresos por mes; el mes actual en el color de la marca (como el escritorio).
+/// Barras de ingresos por mes. Al tocar (o arrastrar) un mes se ve su importe arriba;
+/// sin tocar, el del mes actual, que va resaltado como en el escritorio.
 struct GraficoIngresos: View {
     let meses: [ImporteMes]
+    @State private var seleccion: String?
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
+
+    private var elegido: ImporteMes? {
+        meses.first { $0.etiqueta == seleccion } ?? meses.last
+    }
 
     var body: some View {
-        Chart(meses, id: \.mes) { m in
-            BarMark(x: .value("Mes", m.etiqueta), y: .value("Cobrado", m.importe.double))
-                .foregroundStyle(m == meses.last ? Tema.Color.primario.gradient : Tema.Color.primario.opacity(0.35).gradient)
-                .clipShape(.rect(cornerRadius: 6))
-        }
-        .chartYAxis {
-            AxisMarks { valor in
-                AxisGridLine()
-                AxisValueLabel { if let v = valor.as(Double.self) { Text(Formato.eurosRedondo(v)) } }
+        VStack(alignment: .leading, spacing: Tema.Espacio.s) {
+            if let m = elegido {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(m == meses.last ? "Este mes" : m.etiqueta.capitalized(with: Formato.locale))
+                        .font(Tema.Fuente.nota)
+                        .foregroundStyle(Tema.Color.textoSecundario)
+                    Text(Formato.euros(m.importe))
+                        .font(Tema.Fuente.cifraMediana)
+                        .foregroundStyle(Tema.Color.texto)
+                        .contentTransition(.numericText())
+                }
+                .animation(reducirMovimiento ? nil : Tema.Movimiento.suave, value: m)
+                .accessibilityHidden(true)
             }
+            Chart(meses, id: \.mes) { m in
+                BarMark(x: .value("Mes", m.etiqueta), y: .value("Cobrado", m.importe.double), width: .ratio(0.55))
+                    .foregroundStyle(m == elegido ? Tema.Color.primario : Tema.Color.primario.opacity(0.35))
+                    .clipShape(.rect(cornerRadius: Tema.Radio.pequeno / 2))
+            }
+            .chartXSelection(value: $seleccion)
+            .chartYAxis {
+                AxisMarks(values: .automatic(desiredCount: 3)) { valor in
+                    AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [3, 3])).foregroundStyle(Tema.Color.borde)
+                    AxisValueLabel {
+                        if let v = valor.as(Double.self) {
+                            Text(Formato.eurosRedondo(v)).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                        }
+                    }
+                }
+            }
+            .chartXAxis {
+                AxisMarks { _ in
+                    AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Ingresos cobrados por mes")
+            .accessibilityValue(meses.map { "\($0.etiqueta): \(Formato.euros($0.importe))" }.joined(separator: ", "))
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Ingresos cobrados por mes")
-        .accessibilityValue(meses.map { "\($0.etiqueta): \(Formato.euros($0.importe))" }.joined(separator: ", "))
     }
 }
 
@@ -228,18 +289,18 @@ struct FilaActividad: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: Tema.Espacio.s) {
-            Image(systemName: actividad.icono).foregroundStyle(Tema.Color.primario).frame(width: 24)
+            IconoEtiqueta(icono: actividad.icono, tono: .primario)
             VStack(alignment: .leading, spacing: 2) {
-                Text(actividad.titulo).font(Tema.Fuente.subtitulo)
+                Text(actividad.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                 if let d = actividad.descripcion, !d.isEmpty {
                     Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                 }
+                if let f = actividad.fecha {
+                    Text(f, format: .relative(presentation: .named).locale(Formato.locale))
+                        .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                }
             }
-            Spacer()
-            if let f = actividad.fecha {
-                Text(f, format: .relative(presentation: .named).locale(Formato.locale))
-                    .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
-            }
+            Spacer(minLength: 0)
         }
         .accessibilityElement(children: .combine)
     }

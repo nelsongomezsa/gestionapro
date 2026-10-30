@@ -116,7 +116,7 @@ struct Recorrido {
     let app: XCUIApplication
     let carpeta: URL
 
-    static func iniciar() throws -> Recorrido {
+    static func iniciar(capturarLogin: Bool = true) throws -> Recorrido {
         let env = ProcessInfo.processInfo.environment
         guard let dir = env["CAPTURAS_DIR"], let email = env["CAPTURAS_EMAIL"], let password = env["CAPTURAS_PASSWORD"] else {
             throw XCTSkip("Faltan CAPTURAS_DIR, CAPTURAS_EMAIL o CAPTURAS_PASSWORD")
@@ -131,7 +131,7 @@ struct Recorrido {
         let r = Recorrido(app: app, carpeta: carpeta)
         let campoEmail = app.textFields["Email"]
         r.esperar(campoEmail)
-        r.capturar("01-login")
+        if capturarLogin { r.capturar("01-login") }
         campoEmail.tap()
         campoEmail.typeText(email)
         let campoPassword = app.secureTextFields["Contraseña"]
@@ -501,6 +501,25 @@ extension CapturasUITests {
         r.app.buttons["botonTengoCodigo"].tap()
         r.esperar(r.app.navigationBars["Crear mi cuenta"])
         r.capturar("13-registro-inquilino")
+    }
+}
+
+/// Rediseño premium: una prueba por pantalla, con capturas en docs/capturas/rediseno/<pantalla>.
+extension CapturasUITests {
+
+    @MainActor
+    func testRedisenoInicio() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(2)
+        r.capturar("01-inicio")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("02-inicio-grafico-alertas")
+        r.app.swipeUp()
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("03-inicio-vencimientos-actividad")
     }
 }
 
