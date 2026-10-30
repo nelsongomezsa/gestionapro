@@ -17,6 +17,7 @@ struct CalculadoraView: View {
                         .foregroundStyle(Tema.Color.negativo)
                 }
             }
+            .filaLista()
 
             Section("Impuesto de transmisiones") {
                 Picker("Comunidad autónoma", selection: $vm.entrada.comunidad) {
@@ -29,6 +30,7 @@ struct CalculadoraView: View {
                     LabeledContent("Tipo de ITP", value: Formato.porcentaje(tipo))
                 }
             }
+            .filaLista()
 
             Group {
                 Section("Compra") {
@@ -39,6 +41,7 @@ struct CalculadoraView: View {
                     CampoNumerico("Comisión de compra", valor: $vm.entrada.comisionCompra, sufijo: "€")
                     CampoNumerico("Mobiliario", valor: $vm.entrada.mobiliario, sufijo: "€")
                 }
+                .filaLista()
 
                 Section("Gastos mensuales") {
                     CampoNumerico("IBI y tasas", valor: $vm.entrada.ibiMensual, sufijo: "€")
@@ -47,11 +50,13 @@ struct CalculadoraView: View {
                     CampoNumerico("Mantenimiento", valor: $vm.entrada.mantenimientoMensual, sufijo: "€")
                     CampoNumerico("Periodos sin alquilar", valor: $vm.entrada.vacioMensual, sufijo: "€")
                 }
+                .filaLista()
 
                 Section("Ingresos") {
                     CampoNumerico("Alquiler mensual", valor: $vm.entrada.alquilerMensual, sufijo: "€")
                     CampoNumerico("Revalorización anual", valor: $vm.entrada.revalorizacionAnualPct, sufijo: "%")
                 }
+                .filaLista()
 
                 Section("Financiación") {
                     CampoNumerico("Financiado", valor: $vm.entrada.porcentajeFinanciado, sufijo: "%")
@@ -60,6 +65,7 @@ struct CalculadoraView: View {
                     }
                     CampoNumerico("Tipo de interés", valor: $vm.entrada.tipoInteresPct, sufijo: "%")
                 }
+                .filaLista()
             }
             .id(vm.version)
 
@@ -71,7 +77,9 @@ struct CalculadoraView: View {
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
             }
+            .filaLista()
         }
+        .estiloLista()
         .navigationTitle("Calculadora")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -102,41 +110,24 @@ private struct ResumenRentabilidad: View {
     let calculando: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.m) {
-            HStack {
-                Text("Cash flow mensual")
-                    .font(Tema.Fuente.detalle)
-                    .foregroundStyle(.white.opacity(0.85))
-                Spacer()
-                if calculando { ProgressView().tint(.white).controlSize(.small) }
-            }
-            Text(resultado.map { Formato.euros($0.cashFlowMensual) } ?? "—")
-                .font(Tema.Fuente.cifraGrande)
-                .foregroundStyle(.white)
-                .contentTransition(.numericText())
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            HStack {
-                dato("Rent. bruta", Formato.porcentaje(resultado?.rentabilidadBrutaPct))
-                Spacer()
-                dato("Rent. neta", Formato.porcentaje(resultado?.rentabilidadNetaPct))
-                Spacer()
-                dato("Recuperas en", Formato.anios(resultado?.aniosRecuperacion))
+        TarjetaHero(titulo: "Cash flow previsto al mes", valor: resultado.map { Formato.euros($0.cashFlowMensual) } ?? "—",
+                    accesorio: calculando ? AnyView(ProgressView().controlSize(.small)) : nil) {
+            // Tres datos en fila; con texto grande, uno debajo de otro.
+            ViewThatFits(in: .horizontal) {
+                HStack(alignment: .top) { datos(separados: true) }
+                VStack(alignment: .leading, spacing: Tema.Espacio.s) { datos(separados: false) }
             }
         }
-        .padding(Tema.Espacio.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Tema.Color.degradadoMarca, in: .rect(cornerRadius: Tema.Radio.tarjeta))
-        .animation(.default, value: resultado)
-        .accessibilityElement(children: .combine)
+        .animation(Tema.Movimiento.suave, value: resultado)
     }
 
-    private func dato(_ titulo: String, _ valor: String) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-            Text(titulo).font(Tema.Fuente.nota).foregroundStyle(.white.opacity(0.8))
-            Text(valor).font(Tema.Fuente.cifraPequena).foregroundStyle(.white)
-                .contentTransition(.numericText())
-        }
+    @ViewBuilder
+    private func datos(separados: Bool) -> some View {
+        DatoCompacto(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(resultado?.rentabilidadBrutaPct))
+        if separados { Spacer(minLength: Tema.Espacio.s) }
+        DatoCompacto(titulo: "Rentabilidad neta", valor: Formato.porcentaje(resultado?.rentabilidadNetaPct))
+        if separados { Spacer(minLength: Tema.Espacio.s) }
+        DatoCompacto(titulo: "Recuperas en", valor: Formato.anios(resultado?.aniosRecuperacion))
     }
 }
 

@@ -656,6 +656,42 @@ extension CapturasUITests {
         r.pausa(1.5)
         r.capturar("06-estadisticas-incidencias")
     }
+
+    @MainActor
+    func testRedisenoIncidenciasCalculadora() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        r.pestana("Incidencias")
+        r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-incidencias")
+        r.app.buttons["filaIncidencia"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Comunicada el"))
+        r.pausa(1)
+        r.capturar("02-incidencia-detalle")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("03-incidencia-coste")
+        r.atras()
+        r.app.buttons["Nueva incidencia"].tap()
+        r.esperar(r.app.navigationBars["Nueva incidencia"])
+        r.pausa(1)
+        r.capturar("04-incidencia-nueva")
+        r.app.buttons["Cancelar"].tap()
+
+        r.pestana("Más")
+        r.app.buttons["Calculadora de rentabilidad"].tap()
+        r.esperar(r.elemento(contiene: "Cash flow previsto"))
+        r.pausa(2)
+        r.capturar("05-calculadora")
+        r.desplazarHasta(r.app.buttons["Ver desglose completo"]).tap()
+        r.pausa(2)
+        r.capturar("06-calculadora-desglose")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("07-calculadora-detalle")
+    }
 }
 
 @MainActor

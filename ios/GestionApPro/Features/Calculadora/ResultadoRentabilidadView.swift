@@ -15,16 +15,16 @@ struct ResultadoRentabilidadView: View {
                     TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(r.rentabilidadBrutaPct), icono: "percent")
                     TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(r.rentabilidadNetaPct),
                                icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(r.rentabilidadNetaPct.double))
-                    TarjetaKPI(titulo: "Cash flow mensual", valor: Formato.euros(r.cashFlowMensual),
+                    TarjetaKPI(titulo: "Cash flow previsto", valor: Formato.euros(r.cashFlowMensual),
                                icono: "arrow.left.arrow.right", tono: Tono.signo(r.cashFlowMensual))
-                    TarjetaKPI(titulo: "Años para recuperar", valor: Formato.anios(r.aniosRecuperacion), icono: "hourglass",
+                    TarjetaKPI(titulo: "Recuperas la inversión", valor: Formato.anios(r.aniosRecuperacion), icono: "hourglass",
                                tono: .neutro)
                 }
 
                 seccion("¿A dónde va el alquiler?") {
                     DestinoAlquilerChart(resultado: r)
                         .frame(height: 200)
-                    Text("Importes mensuales. El cash flow es lo que queda tras la cuota y los gastos.")
+                    Text("Importes mensuales previstos. El cash flow es lo que queda tras la cuota y los gastos.")
                         .font(Tema.Fuente.nota)
                         .foregroundStyle(Tema.Color.textoSecundario)
                 }
@@ -76,11 +76,7 @@ struct ResultadoRentabilidadView: View {
     }
 
     private func seccion<Contenido: View>(_ titulo: String, @ViewBuilder contenido: () -> Contenido) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-            Text(titulo).estiloEtiqueta().padding(.horizontal, Tema.Espacio.xxs)
-            VStack(alignment: .leading, spacing: Tema.Espacio.s) { contenido() }
-                .tarjeta()
-        }
+        SeccionTarjeta(titulo: titulo, contenido: contenido)
     }
 }
 
@@ -100,7 +96,7 @@ struct DestinoAlquilerChart: View {
         return [
             Barra(concepto: "Alquiler", importe: resultado.alquilerAnual.double / 12, color: Tema.Color.primario),
             Barra(concepto: "Cuota", importe: resultado.cuotaMensual.double, color: Tema.Color.aviso),
-            Barra(concepto: "Gastos", importe: resultado.gastosMensuales.double, color: .gray),
+            Barra(concepto: "Gastos", importe: resultado.gastosMensuales.double, color: Tema.Color.neutro),
             Barra(concepto: "Cash flow", importe: cashFlow, color: cashFlow < 0 ? Tema.Color.negativo : Tema.Color.positivo),
         ]
     }
@@ -108,20 +104,27 @@ struct DestinoAlquilerChart: View {
     var body: some View {
         Chart(barras) { barra in
             BarMark(x: .value("Concepto", barra.concepto), y: .value("€/mes", barra.importe))
-                .foregroundStyle(barra.color.gradient)
-                .clipShape(.rect(cornerRadius: 6))
+                .foregroundStyle(barra.color)
+                .clipShape(.rect(cornerRadius: Tema.Radio.pequeno / 2))
+                .accessibilityLabel(barra.concepto)
+                .accessibilityValue("\(Formato.eurosRedondo(barra.importe)) al mes")
                 .annotation(position: barra.importe < 0 ? .bottom : .top) {
                     Text(Formato.eurosRedondo(barra.importe))
-                        .font(.caption2.monospacedDigit())
+                        .font(Tema.Fuente.nota.monospacedDigit())
                         .foregroundStyle(Tema.Color.textoSecundario)
                 }
         }
         .chartYAxis {
             AxisMarks { valor in
-                AxisGridLine()
+                AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [3, 3])).foregroundStyle(Tema.Color.borde)
                 AxisValueLabel {
                     if let v = valor.as(Double.self) { Text(Formato.eurosRedondo(v)) }
                 }
+            }
+        }
+        .chartXAxis {
+            AxisMarks { _ in
+                AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }
         }
         .accessibilityLabel("Gráfico del destino del alquiler mensual")

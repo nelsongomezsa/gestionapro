@@ -17,13 +17,9 @@ struct IncidenciasView: View {
             VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { lista in
                 let visibles = filtro == nil ? lista : lista.filter { $0.estado == filtro }
                 List {
-                    Picker("Estado", selection: $filtro) {
-                        ForEach(EstadoIncidencia.allCases) { e in
-                            Text("\(e.nombre) (\(lista.filter { $0.estado == e }.count))").tag(EstadoIncidencia?.some(e))
-                        }
-                        Text("Todas").tag(EstadoIncidencia?.none)
-                    }
-                    .pickerStyle(.segmented)
+                    SelectorSegmentado(opciones: EstadoIncidencia.allCases.map { e in
+                        (EstadoIncidencia?.some(e), "\(e.nombre) (\(lista.filter { $0.estado == e }.count))")
+                    } + [(nil, "Todas (\(lista.count))")], seleccion: $filtro)
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
 
@@ -34,7 +30,7 @@ struct IncidenciasView: View {
                     } else {
                         Section {
                             ForEach(visibles) { i in
-                                NavigationLink(value: i.id) { FilaIncidencia(incidencia: i) }
+                                NavigationLink(value: i.id) { FilaIncidencia(incidencia: i, mostrarEstado: filtro == nil) }
                                     .accessibilityIdentifier("filaIncidencia")
                                     .swipeActions(edge: .leading) {
                                         if gestiona, let accion = i.estado.accionSiguiente, let sig = i.estado.siguiente {
@@ -50,8 +46,10 @@ struct IncidenciasView: View {
                         } footer: {
                             if gestiona { Text("Desliza a la derecha para avanzar el estado y a la izquierda para borrar.") }
                         }
+                        .filaLista()
                     }
                 }
+                .estiloLista()
             }
             .navigationTitle("Incidencias")
             .navigationDestination(for: Int.self) { IncidenciaDetalleView(id: $0) { Task { await cargar() } } }
@@ -96,25 +94,28 @@ struct IncidenciasView: View {
 
 struct FilaIncidencia: View {
     let incidencia: Incidencia
+    /// false cuando la lista ya está filtrada por un estado: la insignia sería la misma en todas.
+    var mostrarEstado = true
     /// false dentro del detalle de un piso: la dirección ya está en la cabecera.
     var mostrarPiso = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
             HStack(alignment: .top) {
-                Text(incidencia.descripcion).font(Tema.Fuente.subtitulo).lineLimit(2)
+                Text(incidencia.descripcion).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto).lineLimit(3)
                 Spacer()
-                InsigniaEstado(texto: incidencia.estado.nombre, tono: incidencia.estado.tono, icono: incidencia.estado.icono)
+                if mostrarEstado {
+                    InsigniaEstado(texto: incidencia.estado.nombre, tono: incidencia.estado.tono, icono: incidencia.estado.icono)
+                }
             }
             Text(mostrarPiso ? "Hab. \(incidencia.habitacion.numero) · \(incidencia.piso.direccion)" : "Habitación \(incidencia.habitacion.numero)")
                 .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
-            HStack {
-                Text(incidencia.dias == 0 ? "Hoy" : "Hace \(incidencia.dias) días")
-                if incidencia.costeReparacion > 0 { Text("· \(Formato.euros(incidencia.costeReparacion))") }
-                Spacer()
-                Text(incidencia.inquilino.nombre).lineLimit(1)
-            }
-            .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+            // El nombre completo, sin recortar: comparte línea con la antigüedad y pasa a otra si no cabe.
+            Text([incidencia.inquilino.nombre,
+                  incidencia.dias == 0 ? "hoy" : "hace \(incidencia.dias) días",
+                  incidencia.costeReparacion > 0 ? "reparación \(Formato.euros(incidencia.costeReparacion))" : nil]
+                    .compactMap { $0 }.joined(separator: " · "))
+                .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
         }
         .padding(.vertical, Tema.Espacio.linea)
         .accessibilityElement(children: .combine)
@@ -140,18 +141,19 @@ struct IncidenciaDetalleView: View {
             List {
                 Section {
                     VStack(alignment: .leading, spacing: Tema.Espacio.s) {
-                        InsigniaEstado(texto: i.estado.nombre, tono: i.estado.tono, icono: i.estado.icono)
+                        // El estado se ve en "Progreso", justo debajo.
                         Text(i.descripcion).font(Tema.Fuente.titulo)
                         Text("Comunicada el \(i.fecha.formatted(FormatoFecha.larga))").foregroundStyle(Tema.Color.textoSecundario)
                     }
                     .listRowBackground(Color.clear)
                 }
+                .filaLista()
 
                 Section("Progreso") {
                     HStack(spacing: Tema.Espacio.xs) {
                         ForEach(EstadoIncidencia.allCases) { e in
                             let hecho = EstadoIncidencia.allCases.firstIndex(of: e)! <= EstadoIncidencia.allCases.firstIndex(of: i.estado)!
-                            VStack(spacing: 4) {
+                            VStack(spacing: Tema.Espacio.xxs) {
                                 Image(systemName: hecho ? "\(e.icono).fill" : e.icono)
                                     .foregroundStyle(hecho ? e.tono.color : Tema.Color.textoSecundario)
                                 Text(e.nombre).font(Tema.Fuente.nota)
@@ -161,10 +163,15 @@ struct IncidenciaDetalleView: View {
                     }
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel("Estado: \(i.estado.nombre)")
-                    if gestiona, let accion = i.estado.accionSiguiente {
+                }
+                .filaLista()
+
+                if gestiona, let accion = i.estado.accionSiguiente {
+                    Section {
                         BotonPrincipal(titulo: accion, icono: i.estado.siguiente?.icono) { Task { await avanzar(i) } }
-                            .listRowInsets(EdgeInsets()).listRowBackground(Color.clear)
                     }
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
                 }
 
                 Section("Detalles") {
@@ -172,6 +179,7 @@ struct IncidenciaDetalleView: View {
                     LabeledContent("Piso", value: "\(i.piso.direccion), \(i.piso.ciudad)")
                     LabeledContent("Inquilino", value: i.inquilino.nombre)
                 }
+                .filaLista()
 
                 Section {
                     if gestiona {
@@ -184,13 +192,16 @@ struct IncidenciaDetalleView: View {
                 } header: {
                     Text("Coste")
                 }
+                .filaLista()
 
                 if gestiona {
                     Section {
                         Button("Borrar incidencia", role: .destructive) { confirmarBorrado = true }.frame(maxWidth: .infinity)
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .confirmationDialog("¿Borrar la incidencia?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
                 Button("Borrar", role: .destructive) { Task { await borrar(i) } }
             }
@@ -267,6 +278,7 @@ struct NuevaIncidenciaView: View {
                         }
                         .disabled(idPiso == nil)
                     }
+                    .filaLista()
                 }
                 Section {
                     TextField("Describe el problema", text: $descripcion, axis: .vertical).lineLimit(3...6)
@@ -275,13 +287,17 @@ struct NuevaIncidenciaView: View {
                 } footer: {
                     Text("\(descripcion.count)/255")
                 }
+                .filaLista()
                 if gestiona {
                     Section("Coste estimado (opcional)") { CampoNumerico("Coste de reparación", valor: $coste, sufijo: "€") }
+                    .filaLista()
                 }
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .navigationTitle("Nueva incidencia")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
