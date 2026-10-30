@@ -26,6 +26,7 @@ struct MapaDireccion: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .tint(Tema.Color.primarioRelleno)
                     .controlSize(.large)
                     .padding()
                 }

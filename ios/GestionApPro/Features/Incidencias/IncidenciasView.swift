@@ -96,6 +96,8 @@ struct IncidenciasView: View {
 
 struct FilaIncidencia: View {
     let incidencia: Incidencia
+    /// false dentro del detalle de un piso: la dirección ya está en la cabecera.
+    var mostrarPiso = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
@@ -104,8 +106,8 @@ struct FilaIncidencia: View {
                 Spacer()
                 InsigniaEstado(texto: incidencia.estado.nombre, tono: incidencia.estado.tono, icono: incidencia.estado.icono)
             }
-            Text("Hab. \(incidencia.habitacion.numero) · \(incidencia.piso.direccion)")
-                .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+            Text(mostrarPiso ? "Hab. \(incidencia.habitacion.numero) · \(incidencia.piso.direccion)" : "Habitación \(incidencia.habitacion.numero)")
+                .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
             HStack {
                 Text(incidencia.dias == 0 ? "Hoy" : "Hace \(incidencia.dias) días")
                 if incidencia.costeReparacion > 0 { Text("· \(Formato.euros(incidencia.costeReparacion))") }

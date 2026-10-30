@@ -12,6 +12,8 @@ struct TarjetaKPI: View {
     /// Con qué se compara la tendencia ("2025"): toda cifra comparativa lo dice.
     var frenteA: String = ""
 
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
+
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             IconoEtiqueta(icono: icono, tono: tono, tamano: Tema.Tamano.iconoPequeno)
@@ -22,10 +24,11 @@ struct TarjetaKPI: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .contentTransition(.numericText())
+                // Con texto grande de accesibilidad, el título pasa a varias líneas en vez de encogerse.
                 Text(titulo)
                     .font(Tema.Fuente.detalle.weight(.medium))
                     .foregroundStyle(Tema.Color.texto)
-                    .lineLimit(1)
+                    .lineLimit(tamanoTexto.isAccessibilitySize ? 3 : 1)
                     .minimumScaleFactor(0.8)
                 if let tendencia {
                     InsigniaEstado(texto: frenteA.isEmpty ? Formato.porcentaje(abs(tendencia))

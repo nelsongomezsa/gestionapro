@@ -62,6 +62,8 @@ struct ContratosView: View {
 
 struct FilaContratoCompleto: View {
     let contrato: Contrato
+    /// false dentro del detalle de un piso: la dirección ya está en la cabecera.
+    var mostrarPiso = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
@@ -70,8 +72,8 @@ struct FilaContratoCompleto: View {
                 Spacer()
                 Text(Formato.euros(contrato.precioMensual)).font(Tema.Fuente.cifraPequena)
             }
-            Text("Hab. \(contrato.habitacion.numero) · \(contrato.piso.direccion)")
-                .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+            Text(mostrarPiso ? "Hab. \(contrato.habitacion.numero) · \(contrato.piso.direccion)" : "Habitación \(contrato.habitacion.numero)")
+                .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
             HStack {
                 Text(FormatoFecha.rango(contrato.fechaInicio, contrato.fechaFin))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)

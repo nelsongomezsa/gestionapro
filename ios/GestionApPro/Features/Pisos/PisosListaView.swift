@@ -50,14 +50,18 @@ struct PisosListaView: View {
                         }
                     }
                 } else {
-                    HStack {
-                        Text("\(pisos.count) \(pisos.count == 1 ? "piso" : "pisos")")
-                        if let ciudad = vm.ciudad { Text("· \(ciudad)") }
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(vm.ciudad.map { "\(pisos.count) en \($0)" } ?? "\(pisos.count) \(pisos.count == 1 ? "piso" : "pisos")")
+                            .font(Tema.Fuente.tituloSeccion)
+                            .foregroundStyle(Tema.Color.texto)
                         Spacer()
-                        Text("Orden: \(vm.orden.rawValue)")
+                        Text("Por \(vm.orden.rawValue.lowercased())")
+                            .font(Tema.Fuente.nota)
+                            .foregroundStyle(Tema.Color.textoSecundario)
+                            .accessibilityLabel("Ordenados por \(vm.orden.rawValue)")
                     }
-                    .estiloEtiqueta()
                     .padding(.horizontal, Tema.Espacio.xxs)
+                    .padding(.top, Tema.Espacio.xs)
 
                     ForEach(pisos) { piso in
                         NavigationLink(value: piso) { TarjetaPiso(piso: piso) }
@@ -66,8 +70,10 @@ struct PisosListaView: View {
                     }
                 }
             }
-            .padding(Tema.Espacio.m)
+            .padding(.horizontal, Tema.Espacio.m)
+            .padding(.bottom, Tema.Espacio.l)
         }
+        .background(Tema.Color.fondo)
     }
 
     private var menuFiltros: some ToolbarContent {
@@ -88,44 +94,19 @@ struct PisosListaView: View {
     }
 }
 
-/// Cabecera con los totales de la cartera.
+/// Cabecera con los totales previstos de la cartera (contratos activos y datos financieros).
 struct ResumenCarteraView: View {
     let resumen: ResumenCartera
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.m) {
-            VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
-                Text("Cash flow mensual de la cartera")
-                    .font(Tema.Fuente.detalle)
-                    .foregroundStyle(.white.opacity(0.85))
-                Text(Formato.euros(resumen.cashFlowMensual))
-                    .font(Tema.Fuente.cifraGrande)
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.6)
-                    .lineLimit(1)
+        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual)) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                BarraProgreso(valor: resumen.ocupacion, tono: Tono.ocupacion(resumen.ocupacion * 100))
+                Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) habitaciones libres")
+                    .font(Tema.Fuente.nota)
+                    .foregroundStyle(Tema.Color.textoSecundario)
             }
-            HStack {
-                dato("Ingresos/mes", Formato.euros(resumen.ingresosMensuales))
-                Spacer()
-                dato("Ocupación", Formato.porcentaje(resumen.ocupacion * 100))
-                Spacer()
-                dato("Libres", "\(resumen.disponibles)")
-            }
-        }
-        .padding(Tema.Espacio.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Tema.Color.degradadoMarca, in: .rect(cornerRadius: Tema.Radio.tarjeta))
-        .accessibilityElement(children: .combine)
-    }
-
-    private func dato(_ titulo: String, _ valor: String) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-            Text(titulo)
-                .font(Tema.Fuente.nota)
-                .foregroundStyle(.white.opacity(0.8))
-            Text(valor)
-                .font(Tema.Fuente.cifraPequena)
-                .foregroundStyle(.white)
+            DatoCompacto(titulo: "Ingresos previstos al mes", valor: Formato.euros(resumen.ingresosMensuales))
         }
     }
 }

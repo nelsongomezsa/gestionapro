@@ -17,6 +17,7 @@ struct EstadoVacio: View {
             if let accionTitulo, let accion {
                 Button(accionTitulo, action: accion)
                     .buttonStyle(.borderedProminent)
+                    .tint(Tema.Color.primarioRelleno)
             }
         }
     }

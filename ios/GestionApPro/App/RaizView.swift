@@ -20,6 +20,7 @@ struct RaizView: View {
                 } actions: {
                     Button("Reintentar") { Task { await sesion.restaurar() } }
                         .buttonStyle(.borderedProminent)
+                        .tint(Tema.Color.primarioRelleno)
                     Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
                 }
             case let .conectado(usuario):

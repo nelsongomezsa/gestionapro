@@ -189,7 +189,7 @@ struct InicioView: View {
                     .foregroundStyle(Tema.Color.textoSecundario)
             }
             HStack(alignment: .top) {
-                DatoCompacto(titulo: "Pendiente", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
+                DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
                 Spacer()
                 DatoCompacto(titulo: "Cash flow previsto", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
             }

@@ -19,6 +19,7 @@ struct PagoFormView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Group {
                 Section("Contrato") {
                     Picker("Contrato activo", selection: $seleccion) {
                         Text("Elige un contrato").tag(Int?.none)
@@ -37,7 +38,10 @@ struct PagoFormView: View {
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
                 }
+                }
+                .filaLista()
             }
+            .estiloLista()
             .environment(\.locale, Formato.locale)
             .navigationTitle("Registrar pago")
             .navigationBarTitleDisplayMode(.inline)

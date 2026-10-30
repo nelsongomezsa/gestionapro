@@ -12,7 +12,7 @@ final class CapturasUITests: XCTestCase {
     func test4A() throws {
         let r = try Recorrido.iniciar()
 
-        r.esperar(r.app.staticTexts["Cash flow mensual de la cartera"])
+        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
         r.capturar("02-inicio")
 
         r.pestana("Pisos")
@@ -53,7 +53,7 @@ extension CapturasUITests {
     @MainActor
     func test4B() throws {
         let r = try Recorrido.iniciar()
-        r.esperar(r.app.staticTexts["Cash flow mensual de la cartera"])
+        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
 
         // Habitaciones de un piso
         r.pestana("Pisos")
@@ -217,7 +217,7 @@ extension CapturasUITests {
     @MainActor
     func test4C() throws {
         let r = try Recorrido.iniciar()
-        r.esperar(r.app.staticTexts["Cash flow mensual de la cartera"])
+        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
 
         // Cobros
         r.pestana("Cobros")
@@ -520,6 +520,55 @@ extension CapturasUITests {
         r.app.swipeUp()
         r.pausa(1.5)
         r.capturar("03-inicio-vencimientos-actividad")
+    }
+
+    @MainActor
+    func testRedisenoPisosCobros() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-pisos")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.pausa(2)
+        r.capturar("02-piso-detalle")
+        r.app.buttons["editarDatosFinancieros"].firstMatch.tap()
+        r.esperar(r.app.navigationBars["Datos financieros"])
+        r.pausa(1)
+        r.capturar("03-datos-financieros")
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("04-piso-grafico-calculo")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("05-piso-habitaciones")
+        r.app.swipeUp()
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("06-piso-contratos-pagos")
+        r.atras()
+        r.app.buttons["Mapa"].tap()
+        r.pausa(8)
+        r.capturar("07-mapa-pisos")
+        r.atras()
+
+        r.pestana("Cobros")
+        r.esperar(r.elemento(contiene: "Cobrado en"))
+        r.pausa(1.5)
+        r.capturar("08-cobros")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("09-cobros-pagos")
+        r.app.buttons["Registrar pago"].tap()
+        r.esperar(r.app.navigationBars["Registrar pago"])
+        r.pausa(1)
+        r.capturar("10-registrar-pago")
+        r.app.buttons["Cancelar"].tap()
     }
 }
 

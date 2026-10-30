@@ -9,13 +9,15 @@ struct TarjetaPiso: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.s) {
-            HStack(alignment: .top) {
+        VStack(alignment: .leading, spacing: Tema.Espacio.m) {
+            HStack(alignment: .top, spacing: Tema.Espacio.s) {
+                IconoEtiqueta(icono: "building.2", tono: .primario)
                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text(piso.direccion)
                         .font(Tema.Fuente.subtitulo)
+                        .foregroundStyle(Tema.Color.texto)
                         .fixedSize(horizontal: false, vertical: true)
-                    Label(piso.ciudad.nombre, systemImage: "mappin.and.ellipse")
+                    Text(piso.ciudad.nombre)
                         .font(Tema.Fuente.detalle)
                         .foregroundStyle(Tema.Color.textoSecundario)
                 }
@@ -25,11 +27,15 @@ struct TarjetaPiso: View {
 
             HStack(alignment: .lastTextBaseline) {
                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                    Text("Cash flow mensual").estiloEtiqueta()
+                    Text("Cash flow previsto")
+                        .font(Tema.Fuente.nota)
+                        .foregroundStyle(Tema.Color.textoSecundario)
                     if let m = piso.metricas {
                         Text(Formato.euros(m.cashFlowMensual))
                             .font(Tema.Fuente.cifra)
                             .foregroundStyle(Tono.signo(m.cashFlowMensual).color)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
                     } else {
                         Text("Sin datos financieros")
                             .font(Tema.Fuente.detalle)
@@ -38,15 +44,17 @@ struct TarjetaPiso: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: Tema.Espacio.linea) {
-                    Text("Rent. bruta").estiloEtiqueta()
+                    Text("Rentabilidad bruta")
+                        .font(Tema.Fuente.nota)
+                        .foregroundStyle(Tema.Color.textoSecundario)
                     Text(Formato.porcentaje(piso.metricas?.rentabilidadBrutaPct))
                         .font(Tema.Fuente.cifraPequena)
+                        .foregroundStyle(Tema.Color.texto)
                 }
             }
 
-            VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
-                ProgressView(value: ocupacion)
-                    .tint(ocupacion >= 0.75 ? Tema.Color.positivo : (ocupacion >= 0.5 ? Tema.Color.aviso : Tema.Color.negativo))
+            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                BarraProgreso(valor: ocupacion, tono: Tono.ocupacion(ocupacion * 100))
                 Text("\(piso.ocupacion.alquiladas) de \(piso.ocupacion.total) habitaciones alquiladas")
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)

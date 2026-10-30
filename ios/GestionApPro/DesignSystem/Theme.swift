@@ -137,6 +137,11 @@ enum Tono: Sendable {
         valor > 0 ? .positivo : (valor < 0 ? .negativo : .neutro)
     }
 
+    /// Semáforo de ocupación (en %), el mismo en Inicio, Pisos y el detalle.
+    static func ocupacion(_ porcentaje: Double) -> Tono {
+        porcentaje >= 75 ? .positivo : (porcentaje >= 40 ? .aviso : .negativo)
+    }
+
     static func signo(_ valor: Double?) -> Tono {
         guard let valor else { return .neutro }
         return valor > 0 ? .positivo : (valor < 0 ? .negativo : .neutro)
@@ -147,6 +152,18 @@ extension View {
     /// Contenedor de tarjeta: superficie, radio grande y borde fino (sombra solo en modo claro).
     func tarjeta(relleno: CGFloat = Tema.Espacio.m) -> some View {
         modifier(EstiloTarjeta(relleno: relleno))
+    }
+
+    /// Listas y formularios con las capas del tema (el fondo del sistema en oscuro es negro,
+    /// no el azul marino de la app). Las filas llevan `filaLista()`.
+    func estiloLista() -> some View {
+        scrollContentBackground(.hidden)
+            .background(Tema.Color.fondo)
+    }
+
+    /// Fondo de las filas de una lista; se aplica a cada `Section`.
+    func filaLista() -> some View {
+        listRowBackground(Tema.Color.superficie)
     }
 
     /// Etiqueta en mayúsculas con algo de espaciado entre letras.

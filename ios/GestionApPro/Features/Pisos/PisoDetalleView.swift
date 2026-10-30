@@ -5,6 +5,8 @@ struct PisoDetalleView: View {
     @Environment(SesionStore.self) private var sesion
     @State private var piso: Piso
     @State private var ingresos: [ImporteMes] = []
+    /// nil mientras carga; así una respuesta vacía o un fallo no se quedan "cargando" para siempre.
+    @State private var ingresosCargados: Bool?
     @State private var contratos: [Contrato] = []
     @State private var pagos: [Pago] = []
     @State private var incidencias: [Incidencia] = []
@@ -17,58 +19,39 @@ struct PisoDetalleView: View {
         _piso = State(initialValue: piso)
     }
 
-    private let columnas = [GridItem(.flexible(), spacing: Tema.Espacio.s), GridItem(.flexible(), spacing: Tema.Espacio.s)]
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Tema.Espacio.l) {
                 cabecera
 
                 if let m = piso.metricas {
-                    LazyVGrid(columns: columnas, spacing: Tema.Espacio.s) {
-                        TarjetaKPI(titulo: "Cash flow mensual", valor: Formato.euros(m.cashFlowMensual),
-                                   icono: "arrow.left.arrow.right", tono: Tono.signo(m.cashFlowMensual))
-                        TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
-                                   icono: "percent", tono: (m.calificacion as Calificacion?).tono)
-                        TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
-                                   icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
-                                   detalle: "Antes de financiación")
-                        TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
-                                   icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
-                                   detalle: "Cash flow anual / capital propio")
+                    TarjetaHero(titulo: "Cash flow previsto al mes", valor: Formato.euros(m.cashFlowMensual),
+                                accesorio: AnyView((m.calificacion as Calificacion?).insignia)) {
+                        HStack(alignment: .top) {
+                            DatoCompacto(titulo: "Ingresos previstos", valor: Formato.euros(piso.ingresosMensuales))
+                            Spacer()
+                            DatoCompacto(titulo: "Hipoteca y gastos al mes",
+                                         valor: Formato.euros(m.cuotaMensualHipoteca + m.gastosAnuales / 12))
+                        }
+                        BotonSecundario(titulo: "Editar datos financieros", icono: "slider.horizontal.3") { editando = true }
+                            .accessibilityIdentifier("editarDatosFinancieros")
                     }
-                }
 
-                seccion("Ingresos últimos 12 meses") {
-                    if ingresos.isEmpty {
-                        ProgressView().frame(maxWidth: .infinity, minHeight: 160)
-                    } else {
-                        GraficoIngresos(meses: ingresos).frame(height: 170)
-                    }
-                }
-
-                if let m = piso.metricas {
-                    seccion("Flujo de caja") {
-                        FilaMetrica(titulo: "Ingresos mensuales", valor: Formato.euros(piso.ingresosMensuales),
-                                    nota: "Contratos activos hoy")
-                        Divider()
-                        FilaMetrica(titulo: "Cuota de hipoteca", valor: Formato.euros(m.cuotaMensualHipoteca))
-                        Divider()
-                        FilaMetrica(titulo: "Gastos anuales", valor: Formato.euros(m.gastosAnuales))
-                        Divider()
-                        FilaMetrica(titulo: "Cash flow mensual", valor: Formato.euros(m.cashFlowMensual),
-                                    tono: Tono.signo(m.cashFlowMensual))
-                    }
-                    seccion("Inversión") {
-                        FilaMetrica(titulo: "Inversión total", valor: Formato.euros(m.inversionTotal))
-                        Divider()
-                        FilaMetrica(titulo: "Capital propio", valor: Formato.euros(m.capitalPropio))
-                        Divider()
-                        FilaMetrica(titulo: "Plusvalía latente", valor: Formato.euros(m.plusvaliaLatente),
-                                    tono: Tono.signo(m.plusvaliaLatente))
-                        Divider()
-                        FilaMetrica(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
-                                    nota: "Años de alquiler para pagar la inversión")
+                    Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
+                        GridRow {
+                            TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
+                                       icono: "percent", tono: (m.calificacion as Calificacion?).tono, detalle: "Alquiler / inversión")
+                            TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
+                                       icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
+                                       detalle: "Antes de financiación")
+                        }
+                        GridRow {
+                            TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
+                                       icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
+                                       detalle: "Sobre el capital propio")
+                            TarjetaKPI(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
+                                       icono: "hourglass", tono: .primario, detalle: "Años para recuperarla")
+                        }
                     }
                 } else {
                     EstadoVacio(icono: "chart.bar.xaxis", titulo: "Sin datos financieros",
@@ -77,68 +60,102 @@ struct PisoDetalleView: View {
                         .tarjeta()
                 }
 
-                seccion("Gestión") {
+                SeccionTarjeta(titulo: "Ingresos cobrados · 12 meses") {
+                    if ingresosCargados == nil {
+                        ProgressView().frame(maxWidth: .infinity, minHeight: 160)
+                    } else if ingresosCargados == false {
+                        Text("No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar.")
+                            .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                    } else {
+                        GraficoIngresos(meses: ingresos).frame(height: 220)
+                    }
+                }
+
+                if let m = piso.metricas {
+                    // Desglose del cash flow de la tarjeta principal (sin repetir el total).
+                    SeccionTarjeta(titulo: "Cómo se calcula") {
+                        FilaMetrica(titulo: "Ingresos previstos", valor: Formato.euros(piso.ingresosMensuales),
+                                    nota: "Rentas de los contratos activos hoy", tono: .positivo)
+                        Divider().overlay(Tema.Color.borde)
+                        FilaMetrica(titulo: "Cuota de hipoteca", valor: "− " + Formato.euros(m.cuotaMensualHipoteca))
+                        Divider().overlay(Tema.Color.borde)
+                        FilaMetrica(titulo: "Gastos", valor: "− " + Formato.euros(m.gastosAnuales / 12),
+                                    nota: "\(Formato.euros(m.gastosAnuales)) al año, repartidos por mes")
+                    }
+                    SeccionTarjeta(titulo: "Inversión") {
+                        FilaMetrica(titulo: "Inversión total", valor: Formato.euros(m.inversionTotal))
+                        Divider().overlay(Tema.Color.borde)
+                        FilaMetrica(titulo: "Capital propio", valor: Formato.euros(m.capitalPropio))
+                        Divider().overlay(Tema.Color.borde)
+                        FilaMetrica(titulo: "Plusvalía latente", valor: Formato.euros(m.plusvaliaLatente),
+                                    nota: "Valor actual frente al precio de compra", tono: Tono.signo(m.plusvaliaLatente))
+                    }
+                }
+
+                SeccionTarjeta(titulo: "Habitaciones") {
+                    let o = piso.ocupacion
+                    VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                        BarraProgreso(valor: o.total > 0 ? Double(o.alquiladas) / Double(o.total) : 0,
+                                      tono: Tono.ocupacion(o.total > 0 ? Double(o.alquiladas) * 100 / Double(o.total) : 0))
+                        Text("\(o.alquiladas) de \(o.total) alquiladas")
+                            .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                    }
+                    HStack(alignment: .top) {
+                        DatoCompacto(titulo: "Disponibles", valor: "\(o.disponibles)")
+                        Spacer()
+                        DatoCompacto(titulo: "En mantenimiento", valor: "\(o.mantenimiento)",
+                                     tono: o.mantenimiento > 0 ? .aviso : nil)
+                    }
+                    Divider().overlay(Tema.Color.borde)
                     NavigationLink(value: DestinoPiso.habitaciones(piso.breve)) {
-                        FilaMetrica(titulo: "Habitaciones", valor: "\(piso.ocupacion.total)", icono: "bed.double")
+                        FilaMetrica(titulo: "Gestionar habitaciones", valor: "", icono: "bed.double")
                     }
                     .accessibilityIdentifier("enlaceHabitaciones")
-                    Divider()
+                    Divider().overlay(Tema.Color.borde)
                     NavigationLink(value: DestinoPiso.mapa(piso.breve)) {
-                        FilaMetrica(titulo: "Ver en el mapa", valor: piso.ciudad.nombre, icono: "map")
+                        FilaMetrica(titulo: "Ver en el mapa", valor: "", icono: "map")
                     }
                     .accessibilityIdentifier("enlaceMapa")
-                    Divider()
-                    Button { editando = true } label: {
-                        FilaMetrica(titulo: "Editar datos financieros", valor: "", icono: "slider.horizontal.3")
-                    }
-                    .accessibilityIdentifier("editarDatosFinancieros")
                 }
                 .buttonStyle(.plain)
 
-                seccion("Contratos activos (\(contratos.count))") {
+                SeccionTarjeta(titulo: "Contratos activos") {
                     if contratos.isEmpty { Text("Sin contratos activos").foregroundStyle(Tema.Color.textoSecundario) }
                     ForEach(contratos) { c in
-                        NavigationLink(value: DestinoPiso.contrato(c.id)) { FilaContratoCompleto(contrato: c).contentShape(.rect) }
+                        NavigationLink(value: DestinoPiso.contrato(c.id)) { FilaContratoCompleto(contrato: c, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
-                        if c != contratos.last { Divider() }
+                        if c != contratos.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
 
-                seccion("Últimos pagos") {
+                SeccionTarjeta(titulo: "Últimos pagos") {
                     if pagos.isEmpty { Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario) }
                     ForEach(pagos.prefix(5)) { p in
                         FilaPago(pago: p)
-                        if p != pagos.prefix(5).last { Divider() }
+                        if p != pagos.prefix(5).last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
 
-                seccion("Incidencias abiertas (\(incidencias.count))") {
+                SeccionTarjeta(titulo: "Incidencias abiertas") {
                     if incidencias.isEmpty {
-                        Label("Sin incidencias abiertas", systemImage: "checkmark.seal").foregroundStyle(Tema.Color.positivo)
+                        HStack(spacing: Tema.Espacio.s) {
+                            IconoEtiqueta(icono: "checkmark.seal", tono: .positivo)
+                            Text("Sin incidencias abiertas").foregroundStyle(Tema.Color.textoSecundario)
+                        }
                     }
                     ForEach(incidencias) { i in
-                        NavigationLink(value: DestinoPiso.incidencia(i.id)) { FilaIncidencia(incidencia: i).contentShape(.rect) }
+                        NavigationLink(value: DestinoPiso.incidencia(i.id)) { FilaIncidencia(incidencia: i, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
-                        if i != incidencias.last { Divider() }
+                        if i != incidencias.last { Divider().overlay(Tema.Color.borde) }
                     }
-                }
-
-                seccion("Ocupación") {
-                    FilaMetrica(titulo: "Habitaciones", valor: "\(piso.ocupacion.total)", icono: "bed.double")
-                    Divider()
-                    FilaMetrica(titulo: "Alquiladas", valor: "\(piso.ocupacion.alquiladas)", tono: .positivo, icono: "key")
-                    Divider()
-                    FilaMetrica(titulo: "Disponibles", valor: "\(piso.ocupacion.disponibles)", icono: "door.left.hand.open")
-                    Divider()
-                    FilaMetrica(titulo: "En mantenimiento", valor: "\(piso.ocupacion.mantenimiento)",
-                                tono: piso.ocupacion.mantenimiento > 0 ? .aviso : nil, icono: "wrench")
                 }
 
                 if let notas = piso.datosFinancieros?.notas, !notas.isEmpty {
-                    seccion("Notas") { Text(notas).font(Tema.Fuente.detalle) }
+                    SeccionTarjeta(titulo: "Notas") { Text(notas).font(Tema.Fuente.detalle) }
                 }
             }
-            .padding(Tema.Espacio.m)
+            .padding(.horizontal, Tema.Espacio.m)
+            .padding(.bottom, Tema.Espacio.l)
         }
         .background(Tema.Color.fondo)
         .navigationTitle("Piso")
@@ -161,14 +178,17 @@ struct PisoDetalleView: View {
     }
 
     private var cabecera: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-            (piso.metricas?.calificacion).insignia
+        VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
             Text(piso.direccion)
                 .font(Tema.Fuente.titulo)
+                .foregroundStyle(Tema.Color.texto)
                 .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
             Label(piso.ciudad.nombre, systemImage: "mappin.and.ellipse")
+                .font(Tema.Fuente.detalle)
                 .foregroundStyle(Tema.Color.textoSecundario)
         }
+        .padding(.top, Tema.Espacio.xs)
     }
 
     private func cargarExtras() async {
@@ -176,7 +196,12 @@ struct PisoDetalleView: View {
         async let c = sesion.api.enviar(.contratos(filtro: .activos, piso: piso.id))
         async let p = sesion.api.enviar(.pagosDePiso(piso.id))
         async let inc = sesion.api.enviar(.incidencias(piso: piso.id))
-        ingresos = (try? await i) ?? []
+        if let lista = try? await i {
+            ingresos = lista
+            ingresosCargados = true
+        } else {
+            ingresosCargados = false
+        }
         contratos = (try? await c) ?? []
         pagos = (try? await p) ?? []
         incidencias = ((try? await inc) ?? []).filter { $0.estado != .resuelta }
@@ -195,14 +220,6 @@ struct PisoDetalleView: View {
         } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription
-        }
-    }
-
-    private func seccion<Contenido: View>(_ titulo: String, @ViewBuilder contenido: () -> Contenido) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-            Text(titulo).estiloEtiqueta().padding(.horizontal, Tema.Espacio.xxs)
-            VStack(alignment: .leading, spacing: Tema.Espacio.s) { contenido() }
-                .tarjeta()
         }
     }
 }
@@ -241,6 +258,7 @@ struct DatosFinancierosFormView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Group {
                 Section("Compra") {
                     campo("Precio de compra", \.precioCompra)
                     campo("ITP pagado", \.itpPagado)
@@ -248,7 +266,7 @@ struct DatosFinancierosFormView: View {
                     campo("Registro", \.gastosRegistro)
                     campo("Reforma", \.costeReforma)
                     campo("Mobiliario", \.costeMobiliario)
-                    campo("Otros gastos de compra", \.otrosGastosCompra)
+                    campo("Otros gastos", \.otrosGastosCompra)
                 }
                 Section {
                     Toggle("Tiene hipoteca", isOn: $d.tieneHipoteca)
@@ -276,7 +294,10 @@ struct DatosFinancierosFormView: View {
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
                 }
+                }
+                .filaLista()
             }
+            .estiloLista()
             .navigationTitle("Datos financieros")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

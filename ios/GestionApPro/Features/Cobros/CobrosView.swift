@@ -13,38 +13,49 @@ struct CobrosView: View {
             VistaCarga(estado: vm.resumen, reintentar: { Task { await vm.cargar(con: sesion.api) } }) { r in
                 List {
                     Section {
-                        SelectorMes(mes: vm.mes, maximo: .actual) { nuevo in Task { await vm.cambiarMes(nuevo, con: sesion.api) } }
-                        ResumenCobros(resumen: r)
+                        VStack(spacing: Tema.Espacio.m) {
+                            SelectorMes(mes: vm.mes, maximo: .actual) { nuevo in Task { await vm.cambiarMes(nuevo, con: sesion.api) } }
+                            ResumenCobros(resumen: r)
+                        }
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
 
                     Section {
-                        if r.pendientes.isEmpty {
+                        let pendientes = pendientesVisibles(r)
+                        if pendientes.isEmpty {
                             Label("Todos los contratos del mes tienen algún pago", systemImage: "checkmark.seal.fill")
                                 .foregroundStyle(Tema.Color.positivo)
                         }
-                        ForEach(r.pendientes.filter { vm.filtroInquilino == nil || $0.inquilino.id == vm.filtroInquilino }) { p in
-                            HStack {
+                        ForEach(pendientes) { p in
+                            HStack(alignment: .top, spacing: Tema.Espacio.s) {
+                                AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
                                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                                    Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo)
+                                    Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                                     Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
-                                        .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                                        .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                                 }
-                                Spacer()
-                                Text(Formato.euros(p.importe)).font(Tema.Fuente.cifraPequena)
-                                Button("Registrar") {
-                                    nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                                Spacer(minLength: Tema.Espacio.xs)
+                                VStack(alignment: .trailing, spacing: Tema.Espacio.xs) {
+                                    Text(Formato.euros(p.importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.texto)
+                                    Button("Registrar") {
+                                        nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    // Relleno fijo: con el acento claro del modo oscuro el texto blanco no llegaba a 4,5:1.
+                                    .tint(Tema.Color.primarioRelleno)
+                                    .controlSize(.small)
+                                    .accessibilityLabel("Registrar pago de \(p.inquilino.nombre)")
                                 }
-                                .buttonStyle(.bordered)
-                                .controlSize(.small)
                             }
+                            .padding(.vertical, Tema.Espacio.xxs)
                         }
                     } header: {
-                        Text("Pendientes de cobro (\(r.pendientes.count))")
+                        Text("Pendientes de cobro (\(pendientesVisibles(r).count))")
                     } footer: {
                         Text("Contratos vigentes en el mes sin ningún pago registrado.")
                     }
+                    .filaLista()
 
                     Section {
                         if vm.pagosVisibles.isEmpty {
@@ -56,13 +67,19 @@ struct CobrosView: View {
                         }
                     } header: {
                         HStack {
-                            Text("Pagos (\(vm.pagosVisibles.count))")
+                            Text("Pagos registrados (\(vm.pagosVisibles.count))")
                             Spacer()
-                            Text(Formato.euros(vm.totalVisible)).monospacedDigit()
+                            // El total del mes ya está arriba; aquí solo cuando se filtra.
+                            if vm.filtroInquilino != nil || !vm.busqueda.isEmpty {
+                                Text(Formato.euros(vm.totalVisible)).monospacedDigit()
+                            }
                         }
                     }
+                    .filaLista()
                 }
+                .estiloLista()
             }
+            .background(Tema.Color.fondo)
             .navigationTitle("Cobros")
             .searchable(text: $vm.busqueda, prompt: "Inquilino, dirección o habitación")
             .toolbar {
@@ -89,6 +106,11 @@ struct CobrosView: View {
             .alertaError($vm.error)
         }
     }
+
+    /// Pendientes del mes con el filtro de inquilino aplicado (filas y contador salen de aquí).
+    private func pendientesVisibles(_ r: ResumenPagos) -> [ResumenPagos.Pendiente] {
+        r.pendientes.filter { vm.filtroInquilino == nil || $0.inquilino.id == vm.filtroInquilino }
+    }
 }
 
 struct PagoPrellenado: Identifiable {
@@ -108,7 +130,10 @@ struct SelectorMes: View {
             Button { cambiar(mes.anterior) } label: { Image(systemName: "chevron.left") }
                 .accessibilityLabel("Mes anterior")
             Spacer()
-            Text(mes.nombre).font(Tema.Fuente.subtitulo).contentTransition(.numericText())
+            Text(mes.nombre)
+                .font(Tema.Fuente.subtitulo)
+                .foregroundStyle(Tema.Color.texto)
+                .contentTransition(.numericText())
             Spacer()
             Button { cambiar(mes.siguiente) } label: { Image(systemName: "chevron.right") }
                 .accessibilityLabel("Mes siguiente")
@@ -116,10 +141,11 @@ struct SelectorMes: View {
         }
         .buttonStyle(.bordered)
         .buttonBorderShape(.circle)
-        .padding(.bottom, Tema.Espacio.s)
+        .tint(Tema.Color.primario)
     }
 }
 
+/// Lo cobrado en el mes frente a lo esperado (rentas de los contratos vigentes).
 struct ResumenCobros: View {
     let resumen: ResumenPagos
 
@@ -128,32 +154,19 @@ struct ResumenCobros: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.m) {
-            VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
-                Text("Cobrado en \(resumen.nombreMes)").font(Tema.Fuente.detalle).foregroundStyle(.white.opacity(0.85))
-                Text(Formato.euros(resumen.cobrado))
-                    .font(Tema.Fuente.cifraGrande).foregroundStyle(.white)
-                    .lineLimit(1).minimumScaleFactor(0.6)
+        TarjetaHero(titulo: "Cobrado en \(resumen.nombreMes)", valor: Formato.euros(resumen.cobrado)) {
+            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                BarraProgreso(valor: progreso, tono: .positivo)
+                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(resumen.esperado)) esperados")
+                    .font(Tema.Fuente.nota)
+                    .foregroundStyle(Tema.Color.textoSecundario)
             }
-            ProgressView(value: progreso).tint(.white)
-            HStack {
-                dato("Esperado", Formato.euros(resumen.esperado))
+            HStack(alignment: .top) {
+                DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(resumen.pendiente),
+                             tono: resumen.pendiente > 0 ? .aviso : .positivo)
                 Spacer()
-                dato("Pendiente", Formato.euros(resumen.pendiente))
-                Spacer()
-                dato("Pagos", "\(resumen.numeroPagos)")
+                DatoCompacto(titulo: "Pagos registrados", valor: "\(resumen.numeroPagos)")
             }
-        }
-        .padding(Tema.Espacio.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Tema.Color.degradadoMarca, in: .rect(cornerRadius: Tema.Radio.tarjeta))
-        .accessibilityElement(children: .combine)
-    }
-
-    private func dato(_ titulo: String, _ valor: String) -> some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-            Text(titulo).font(Tema.Fuente.nota).foregroundStyle(.white.opacity(0.8))
-            Text(valor).font(Tema.Fuente.cifraPequena).foregroundStyle(.white)
         }
     }
 }
@@ -162,14 +175,17 @@ struct FilaPago: View {
     let pago: Pago
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top, spacing: Tema.Espacio.s) {
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                Text(pago.inquilino.nombre).font(Tema.Fuente.subtitulo)
+                Text(pago.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                 Text("\(pago.fechaPago.formatted(FormatoFecha.corta)) · \(pago.metodoPago.nombre) · Hab. \(pago.numeroHabitacion)")
-                    .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                    .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }
-            Spacer()
-            Text(Formato.euros(pago.cantidad)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.positivo)
+            Spacer(minLength: Tema.Espacio.xs)
+            Text(Formato.euros(pago.cantidad))
+                .font(Tema.Fuente.cifraPequena)
+                .foregroundStyle(Tema.Color.positivo)
+                .layoutPriority(1)
         }
         .accessibilityElement(children: .combine)
     }

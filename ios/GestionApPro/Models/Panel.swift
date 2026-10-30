@@ -23,7 +23,7 @@ struct Ocupacion: Decodable, Hashable, Sendable {
     /// "Sistema saludable", "Ocupación media" o "Baja ocupación" (umbrales del escritorio).
     let salud: String
 
-    var tono: Tono { porcentaje >= 75 ? .positivo : (porcentaje >= 40 ? .aviso : .negativo) }
+    var tono: Tono { .ocupacion(porcentaje) }
 }
 
 struct Alerta: Decodable, Hashable, Sendable {

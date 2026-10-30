@@ -83,6 +83,7 @@ struct InvitacionView: View {
                     Label("Compartir invitación", systemImage: "square.and.arrow.up").frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(Tema.Color.primarioRelleno)
                 .controlSize(.large)
             }
             .padding(Tema.Espacio.l)
