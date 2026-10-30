@@ -67,6 +67,11 @@ public class PanelService {
         List<ImporteMes> seisMeses = ingresosPorMes(prop, mes.minusMonths(5), mes);
         BigDecimal cobrado = seisMeses.getLast().importe();
         BigDecimal anterior = seisMeses.get(seisMeses.size() - 2).importe();
+        // La tendencia compara con lo cobrado hasta el mismo día del mes anterior: comparar
+        // un mes a medias con uno completo daría siempre una caída engañosa.
+        YearMonth mesAnterior = mes.minusMonths(1);
+        int diaComparado = Math.min(hoy.getDayOfMonth(), mesAnterior.lengthOfMonth());
+        BigDecimal anteriorMismoDia = suma(pagos.buscar(prop, null, mesAnterior.atDay(1), mesAnterior.atDay(diaComparado)));
         var pendientesInc = incidencias.buscar(prop, null, null, Set.of(EstadoIncidencia.pendiente, EstadoIncidencia.en_proceso));
         BigDecimal cashFlow = pisos.listar(actor).stream()
                 .map(PisoResponse::metricas).filter(Objects::nonNull)
@@ -80,7 +85,8 @@ public class PanelService {
 
         return new DashboardResponse(ocupacion,
                 inquilinos.visiblesPara(prop).size(), activos.size(), incPendientes,
-                pendientesInc.size() - incPendientes, cobrado, anterior, variacion(cobrado, anterior),
+                pendientesInc.size() - incPendientes, cobrado, anterior, anteriorMismoDia, diaComparado,
+                Textos.mesCorto(mesAnterior), variacion(cobrado, anteriorMismoDia),
                 activos.stream().map(Contrato::getPrecioMensual).reduce(BigDecimal.ZERO, BigDecimal::add),
                 cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes), proximos,
                 actividadReciente(actor, ACTIVIDAD_RECIENTE));
@@ -140,12 +146,18 @@ public class PanelService {
         return actividadReciente(actor, limite, false);
     }
 
-    /** Con soloMia, también el admin ve solo la suya (historial del perfil). */
+    /**
+     * Con soloMia, también el admin ve solo la suya (historial del perfil), incluidos sus
+     * inicios de sesión. Sin soloMia (Inicio y "Ver todo") se omiten los inicios de sesión:
+     * solo interesan los cambios (pagos, contratos, incidencias...).
+     */
     @Transactional(readOnly = true)
     public List<ActividadResponse> actividadReciente(UsuarioAutenticado actor, int limite, boolean soloMia) {
-        var lista = actor.esAdmin() && !soloMia
-                ? actividad.findAllByOrderByFechaDescIdDesc(Limit.of(limite))
-                : actividad.findByIdUsuarioOrderByFechaDescIdDesc(actor.id(), Limit.of(limite));
+        var lista = soloMia
+                ? actividad.findByIdUsuarioOrderByFechaDescIdDesc(actor.id(), Limit.of(limite))
+                : actor.esAdmin()
+                ? actividad.recientesSinAccesos(Limit.of(limite))
+                : actividad.recientesSinAccesosDe(actor.id(), Limit.of(limite));
         return lista.stream().map(ActividadResponse::de).toList();
     }
 
@@ -185,10 +197,11 @@ public class PanelService {
     private static List<Alerta> alertas(Ocupacion ocupacion, List<ContratoResponse> proximos, long incidenciasPendientes) {
         List<Alerta> alertas = new ArrayList<>();
         if (!proximos.isEmpty()) {
-            String nombres = proximos.stream().map(c -> c.inquilino().nombre()).collect(Collectors.joining(", "));
+            // Sin los nombres: ya aparecen en "Próximos vencimientos".
             alertas.add(new Alerta("CONTRATOS_POR_VENCER",
-                    proximos.size() == 1 ? "1 contrato vence en menos de 30 días" : proximos.size() + " contratos vencen próximamente",
-                    nombres, proximos.stream().anyMatch(c -> c.vencimiento() == NivelVencimiento.CRITICO) ? "negativo" : "aviso"));
+                    proximos.size() == 1 ? "1 contrato vence en los próximos 30 días"
+                            : proximos.size() + " contratos vencen en los próximos 30 días",
+                    "", proximos.stream().anyMatch(c -> c.vencimiento() == NivelVencimiento.CRITICO) ? "negativo" : "aviso"));
         }
         if (incidenciasPendientes > 0) {
             alertas.add(new Alerta("INCIDENCIAS_PENDIENTES",

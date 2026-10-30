@@ -41,8 +41,11 @@ public final class PanelDtos {
             long incidenciasPendientes,
             long incidenciasEnProceso,
             @Schema(description = "Cobrado en el mes actual") BigDecimal cobradoMes,
-            BigDecimal cobradoMesAnterior,
-            @Schema(description = "Variación del cobrado frente al mes anterior en %; ausente si el anterior fue 0")
+            @Schema(description = "Cobrado en todo el mes anterior") BigDecimal cobradoMesAnterior,
+            @Schema(description = "Cobrado en el mes anterior hasta el mismo día que hoy") BigDecimal cobradoMesAnteriorMismoDia,
+            @Schema(description = "Día del mes anterior hasta el que se compara (hoy, o el último si es más corto)") int diaComparado,
+            @Schema(description = "Mes con el que se compara, abreviado", example = "sept") String mesComparado,
+            @Schema(description = "Variación del cobrado frente al mes anterior hasta el mismo día, en %; ausente si fue 0")
             Double tendenciaPct,
             @Schema(description = "Rentas de los contratos vigentes este mes") BigDecimal esperadoMes,
             @Schema(description = "Suma del cash flow mensual de los pisos con datos financieros") BigDecimal cashFlowMensual,

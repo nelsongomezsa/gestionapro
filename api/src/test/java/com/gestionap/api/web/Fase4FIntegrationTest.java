@@ -72,7 +72,8 @@ class Fase4FIntegrationTest extends IntegrationTest {
     void actividadPropia_inclusoParaElAdmin() throws Exception {
         token("ana@test.com");
         String t = token("admin@test.com");
-        mvc.perform(get("/api/actividad").header("Authorization", t)).andExpect(jsonPath("$.length()").value(2));
+        // La general omite los inicios de sesión; el historial propio los incluye.
+        mvc.perform(get("/api/actividad").header("Authorization", t)).andExpect(jsonPath("$.length()").value(0));
         mvc.perform(get("/api/actividad").param("soloMia", "true").header("Authorization", t))
                 .andExpect(jsonPath("$.length()").value(1));
     }

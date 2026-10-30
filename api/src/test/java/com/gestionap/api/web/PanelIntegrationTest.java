@@ -2,9 +2,13 @@ package com.gestionap.api.web;
 
 import com.gestionap.api.IntegrationTest;
 import com.gestionap.api.domain.*;
+import com.gestionap.api.service.ActividadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -18,6 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PanelIntegrationTest extends IntegrationTest {
 
+    @Autowired ActividadService actividadService;
+    Usuario ana;
+
     final LocalDate hoy = LocalDate.now();
     final YearMonth mes = YearMonth.from(hoy);
     Contrato pagado;
@@ -28,7 +35,7 @@ class PanelIntegrationTest extends IntegrationTest {
     @BeforeEach
     void preparar() {
         Ciudad madrid = datos.ciudad("Madrid");
-        Usuario ana = datos.usuario("ana@test.com", Rol.PROPIETARIO);
+        ana = datos.usuario("ana@test.com", Rol.PROPIETARIO);
         Usuario bea = datos.usuario("bea@test.com", Rol.PROPIETARIO);
         Piso piso = datos.piso("Calle de Ana 1", madrid, ana);
         Piso deBea = datos.piso("Calle de Bea 2", madrid, bea);
@@ -63,7 +70,8 @@ class PanelIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.contratosActivos").value(2))
                 .andExpect(jsonPath("$.cobradoMes").value(400.00))
                 .andExpect(jsonPath("$.cobradoMesAnterior").value(1000.00))
-                .andExpect(jsonPath("$.tendenciaPct").value(-60.0))
+                .andExpect(jsonPath("$.diaComparado").value(Math.min(hoy.getDayOfMonth(), mes.minusMonths(1).lengthOfMonth())))
+                .andExpect(jsonPath("$.alertas[0].mensaje").value(""))
                 .andExpect(jsonPath("$.esperadoMes").value(1000.00))
                 .andExpect(jsonPath("$.incidenciasPendientes").value(1))
                 .andExpect(jsonPath("$.ingresosUltimos6Meses.length()").value(6))
@@ -167,13 +175,37 @@ class PanelIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    void actividad_propietarioVeLaSuya() throws Exception {
+    void tendencia_comparaHastaElMismoDiaDelMesAnterior() throws Exception {
+        // Un pago del mes anterior posterior al día de hoy no cuenta en la comparación.
+        LocalDate anterior = hoy.minusMonths(1);
+        if (hoy.getDayOfMonth() < anterior.lengthOfMonth()) {
+            datos.pago(pagado, "5000.00", anterior.withDayOfMonth(anterior.lengthOfMonth()));
+        }
+        // Mes anterior hasta hoy: 400 (día 1) + 600 (día 2, si hoy es al menos día 2).
+        BigDecimal esperado = new BigDecimal(hoy.getDayOfMonth() >= 2 ? "1000.00" : "400.00");
+        mvc.perform(get("/api/dashboard").header("Authorization", token("ana@test.com")))
+                .andExpect(jsonPath("$.cobradoMesAnteriorMismoDia").value(esperado.doubleValue()))
+                .andExpect(jsonPath("$.tendenciaPct").value(
+                        new BigDecimal("400").subtract(esperado).divide(esperado, 4, java.math.RoundingMode.HALF_UP)
+                                .multiply(BigDecimal.valueOf(100)).doubleValue()))
+                .andExpect(jsonPath("$.mesComparado").value(
+                        anterior.getMonth().getDisplayName(TextStyle.SHORT, Locale.of("es", "ES")).replace(".", "")));
+    }
+
+    @Test
+    void actividad_propietarioVeLaSuya_sinInicioDeSesion() throws Exception {
         String t = token("ana@test.com"); // el login registra LOGIN_API
         token("bea@test.com");
+        actividadService.registrar(ana.getId(), "REGISTRAR_PAGO", "Pago de 400 €");
         mvc.perform(get("/api/actividad").header("Authorization", t))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].accion").value("LOGIN_API"));
+                .andExpect(jsonPath("$[0].accion").value("REGISTRAR_PAGO"));
+        mvc.perform(get("/api/dashboard").header("Authorization", t))
+                .andExpect(jsonPath("$.actividadReciente.length()").value(1));
+        // En el historial del perfil sí salen los accesos.
+        mvc.perform(get("/api/actividad").param("soloMia", "true").header("Authorization", t))
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
     @Test
