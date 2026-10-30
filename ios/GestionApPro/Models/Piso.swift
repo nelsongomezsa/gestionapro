@@ -41,6 +41,8 @@ struct Piso: Decodable, Identifiable, Equatable, Sendable {
         let capitalPropio: Decimal
         let plusvaliaLatente: Decimal
         let perAnios: Double?
+        /// true si los gastos salen de los gastos reales de los últimos 12 meses (al menos una categoría).
+        let gastosReales: Bool?
     }
 
     struct DatosFinancieros: Decodable, Equatable, Sendable {

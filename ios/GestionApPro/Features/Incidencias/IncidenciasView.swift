@@ -133,6 +133,7 @@ struct IncidenciaDetalleView: View {
     @State private var coste = 0.0
     @State private var confirmarBorrado = false
     @State private var error: String?
+    @State private var modeloFotos = ModeloFotos()
 
     private var gestiona: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -174,6 +175,8 @@ struct IncidenciaDetalleView: View {
                     .listRowBackground(Color.clear)
                 }
 
+                SeccionFotos(modelo: modeloFotos)
+
                 Section("Detalles") {
                     LabeledContent("Habitación", value: "Hab. \(i.habitacion.numero)")
                     LabeledContent("Piso", value: "\(i.piso.direccion), \(i.piso.ciudad)")
@@ -209,6 +212,7 @@ struct IncidenciaDetalleView: View {
         .navigationTitle("Incidencia")
         .navigationBarTitleDisplayMode(.inline)
         .task { await cargar() }
+        .fotosIncidencia(modeloFotos, incidencia: id, api: sesion.api, puedeBorrarTodas: gestiona)
         .alertaError($error)
     }
 

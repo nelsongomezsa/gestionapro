@@ -171,6 +171,85 @@ extension Endpoint where Respuesta == [HistorialRenta] {
     }
 }
 
+// MARK: Gastos
+
+extension Rutas {
+    static func facturaGasto(_ id: Int) -> String { "/api/gastos/\(id)/factura" }
+}
+
+extension Endpoint where Respuesta == ResumenGastos {
+    static func gastos(piso: Int?, anio: Int?) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/gastos",
+                 consulta: [URLQueryItem(name: "piso", value: piso.map(String.init)),
+                            URLQueryItem(name: "anio", value: anio.map(String.init))])
+    }
+}
+
+extension Endpoint where Respuesta == Gasto {
+    static func crearGasto(_ req: GastoRequest) -> Self { Endpoint(metodo: "POST", ruta: "/api/gastos", cuerpo: json(req)) }
+    static func actualizarGasto(_ id: Int, _ req: GastoRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/gastos/\(id)", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarGasto(_ id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/gastos/\(id)") }
+}
+
+// MARK: Resumen fiscal
+
+extension Rutas {
+    static func resumenFiscal(piso id: Int, formato: String) -> String { "/api/pisos/\(id)/resumen-fiscal/\(formato)" }
+}
+
+/// Parámetros comunes del resumen fiscal (año y valores catastrales del recibo del IBI).
+func consultaResumenFiscal(anio: Int, catastral: Decimal?, construccion: Decimal?) -> [URLQueryItem] {
+    [URLQueryItem(name: "anio", value: String(anio)),
+     URLQueryItem(name: "valorCatastral", value: catastral.map { "\($0)" }),
+     URLQueryItem(name: "valorCatastralConstruccion", value: construccion.map { "\($0)" })]
+}
+
+extension Endpoint where Respuesta == ResumenFiscal {
+    static func resumenFiscal(piso id: Int, anio: Int, catastral: Decimal?, construccion: Decimal?) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pisos/\(id)/resumen-fiscal",
+                 consulta: consultaResumenFiscal(anio: anio, catastral: catastral, construccion: construccion))
+    }
+}
+
+// MARK: Fotos e inventarios
+
+extension Rutas {
+    static func fotosIncidencia(_ id: Int) -> String { "/api/incidencias/\(id)/fotos" }
+    static func fotoIncidencia(_ id: Int) -> String { "/api/incidencias/fotos/\(id)" }
+}
+
+extension Rutas {
+    static func pdfInventario(_ id: Int) -> String { "/api/inventarios/\(id)/pdf" }
+    static func fotoElemento(_ id: Int) -> String { "/api/inventarios/elementos/\(id)/foto" }
+}
+
+extension Endpoint where Respuesta == [Inventario] {
+    static func inventarios(habitacion id: Int) -> Self { Endpoint(metodo: "GET", ruta: "/api/habitaciones/\(id)/inventarios") }
+}
+
+extension Endpoint where Respuesta == Inventario {
+    static func crearInventario(habitacion id: Int, _ req: InventarioRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/habitaciones/\(id)/inventarios", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarInventario(_ id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/inventarios/\(id)") }
+}
+
+extension Endpoint where Respuesta == [FotoIncidencia] {
+    static func fotosIncidencia(_ id: Int) -> Self { Endpoint(metodo: "GET", ruta: Rutas.fotosIncidencia(id)) }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarFotoIncidencia(_ id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: Rutas.fotoIncidencia(id)) }
+}
+
 // MARK: Fianzas
 
 extension Endpoint where Respuesta == Fianza {

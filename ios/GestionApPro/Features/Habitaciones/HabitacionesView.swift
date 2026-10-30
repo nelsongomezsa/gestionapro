@@ -8,6 +8,7 @@ struct HabitacionesView: View {
     @State private var creando = false
     @State private var paraBorrar: Habitacion?
     @State private var documento: DocumentoPDF?
+    @State private var inventarios: Habitacion?
 
     init(piso: PisoBreve) {
         _vm = State(initialValue: HabitacionesViewModel(piso: piso))
@@ -45,9 +46,14 @@ struct HabitacionesView: View {
                                     Button("Editar", systemImage: "pencil") { editando = h }
                                         .tint(Tema.Color.primario)
                                 }
-                                .swipeActions(edge: .leading) { menuEstado(h) }
+                                .swipeActions(edge: .leading) {
+                                    menuEstado(h)
+                                    Button("Inventarios", systemImage: "checklist") { inventarios = h }
+                                        .tint(Tema.Color.iconoMarino)
+                                }
                                 .contextMenu {
                                     Button("Editar", systemImage: "pencil") { editando = h }
+                                    Button("Inventarios", systemImage: "checklist") { inventarios = h }
                                     Menu("Cambiar estado", systemImage: "arrow.triangle.2.circlepath") { menuEstado(h) }
                                     Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = h }
                                 }
@@ -74,6 +80,12 @@ struct HabitacionesView: View {
         .task { await vm.cargar(con: sesion.api) }
         .sheet(item: $editando) { h in
             HabitacionFormView(piso: vm.piso, habitacion: h) { vm.reemplazar($0) }
+        }
+        .sheet(item: $inventarios) { h in
+            NavigationStack {
+                InventariosView(idHabitacion: h.id, titulo: "Inventarios · hab. \(h.numero)")
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { inventarios = nil } } }
+            }
         }
         .sheet(isPresented: $creando) {
             HabitacionFormView(piso: vm.piso, habitacion: nil) { vm.reemplazar($0) }

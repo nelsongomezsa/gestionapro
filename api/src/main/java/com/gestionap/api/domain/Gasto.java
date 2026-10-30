@@ -60,4 +60,9 @@ public class Gasto {
 
     @Column(name = "fecha_alta", nullable = false)
     private LocalDateTime fechaAlta;
+
+    @PrePersist
+    void alCrear() {
+        if (fechaAlta == null) fechaAlta = LocalDateTime.now();
+    }
 }

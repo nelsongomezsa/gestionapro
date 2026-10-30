@@ -33,5 +33,6 @@ public record PisoResponse(
             Double cashOnCashPct,
             BigDecimal capitalPropio,
             BigDecimal plusvaliaLatente,
-            Double perAnios) {}
+            Double perAnios,
+            boolean gastosReales) {}
 }

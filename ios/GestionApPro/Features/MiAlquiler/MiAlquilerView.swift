@@ -47,6 +47,11 @@ struct MiAlquilerView: View {
                             Button { Task { await abrirPDF(c) } } label: {
                                 Label("Ver contrato (PDF)", systemImage: "doc.text.magnifyingglass")
                             }
+                            NavigationLink {
+                                InventariosView(idHabitacion: c.habitacion.id, titulo: "Inventarios")
+                            } label: {
+                                Label("Inventarios de la habitación", systemImage: "checklist")
+                            }
                         }
                         .filaLista()
                         Section {

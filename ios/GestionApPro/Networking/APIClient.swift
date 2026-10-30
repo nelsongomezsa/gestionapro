@@ -39,8 +39,28 @@ final class APIClient: Sendable {
         try await ejecutar(metodo: "GET", ruta: ruta, consulta: consulta, cuerpo: nil, requiereAuth: true, acepta: tipo).0
     }
 
+    /// Sube un archivo (foto o factura) como multipart/form-data en el campo "archivo".
+    func subir<R: Decodable & Sendable>(_ ruta: String, archivo: Data, nombre: String, tipo: String,
+                                        respuesta: R.Type = R.self) async throws(APIError) -> R {
+        let limite = "GestionAp-\(UUID().uuidString)"
+        var cuerpo = Data()
+        cuerpo.append(Data("--\(limite)\r\n".utf8))
+        cuerpo.append(Data("Content-Disposition: form-data; name=\"archivo\"; filename=\"\(nombre)\"\r\n".utf8))
+        cuerpo.append(Data("Content-Type: \(tipo)\r\n\r\n".utf8))
+        cuerpo.append(archivo)
+        cuerpo.append(Data("\r\n--\(limite)--\r\n".utf8))
+        let (datos, _) = try await ejecutar(metodo: "POST", ruta: ruta, consulta: [], cuerpo: cuerpo, requiereAuth: true,
+                                            acepta: "application/json", tipoCuerpo: "multipart/form-data; boundary=\(limite)")
+        do {
+            return try JSONCoding.decoder().decode(R.self, from: datos)
+        } catch {
+            throw .decodificacion(String(describing: error))
+        }
+    }
+
     private func ejecutar(metodo: String, ruta: String, consulta: [URLQueryItem], cuerpo: Data?,
-                          requiereAuth: Bool, acepta: String) async throws(APIError) -> (Data, HTTPURLResponse) {
+                          requiereAuth: Bool, acepta: String,
+                          tipoCuerpo: String = "application/json") async throws(APIError) -> (Data, HTTPURLResponse) {
         var url = baseURL.appending(path: ruta)
         let parametros = consulta.filter { $0.value != nil }
         if !parametros.isEmpty { url.append(queryItems: parametros) }
@@ -50,7 +70,7 @@ final class APIClient: Sendable {
         peticion.setValue(acepta == "application/json" ? acepta : "\(acepta), application/json", forHTTPHeaderField: "Accept")
         if let cuerpo {
             peticion.httpBody = cuerpo
-            peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            peticion.setValue(tipoCuerpo, forHTTPHeaderField: "Content-Type")
         }
         if requiereAuth {
             guard let token = tokens.leer() else {

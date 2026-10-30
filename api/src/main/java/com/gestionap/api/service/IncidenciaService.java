@@ -122,7 +122,7 @@ public class IncidenciaService {
         actividad.registrar(actor.id(), "BORRAR_INCIDENCIA", "#" + id + " · " + i.getDescripcion());
     }
 
-    private Incidencia cargarVisible(Integer id, UsuarioAutenticado actor) {
+    Incidencia cargarVisible(Integer id, UsuarioAutenticado actor) {
         Incidencia i = incidencias.findById(id).orElseThrow(() -> ApiException.noEncontrado("Incidencia"));
         boolean visible = switch (actor.rol()) {
             case ADMIN -> true;

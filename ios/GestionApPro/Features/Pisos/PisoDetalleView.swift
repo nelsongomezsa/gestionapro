@@ -80,7 +80,20 @@ struct PisoDetalleView: View {
                         FilaMetrica(titulo: "Cuota de hipoteca", valor: "− " + Formato.euros(m.cuotaMensualHipoteca))
                         Divider().overlay(Tema.Color.borde)
                         FilaMetrica(titulo: "Gastos", valor: "− " + Formato.euros(m.gastosAnuales / 12),
-                                    nota: "\(Formato.euros(m.gastosAnuales)) al año, repartidos por mes")
+                                    nota: "\(Formato.euros(m.gastosAnuales)) al año, repartidos por mes"
+                                        + (m.gastosReales == true ? " · con gastos reales de los últimos 12 meses" : " · estimados"))
+                        Divider().overlay(Tema.Color.borde)
+                        NavigationLink(value: DestinoPiso.gastos(piso.breve)) {
+                            FilaMetrica(titulo: "Gastos reales y facturas", valor: "", icono: "eurosign.square")
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("enlaceGastos")
+                        Divider().overlay(Tema.Color.borde)
+                        NavigationLink(value: DestinoPiso.resumenFiscal(piso.breve)) {
+                            FilaMetrica(titulo: "Resumen fiscal del año", valor: "", icono: "doc.text.below.ecg")
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityIdentifier("enlaceResumenFiscal")
                     }
                     SeccionTarjeta(titulo: "Inversión") {
                         FilaMetrica(titulo: "Inversión total", valor: Formato.euros(m.inversionTotal))
@@ -229,6 +242,8 @@ struct PisoDetalleView: View {
 /// directamente hacía que algunos no navegaran.
 enum DestinoPiso: Hashable {
     case habitaciones(PisoBreve)
+    case gastos(PisoBreve)
+    case resumenFiscal(PisoBreve)
     case mapa(PisoBreve)
     case contrato(Int)
     case incidencia(Int)
@@ -237,6 +252,8 @@ enum DestinoPiso: Hashable {
     var vista: some View {
         switch self {
         case let .habitaciones(piso): HabitacionesView(piso: piso)
+        case let .gastos(piso): GastosView(piso: piso)
+        case let .resumenFiscal(piso): ResumenFiscalView(piso: piso)
         case let .mapa(piso): MapaDireccion(titulo: piso.direccion, direccion: piso.direccion, ciudad: piso.ciudad)
         case let .contrato(id): ContratoDetalleView(id: id)
         case let .incidencia(id): IncidenciaDetalleView(id: id)

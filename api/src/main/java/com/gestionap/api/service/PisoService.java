@@ -2,6 +2,7 @@ package com.gestionap.api.service;
 
 import com.gestionap.api.domain.DatosPiso;
 import com.gestionap.api.domain.EstadoHabitacion;
+import com.gestionap.api.domain.Gasto;
 import com.gestionap.api.domain.Piso;
 import com.gestionap.api.repository.*;
 import com.gestionap.api.security.UsuarioAutenticado;
@@ -32,15 +33,18 @@ public class PisoService {
     private final ContratoRepository contratos;
     private final UsuarioRepository usuarios;
     private final ActividadService actividad;
+    private final GastoService gastoService;
 
     public PisoService(PisoRepository pisos, CiudadRepository ciudades, HabitacionRepository habitaciones,
-                       ContratoRepository contratos, UsuarioRepository usuarios, ActividadService actividad) {
+                       ContratoRepository contratos, UsuarioRepository usuarios, ActividadService actividad,
+                       GastoService gastoService) {
         this.pisos = pisos;
         this.ciudades = ciudades;
         this.habitaciones = habitaciones;
         this.contratos = contratos;
         this.usuarios = usuarios;
         this.actividad = actividad;
+        this.gastoService = gastoService;
     }
 
     @Transactional(readOnly = true)
@@ -144,6 +148,7 @@ public class PisoService {
         for (Object[] fila : contratos.ingresosMensualesActivos(ids, LocalDate.now())) {
             ingresos.put((Integer) fila[0], (BigDecimal) fila[1]);
         }
+        Map<Integer, Map<Gasto.Categoria, BigDecimal>> reales = gastoService.gastosRealesUltimoAnio(ids);
 
         return lista.stream().map(p -> {
             Map<EstadoHabitacion, Long> occ = ocupacion.getOrDefault(p.getId(), Map.of());
@@ -160,11 +165,25 @@ public class PisoService {
                     new PisoResponse.Ocupacion(alquiladas + disponibles + mantenimiento, alquiladas, disponibles, mantenimiento),
                     ingresosMes,
                     d != null ? aDto(d) : null,
-                    d != null ? metricas(d, ingresosMes) : null);
+                    d != null ? metricas(d, ingresosMes, reales.getOrDefault(p.getId(), Map.of())) : null);
         }).toList();
     }
 
     static PisoResponse.Metricas metricas(DatosPiso d, BigDecimal ingresosMes) {
+        return metricas(d, ingresosMes, Map.of());
+    }
+
+    static PisoResponse.Metricas metricas(DatosPiso d, BigDecimal ingresosMes,
+                                           Map<Gasto.Categoria, BigDecimal> reales) {
+        boolean ibiReal = reales.containsKey(Gasto.Categoria.IBI);
+        boolean comunidadReal = reales.containsKey(Gasto.Categoria.COMUNIDAD);
+        boolean seguroReal = reales.containsKey(Gasto.Categoria.SEGURO);
+        boolean mantenimientoReal = reales.keySet().stream().anyMatch(c -> switch (c) {
+            case REPARACION, MANTENIMIENTO, SUMINISTROS, GESTION, OTROS -> true;
+            default -> false;
+        });
+        BigDecimal mantenimiento = suma(reales, Gasto.Categoria.REPARACION, Gasto.Categoria.MANTENIMIENTO,
+                Gasto.Categoria.SUMINISTROS, Gasto.Categoria.GESTION, Gasto.Categoria.OTROS);
         var entrada = new CalculadoraFinancieraPiso.Entrada(
                 new CalculadoraFinancieraPiso.DatosAdquisicion(
                         nz(d.getPrecioCompra()), nz(d.getItpPagado()), nz(d.getGastosNotaria()),
@@ -174,14 +193,25 @@ public class PisoService {
                         d.isTieneHipoteca(), nz(d.getImporteHipoteca()), nz(d.getTipoInteres()),
                         d.getPlazoAnos() != null ? d.getPlazoAnos() : 0),
                 new CalculadoraFinancieraPiso.DatosGastos(
-                        nz(d.getGastoIbiAnual()), nz(d.getGastoComunidadMensual()),
-                        nz(d.getGastoSeguroAnual()), nz(d.getGastoMantenimientoAnual())),
+                        ibiReal ? reales.get(Gasto.Categoria.IBI) : nz(d.getGastoIbiAnual()),
+                        comunidadReal ? reales.get(Gasto.Categoria.COMUNIDAD).divide(BigDecimal.valueOf(12), 2, java.math.RoundingMode.HALF_UP) : nz(d.getGastoComunidadMensual()),
+                        seguroReal ? reales.get(Gasto.Categoria.SEGURO) : nz(d.getGastoSeguroAnual()),
+                        mantenimientoReal ? mantenimiento : nz(d.getGastoMantenimientoAnual())),
                 nz(d.getValorMercadoActual()),
                 ingresosMes);
         var r = CalculadoraFinancieraPiso.calcular(entrada);
         return new PisoResponse.Metricas(r.inversionTotal(), r.cuotaMensualHipoteca(), r.totalGastosAnuales(),
                 r.rentabilidadBrutaPct(), r.rentabilidadNetaPct(), r.calificacion(), r.cashFlowMensual(),
-                r.cashOnCashPct(), r.capitalPropio(), r.plusvaliaLatente(), r.perAnios());
+                r.cashOnCashPct(), r.capitalPropio(), r.plusvaliaLatente(), r.perAnios(),
+                ibiReal || comunidadReal || seguroReal || mantenimientoReal);
+    }
+
+    private static BigDecimal suma(Map<Gasto.Categoria, BigDecimal> reales, Gasto.Categoria... categorias) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Gasto.Categoria categoria : categorias) {
+            total = total.add(reales.getOrDefault(categoria, BigDecimal.ZERO));
+        }
+        return total;
     }
 
     private static DatosFinancierosDto aDto(DatosPiso d) {
