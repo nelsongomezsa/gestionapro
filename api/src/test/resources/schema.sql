@@ -104,6 +104,17 @@ CREATE TABLE Invitaciones (
     fecha_uso        DATETIME
 );
 
+CREATE TABLE Notificaciones (
+    id_notificacion INT AUTO_INCREMENT PRIMARY KEY,
+    tipo            VARCHAR(50)  NOT NULL,
+    titulo          VARCHAR(200) NOT NULL,
+    descripcion     TEXT,
+    referencia      VARCHAR(100),
+    fecha           DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    leida           TINYINT(1)   NOT NULL DEFAULT 0,
+    id_usuario      INT          NOT NULL REFERENCES Usuarios (id_usuario) ON DELETE CASCADE
+);
+
 CREATE TABLE actividad (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario  INT,

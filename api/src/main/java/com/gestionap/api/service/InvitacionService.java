@@ -89,7 +89,7 @@ public class InvitacionService {
                                 + "Tu código para crear tu cuenta en la app GestionAp es:\n\n    " + codigo + "\n\n"
                                 + "Es de un solo uso y caduca el " + inv.getFechaExpiracion().format(FMT_FECHA) + ".\n");
 
-        return new InvitacionResponse(codigo, idInquilino, inv.getFechaExpiracion(), enviado);
+        return new InvitacionResponse(codigo, idInquilino, Textos.conZona(inv.getFechaExpiracion()), enviado);
     }
 
     private static String nuevoCodigo() {

@@ -1,7 +1,10 @@
 package com.gestionap.api.service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -14,6 +17,15 @@ public final class Textos {
     public static final Locale ES = Locale.of("es", "ES");
 
     private static final Pattern IBAN = Pattern.compile("[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}");
+
+    /**
+     * Fecha y hora con su zona. Las columnas DATETIME de la BD (NOW() de MariaDB) y
+     * LocalDateTime.now() van en la hora local del servidor; enviarlas sin zona hacía que el
+     * móvil las leyera como hora de Madrid (en un servidor en UTC+10, «dentro de 9 horas»).
+     */
+    public static OffsetDateTime conZona(LocalDateTime fecha) {
+        return fecha == null ? null : fecha.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+    }
 
     /** "octubre 2026". El escritorio usaba DATE_FORMAT/MMMM, que depende del idioma del servidor. */
     public static String mes(YearMonth mes) {
