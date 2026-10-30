@@ -4,6 +4,7 @@ import SwiftUI
 struct ResultadoRentabilidadView: View {
     let resultado: RentabilidadResponse
     let comunidad: String
+    @State private var documento: DocumentoPDF?
 
     var body: some View {
         let r = resultado
@@ -66,6 +67,12 @@ struct ResultadoRentabilidadView: View {
         .background(Tema.Color.fondo)
         .navigationTitle("Desglose")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Exportar PDF", systemImage: "doc.richtext") { documento = pdf() }
+            }
+        }
+        .visorPDF($documento)
     }
 
     private func seccion<Contenido: View>(_ titulo: String, @ViewBuilder contenido: () -> Contenido) -> some View {
@@ -118,5 +125,45 @@ struct DestinoAlquilerChart: View {
             }
         }
         .accessibilityLabel("Gráfico del destino del alquiler mensual")
+    }
+}
+
+extension ResultadoRentabilidadView {
+    /// Resultado en PDF (como "Exportar PDF" de la calculadora del escritorio), generado en el móvil.
+    func pdf() -> DocumentoPDF {
+        let r = resultado
+        var secciones: [(String, [(String, String)])] = [
+            ("Rentabilidad", [
+                ("Rentabilidad bruta", Formato.porcentaje(r.rentabilidadBrutaPct)),
+                ("Rentabilidad neta", Formato.porcentaje(r.rentabilidadNetaPct)),
+                ("Cash flow mensual", Formato.euros(r.cashFlowMensual)),
+                ("Cash flow anual", Formato.euros(r.cashFlowAnual)),
+                ("Años para recuperar", Formato.anios(r.aniosRecuperacion)),
+            ]),
+            ("Coste de compra", [
+                ("ITP \(comunidad) (\(Formato.porcentaje(r.itpPct)))", Formato.euros(r.itpImporte)),
+                ("Total compra", Formato.euros(r.totalCompra)),
+            ]),
+            ("Financiación", [
+                ("Hipoteca", Formato.euros(r.hipoteca)),
+                ("Capital aportado", Formato.euros(r.capitalAportado)),
+                ("Cuota mensual", Formato.euros(r.cuotaMensual)),
+                ("Intereses (media mensual)", Formato.euros(r.interesesMensualesPromedio)),
+                ("Amortización (media mensual)", Formato.euros(r.amortizacionMensualPromedio)),
+            ]),
+            ("Gastos e ingresos", [
+                ("Gastos mensuales", Formato.euros(r.gastosMensuales)),
+                ("Gastos anuales", Formato.euros(r.gastosAnuales)),
+                ("Alquiler anual", Formato.euros(r.alquilerAnual)),
+            ]),
+        ]
+        if r.plusvalia5Anios != nil || r.plusvalia10Anios != nil {
+            secciones.append(("Revalorización estimada", [
+                ("Plusvalía a 5 años", Formato.euros(r.plusvalia5Anios)),
+                ("Plusvalía a 10 años", Formato.euros(r.plusvalia10Anios)),
+            ]))
+        }
+        let datos = GeneradorPDF.secciones(titulo: "Análisis de rentabilidad", subtitulo: "Comunidad: \(comunidad)", secciones)
+        return DocumentoPDF(titulo: "Análisis de rentabilidad", datos: datos)
     }
 }

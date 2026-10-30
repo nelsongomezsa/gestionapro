@@ -274,11 +274,11 @@ struct HabitacionDestinoView: View {
     }
 }
 
-/// Destino de las notificaciones de incidencia. La ficha de incidencia llega en la fase 4E.
+/// Destino de las notificaciones de incidencia.
 struct IncidenciaDestinoView: View {
     let id: Int
 
     var body: some View {
-        PantallaPendiente(titulo: "Incidencia #\(id)", fase: "4E")
+        IncidenciaDetalleView(id: id)
     }
 }

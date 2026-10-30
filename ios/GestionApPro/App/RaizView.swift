@@ -47,6 +47,8 @@ struct PestanasView: View {
             TabView {
                 MiAlquilerView()
                     .tabItem { Label("Mi alquiler", systemImage: "key") }
+                IncidenciasView()
+                    .tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
                 NavigationStack { PerfilView(usuario: usuario) }
                     .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
             }

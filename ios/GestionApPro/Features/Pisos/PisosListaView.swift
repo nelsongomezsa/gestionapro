@@ -14,7 +14,14 @@ struct PisosListaView: View {
             .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0) }
             .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
-            .toolbar { menuFiltros }
+            .toolbar {
+                menuFiltros
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink(value: DestinoListaPisos.mapa) { Label("Mapa", systemImage: "map") }
+                        .disabled(vm.estado.valor?.isEmpty ?? true)
+                }
+            }
+            .navigationDestination(for: DestinoListaPisos.self) { _ in MapaPisosView(pisos: vm.estado.valor ?? []) }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
         }
@@ -126,3 +133,5 @@ struct ResumenCarteraView: View {
 extension Piso: Hashable {
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
+
+enum DestinoListaPisos: Hashable { case mapa }

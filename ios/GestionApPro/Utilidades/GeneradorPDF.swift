@@ -61,6 +61,35 @@ enum GeneradorPDF {
         }
     }
 
+    /// Informe por secciones de pares "concepto → valor" (p. ej. el resultado de la calculadora).
+    static func secciones(titulo: String, subtitulo: String? = nil, _ secciones: [(String, [(String, String)])]) -> Data {
+        let r = UIGraphicsPDFRenderer(bounds: pagina, format: formato(titulo: titulo))
+        let ancho = pagina.width - 2 * margen
+        let columnas = [Columna(titulo: "", peso: 3), Columna(titulo: "", peso: 2, alineacion: .right)]
+        let anchos = [ancho * 0.6, ancho * 0.4]
+        return r.pdfData { contexto in
+            contexto.beginPage()
+            var y = dibujar(titulo, en: CGPoint(x: margen, y: margen), ancho: ancho,
+                            fuente: .systemFont(ofSize: 20, weight: .bold), color: morado) + 4
+            if let subtitulo {
+                y = dibujar(subtitulo, en: CGPoint(x: margen, y: y), ancho: ancho, fuente: .systemFont(ofSize: 10), color: .darkGray) + 4
+            }
+            let generado = "Generado el " + Date.now.formatted(.dateTime.day().month(.wide).year().locale(Formato.locale))
+            y = dibujar(generado, en: CGPoint(x: margen, y: y), ancho: ancho, fuente: .systemFont(ofSize: 9), color: .gray) + 14
+            for (nombre, filas) in secciones {
+                if y + 40 > pagina.height - margen { contexto.beginPage(); y = margen }
+                y = dibujar(nombre.uppercased(), en: CGPoint(x: margen, y: y), ancho: ancho,
+                            fuente: .systemFont(ofSize: 11, weight: .semibold), color: morado) + 4
+                for (i, par) in filas.enumerated() {
+                    if y + 20 > pagina.height - margen { contexto.beginPage(); y = margen }
+                    y = fila([par.0, par.1], y: y, anchos: anchos, columnas: columnas, fuente: .systemFont(ofSize: 10),
+                             fondo: i.isMultiple(of: 2) ? nil : UIColor(white: 0.96, alpha: 1))
+                }
+                y += 12
+            }
+        }
+    }
+
     private static func formato(titulo: String) -> UIGraphicsPDFRendererFormat {
         let f = UIGraphicsPDFRendererFormat()
         f.documentInfo = [kCGPDFContextTitle as String: titulo, kCGPDFContextCreator as String: "GestionAp PRO"]

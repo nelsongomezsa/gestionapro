@@ -229,3 +229,60 @@ extension Endpoint where Respuesta == Habitacion {
 extension Rutas {
     static let informeMensual = "/api/informes/mensual"
 }
+
+// MARK: Incidencias y detalle de piso
+
+extension Endpoint where Respuesta == [Incidencia] {
+    static func incidencias(estado: EstadoIncidencia? = nil, piso: Int? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/incidencias",
+                 consulta: [URLQueryItem(name: "estado", value: estado?.rawValue),
+                            URLQueryItem(name: "piso", value: piso.map(String.init))])
+    }
+}
+
+extension Endpoint where Respuesta == Incidencia {
+    static func incidencia(id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/incidencias/\(id)")
+    }
+
+    static func crearIncidencia(_ req: IncidenciaRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/incidencias", cuerpo: json(req))
+    }
+
+    /// Sin estado, avanza un paso (pendiente → en proceso → resuelta).
+    static func cambiarEstado(incidencia id: Int, a estado: EstadoIncidencia? = nil) -> Self {
+        Endpoint(metodo: "PATCH", ruta: "/api/incidencias/\(id)/estado", cuerpo: json(CambioEstadoIncidencia(estado: estado)))
+    }
+
+    static func actualizarIncidencia(id: Int, _ req: ActualizarIncidencia) -> Self {
+        Endpoint(metodo: "PATCH", ruta: "/api/incidencias/\(id)", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarIncidencia(id: Int) -> Self {
+        Endpoint(metodo: "DELETE", ruta: "/api/incidencias/\(id)")
+    }
+}
+
+extension Endpoint where Respuesta == [ImporteMes] {
+    static func ingresosPiso(id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pisos/\(id)/ingresos")
+    }
+}
+
+extension Endpoint where Respuesta == Piso {
+    static func actualizarPiso(id: Int, _ req: PisoRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/pisos/\(id)", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == [Pago] {
+    static func pagosDePiso(_ id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos", consulta: [URLQueryItem(name: "piso", value: String(id))])
+    }
+}
+
+extension Rutas {
+    static func pdfPiso(_ id: Int) -> String { "/api/pisos/\(id)/pdf" }
+}
