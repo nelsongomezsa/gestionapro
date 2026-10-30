@@ -56,7 +56,7 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
 | KPIs y métricas del piso | `GET /api/pisos/{id}` | ✔︎ | Detalle de piso | — | ✅ |
-| Habitaciones del piso | ✚ `GET /api/pisos/{id}/habitaciones` | ✚ | Detalle de piso | 4B | ⏳ |
+| Habitaciones del piso | `GET /api/habitaciones?piso=` | ✔︎ | Detalle de piso → Habitaciones | 4B | ✅ |
 | Contratos del piso | ✚ `GET /api/contratos?piso=` | ✚ | Detalle de piso | 4C | ⏳ |
 | Últimos pagos del piso | ✚ `GET /api/pagos?piso=` | ✚ | Detalle de piso | 4C | ⏳ |
 | Incidencias del piso | ✚ `GET /api/incidencias?piso=` | ✚ | Detalle de piso | 4E | ⏳ |
@@ -67,23 +67,23 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista con filtro por estado y buscador | ✚ `GET /api/habitaciones` | ✚ | Detalle de piso → Habitaciones | 4B | ⏳ |
-| Añadir, editar y eliminar habitación | ✚ `POST/PUT/DELETE /api/habitaciones` | ✚ | Habitaciones (deslizar para editar/borrar) | 4B | ⏳ |
-| Cambiar estado (disponible / alquilada / mantenimiento) | ✚ `PATCH /api/habitaciones/{id}/estado` | ✚ | Habitaciones | 4B | ⏳ |
-| Ver en el mapa (Google Maps) | — | | Mapa del piso (MapKit) | 4B | ⏳ |
-| Exportar la lista a PDF | — (se genera en el móvil) | | Habitaciones → visor PDF | 4B | ⏳ |
+| Lista con filtro por estado y buscador | `GET /api/habitaciones` | ✔︎ | Detalle de piso → Habitaciones | 4B | ✅ |
+| Añadir, editar y eliminar habitación | `POST/PUT/DELETE /api/habitaciones` | ✔︎ | Habitaciones (deslizar para editar/borrar) | 4B | ✅ |
+| Cambiar estado (disponible / alquilada / mantenimiento) | `PATCH /api/habitaciones/{id}/estado` | ✔︎ | Habitaciones | 4B | ✅ |
+| Ver en el mapa (Google Maps) | — | | Mapa del piso (MapKit) | 4B | ✅ |
+| Exportar la lista a PDF | — (se genera en el móvil) | | Habitaciones → visor PDF | 4B | ✅ |
 
 ## Inquilinos (`InquilinosController`, `InquilinoDAO`)
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista con buscador | ✚ `GET /api/inquilinos` | ✚ | Más → Inquilinos | 4B | ⏳ |
-| Añadir, editar y eliminar | ✚ `POST/PUT/DELETE /api/inquilinos` | ✚ | Inquilinos (deslizar para editar/borrar) | 4B | ⏳ |
-| Ver su contrato y pagos *(en escritorio, en pantallas aparte)* | ✚ `GET /api/inquilinos/{id}` | ✚ | Ficha del inquilino | 4B | ⏳ |
-| QR de pago SEPA | ✚ `GET /api/inquilinos/{id}/qr-pago` | ✚ | Ficha → QR en pantalla y compartir | 4B | ⏳ |
-| Enviar email (JavaMail) | — | | Ficha → llamar, email o WhatsApp (hoja de Compartir) | 4B | ⏳ |
-| Exportar la lista a PDF | — (se genera en el móvil) | | Inquilinos → visor PDF | 4B | ⏳ |
-| Invitar a la app *(solo móvil)* | `POST /api/inquilinos/{id}/invitaciones` | ✔︎ | Ficha → Invitar a la app | 4B | ⏳ |
+| Lista con buscador | `GET /api/inquilinos` | ✔︎ | Más → Inquilinos | 4B | ✅ |
+| Añadir, editar y eliminar | `POST/PUT/DELETE /api/inquilinos` | ✔︎ | Inquilinos (deslizar para editar/borrar) | 4B | ✅ |
+| Ver su contrato y pagos *(en escritorio, en pantallas aparte)* | `GET /api/inquilinos/{id}` | ✔︎ | Ficha del inquilino | 4B | ✅ |
+| QR de pago SEPA | `GET /api/inquilinos/{id}/qr-pago` | ✔︎ | Ficha → QR en pantalla y compartir | 4B | ✅ |
+| Enviar email (JavaMail) | — | | Ficha → llamar, email o WhatsApp (hoja de Compartir) | 4B | ✅ |
+| Exportar la lista a PDF | — (se genera en el móvil) | | Inquilinos → visor PDF | 4B | ✅ |
+| Invitar a la app *(solo móvil)* | `POST /api/inquilinos/{id}/invitaciones` | ✔︎ | Ficha → Invitar a la app | 4B | ✅ |
 
 ## Contratos (`ContratosController`, `ContratoDAO`, `VencimientoContrato`)
 
@@ -165,7 +165,7 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 | Cambiar contraseña | ✚ `PUT /api/me/password` | ✚ | Perfil → Contraseña | 4F | ⏳ |
 | Mis estadísticas (contratos, pagos, incidencias) | ✚ `GET /api/me/estadisticas` | ✚ | Perfil | 4F | ⏳ |
 | Historial de actividad reciente | ✚ `GET /api/actividad` | ✚ | Perfil → Actividad | 4F | ⏳ |
-| IBAN para el QR de pago *(nuevo, ver 4B)* | ✚ `PUT /api/me` | ✚ | Perfil → Datos de cobro | 4B | ⏳ |
+| IBAN para el QR de pago *(nuevo, ver 4B)* | `PATCH /api/me` | ✔︎ | Perfil → Datos de cobro | 4B | ✅ |
 
 ## Usuarios (`UsuariosController`, `UsuarioDAO`) — solo admin
 

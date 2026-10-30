@@ -48,6 +48,68 @@ final class CapturasUITests: XCTestCase {
     }
 }
 
+extension CapturasUITests {
+
+    @MainActor
+    func test4B() throws {
+        let r = try Recorrido.iniciar()
+        r.esperar(r.app.staticTexts["Cash flow mensual de la cartera"])
+
+        // Habitaciones de un piso
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.desplazarHasta(r.app.buttons["enlaceHabitaciones"]).tap()
+        r.esperar(r.app.staticTexts["Desliza para editar, borrar o cambiar el estado."])
+        r.capturar("01-habitaciones")
+
+        r.app.cells.element(boundBy: 1).swipeLeft()
+        r.pausa(1)
+        r.capturar("02-habitaciones-deslizar")
+        r.app.cells.element(boundBy: 1).swipeRight()
+
+        r.app.buttons["Añadir"].tap()
+        r.esperar(r.app.navigationBars["Nueva habitación"])
+        r.capturar("03-habitacion-nueva")
+        r.app.buttons["Cancelar"].tap()
+
+        r.atras()
+        r.desplazarHasta(r.app.buttons["enlaceMapa"]).tap()
+        r.esperar(r.app.buttons["Abrir en Mapas"], timeout: 20)
+        r.pausa(3) // teselas del mapa
+        r.capturar("04-mapa-piso")
+
+        // Inquilinos
+        r.pestana("Más")
+        r.app.buttons["Inquilinos"].tap()
+        r.esperar(r.app.buttons["filaInquilino"].firstMatch)
+        r.capturar("05-inquilinos")
+
+        r.app.buttons["filaInquilino"].firstMatch.tap()
+        r.esperar(r.app.staticTexts["Contrato activo"])
+        r.capturar("06-ficha-inquilino")
+
+        r.app.buttons["QR de pago del mes"].tap()
+        r.esperar(r.app.navigationBars["QR de pago"])
+        r.capturar("07-qr-pago")
+        r.app.buttons["Cerrar"].tap()
+
+        if r.app.buttons["Invitar a la app"].exists {
+            r.app.buttons["Invitar a la app"].tap()
+            r.esperar(r.app.staticTexts["Código de invitación"])
+            r.capturar("08-invitacion")
+            r.app.buttons["Cerrar"].tap()
+        }
+
+        // Datos de cobro (IBAN del QR)
+        r.pestana("Más") // pulsar la pestaña ya activa vuelve a su raíz
+        r.app.buttons["enlacePerfil"].firstMatch.tap()
+        r.app.buttons["botonDatosCobro"].tap()
+        r.esperar(r.app.navigationBars["Datos de cobro"])
+        r.capturar("09-datos-cobro")
+    }
+}
+
 /// Sesión de la app abierta y lista para capturar.
 @MainActor
 struct Recorrido {
@@ -91,6 +153,9 @@ struct Recorrido {
             app.swipeUp()
             intentos += 1
         }
+        // Si se ha deslizado, esperar a que pare la inercia: un toque sobre una lista en
+        // movimiento solo la frena y no activa el elemento.
+        if intentos > 0 { pausa(1.2) }
         return elemento
     }
 
