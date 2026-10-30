@@ -7,6 +7,7 @@ struct MiAlquilerView: View {
     @State private var documento: DocumentoPDF?
     @State private var error: String?
     @State private var modeloFianza = ModeloFianza()
+    @State private var modeloRenta = ModeloRenta()
     @State private var noLeidas = 0
     @State private var verAvisos = false
 
@@ -40,6 +41,7 @@ struct MiAlquilerView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                         }
+                        SeccionRenta(modelo: modeloRenta)
                         SeccionFianza(modelo: modeloFianza, idContrato: c.id)
                         Section {
                             Button { Task { await abrirPDF(c) } } label: {
@@ -100,6 +102,7 @@ struct MiAlquilerView: View {
             .visorPDF($documento)
             .alertaError($error)
             .fianza(modeloFianza, contrato: contratoPrincipal?.id, renta: contratoPrincipal?.precioMensual ?? 0, api: sesion.api)
+            .actualizacionRenta(modeloRenta, contrato: contratoPrincipal?.id, gestor: false, api: sesion.api)
         }
     }
 

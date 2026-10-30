@@ -912,6 +912,33 @@ extension CapturasUITests {
             ri.capturar("02-avisos-inquilino")
         }
     }
+    @MainActor
+    func testFase5Renta() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Más")
+        r.app.buttons["Contratos"].tap()
+        let natalia = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Natalia")).firstMatch
+        r.desplazarHasta(natalia).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.desplazarHasta(r.app.buttons["botonActualizarRenta"])
+        r.pausa(1)
+        r.capturar("01-renta-propuesta")
+        r.app.buttons["botonActualizarRenta"].tap()
+        r.esperar(r.app.navigationBars["Actualizar renta"])
+        r.pausa(1)
+        r.capturar("02-renta-revision")
+        r.app.buttons["Cancelar"].tap()
+        r.atras()
+        r.app.swipeDown()
+        r.app.swipeDown()
+        let laura = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Laura")).firstMatch
+        r.desplazarHasta(laura).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.desplazarHasta(r.elemento(contiene: "IRAV (INE)"))
+        r.pausa(1)
+        r.capturar("03-renta-historial")
+    }
 }
 
 @MainActor

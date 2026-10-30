@@ -148,3 +148,19 @@ CREATE TABLE Fianzas (
     motivo_retencion    VARCHAR(255),
     notas               TEXT
 );
+
+-- V5: historial de actualizaciones de renta.
+CREATE TABLE ActualizacionesRenta (
+    id_actualizacion   INT AUTO_INCREMENT PRIMARY KEY,
+    id_contrato        INT NOT NULL REFERENCES Contratos (id_contrato) ON DELETE CASCADE,
+    fecha_efecto       DATE NOT NULL,
+    indice             VARCHAR(10) NOT NULL,
+    periodo_indice     VARCHAR(7),
+    porcentaje         DECIMAL(6,3) NOT NULL,
+    renta_anterior     DECIMAL(8,2) NOT NULL,
+    renta_nueva        DECIMAL(8,2) NOT NULL,
+    fuente             VARCHAR(255),
+    id_usuario         INT REFERENCES Usuarios (id_usuario) ON DELETE SET NULL,
+    fecha_confirmacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_actualizacion_contrato_fecha UNIQUE (id_contrato, fecha_efecto)
+);

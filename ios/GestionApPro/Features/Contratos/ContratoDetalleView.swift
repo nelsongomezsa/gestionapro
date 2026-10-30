@@ -15,6 +15,7 @@ struct ContratoDetalleView: View {
     @State private var trabajando = false
     @State private var error: String?
     @State private var modeloFianza = ModeloFianza()
+    @State private var modeloRenta = ModeloRenta()
 
     private var esGestor: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -53,6 +54,10 @@ struct ContratoDetalleView: View {
                 }
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
+
+                if c.activo || !modeloRenta.historial.isEmpty {
+                    SeccionRenta(modelo: modeloRenta, gestor: esGestor && c.activo)
+                }
 
                 SeccionFianza(modelo: modeloFianza, idContrato: c.id, editable: esGestor)
 
@@ -113,6 +118,10 @@ struct ContratoDetalleView: View {
         }
         .task { await cargar() }
         .fianza(modeloFianza, contrato: id, renta: estado.valor?.precioMensual ?? 0, api: sesion.api)
+        .actualizacionRenta(modeloRenta, contrato: id, gestor: esGestor, api: sesion.api) {
+            await cargar()
+            alCambiar()
+        }
         .visorPDF($documento)
         .hojaCompartir($compartir)
         .alertaError($error)

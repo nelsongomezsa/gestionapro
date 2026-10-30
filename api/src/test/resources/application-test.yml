@@ -18,3 +18,6 @@ gestionap:
   recordatorios:
     # En los tests el envío se llama a mano con una fecha fija.
     cron: "-"
+  indices:
+    # Sin red en los tests: los valores se fijan en cada test.
+    url: ""

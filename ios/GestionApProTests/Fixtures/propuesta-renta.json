@@ -1,0 +1,14 @@
+{
+  "debida": true,
+  "fechaEfecto": "2026-11-10",
+  "indice": "IRAV",
+  "indiceRecomendado": "IRAV",
+  "periodoIndice": "2026-09",
+  "porcentaje": 2.54,
+  "limitadoPorIrav": false,
+  "rentaActual": 500.00,
+  "rentaNueva": 512.70,
+  "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de septiembre 2026 (serie IRAV1)",
+  "motivoIndice": "Contrato firmado desde el 26-05-2023 (Ley 12/2023): índice de referencia IRAV del INE.",
+  "aviso": "Orientativo."
+}

@@ -102,4 +102,15 @@ struct APIClientDescargasTests {
         #expect(f.fechaDevolucion != nil)
         #expect(f.notas == nil)
     }
+
+    @Test("Propuesta de actualización de renta con el IRAV")
+    func propuestaRenta() throws {
+        let p = try Fixture.decodificar(PropuestaRenta.self, de: "propuesta-renta")
+        #expect(p.debida)
+        #expect(p.indice == .irav)
+        #expect(p.porcentaje == Decimal(string: "2.54"))
+        #expect(p.rentaNueva == Decimal(string: "512.7"))
+        #expect(nombreMes(p.periodoIndice) == "septiembre de 2026")
+        #expect(nombreMes(nil) == nil)
+    }
 }

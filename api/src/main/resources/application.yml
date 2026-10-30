@@ -26,6 +26,15 @@ gestionap:
     dia-limite: 7
     # Recordatorio al inquilino desde estos días antes del límite.
     dias-aviso: 3
+  indices:
+    # API oficial del INE (Tempus). IRAV: serie IRAV1. IPC general, variación anual:
+    # base 2025 desde enero de 2026 (IPC290750) y base 2021 para los meses anteriores (IPC251856).
+    url: https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/
+    irav: IRAV1
+    ipc: IPC290750,IPC251856
+  renta:
+    # Ninguna actualización supera el IRAV (LAU art. 18.1, redacción del RDL 29/2026).
+    tope-irav: true
   recordatorios:
     # Email de recordatorio a los inquilinos (solo si hay email configurado). "-" lo desactiva.
     cron: "0 0 9 * * *"

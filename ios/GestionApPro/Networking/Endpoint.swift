@@ -150,6 +150,27 @@ enum Rutas {
     static func reciboPago(_ id: Int) -> String { "/api/pagos/\(id)/recibo" }
 }
 
+// MARK: Actualización de renta
+
+extension Endpoint where Respuesta == PropuestaRenta {
+    static func propuestaRenta(contrato id: Int, indice: IndiceRenta? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/actualizacion-renta",
+                 consulta: [URLQueryItem(name: "indice", value: indice?.rawValue)])
+    }
+}
+
+extension Endpoint where Respuesta == HistorialRenta {
+    static func confirmarRenta(contrato id: Int, _ req: ConfirmacionRenta) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/contratos/\(id)/actualizacion-renta", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == [HistorialRenta] {
+    static func historialRenta(contrato id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/actualizaciones-renta")
+    }
+}
+
 // MARK: Fianzas
 
 extension Endpoint where Respuesta == Fianza {
