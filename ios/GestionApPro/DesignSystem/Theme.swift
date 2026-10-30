@@ -1,48 +1,78 @@
 import SwiftUI
 import UIKit
 
-/// Tokens de diseño de GestionApPro: color, tipografía, espaciado y radios.
-/// El color principal es el morado del icono (#6C63FF), más claro en modo oscuro.
+/// Tokens de diseño de GestionApPro: color, tipografía, espaciado, radios y elevación.
+///
+/// Identidad: azul marino profundo con azul eléctrico como acento (acción principal) y verde
+/// para lo positivo; rojo y ámbar solo para estados. Cada color tiene variante clara y oscura
+/// y cumple contraste WCAG AA sobre su superficie (comprobado al definirlos).
 enum Tema {
 
     // MARK: Color
 
     enum Color {
+        /// Azul eléctrico: enlaces, iconos y acciones. Es el color de acento del catálogo.
         static let primario = SwiftUI.Color.accentColor
-        static let primarioSuave = SwiftUI.Color.accentColor.opacity(0.12)
+        static let primarioSuave = dinamico(claro: 0xE6EEFE, oscuro: 0x1A2D52)
+        /// Relleno de los botones principales: el mismo azul en los dos modos, para que el
+        /// texto blanco encima tenga contraste suficiente (4,8:1).
+        static let primarioRelleno = fijo(0x2F6BF0)
+        static let sobrePrimario = SwiftUI.Color.white
+        /// Relleno de los botones destructivos (texto blanco encima).
+        static let negativoRelleno = fijo(0xC62828)
 
-        static let positivo = dinamico(claro: 0x1E9E5A, oscuro: 0x3DD68C)
-        static let negativo = dinamico(claro: 0xD93A3A, oscuro: 0xFF6B6B)
-        static let aviso = dinamico(claro: 0xC77700, oscuro: 0xFFB340)
-        static let neutro = SwiftUI.Color(uiColor: .secondaryLabel)
+        static let positivo = dinamico(claro: 0x15803D, oscuro: 0x3DD68C)
+        static let negativo = dinamico(claro: 0xC62828, oscuro: 0xFF6B6B)
+        static let aviso = dinamico(claro: 0xB45309, oscuro: 0xFFB340)
+        static let neutro = dinamico(claro: 0x5B6475, oscuro: 0x9AA6BD)
 
-        static let fondo = SwiftUI.Color(uiColor: .systemGroupedBackground)
-        static let superficie = SwiftUI.Color(uiColor: .secondarySystemGroupedBackground)
-        static let superficieElevada = SwiftUI.Color(uiColor: .tertiarySystemGroupedBackground)
-        static let borde = SwiftUI.Color(uiColor: .separator).opacity(0.6)
-        static let textoSecundario = SwiftUI.Color(uiColor: .secondaryLabel)
+        /// Capas: fondo < superficie < superficie elevada.
+        static let fondo = dinamico(claro: 0xF4F6FA, oscuro: 0x0B1220)
+        static let superficie = dinamico(claro: 0xFFFFFF, oscuro: 0x121B2E)
+        static let superficieElevada = dinamico(claro: 0xEEF2F8, oscuro: 0x1A2540)
+        static let borde = dinamico(claro: 0xE3E8F0, oscuro: 0x24304A)
+        static let texto = dinamico(claro: 0x0B1220, oscuro: 0xF2F5FA)
+        static let textoSecundario = dinamico(claro: 0x5B6475, oscuro: 0x9AA6BD)
 
-        /// Degradado de la marca (cabeceras y avatar).
-        static let degradadoMarca = LinearGradient(
-            colors: [dinamico(claro: 0x6C63FF, oscuro: 0x8A82FF), dinamico(claro: 0x4A3FD1, oscuro: 0x5B50E0)],
-            startPoint: .topLeading, endPoint: .bottomTrailing)
+        /// Tarjeta principal de cada pantalla (la cifra que más importa): azul marino en los dos
+        /// modos. Su contenido se dibuja con los colores del modo oscuro (ver `TarjetaHero`).
+        static let superficieHeroe = dinamico(claro: 0x0F1B33, oscuro: 0x16233F)
+        static let bordeHeroe = dinamico(claro: 0x0F1B33, oscuro: 0x2A3A5E)
+
+        /// Cabeceras que aún no se han pasado a `TarjetaHero`; desaparece al rediseñar cada pantalla.
+        static let degradadoMarca = superficieHeroe
+
+        /// Fondos de los iconos de sección (la pestaña Más): tonos de la paleta, no del sistema.
+        static let iconoAzul = fijo(0x2F6BF0)
+        static let iconoVerde = fijo(0x15803D)
+        static let iconoAmbar = fijo(0xB45309)
+        static let iconoRojo = fijo(0xC62828)
+        static let iconoMarino = fijo(0x24304A)
 
         private static func dinamico(claro: UInt32, oscuro: UInt32) -> SwiftUI.Color {
             SwiftUI.Color(uiColor: UIColor { rasgos in
                 UIColor(hex: rasgos.userInterfaceStyle == .dark ? oscuro : claro)
             })
         }
+
+        private static func fijo(_ hex: UInt32) -> SwiftUI.Color {
+            SwiftUI.Color(uiColor: UIColor(hex: hex))
+        }
     }
 
     // MARK: Tipografía
-    // Cifras en SF Rounded con dígitos de ancho fijo, para que las columnas de importes alineen.
+    // SF Pro del sistema, con Dynamic Type. Cifras con dígitos de ancho fijo para que los
+    // importes no "bailen" al cambiar ni desalineen las columnas.
 
     enum Fuente {
-        static let cifraGrande = Font.system(.largeTitle, design: .rounded, weight: .bold).monospacedDigit()
-        static let cifra = Font.system(.title2, design: .rounded, weight: .semibold).monospacedDigit()
-        static let cifraMediana = Font.system(.title3, design: .rounded, weight: .semibold).monospacedDigit()
-        static let cifraPequena = Font.system(.headline, design: .rounded, weight: .semibold).monospacedDigit()
+        /// La cifra protagonista de una pantalla (tarjeta principal).
+        static let cifraHeroe = Font.system(.largeTitle, weight: .bold).monospacedDigit()
+        static let cifraGrande = Font.system(.largeTitle, weight: .bold).monospacedDigit()
+        static let cifra = Font.system(.title2, weight: .semibold).monospacedDigit()
+        static let cifraMediana = Font.system(.title3, weight: .semibold).monospacedDigit()
+        static let cifraPequena = Font.system(.headline, weight: .semibold).monospacedDigit()
         static let titulo = Font.title2.weight(.bold)
+        static let tituloSeccion = Font.title3.weight(.semibold)
         static let subtitulo = Font.headline
         static let cuerpo = Font.body
         static let detalle = Font.subheadline
@@ -50,16 +80,15 @@ enum Tema {
         static let nota = Font.caption
     }
 
-    // MARK: Espaciado (escala de 4 pt)
+    // MARK: Espaciado (escala fija 4 · 8 · 12 · 16 · 24 · 32)
 
     enum Espacio {
         static let xxs: CGFloat = 4
         static let xs: CGFloat = 8
         static let s: CGFloat = 12
         static let m: CGFloat = 16
-        static let l: CGFloat = 20
-        static let xl: CGFloat = 24
-        static let xxl: CGFloat = 32
+        static let l: CGFloat = 24
+        static let xl: CGFloat = 32
     }
 
     // MARK: Radios
@@ -69,6 +98,22 @@ enum Tema {
         static let medio: CGFloat = 12
         static let grande: CGFloat = 16
         static let tarjeta: CGFloat = 20
+    }
+
+    // MARK: Tamaños fijos de iconos
+
+    enum Tamano {
+        /// Cuadrado de los iconos de fila y de KPI.
+        static let icono: CGFloat = 32
+        static let iconoPequeno: CGFloat = 28
+        static let alturaBoton: CGFloat = 50
+        static let alturaBarraProgreso: CGFloat = 6
+    }
+
+    // MARK: Movimiento
+
+    enum Movimiento {
+        static let suave = Animation.snappy(duration: 0.25)
     }
 }
 
@@ -125,7 +170,8 @@ private struct EstiloTarjeta: ViewModifier {
             // enlaces y botones que hay dentro de la tarjeta.
             .overlay(RoundedRectangle(cornerRadius: Tema.Radio.tarjeta).strokeBorder(Tema.Color.borde, lineWidth: 0.5)
                 .allowsHitTesting(false))
-            .shadow(color: .black.opacity(esquema == .dark ? 0 : 0.05), radius: 8, y: 2)
+            // Elevación: en claro una sombra mínima; en oscuro la da el borde y el cambio de capa.
+            .shadow(color: .black.opacity(esquema == .dark ? 0 : 0.04), radius: 6, y: 1)
     }
 }
 

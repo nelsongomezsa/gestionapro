@@ -10,7 +10,7 @@ struct LoginView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: Tema.Espacio.xl) {
+            VStack(spacing: Tema.Espacio.l) {
                 VStack(spacing: Tema.Espacio.s) {
                     Image(systemName: "building.2.fill")
                         .font(.system(size: 40, weight: .semibold))
@@ -23,7 +23,7 @@ struct LoginView: View {
                     Text("Gestión de alquiler de habitaciones")
                         .foregroundStyle(Tema.Color.textoSecundario)
                 }
-                .padding(.top, Tema.Espacio.xxl)
+                .padding(.top, Tema.Espacio.xl)
 
                 if let aviso = sesion.aviso {
                     Label(aviso, systemImage: "clock.badge.exclamationmark")

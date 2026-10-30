@@ -13,6 +13,7 @@ struct PerfilView: View {
     @State private var confirmarSalida = false
     @State private var hoja: Hoja?
     @State private var resumen: Dashboard?
+    @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
 
     private enum Hoja: String, Identifiable {
         case editar, password, cobro
@@ -79,6 +80,15 @@ struct PerfilView: View {
                     }
                     .accessibilityIdentifier("enlaceMiActividad")
                 }
+            }
+
+            Section {
+                Picker("Apariencia", selection: $apariencia) {
+                    ForEach(Apariencia.allCases) { Text($0.nombre).tag($0) }
+                }
+                .accessibilityIdentifier("selectorApariencia")
+            } footer: {
+                Text("Automático sigue el modo claro u oscuro del iPhone.")
             }
 
             Section {

@@ -3,6 +3,7 @@ import SwiftUI
 /// Login o pestañas según la sesión y el rol.
 struct RaizView: View {
     @Environment(SesionStore.self) private var sesion
+    @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
 
     var body: some View {
         Group {
@@ -25,6 +26,7 @@ struct RaizView: View {
                 PestanasView(usuario: usuario)
             }
         }
+        .preferredColorScheme(apariencia.esquema)
         .task { await sesion.restaurar() }
     }
 }

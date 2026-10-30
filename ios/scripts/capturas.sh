@@ -30,7 +30,8 @@ fallos=0
 
 for modo in claro oscuro; do
   [[ $modo == claro ]] && xcrun simctl ui "$udid" appearance light || xcrun simctl ui "$udid" appearance dark
-  destino="$raiz/docs/capturas/$fase/$modo"
+  # CAPTURAS_CARPETA cambia la carpeta de destino (p. ej. rediseno/inicio).
+  destino="$raiz/docs/capturas/${CAPTURAS_CARPETA:-$fase}/$modo"
   rm -rf "$destino"
   echo "== $fase ($modo)"
   TEST_RUNNER_CAPTURAS_DIR="$destino" \

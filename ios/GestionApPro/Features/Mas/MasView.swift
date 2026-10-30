@@ -80,7 +80,7 @@ struct MasView: View {
     }
 }
 
-/// Círculo con las iniciales del nombre sobre el degradado de la marca.
+/// Círculo con las iniciales del nombre sobre el azul de la marca.
 struct AvatarIniciales: View {
     let nombre: String
     var tamano: CGFloat = 64
@@ -91,10 +91,10 @@ struct AvatarIniciales: View {
 
     var body: some View {
         Text(iniciales.isEmpty ? "?" : iniciales)
-            .font(.system(size: tamano * 0.38, weight: .semibold, design: .rounded))
-            .foregroundStyle(.white)
+            .font(.system(size: tamano * 0.38, weight: .semibold))
+            .foregroundStyle(Tema.Color.sobrePrimario)
             .frame(width: tamano, height: tamano)
-            .background(Tema.Color.degradadoMarca, in: .circle)
+            .background(Tema.Color.primarioRelleno, in: .circle)
             .accessibilityHidden(true)
     }
 }

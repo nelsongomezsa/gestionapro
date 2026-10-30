@@ -14,16 +14,16 @@ struct BotonPrincipal: View {
         Button(action: accion) {
             HStack(spacing: Tema.Espacio.xs) {
                 if cargando {
-                    ProgressView().tint(.white)
+                    ProgressView().tint(Tema.Color.sobrePrimario)
                 } else {
                     if let icono { Image(systemName: icono) }
                     Text(titulo)
                 }
             }
             .font(.headline)
-            .frame(maxWidth: .infinity, minHeight: 50)
-            .foregroundStyle(.white)
-            .background((destructivo ? Tema.Color.negativo : Tema.Color.primario).opacity(habilitado ? 1 : 0.4),
+            .frame(maxWidth: .infinity, minHeight: Tema.Tamano.alturaBoton)
+            .foregroundStyle(Tema.Color.sobrePrimario)
+            .background((destructivo ? Tema.Color.negativoRelleno : Tema.Color.primarioRelleno).opacity(habilitado ? 1 : 0.4),
                         in: .rect(cornerRadius: Tema.Radio.medio))
             .contentShape(.rect)
         }

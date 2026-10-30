@@ -11,34 +11,34 @@ struct TarjetaKPI: View {
     var tendencia: Double? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-            HStack {
-                Image(systemName: icono)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(tono.color)
-                    .frame(width: 30, height: 30)
-                    .background(tono.color.opacity(0.14), in: .rect(cornerRadius: Tema.Radio.pequeno))
-                    .accessibilityHidden(true)
-                Spacer()
+        VStack(alignment: .leading, spacing: Tema.Espacio.s) {
+            IconoEtiqueta(icono: icono, tono: tono, tamano: Tema.Tamano.iconoPequeno)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(valor)
+                    .font(Tema.Fuente.cifra)
+                    .foregroundStyle(Tema.Color.texto)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .contentTransition(.numericText())
+                Text(titulo)
+                    .font(Tema.Fuente.detalle.weight(.medium))
+                    .foregroundStyle(Tema.Color.texto)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 if let tendencia {
                     InsigniaEstado(texto: Formato.porcentaje(abs(tendencia)), tono: Tono.signo(tendencia),
                                    icono: tendencia >= 0 ? "arrow.up.right" : "arrow.down.right")
+                } else if let detalle {
+                    Text(detalle)
+                        .font(Tema.Fuente.nota)
+                        .foregroundStyle(Tema.Color.textoSecundario)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                 }
             }
-            Text(valor)
-                .font(Tema.Fuente.cifra)
-                .foregroundStyle(.primary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            Text(titulo)
-                .font(Tema.Fuente.detalle)
-                .foregroundStyle(Tema.Color.textoSecundario)
-            if let detalle {
-                Text(detalle)
-                    .font(Tema.Fuente.nota)
-                    .foregroundStyle(Tema.Color.textoSecundario)
-            }
         }
+        // Todas las tarjetas de una fila con la misma altura.
+        .frame(maxHeight: .infinity, alignment: .topLeading)
         .tarjeta()
         .accessibilityElement(children: .combine)
     }
