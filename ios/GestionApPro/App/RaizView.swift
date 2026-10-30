@@ -29,19 +29,42 @@ struct RaizView: View {
     }
 }
 
+/// Propietario y admin: Inicio · Pisos · Cobros · Incidencias · Más.
+/// Inquilino: su alquiler y su perfil.
 struct PestanasView: View {
     let usuario: Usuario
 
     var body: some View {
-        TabView {
-            if usuario.rol.gestionaPisos {
-                PisosListaView()
-                    .tabItem { Label("Mis Pisos", systemImage: "building.2") }
-                CalculadoraView()
-                    .tabItem { Label("Calculadora", systemImage: "function") }
+        if usuario.rol.gestionaPisos {
+            TabView {
+                InicioView().tabItem { Label("Inicio", systemImage: "house") }
+                PisosListaView().tabItem { Label("Pisos", systemImage: "building.2") }
+                CobrosView().tabItem { Label("Cobros", systemImage: "eurosign.circle") }
+                IncidenciasView().tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
+                MasView(usuario: usuario).tabItem { Label("Más", systemImage: "ellipsis.circle") }
             }
-            PerfilView(usuario: usuario)
-                .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
+        } else {
+            TabView {
+                NavigationStack {
+                    PantallaPendiente(titulo: "Mi alquiler", fase: "4C")
+                        .navigationTitle("Mi alquiler")
+                }
+                .tabItem { Label("Mi alquiler", systemImage: "key") }
+                NavigationStack { PerfilView(usuario: usuario) }
+                    .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
+            }
         }
+    }
+}
+
+/// Marcador temporal de una pantalla que llega en una fase posterior del plan (docs/PARIDAD.md).
+/// Al terminar la fase 4F no debe quedar ninguno.
+struct PantallaPendiente: View {
+    let titulo: String
+    let fase: String
+
+    var body: some View {
+        EstadoVacio(icono: "hammer", titulo: titulo,
+                    mensaje: "Esta pantalla se añade en la fase \(fase) del plan.")
     }
 }
