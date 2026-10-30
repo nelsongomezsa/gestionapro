@@ -16,7 +16,7 @@ struct QrPagoView: View {
                             .scaledToFit()
                             .frame(maxWidth: 260)
                             .padding(Tema.Espacio.m)
-                            .background(.white, in: .rect(cornerRadius: Tema.Radio.grande))
+                            .background(Tema.Color.fondoQR, in: .rect(cornerRadius: Tema.Radio.grande))
                             .accessibilityLabel("Código QR de pago de \(Formato.euros(qr.importe))")
                     }
                     Text(Formato.euros(qr.importe)).font(Tema.Fuente.cifraGrande)
@@ -67,10 +67,10 @@ struct InvitacionView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: Tema.Espacio.l) {
-                Image(systemName: "envelope.open.badge.clock").font(.system(size: 48)).foregroundStyle(Tema.Color.primario)
+                Image(systemName: "envelope.open.badge.clock").font(Tema.Fuente.iconoGrande).foregroundStyle(Tema.Color.primario)
                 Text("Código de invitación").font(Tema.Fuente.titulo)
                 Text(invitacion.codigo)
-                    .font(.system(.title, design: .monospaced, weight: .bold))
+                    .font(Tema.Fuente.codigo)
                     .textSelection(.enabled)
                     .padding()
                     .tarjeta()

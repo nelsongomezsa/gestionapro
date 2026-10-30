@@ -26,6 +26,7 @@ struct HabitacionesView: View {
                     }
                     .pickerStyle(.menu)
                 }
+                .filaLista()
 
                 if vm.visibles.isEmpty {
                     EstadoVacio(icono: "bed.double", titulo: "Sin habitaciones",
@@ -34,9 +35,11 @@ struct HabitacionesView: View {
                 } else {
                     Section {
                         ForEach(vm.visibles) { h in
-                            FilaHabitacion(habitacion: h)
-                                .contentShape(.rect)
-                                .onTapGesture { editando = h }
+                            // Botón (no un gesto de toque) para que VoiceOver y los deslizamientos funcionen.
+                            Button { editando = h } label: {
+                                FilaHabitacion(habitacion: h).contentShape(.rect)
+                            }
+                            .buttonStyle(.plain)
                                 .swipeActions(edge: .trailing) {
                                     Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = h }
                                     Button("Editar", systemImage: "pencil") { editando = h }
@@ -52,8 +55,10 @@ struct HabitacionesView: View {
                     } footer: {
                         Text("Desliza para editar, borrar o cambiar el estado.")
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .searchable(text: $vm.busqueda, prompt: "Número o inquilino")
         }
         .navigationTitle("Habitaciones")
@@ -101,7 +106,8 @@ struct FilaHabitacion: View {
         HStack(spacing: Tema.Espacio.s) {
             Text("\(habitacion.numero)")
                 .font(Tema.Fuente.cifraPequena)
-                .frame(width: 40, height: 40)
+                .frame(width: Tema.Tamano.avatarFila, height: Tema.Tamano.avatarFila)
+                .accessibilityLabel("Habitación \(habitacion.numero)")
                 .background(habitacion.estado.tono.color.opacity(0.14), in: .rect(cornerRadius: Tema.Radio.pequeno))
                 .foregroundStyle(habitacion.estado.tono.color)
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
@@ -111,8 +117,10 @@ struct FilaHabitacion: View {
                         Text("Alquilada hace \(dias) días").font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     }
                 } else {
-                    Text("Habitación \(habitacion.numero)").font(Tema.Fuente.subtitulo)
-                    InsigniaEstado(texto: habitacion.estado.nombre, tono: habitacion.estado.tono, icono: habitacion.estado.icono)
+                    // El número ya está en la casilla: aquí, el estado.
+                    Label(habitacion.estado.nombre, systemImage: habitacion.estado.icono)
+                        .font(Tema.Fuente.subtitulo)
+                        .foregroundStyle(habitacion.estado.tono.color)
                 }
             }
             Spacer()
@@ -121,7 +129,7 @@ struct FilaHabitacion: View {
                 Text("al mes").font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, Tema.Espacio.linea)
         .accessibilityElement(children: .combine)
         .accessibilityHint("Toca para editar; desliza para más acciones")
     }

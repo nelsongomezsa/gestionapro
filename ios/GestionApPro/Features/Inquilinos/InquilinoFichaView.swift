@@ -22,12 +22,14 @@ struct InquilinoFichaView: View {
                 cabecera(i)
                 if let c = i.contratoActivo {
                     Section("Contrato activo") { FilaContrato(contrato: c) }
+                    .filaLista()
                 }
                 Section("Datos") {
                     LabeledContent("DNI", value: i.dni)
                     LabeledContent("Teléfono", value: i.telefono ?? "—")
                     LabeledContent("Email", value: i.email ?? "—")
                 }
+                .filaLista()
                 Section {
                     Button { Task { await pedirQr(i) } } label: {
                         Label("QR de pago del mes", systemImage: "qrcode")
@@ -46,9 +48,11 @@ struct InquilinoFichaView: View {
                 } footer: {
                     if i.contratoActivo == nil { Text("El QR de pago necesita un contrato activo.") }
                 }
+                .filaLista()
                 let historico = i.contratos.filter { !$0.activo }
                 if !historico.isEmpty {
                     Section("Contratos anteriores") { ForEach(historico) { FilaContrato(contrato: $0) } }
+                    .filaLista()
                 }
                 Section("Últimos pagos") {
                     if i.pagos.isEmpty {
@@ -60,8 +64,11 @@ struct InquilinoFichaView: View {
                         }
                     }
                 }
+                .filaLista()
             }
-            .navigationTitle(i.nombre)
+            .estiloLista()
+            // El nombre ya va grande en la cabecera.
+            .navigationTitle("Inquilino")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .primaryAction) { Button("Editar") { editando = true } } }
             .sheet(isPresented: $editando) {
@@ -90,8 +97,12 @@ struct InquilinoFichaView: View {
     private func cabecera(_ i: Inquilino) -> some View {
         Section {
             VStack(spacing: Tema.Espacio.s) {
-                AvatarIniciales(nombre: i.nombreCompleto, tamano: 72)
-                Text(i.nombreCompleto).font(Tema.Fuente.titulo).multilineTextAlignment(.center)
+                AvatarIniciales(nombre: i.nombreCompleto, tamano: Tema.Tamano.avatarGrande)
+                Text(i.nombreCompleto)
+                    .font(Tema.Fuente.titulo)
+                    .foregroundStyle(Tema.Color.texto)
+                    .multilineTextAlignment(.center)
+                    .accessibilityAddTraits(.isHeader)
                 HStack(spacing: Tema.Espacio.l) {
                     accionContacto("Llamar", icono: "phone.fill", habilitado: i.telefono != nil) {
                         if let t = i.telefono, let url = Contacto.llamada(t) { abrirURL(url) }
@@ -108,13 +119,14 @@ struct InquilinoFichaView: View {
             .frame(maxWidth: .infinity)
             .listRowBackground(Color.clear)
         }
+        .filaLista()
     }
 
     private func accionContacto(_ titulo: String, icono: String, habilitado: Bool, accion: @escaping () -> Void) -> some View {
         Button(action: accion) {
             VStack(spacing: Tema.Espacio.xxs) {
                 Image(systemName: icono)
-                    .frame(width: 44, height: 44)
+                    .frame(width: Tema.Tamano.botonRedondo, height: Tema.Tamano.botonRedondo)
                     .background(Tema.Color.primarioSuave, in: .circle)
                 Text(titulo).font(Tema.Fuente.nota)
             }
@@ -152,14 +164,16 @@ struct FilaContrato: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
             HStack {
-                Text("Hab. \(contrato.numeroHabitacion) · \(contrato.piso.direccion)").font(Tema.Fuente.subtitulo)
+                Text("Hab. \(contrato.numeroHabitacion) · \(contrato.piso.direccion)")
+                    .font(Tema.Fuente.subtitulo)
+                    .fixedSize(horizontal: false, vertical: true)
                 Spacer()
                 Text(Formato.euros(contrato.precioMensual)).font(Tema.Fuente.cifraPequena)
             }
             HStack {
                 Text(rango).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                 Spacer()
-                InsigniaEstado(texto: contrato.activo ? contrato.vencimiento.texto : "Finalizado",
+                InsigniaEstado(texto: contrato.activo ? contrato.vencimiento.estadoCorto : "Finalizado",
                                tono: contrato.activo ? contrato.vencimiento.tono : .neutro)
             }
         }

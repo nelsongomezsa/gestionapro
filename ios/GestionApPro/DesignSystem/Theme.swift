@@ -20,6 +20,8 @@ enum Tema {
         /// texto blanco encima tenga contraste suficiente (5,6:1).
         static let primarioRelleno = fijo(0x1F5FE0)
         static let sobrePrimario = SwiftUI.Color.white
+        /// Fondo de los códigos QR: siempre blanco, para que los lea cualquier cámara.
+        static let fondoQR = SwiftUI.Color.white
         /// Relleno de los botones destructivos (texto blanco encima).
         static let negativoRelleno = fijo(0xC62828)
 
@@ -77,6 +79,10 @@ enum Tema {
         static let detalle = Font.subheadline
         static let etiqueta = Font.caption.weight(.semibold)
         static let nota = Font.caption
+        /// Códigos que se leen o se dictan (invitaciones).
+        static let codigo = Font.system(.title, design: .monospaced, weight: .bold)
+        /// Icono grande de una pantalla informativa.
+        static let iconoGrande = Font.system(.largeTitle)
     }
 
     // MARK: Espaciado (escala fija 4 · 8 · 12 · 16 · 24 · 32)
@@ -109,6 +115,12 @@ enum Tema {
         static let iconoPequeno: CGFloat = 28
         static let alturaBoton: CGFloat = 50
         static let alturaBarraProgreso: CGFloat = 6
+        /// Avatar o casilla al principio de una fila de lista.
+        static let avatarFila: CGFloat = 40
+        /// Avatar de la cabecera de una ficha.
+        static let avatarGrande: CGFloat = 72
+        /// Botones redondos de acción rápida (llamar, mensaje...): 44 pt, el mínimo táctil.
+        static let botonRedondo: CGFloat = 44
     }
 
     // MARK: Movimiento

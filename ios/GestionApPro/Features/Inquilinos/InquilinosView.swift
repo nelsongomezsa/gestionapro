@@ -12,7 +12,10 @@ struct InquilinosView: View {
         @Bindable var vm = vm
         VistaCarga(estado: vm.estado, reintentar: { Task { await vm.cargar(con: sesion.api) } }) { _ in
             List {
-                Toggle("Solo con contrato activo", isOn: $vm.soloConContrato)
+                Section {
+                    Toggle("Solo con contrato activo", isOn: $vm.soloConContrato)
+                }
+                .filaLista()
                 if vm.visibles.isEmpty {
                     EstadoVacio(icono: "person.2", titulo: vm.busqueda.isEmpty && !vm.soloConContrato ? "Sin inquilinos" : "Sin resultados",
                                 mensaje: vm.busqueda.isEmpty && !vm.soloConContrato ? "Da de alta tu primer inquilino con +." : "Prueba con otro nombre, DNI o teléfono.")
@@ -28,8 +31,10 @@ struct InquilinosView: View {
                                 }
                         }
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .searchable(text: $vm.busqueda, prompt: "Nombre, DNI, teléfono o email")
         }
         .navigationTitle("Inquilinos")
@@ -58,25 +63,25 @@ struct FilaInquilino: View {
 
     var body: some View {
         HStack(spacing: Tema.Espacio.s) {
-            AvatarIniciales(nombre: inquilino.nombreCompleto, tamano: 40)
+            AvatarIniciales(nombre: inquilino.nombreCompleto, tamano: Tema.Tamano.avatarFila)
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 HStack(spacing: Tema.Espacio.xxs) {
                     Text(inquilino.nombreCompleto).font(Tema.Fuente.subtitulo)
                     if inquilino.tieneCuentaApp {
-                        Image(systemName: "iphone").font(.caption).foregroundStyle(Tema.Color.primario)
+                        Image(systemName: "iphone").font(Tema.Fuente.nota).foregroundStyle(Tema.Color.primario)
                             .accessibilityLabel("Usa la app")
                     }
                 }
                 if let c = inquilino.contratoActivo {
                     Text("Hab. \(c.numeroHabitacion) · \(c.piso.direccion)")
-                        .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                        .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                 } else {
                     Text("Sin contrato activo").font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                 }
             }
             Spacer()
             if let c = inquilino.contratoActivo, c.vencimiento != .normal {
-                InsigniaEstado(texto: c.vencimiento == .critico ? "≤ 7 días" : "≤ 30 días", tono: c.vencimiento.tono,
+                InsigniaEstado(texto: c.vencimiento.estadoCorto, tono: c.vencimiento.tono,
                                icono: "calendar.badge.exclamationmark")
             }
         }

@@ -66,6 +66,16 @@ enum NivelVencimiento: String, Decodable, Sendable {
         }
     }
 
+    /// Para la insignia junto a "Quedan N días" (sin repetir los días).
+    var estadoCorto: String {
+        switch self {
+        case .vencido: "Vencido"
+        case .critico: "Urgente"
+        case .proximo: "Por vencer"
+        case .normal: "Vigente"
+        }
+    }
+
     var tono: Tono {
         switch self {
         case .vencido: .neutro

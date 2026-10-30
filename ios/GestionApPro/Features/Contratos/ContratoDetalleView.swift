@@ -21,30 +21,37 @@ struct ContratoDetalleView: View {
         VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { c in
             List {
                 Section {
-                    VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-                        InsigniaEstado(texto: c.activo ? c.vencimiento.texto : "Finalizado",
-                                       tono: c.activo ? c.vencimiento.tono : .neutro)
-                        Text(c.inquilino.nombre).font(Tema.Fuente.titulo)
-                        Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion), \(c.piso.ciudad)")
-                            .foregroundStyle(Tema.Color.textoSecundario)
+                    VStack(alignment: .leading, spacing: Tema.Espacio.l) {
+                        VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
+                            Text(c.inquilino.nombre)
+                                .font(Tema.Fuente.titulo)
+                                .foregroundStyle(Tema.Color.texto)
+                                .accessibilityAddTraits(.isHeader)
+                            Text("Habitación \(c.habitacion.numero) · \(c.piso.direccion), \(c.piso.ciudad)")
+                                .font(Tema.Fuente.detalle)
+                                .foregroundStyle(Tema.Color.textoSecundario)
+                        }
+                        TarjetaHero(titulo: "Renta mensual", valor: Formato.euros(c.precioMensual),
+                                    accesorio: AnyView(InsigniaEstado(texto: c.activo ? c.vencimiento.estadoCorto : "Finalizado",
+                                                                      tono: c.activo ? c.vencimiento.tono : .neutro))) {
+                            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                                BarraProgreso(valor: Self.transcurrido(c), tono: c.activo ? c.vencimiento.tono : .neutro)
+                                Text(c.activo ? (c.diasRestantes == 0 ? "Vence hoy" : "Quedan \(c.diasRestantes) días")
+                                              : "Finalizó hace \(abs(c.diasRestantes)) días")
+                                    .font(Tema.Fuente.nota)
+                                    .foregroundStyle(Tema.Color.textoSecundario)
+                            }
+                            HStack(alignment: .top) {
+                                DatoCompacto(titulo: "Inicio", valor: c.fechaInicio.formatted(FormatoFecha.corta))
+                                Spacer()
+                                DatoCompacto(titulo: "Fin", valor: c.fechaFin.formatted(FormatoFecha.corta))
+                            }
+                        }
                     }
-                    .listRowBackground(Color.clear)
+                    .padding(.top, Tema.Espacio.xs)
                 }
-
-                Section {
-                    HStack(spacing: Tema.Espacio.s) {
-                        TarjetaKPI(titulo: "Renta mensual", valor: Formato.euros(c.precioMensual), icono: "eurosign")
-                        TarjetaKPI(titulo: c.diasRestantes >= 0 ? "Días restantes" : "Finalizó hace",
-                                   valor: "\(abs(c.diasRestantes))", icono: "calendar", tono: c.activo ? c.vencimiento.tono : .neutro)
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                }
-
-                Section("Fechas") {
-                    LabeledContent("Inicio", value: c.fechaInicio.formatted(FormatoFecha.larga))
-                    LabeledContent("Fin", value: c.fechaFin.formatted(FormatoFecha.larga))
-                }
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
 
                 Section("Documentos y avisos") {
                     Button { Task { await abrirPDF(c) } } label: {
@@ -60,6 +67,7 @@ struct ContratoDetalleView: View {
                     }
                     Button { verMapa = true } label: { Label("Ver en el mapa", systemImage: "map") }
                 }
+                .filaLista()
 
                 if esGestor, c.inquilino.telefono != nil || c.inquilino.email != nil {
                     Section("Contacto") {
@@ -73,17 +81,21 @@ struct ContratoDetalleView: View {
                             Button { abrirURL(url) } label: { Label("Email · \(e)", systemImage: "envelope") }
                         }
                     }
+                    .filaLista()
                 }
 
                 if esGestor && c.activo {
                     Section {
                         Button("Finalizar contrato", role: .destructive) { confirmarFin = true }
+                            .disabled(trabajando)
                             .frame(maxWidth: .infinity)
                     } footer: {
                         Text("La fecha de fin pasa a ser hoy y la habitación queda disponible.")
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .navigationTitle("Contrato")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $verMapa) {
@@ -100,6 +112,13 @@ struct ContratoDetalleView: View {
         .visorPDF($documento)
         .hojaCompartir($compartir)
         .alertaError($error)
+    }
+
+    /// Parte del contrato ya transcurrida (0 a 1), para la barra de la tarjeta principal.
+    static func transcurrido(_ c: Contrato, hoy: Date = .now) -> Double {
+        let total = c.fechaFin.timeIntervalSince(c.fechaInicio)
+        guard total > 0 else { return 1 }
+        return min(max(hoy.timeIntervalSince(c.fechaInicio) / total, 0), 1)
     }
 
     private func cargar() async {
@@ -124,6 +143,8 @@ struct ContratoDetalleView: View {
     }
 
     private func finalizar(_ c: Contrato) async {
+        trabajando = true
+        defer { trabajando = false }
         do {
             estado = .cargado(try await sesion.api.enviar(.finalizarContrato(id: c.id)))
             alCambiar()

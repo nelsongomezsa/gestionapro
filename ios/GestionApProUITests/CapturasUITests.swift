@@ -570,6 +570,62 @@ extension CapturasUITests {
         r.capturar("10-registrar-pago")
         r.app.buttons["Cancelar"].tap()
     }
+
+    @MainActor
+    func testRedisenoContratosInquilinos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        r.pestana("Más")
+        r.app.buttons["Contratos"].tap()
+        r.esperar(r.app.buttons["filaContrato"].firstMatch)
+        r.pausa(1)
+        r.capturar("01-contratos")
+        r.app.buttons["filaContrato"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Renta mensual"))
+        r.pausa(1)
+        r.capturar("02-contrato-detalle")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("03-contrato-acciones")
+        r.atras()
+        r.app.buttons["Nuevo contrato"].tap()
+        r.esperar(r.app.navigationBars["Nuevo contrato"])
+        r.pausa(1)
+        r.capturar("04-contrato-nuevo")
+        r.app.buttons["Cancelar"].tap()
+        r.atras()
+
+        r.app.buttons["Inquilinos"].tap()
+        r.esperar(r.app.buttons["filaInquilino"].firstMatch)
+        r.pausa(1)
+        r.capturar("05-inquilinos")
+        r.app.buttons["filaInquilino"].firstMatch.tap()
+        r.esperar(r.app.navigationBars["Inquilino"])
+        r.pausa(1.5)
+        r.capturar("06-inquilino-ficha")
+        r.app.swipeUp()
+        r.pausa(1.5)
+        r.capturar("07-inquilino-pagos")
+        r.atras()
+        r.app.buttons["Nuevo inquilino"].tap()
+        r.pausa(1.5)
+        r.capturar("08-inquilino-nuevo")
+        r.app.buttons["Cancelar"].tap()
+
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.desplazarHasta(r.app.buttons["enlaceHabitaciones"]).tap()
+        r.esperar(r.app.navigationBars["Habitaciones"])
+        r.pausa(1.5)
+        r.capturar("09-habitaciones")
+        r.app.buttons["Añadir"].tap()
+        r.pausa(1.5)
+        r.capturar("10-habitacion-nueva")
+        r.app.buttons["Cancelar"].tap()
+    }
 }
 
 @MainActor

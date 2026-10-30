@@ -35,8 +35,10 @@ struct ContratosView: View {
                                 }
                         }
                     }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .searchable(text: $vm.busqueda, prompt: "Inquilino o dirección")
         }
         .navigationTitle("Contratos")
@@ -78,18 +80,21 @@ struct FilaContratoCompleto: View {
                 Text(FormatoFecha.rango(contrato.fechaInicio, contrato.fechaFin))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 Spacer()
+                // "Vigente" no se muestra: es lo normal y llenaría la lista de insignias iguales.
+                if !contrato.activo || contrato.vencimiento != .normal {
                 InsigniaEstado(texto: contrato.activo ? textoVencimiento : "Finalizado",
                                tono: contrato.activo ? contrato.vencimiento.tono : .neutro,
                                icono: contrato.activo && contrato.vencimiento != .normal ? "calendar.badge.exclamationmark" : nil)
+                }
             }
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, Tema.Espacio.linea)
         .accessibilityElement(children: .combine)
     }
 
     private var textoVencimiento: String {
         switch contrato.vencimiento {
-        case .critico, .proximo: contrato.diasRestantes == 0 ? "Vence hoy" : "Vence en \(contrato.diasRestantes) d"
+        case .critico, .proximo: contrato.diasRestantes == 0 ? "Vence hoy" : "Vence en \(contrato.diasRestantes) días"
         default: "Vigente"
         }
     }

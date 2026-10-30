@@ -116,7 +116,7 @@ struct FilaIncidencia: View {
             }
             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
         }
-        .padding(.vertical, 2)
+        .padding(.vertical, Tema.Espacio.linea)
         .accessibilityElement(children: .combine)
     }
 }

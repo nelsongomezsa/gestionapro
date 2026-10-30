@@ -41,21 +41,26 @@ struct NuevoContratoView: View {
                     }
                     .disabled(idPiso == nil || habitaciones.isEmpty)
                 }
+                .filaLista()
                 Section("Inquilino") {
                     Picker("Inquilino", selection: $idInquilino) {
                         Text("Elige un inquilino").tag(Int?.none)
                         ForEach(inquilinos) { Text($0.nombreCompleto).tag(Int?.some($0.id)) }
                     }
                 }
+                .filaLista()
                 Section("Condiciones") {
                     DatePicker("Inicio", selection: $inicio, displayedComponents: .date)
                     DatePicker("Fin", selection: $fin, in: inicio..., displayedComponents: .date)
                     CampoNumerico("Renta mensual", valor: $precio, sufijo: "€")
                 }
+                .filaLista()
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .environment(\.locale, Formato.locale)
             .overlay { if cargando { ProgressView() } }
             .navigationTitle("Nuevo contrato")

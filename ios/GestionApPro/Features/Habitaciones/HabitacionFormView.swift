@@ -28,10 +28,13 @@ struct HabitacionFormView: View {
                         ForEach(EstadoHabitacion.allCases) { Label($0.nombre, systemImage: $0.icono).tag($0) }
                     }
                 }
+                .filaLista()
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .navigationTitle(habitacion == nil ? "Nueva habitación" : "Habitación \(habitacion!.numero)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

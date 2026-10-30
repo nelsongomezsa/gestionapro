@@ -26,6 +26,7 @@ struct InquilinoFormView: View {
                         .textInputAutocapitalization(.characters)
                         .autocorrectionDisabled()
                 }
+                .filaLista()
                 Section {
                     TextField("Teléfono", text: $datos.telefono).keyboardType(.phonePad).textContentType(.telephoneNumber)
                     TextField("Email", text: $datos.email)
@@ -36,10 +37,13 @@ struct InquilinoFormView: View {
                 } footer: {
                     Text("Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha.")
                 }
+                .filaLista()
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
+                    .filaLista()
                 }
             }
+            .estiloLista()
             .navigationTitle(inquilino == nil ? "Nuevo inquilino" : "Editar inquilino")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
