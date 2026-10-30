@@ -50,6 +50,18 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gestionap.GestionApProTests
         GENERATE_INFOPLIST_FILE: YES
+  GestionApProUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - GestionApProUITests
+    dependencies:
+      - target: GestionApPro
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gestionap.GestionApProUITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: GestionApPro
 schemes:
   GestionApPro:
     build:
@@ -63,3 +75,13 @@ schemes:
         - GestionApProTests
     archive:
       config: Release
+  # Recorre la app contra una API en marcha y guarda capturas (ver docs/capturas/README.md).
+  Capturas:
+    build:
+      targets:
+        GestionApPro: all
+        GestionApProUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - GestionApProUITests
