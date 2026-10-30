@@ -1,0 +1,83 @@
+{
+    "pisos": [],
+    "inquilinos": [
+        {
+            "id": 6,
+            "titulo": "Ana Fern\u00e1ndez Mart\u00ednez",
+            "subtitulo": "Hab. 2 \u00b7 Gran V\u00eda 42, 2\u00ba B"
+        },
+        {
+            "id": 1,
+            "titulo": "Carlos Garc\u00eda Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 2,
+            "titulo": "Mar\u00eda L\u00f3pez S\u00e1nchez",
+            "subtitulo": "Hab. 2 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 4,
+            "titulo": "Laura Mart\u00ednez Fern\u00e1ndez",
+            "subtitulo": "Hab. 4 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 10,
+            "titulo": "Isabel P\u00e9rez Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Passeig de Gr\u00e0cia 58, 4\u00ba 1\u00aa"
+        },
+        {
+            "id": 15,
+            "titulo": "Pedro Ruiz Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Carrer de Proven\u00e7a 144, 2\u00ba 2\u00aa"
+        },
+        {
+            "id": 21,
+            "titulo": "David Vargas Mart\u00ednez",
+            "subtitulo": "Sin contrato activo"
+        }
+    ],
+    "contratos": [
+        {
+            "id": 4,
+            "titulo": "Laura Mart\u00ednez Fern\u00e1ndez",
+            "subtitulo": "Hab. 4 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 15,
+            "titulo": "Pedro Ruiz Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Carrer de Proven\u00e7a 144, 2\u00ba 2\u00aa"
+        },
+        {
+            "id": 10,
+            "titulo": "Isabel P\u00e9rez Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Passeig de Gr\u00e0cia 58, 4\u00ba 1\u00aa"
+        },
+        {
+            "id": 1,
+            "titulo": "Carlos Garc\u00eda Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 2,
+            "titulo": "Mar\u00eda L\u00f3pez S\u00e1nchez",
+            "subtitulo": "Hab. 2 \u00b7 Calle Mayor 15, 3\u00ba A"
+        },
+        {
+            "id": 6,
+            "titulo": "Ana Fern\u00e1ndez Mart\u00ednez",
+            "subtitulo": "Hab. 2 \u00b7 Gran V\u00eda 42, 2\u00ba B"
+        },
+        {
+            "id": 27,
+            "titulo": "David Vargas Mart\u00ednez",
+            "subtitulo": "Hab. 1 \u00b7 Calle Mayor 15, 3\u00ba A \u00b7 finalizado"
+        },
+        {
+            "id": 21,
+            "titulo": "David Vargas Mart\u00ednez",
+            "subtitulo": "Hab. 5 \u00b7 Calle Mayor 15, 3\u00ba A \u00b7 finalizado"
+        }
+    ],
+    "incidencias": []
+}

@@ -17,7 +17,7 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 | Login con email y contraseña (`LoginController`) | `POST /api/auth/login` | ✔︎ | Login | — | ✅ |
 | Cerrar sesión | — (borra el token del Keychain) | ✔︎ | Más → Perfil | — | ✅ |
 | Rehash SHA-256 → BCrypt al entrar | (en el login) | ✔︎ | — | — | ✅ |
-| Registro de inquilino con invitación *(solo móvil)* | `POST /api/auth/register-inquilino` | ✔︎ | Registro | 4F | ⏳ |
+| Registro de inquilino con invitación *(solo móvil)* | `POST /api/auth/register-inquilino` | ✔︎ | Login → "Soy inquilino y tengo un código" | 4F | ✅ |
 
 ## Navegación (`MainController`)
 
@@ -25,7 +25,7 @@ pisos y un **INQUILINO** solo lo suyo. Lo ajeno responde 404.
 |---|---|---|---|---|---|
 | Menú lateral con 12 secciones | — | | Pestañas Inicio · Pisos · Cobros · Incidencias · Más | 4A | ✅ |
 | Usuarios visible solo para admin | `GET /api/me` | ✔︎ | Más → Usuarios (solo admin) | 4A | ✅ |
-| Búsqueda global | ✚ `GET /api/buscar?q=` | ✚ | Inicio → buscar | 4F | ⏳ |
+| Búsqueda global | ✚ `GET /api/buscar?q=` | ✚ | Inicio → lupa (abre piso, inquilino, contrato o incidencia) | 4F | ✅ |
 | Campana de notificaciones con contador | `GET /api/notificaciones` y `/no-leidas` | ✔︎ | Inicio → campana | 4D | ✅ |
 | Tema claro / oscuro | — | | Automático (sistema) | 4A | ✅ |
 | Atrás / historial (`HistorialNavegacion`) | — | | Navegación nativa de iOS | 4A | ➖ |
@@ -161,20 +161,20 @@ En escritorio estas consultas son globales y los meses dependen del idioma del s
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
 | Información de la cuenta | `GET /api/me` | ✔︎ | Más → Perfil (avatar con iniciales) | 4A | ✅ |
-| Editar nombre y email | ✚ `PUT /api/me` | ✚ | Perfil → Editar | 4F | ⏳ |
-| Cambiar contraseña | ✚ `PUT /api/me/password` | ✚ | Perfil → Contraseña | 4F | ⏳ |
-| Mis estadísticas (contratos, pagos, incidencias) | ✚ `GET /api/me/estadisticas` | ✚ | Perfil | 4F | ⏳ |
-| Historial de actividad reciente | ✚ `GET /api/actividad` | ✚ | Perfil → Actividad | 4F | ⏳ |
+| Editar nombre y email | ✚ `PATCH /api/me` | ✚ | Perfil → Editar nombre y email | 4F | ✅ |
+| Cambiar contraseña | ✚ `PUT /api/me/password` | ✚ | Perfil → Cambiar contraseña | 4F | ✅ |
+| Mis estadísticas (contratos, pagos, incidencias) | `GET /api/dashboard` (reutilizado) | ✔︎ | Perfil → Mis estadísticas | 4F | ✅ |
+| Historial de actividad reciente | ✚ `GET /api/actividad?soloMia=true` | ✚ | Perfil → Historial de actividad | 4F | ✅ |
 | IBAN para el QR de pago *(nuevo, ver 4B)* | `PATCH /api/me` | ✔︎ | Perfil → Datos de cobro | 4B | ✅ |
 
 ## Usuarios (`UsuariosController`, `UsuarioDAO`) — solo admin
 
 | Escritorio | API | | Pantalla iOS | Fase | Estado |
 |---|---|---|---|---|---|
-| Lista de usuarios | ✚ `GET /api/usuarios` | ✚ | Más → Usuarios | 4F | ⏳ |
-| Nuevo usuario | ✚ `POST /api/usuarios` | ✚ | Usuarios → Nuevo | 4F | ⏳ |
-| Activar / desactivar | ✚ `PATCH /api/usuarios/{id}/activo` | ✚ | Usuarios (deslizar) | 4F | ⏳ |
-| Cambiar rol (un inquilino no puede ascender) | ✚ `PATCH /api/usuarios/{id}/rol` | ✚ | Usuarios | 4F | ⏳ |
+| Lista de usuarios | ✚ `GET /api/usuarios` | ✚ | Más → Usuarios | 4F | ✅ |
+| Nuevo usuario | ✚ `POST /api/usuarios` | ✚ | Usuarios → + | 4F | ✅ |
+| Activar / desactivar | ✚ `PATCH /api/usuarios/{id}/activo` | ✚ | Usuarios (deslizar o mantener pulsado; no a uno mismo) | 4F | ✅ |
+| Cambiar rol (un inquilino no puede ascender) | ✚ `PATCH /api/usuarios/{id}/rol` | ✚ | Usuarios (mantener pulsado) | 4F | ✅ |
 
 ## Lo que no se traslada tal cual
 

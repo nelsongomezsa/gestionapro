@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "nombre": "Administrador",
+        "email": "admin@gestionap.com",
+        "rol": "ADMIN",
+        "activo": true
+    },
+    {
+        "id": 2,
+        "nombre": "Gestor Demo",
+        "email": "gestor@gestionap.com",
+        "rol": "PROPIETARIO",
+        "activo": true
+    },
+    {
+        "id": 4,
+        "nombre": "Natalia Castro L\u00f3pez",
+        "email": "inquilino.demo@example.com",
+        "rol": "INQUILINO",
+        "activo": true
+    },
+    {
+        "id": 3,
+        "nombre": "Propietario Dos",
+        "email": "propietario2@example.com",
+        "rol": "ADMIN",
+        "activo": true
+    }
+]
