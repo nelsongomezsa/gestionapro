@@ -4,6 +4,7 @@ struct LoginView: View {
     @Environment(SesionStore.self) private var sesion
     @State private var vm = LoginViewModel()
     @FocusState private var campo: Campo?
+    @State private var registrando = false
 
     private enum Campo { case email, password }
 
@@ -64,6 +65,10 @@ struct LoginView: View {
                     Task { await vm.entrar(con: sesion) }
                 }
                 .disabled(!vm.puedeEnviar)
+
+                Button("Soy inquilino y tengo un código") { registrando = true }
+                    .font(Tema.Fuente.detalle)
+                    .accessibilityIdentifier("botonTengoCodigo")
             }
             .padding(Tema.Espacio.l)
             .frame(maxWidth: 480)
@@ -71,5 +76,8 @@ struct LoginView: View {
         }
         .background(Tema.Color.fondo)
         .scrollDismissesKeyboard(.interactively)
+        .sheet(isPresented: $registrando) {
+            NavigationStack { RegistroInquilinoView() }
+        }
     }
 }

@@ -286,3 +286,48 @@ extension Endpoint where Respuesta == [Pago] {
 extension Rutas {
     static func pdfPiso(_ id: Int) -> String { "/api/pisos/\(id)/pdf" }
 }
+
+// MARK: Perfil, usuarios, búsqueda y registro (fase 4F)
+
+extension Endpoint where Respuesta == TokenResponse {
+    static func registrarInquilino(_ req: RegistroInquilinoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/auth/register-inquilino", cuerpo: json(req), requiereAuth: false)
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func cambiarPassword(_ req: CambioPasswordRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/me/password", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == [Actividad] {
+    static func miActividad(limite: Int = 50) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/actividad",
+                 consulta: [URLQueryItem(name: "limite", value: String(limite)), URLQueryItem(name: "soloMia", value: "true")])
+    }
+}
+
+extension Endpoint where Respuesta == [UsuarioAdmin] {
+    static let usuarios = Endpoint(metodo: "GET", ruta: "/api/usuarios")
+}
+
+extension Endpoint where Respuesta == UsuarioAdmin {
+    static func crearUsuario(_ req: NuevoUsuarioRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/usuarios", cuerpo: json(req))
+    }
+
+    static func cambiarActivo(usuario id: Int, activo: Bool) -> Self {
+        Endpoint(metodo: "PATCH", ruta: "/api/usuarios/\(id)/activo", cuerpo: json(CambioActivoRequest(activo: activo)))
+    }
+
+    static func cambiarRol(usuario id: Int, a rol: Rol) -> Self {
+        Endpoint(metodo: "PATCH", ruta: "/api/usuarios/\(id)/rol", cuerpo: json(CambioRolRequest(rol: rol)))
+    }
+}
+
+extension Endpoint where Respuesta == ResultadosBusqueda {
+    static func buscar(_ texto: String) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/buscar", consulta: [URLQueryItem(name: "q", value: texto)])
+    }
+}

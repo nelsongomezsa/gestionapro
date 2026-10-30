@@ -5,6 +5,9 @@ import SwiftUI
 enum DestinoInicio: Hashable {
     case notificaciones
     case actividad
+    case buscar
+    case piso(Int)
+    case inquilino(Int)
     case contrato(Int)
     case habitacion(Int)
     case incidencia(Int)
@@ -111,6 +114,12 @@ struct InicioView: View {
                     .disabled(generandoInforme)
                 }
                 ToolbarItem(placement: .primaryAction) {
+                    NavigationLink(value: DestinoInicio.buscar) {
+                        Label("Buscar", systemImage: "magnifyingglass")
+                    }
+                    .accessibilityIdentifier("botonBuscar")
+                }
+                ToolbarItem(placement: .primaryAction) {
                     NavigationLink(value: DestinoInicio.notificaciones) {
                         Image(systemName: noLeidas > 0 ? "bell.badge.fill" : "bell")
                             .symbolRenderingMode(.multicolor)
@@ -132,6 +141,9 @@ struct InicioView: View {
                 case .notificaciones:
                     NotificacionesView(abrir: { ruta.append($0) }, alCambiar: { await contarNoLeidas() })
                 case .actividad: ActividadView()
+                case .buscar: BuscarView()
+                case let .piso(id): PisoDestinoView(id: id)
+                case let .inquilino(id): InquilinoFichaView(id: id)
                 case let .contrato(id): ContratoDetalleView(id: id)
                 case let .habitacion(id): HabitacionDestinoView(id: id)
                 case let .incidencia(id): IncidenciaDestinoView(id: id)
@@ -236,6 +248,8 @@ struct FilaActividad: View {
 /// Toda la actividad reciente.
 struct ActividadView: View {
     @Environment(SesionStore.self) private var sesion
+    /// Solo lo que ha hecho el usuario (el historial de su perfil).
+    var soloMia = false
     @State private var estado: EstadoCarga<[Actividad]> = .cargando
 
     var body: some View {
@@ -243,12 +257,12 @@ struct ActividadView: View {
             List(lista) { FilaActividad(actividad: $0) }
                 .overlay { if lista.isEmpty { EstadoVacio(icono: "clock", titulo: "Sin actividad") } }
         }
-        .navigationTitle("Actividad")
+        .navigationTitle(soloMia ? "Mi actividad" : "Actividad")
         .task { await cargar() }
     }
 
     private func cargar() async {
-        do { estado = .cargado(try await sesion.api.enviar(.actividad(limite: 50))) }
+        do { estado = .cargado(try await sesion.api.enviar(soloMia ? .miActividad() : .actividad(limite: 50))) }
         catch .noAutorizado {}
         catch { estado = .error(error.localizedDescription) }
     }

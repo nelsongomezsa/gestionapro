@@ -50,3 +50,36 @@ struct TokenResponse: Decodable, Sendable {
     let expira: Date
     let usuario: Usuario
 }
+
+/// POST /api/auth/register-inquilino: el inquilino crea su cuenta con el código de su propietario.
+struct RegistroInquilinoRequest: Encodable, Sendable {
+    let codigo: String
+    let email: String
+    let password: String
+}
+
+/// PUT /api/me/password
+struct CambioPasswordRequest: Encodable, Sendable {
+    let actual: String
+    let nueva: String
+}
+
+/// GET /api/usuarios (solo admin).
+struct UsuarioAdmin: Decodable, Identifiable, Hashable, Sendable {
+    let id: Int
+    let nombre: String
+    let email: String
+    let rol: Rol
+    let activo: Bool
+}
+
+/// POST /api/usuarios: solo ADMIN o PROPIETARIO (los inquilinos entran con invitación).
+struct NuevoUsuarioRequest: Encodable, Sendable {
+    let nombre: String
+    let email: String
+    let password: String
+    let rol: Rol
+}
+
+struct CambioActivoRequest: Encodable, Sendable { let activo: Bool }
+struct CambioRolRequest: Encodable, Sendable { let rol: Rol }

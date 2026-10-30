@@ -58,7 +58,8 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
 
     var icono: String {
         guard let accion else { return "clock" }
-        if accion.contains("LOGIN") { return "person.badge.key" }
+        if accion.contains("LOGIN") || accion.contains("PASSWORD") { return "person.badge.key" }
+        if accion.contains("USUARIO") || accion.contains("ROL") { return "person.crop.circle.badge.checkmark" }
         if accion.contains("PAGO") { return "eurosign.circle" }
         if accion.contains("CONTRATO") { return "doc.text" }
         if accion.contains("INQUILINO") || accion.contains("INVITAR") { return "person.2" }
@@ -79,6 +80,8 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
         "CREAR_CONTRATO": "Contrato creado", "FINALIZAR_CONTRATO": "Contrato finalizado",
         "REGISTRAR_PAGO": "Pago registrado", "BORRAR_PAGO": "Pago borrado",
         "EDITAR_PERFIL": "Perfil actualizado", "CAMBIAR_ROL": "Rol cambiado",
+        "CAMBIAR_PASSWORD": "Contraseña cambiada", "CREAR_USUARIO": "Usuario creado",
+        "ACTIVAR_USUARIO": "Usuario activado", "DESACTIVAR_USUARIO": "Usuario desactivado",
     ]
 }
 

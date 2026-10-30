@@ -429,4 +429,84 @@ extension CapturasUITests {
             ri.capturar("13-inquilino-nueva-incidencia")
         }
     }
+
+    /// Fase 4F: búsqueda global, usuarios, perfil completo y registro con invitación.
+    @MainActor
+    func test4F() throws {
+        let r = try Recorrido.iniciar()
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        // Búsqueda global
+        r.app.buttons["botonBuscar"].tap()
+        r.esperar(r.app.navigationBars["Buscar"])
+        r.capturar("02-buscar")
+        let campo = r.app.searchFields.firstMatch
+        campo.tap()
+        campo.typeText("calle")
+        r.esperar(r.app.staticTexts["Contratos"])
+        r.pausa(1)
+        r.capturar("03-buscar-resultados")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Calle")).firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.pausa(1)
+        r.capturar("04-buscar-abre-piso")
+        r.atras()
+        r.pausa(1)
+        r.app.buttons["Cancel"].firstMatch.tapSiExiste()
+        r.app.buttons["Cancelar"].firstMatch.tapSiExiste()
+        r.atras()
+
+        // Usuarios (admin)
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["Usuarios"]).tap()
+        r.esperar(r.texto(empiezaPor: "Gestor"))
+        r.pausa(1)
+        r.capturar("05-usuarios")
+        r.texto(empiezaPor: "Gestor").swipeLeft()
+        r.pausa(1)
+        r.capturar("06-usuarios-desactivar-deslizando")
+        r.texto(empiezaPor: "Gestor").swipeRight()
+        r.pausa(1)
+        r.app.buttons["botonNuevoUsuario"].tap()
+        r.esperar(r.app.navigationBars["Nuevo usuario"])
+        r.capturar("07-usuario-nuevo")
+        r.app.buttons["Cancelar"].tap()
+        r.atras()
+
+        // Perfil completo
+        r.app.buttons["enlacePerfil"].tap()
+        r.esperar(r.app.navigationBars["Perfil"])
+        r.capturar("08-perfil")
+        r.desplazarHasta(r.elemento(contiene: "Incidencias abiertas"))
+        r.capturar("09-perfil-estadisticas")
+        r.desplazarHasta(r.app.buttons["botonEditarPerfil"]).tap()
+        r.esperar(r.app.navigationBars["Editar perfil"])
+        r.capturar("10-editar-perfil")
+        r.app.buttons["Cancelar"].tap()
+        r.desplazarHasta(r.app.buttons["botonCambiarPassword"]).tap()
+        r.esperar(r.app.navigationBars["Cambiar contraseña"])
+        // Antes de escribir: iOS oculta en las capturas el contenido de los campos de contraseña.
+        r.capturar("11-cambiar-password")
+        r.app.buttons["Cancelar"].tap()
+        r.desplazarHasta(r.app.buttons["enlaceMiActividad"]).tap()
+        r.esperar(r.app.navigationBars["Mi actividad"])
+        r.pausa(1)
+        r.capturar("12-mi-actividad")
+
+        // Registro del inquilino con su código
+        r.app.terminate()
+        r.app.launchArguments = ["-reiniciarSesion"]
+        r.app.launch()
+        r.esperar(r.app.buttons["botonTengoCodigo"])
+        r.app.buttons["botonTengoCodigo"].tap()
+        r.esperar(r.app.navigationBars["Crear mi cuenta"])
+        r.capturar("13-registro-inquilino")
+    }
+}
+
+@MainActor
+private extension XCUIElement {
+    func tapSiExiste() {
+        if exists && isHittable { tap() }
+    }
 }

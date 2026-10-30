@@ -55,15 +55,3 @@ struct PestanasView: View {
         }
     }
 }
-
-/// Marcador temporal de una pantalla que llega en una fase posterior del plan (docs/PARIDAD.md).
-/// Al terminar la fase 4F no debe quedar ninguno.
-struct PantallaPendiente: View {
-    let titulo: String
-    let fase: String
-
-    var body: some View {
-        EstadoVacio(icono: "hammer", titulo: titulo,
-                    mensaje: "Esta pantalla se añade en la fase \(fase) del plan.")
-    }
-}

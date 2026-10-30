@@ -56,7 +56,16 @@ final class SesionStore {
     }
 
     func iniciarSesion(email: String, password: String) async throws(APIError) {
-        let respuesta = try await api.enviar(.login(email: email, password: password))
+        try entrar(con: await api.enviar(.login(email: email, password: password)))
+    }
+
+    /// Registro del inquilino con el código de invitación: deja la sesión iniciada.
+    func registrarInquilino(codigo: String, email: String, password: String) async throws(APIError) {
+        try entrar(con: await api.enviar(.registrarInquilino(
+            RegistroInquilinoRequest(codigo: codigo, email: email, password: password))))
+    }
+
+    private func entrar(con respuesta: TokenResponse) throws(APIError) {
         do {
             try tokens.guardar(respuesta.token)
         } catch {

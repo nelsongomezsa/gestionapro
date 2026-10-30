@@ -39,8 +39,6 @@ struct DatosCobroView: View {
         .navigationTitle("Datos de cobro")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }
-        }
-        .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 if guardando { ProgressView() } else { Button("Guardar") { Task { await guardar() } } }
             }
