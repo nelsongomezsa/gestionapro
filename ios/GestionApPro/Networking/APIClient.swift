@@ -35,8 +35,8 @@ final class APIClient: Sendable {
     }
 
     /// Descarga un archivo (p. ej. el contrato en PDF) con el mismo manejo de errores.
-    func descargar(_ ruta: String, tipo: String = "application/pdf") async throws(APIError) -> Data {
-        try await ejecutar(metodo: "GET", ruta: ruta, consulta: [], cuerpo: nil, requiereAuth: true, acepta: tipo).0
+    func descargar(_ ruta: String, consulta: [URLQueryItem] = [], tipo: String = "application/pdf") async throws(APIError) -> Data {
+        try await ejecutar(metodo: "GET", ruta: ruta, consulta: consulta, cuerpo: nil, requiereAuth: true, acepta: tipo).0
     }
 
     private func ejecutar(metodo: String, ruta: String, consulta: [URLQueryItem], cuerpo: Data?,

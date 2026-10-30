@@ -58,8 +58,8 @@ struct MasView: View {
         case .perfil: PerfilView(usuario: usuario)
         case .inquilinos: InquilinosView()
         case .contratos: ContratosView()
-        case .calendario: PantallaPendiente(titulo: "Calendario", fase: "4D")
-        case .estadisticas: PantallaPendiente(titulo: "Estadísticas", fase: "4D")
+        case .calendario: CalendarioView()
+        case .estadisticas: EstadisticasView()
         case .calculadora: CalculadoraView()
         case .usuarios: PantallaPendiente(titulo: "Usuarios", fase: "4F")
         }

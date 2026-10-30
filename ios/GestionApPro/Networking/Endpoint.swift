@@ -176,3 +176,56 @@ extension Endpoint where Respuesta == SinContenido {
         Endpoint(metodo: "DELETE", ruta: "/api/pagos/\(id)")
     }
 }
+
+// MARK: Inicio, estadísticas, calendario y notificaciones
+
+extension Endpoint where Respuesta == Dashboard {
+    static let dashboard = Endpoint(metodo: "GET", ruta: "/api/dashboard")
+}
+
+extension Endpoint where Respuesta == Estadisticas {
+    static let estadisticas = Endpoint(metodo: "GET", ruta: "/api/estadisticas")
+}
+
+extension Endpoint where Respuesta == Calendario {
+    static func calendario(mes: Mes) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/calendario", consulta: [URLQueryItem(name: "mes", value: mes.texto)])
+    }
+}
+
+extension Endpoint where Respuesta == [Notificacion] {
+    static func notificaciones(soloNoLeidas: Bool = false) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/notificaciones",
+                 consulta: [URLQueryItem(name: "soloNoLeidas", value: soloNoLeidas ? "true" : nil)])
+    }
+}
+
+extension Endpoint where Respuesta == TotalNoLeidas {
+    static let notificacionesNoLeidas = Endpoint(metodo: "GET", ruta: "/api/notificaciones/no-leidas")
+}
+
+extension Endpoint where Respuesta == Notificacion {
+    static func marcarLeida(_ id: Int) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/notificaciones/\(id)/leida")
+    }
+}
+
+extension Endpoint where Respuesta == TotalMarcadas {
+    static let marcarTodasLeidas = Endpoint(metodo: "POST", ruta: "/api/notificaciones/leidas")
+}
+
+extension Endpoint where Respuesta == [Actividad] {
+    static func actividad(limite: Int = 30) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/actividad", consulta: [URLQueryItem(name: "limite", value: String(limite))])
+    }
+}
+
+extension Endpoint where Respuesta == Habitacion {
+    static func habitacion(id: Int) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/habitaciones/\(id)")
+    }
+}
+
+extension Rutas {
+    static let informeMensual = "/api/informes/mensual"
+}
