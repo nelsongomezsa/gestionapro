@@ -88,6 +88,11 @@
             <version>${itext.version}</version>
         </dependency>
 
+        <!-- Comprobación de salud para el despliegue (/actuator/health, sin detalles). -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!-- Asistente con IA (fase 7): SDK oficial de la API de Claude. La clave solo en ANTHROPIC_API_KEY. -->
         <dependency>
             <groupId>com.anthropic</groupId>

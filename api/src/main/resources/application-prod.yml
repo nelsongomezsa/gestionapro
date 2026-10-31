@@ -13,9 +13,17 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
 
+server:
+  # Detrás del proxy HTTPS de la plataforma: confía en X-Forwarded-For/Proto para saber la IP real
+  # (firmas) y que la petición llegó por HTTPS. Solo es seguro si la API no es accesible sin el proxy.
+  forward-headers-strategy: framework
+
 gestionap:
   jwt:
     secret: ${JWT_SECRET}
+  archivos:
+    # Facturas, fotos y firmas: un volumen persistente de la plataforma.
+    dir: ${GESTIONAP_ARCHIVOS_DIR:/data/archivos}
   mail:
     remitente: ${MAIL_FROM:${MAIL_USER:}}
 

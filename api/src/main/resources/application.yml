@@ -59,3 +59,13 @@ springdoc:
 server:
   error:
     include-stacktrace: never
+
+# Solo la comprobación de salud, sin detalles (la usa la plataforma de despliegue).
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
