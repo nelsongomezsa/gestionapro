@@ -117,6 +117,7 @@ struct ContratoDetalleView: View {
             .estiloLista()
             .navigationTitle("Contrato")
             .navigationBarTitleDisplayMode(.inline)
+            .contextoAsistente(.contrato(id))
             .sheet(isPresented: $verMapa) {
                 NavigationStack {
                     MapaDireccion(titulo: c.piso.direccion, direccion: c.piso.direccion, ciudad: c.piso.ciudad)

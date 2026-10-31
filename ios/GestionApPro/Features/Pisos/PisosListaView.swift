@@ -65,6 +65,15 @@ struct PisosListaView: View {
 
                     ForEach(pisos) { piso in
                         NavigationLink(value: piso) { TarjetaPiso(piso: piso) }
+                            .contextMenu {
+                                if let url = URL(string: "maps://?q=" + "\(piso.direccion), \(piso.ciudad.nombre)"
+                                    .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
+                                    Link(destination: url) { Label("Abrir en Mapas", systemImage: "map") }
+                                }
+                                Button("Copiar dirección", systemImage: "doc.on.doc") {
+                                    UIPasteboard.general.string = "\(piso.direccion), \(piso.ciudad.nombre)"
+                                }
+                            }
                             .accessibilityIdentifier("tarjetaPiso")
                             .buttonStyle(.plain)
                     }

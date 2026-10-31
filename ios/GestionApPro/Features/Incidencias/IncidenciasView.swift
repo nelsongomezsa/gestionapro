@@ -58,6 +58,7 @@ struct IncidenciasView: View {
                     Button("Nueva incidencia", systemImage: "plus") { creando = true }
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await cargar() } }
             .refreshable { await cargar() }
             .task { await cargar() }
             .sheet(isPresented: $creando) { NuevaIncidenciaView { _ in Task { await cargar() } } }

@@ -54,6 +54,12 @@ struct CobrosView: View {
                                 }
                             }
                             .padding(.vertical, Tema.Espacio.xxs)
+                            .contextMenu {
+                                Button("Registrar pago", systemImage: "eurosign.circle") {
+                                    nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                                }
+                                AccionesContacto(telefono: p.inquilino.telefono, email: p.inquilino.email)
+                            }
                         }
                     } header: {
                         Text("Pendientes de cobro (\(pendientesVisibles(r).count))")
@@ -110,6 +116,7 @@ struct CobrosView: View {
                     }
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await vm.cargar(con: sesion.api) } }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
             .sheet(isPresented: $conciliando) {

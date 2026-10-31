@@ -1100,6 +1100,45 @@ extension CapturasUITests {
             ri.capturar("07-chat-inquilino")
         }
     }
+    /// Accesos rápidos sobre la barra de pestañas: cobro, gasto y mensajes desde cualquier pestaña.
+    @MainActor
+    func testIngenieroAccesos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(1)
+        r.capturar("01-inicio-accesos")
+
+        r.pestana("Pisos")
+        r.app.buttons["accesoPago"].tap()
+        r.esperar(r.app.buttons["cobroPendiente"].firstMatch)
+        r.capturar("02-cobro-desde-pisos")
+        r.app.buttons["cobroPendiente"].firstMatch.tap()
+        r.esperar(r.app.buttons["Guardar"])
+        r.pausa(1)
+        r.capturar("02b-cobro-prellenado")
+        r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
+        r.app.buttons["Cancelar"].firstMatch.tap()
+
+        r.app.buttons["accesoGasto"].tap()
+        r.esperar(r.app.navigationBars["¿De qué piso?"])
+        r.pausa(1)
+        r.capturar("03-gasto-elige-piso")
+        r.app.buttons["Cancelar"].tap()
+
+        r.app.buttons["accesoMensajes"].tap()
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        r.capturar("04-mensajes-desde-pisos")
+        r.app.buttons["Cerrar"].tap()
+
+        r.pestana("Cobros")
+        let fila = r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch
+        r.esperar(fila)
+        fila.press(forDuration: 1.0)
+        r.pausa(1)
+        r.capturar("05-cobros-menu-contextual")
+    }
+
     @MainActor
     func testFase7() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)

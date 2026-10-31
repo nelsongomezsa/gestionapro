@@ -79,6 +79,7 @@ struct InicioView: View {
                 case let .incidencia(id): IncidenciaDestinoView(id: id)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await cargar() } }
             .refreshable { await cargar() }
             .task { await cargar() }
             .visorPDF($vm.documento)

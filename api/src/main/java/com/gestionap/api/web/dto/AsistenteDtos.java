@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -17,7 +19,12 @@ public final class AsistenteDtos {
 
     public record Turno(@NotNull Boolean delUsuario, @NotBlank @Size(max = 4000) String texto) {}
 
-    public record Pregunta(@NotBlank @Size(max = 2000) String mensaje, @Size(max = 20) List<@Valid Turno> historial) {}
+    /** Pantalla desde la que se pregunta (piso o contrato abierto): el asistente responde con ese contexto. */
+    public record Contexto(@NotNull @Pattern(regexp = "PISO|CONTRATO", message = "debe ser PISO o CONTRATO") String tipo,
+                           @NotNull @Positive Integer id) {}
+
+    public record Pregunta(@NotBlank @Size(max = 2000) String mensaje, @Size(max = 20) List<@Valid Turno> historial,
+                           @Valid Contexto contexto) {}
 
     /**
      * Acción que propone el asistente y que la app solo ejecuta si el usuario la confirma

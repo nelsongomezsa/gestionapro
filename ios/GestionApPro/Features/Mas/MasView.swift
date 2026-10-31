@@ -9,6 +9,7 @@ enum SeccionMas: Hashable {
 
 /// Pestaña "Más": el resto de secciones del escritorio.
 struct MasView: View {
+    @Environment(BuzonMensajes.self) private var buzon: BuzonMensajes?
     let usuario: Usuario
 
     var body: some View {
@@ -43,6 +44,7 @@ struct MasView: View {
                     enlace("Inquilinos", icono: "person.2", color: Tema.Color.iconoAzul, a: .inquilinos)
                     enlace("Contratos", icono: "doc.text", color: Tema.Color.iconoAzul, a: .contratos)
                     enlace("Mensajes", icono: "bubble.left.and.bubble.right", color: Tema.Color.iconoAzul, a: .mensajes)
+                        .badge(buzon?.sinLeer ?? 0)
                     enlace("Calendario", icono: "calendar", color: Tema.Color.iconoAzul, a: .calendario)
                     enlace("Estadísticas", icono: "chart.xyaxis.line", color: Tema.Color.iconoAzul, a: .estadisticas)
                 }

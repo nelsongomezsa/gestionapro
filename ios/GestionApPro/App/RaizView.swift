@@ -46,31 +46,97 @@ struct RaizView: View {
     }
 }
 
-/// Propietario y admin: Inicio · Pisos · Cobros · Incidencias · Más.
+/// Propietario y admin: Inicio · Pisos · Cobros · Incidencias · Más, con accesos flotantes.
 /// Inquilino: su alquiler y su perfil.
 struct PestanasView: View {
+    @Environment(SesionStore.self) private var sesion
+    @Environment(\.scenePhase) private var fase
     let usuario: Usuario
+    @State private var buzon = BuzonMensajes()
+    @State private var pantalla = PantallaActual()
+    @State private var abierto: AccesoRapido?
+    @State private var chat: Conversacion?
 
     var body: some View {
-        if usuario.rol.gestionaPisos {
-            TabView {
-                InicioView().tabItem { Label("Inicio", systemImage: "house") }
-                PisosListaView().tabItem { Label("Pisos", systemImage: "building.2") }
-                CobrosView().tabItem { Label("Cobros", systemImage: "eurosign.circle") }
-                IncidenciasView().tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
-                MasView(usuario: usuario).tabItem { Label("Más", systemImage: "ellipsis.circle") }
+        Group {
+            if usuario.rol.gestionaPisos {
+                TabView {
+                    InicioView().tabItem { Label("Inicio", systemImage: "house") }
+                    PisosListaView().tabItem { Label("Pisos", systemImage: "building.2") }
+                    CobrosView().tabItem { Label("Cobros", systemImage: "eurosign.circle") }
+                    IncidenciasView().tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
+                    MasView(usuario: usuario).tabItem { Label("Más", systemImage: "ellipsis.circle") }
+                        .badge(buzon.sinLeer)
+                }
+                .tabViewBottomAccessory { BarraAccesos(abierto: $abierto) }
+                .overlay { BurbujaAsistente(contexto: pantalla.contexto) { abierto = .asistente } }
+                .sheet(item: $abierto, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { hoja($0) }
+            } else {
+                TabView {
+                    MiAlquilerView()
+                        .tabItem { Label("Mi alquiler", systemImage: "key") }
+                    IncidenciasView()
+                        .tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
+                    NavigationStack { ConversacionesView() }
+                        .tabItem { Label("Mensajes", systemImage: "bubble.left.and.bubble.right") }
+                        .badge(buzon.sinLeer)
+                    NavigationStack { PerfilView(usuario: usuario) }
+                        .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
+                }
             }
-        } else {
-            TabView {
-                MiAlquilerView()
-                    .tabItem { Label("Mi alquiler", systemImage: "key") }
-                IncidenciasView()
-                    .tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
-                NavigationStack { ConversacionesView() }
-                    .tabItem { Label("Mensajes", systemImage: "bubble.left.and.bubble.right") }
-                NavigationStack { PerfilView(usuario: usuario) }
-                    .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
+        }
+        .environment(buzon)
+        .environment(pantalla)
+        .overlay(alignment: .top) {
+            if let nueva = buzon.nuevo {
+                AvisoMensaje(conversacion: nueva,
+                             responder: { chat = nueva; buzon.nuevo = nil },
+                             cerrar: { withAnimation(Tema.Movimiento.suave) { buzon.nuevo = nil } })
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .task(id: nueva.id) {
+                        try? await Task.sleep(for: .seconds(8))
+                        withAnimation(Tema.Movimiento.suave) { if buzon.nuevo?.id == nueva.id { buzon.nuevo = nil } }
+                    }
             }
+        }
+        .animation(Tema.Movimiento.suave, value: buzon.nuevo?.id)
+        .sheet(item: $chat, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { c in
+            NavigationStack {
+                ChatView(hilo: c.idIncidencia.map { .incidencia($0) } ?? .contrato(c.idContrato))
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = nil } } }
+            }
+            .presentationDetents([.medium, .large])
+        }
+        // Mensajes nuevos: al abrir, al volver a la app y cada minuto mientras está abierta.
+        .task(id: fase) {
+            guard fase == .active else { return }
+            while !Task.isCancelled {
+                await buzon.actualizar(con: sesion.api)
+                try? await Task.sleep(for: .seconds(60))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func hoja(_ acceso: AccesoRapido) -> some View {
+        switch acceso {
+        case .pago:
+            CobroRapidoView()
+        case .incidencia:
+            NuevaIncidenciaView { _ in NotificationCenter.default.post(name: .datosCambiados, object: nil) }
+        case .gasto:
+            NuevoGastoRapidoView()
+        case .mensajes:
+            NavigationStack {
+                ConversacionesView()
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
+            }
+        case .asistente:
+            NavigationStack {
+                AsistenteView(contexto: pantalla.contexto)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
+            }
+            .presentationDetents([.medium, .large])
         }
     }
 }

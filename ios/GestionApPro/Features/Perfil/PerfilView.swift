@@ -14,6 +14,7 @@ struct PerfilView: View {
     @State private var hoja: Hoja?
     @State private var resumen: Dashboard?
     @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
+    @AppStorage("asistente.flotante") private var asistenteFlotante = true
     @AppStorage(BloqueoBiometrico.clave) private var entrarConFaceID = false
     @AppStorage(AvisosLocales.clave) private var recordatorios = false
     @State private var sinPermiso = false
@@ -132,6 +133,16 @@ struct PerfilView: View {
                 Text("Automático sigue el modo claro u oscuro del iPhone.")
             }
             .filaLista()
+
+            if usuario.rol.gestionaPisos {
+                Section {
+                    Toggle("Asistente flotante", isOn: $asistenteFlotante)
+                        .accessibilityIdentifier("interruptorAsistenteFlotante")
+                } footer: {
+                    Text("Muestra el botón del asistente sobre todas las pantallas; conoce el piso o contrato que tengas abierto.")
+                }
+                .filaLista()
+            }
 
             Section {
                 Button("Cerrar sesión", role: .destructive) { confirmarSalida = true }

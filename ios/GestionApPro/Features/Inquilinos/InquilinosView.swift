@@ -24,6 +24,7 @@ struct InquilinosView: View {
                     Section("\(vm.visibles.count) inquilinos") {
                         ForEach(vm.visibles) { i in
                             NavigationLink(value: i) { FilaInquilino(inquilino: i) }
+                                .contextMenu { AccionesContacto(telefono: i.telefono, email: i.email) }
                                 .accessibilityIdentifier("filaInquilino")
                                 .swipeActions(edge: .trailing) {
                                     Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = i }

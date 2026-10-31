@@ -4,6 +4,8 @@ import SwiftUI
 /// Sin clave en el servidor aparece desactivado con su explicación.
 struct AsistenteView: View {
     @Environment(SesionStore.self) private var sesion
+    /// Si se abre desde la burbuja con un piso o contrato en pantalla, las preguntas van sobre eso.
+    var contexto: ContextoPantalla? = nil
 
     struct Entrada: Identifiable {
         let id = UUID()
@@ -44,6 +46,12 @@ struct AsistenteView: View {
         ScrollViewReader { scroll in
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: Tema.Espacio.s) {
+                    if let contexto {
+                        Label("Preguntas sobre \(contexto.descripcion)", systemImage: "scope")
+                            .font(Tema.Fuente.nota.weight(.semibold))
+                            .foregroundStyle(Tema.Color.primario)
+                            .accessibilityIdentifier("contextoAsistente")
+                    }
                     if conversacion.isEmpty {
                         Text("Pregúntame por tu cartera. Si me pides registrar un pago o crear una incidencia, te lo preparo y tú lo confirmas.")
                             .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
@@ -139,7 +147,7 @@ struct AsistenteView: View {
         pensando = true
         defer { pensando = false }
         do {
-            let r = try await sesion.api.enviar(.preguntarAsistente(PreguntaAsistente(mensaje: limpia, historial: historial)))
+            let r = try await sesion.api.enviar(.preguntarAsistente(PreguntaAsistente(mensaje: limpia, historial: historial, contexto: contexto?.paraAPI)))
             conversacion.append(Entrada(delUsuario: false, texto: r.respuesta, acciones: r.acciones))
             estado = EstadoAsistente(disponible: true, mensaje: estado?.mensaje ?? "", usadosHoy: r.usadosHoy, limiteDiario: r.limiteDiario)
         } catch .noAutorizado {
