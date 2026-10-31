@@ -12,7 +12,7 @@ final class CapturasUITests: XCTestCase {
     func test4A() throws {
         let r = try Recorrido.iniciar()
 
-        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
         r.capturar("02-inicio")
 
         r.pestana("Pisos")
@@ -32,7 +32,7 @@ final class CapturasUITests: XCTestCase {
         r.capturar("06-mas")
 
         r.app.buttons["Calculadora de rentabilidad"].tap()
-        r.esperar(r.app.staticTexts["Rent. bruta"])
+        r.esperar(r.app.staticTexts["Rentabilidad bruta"].firstMatch)
         r.pausa(2) // resumen en vivo
         r.capturar("07-calculadora")
 
@@ -53,7 +53,7 @@ extension CapturasUITests {
     @MainActor
     func test4B() throws {
         let r = try Recorrido.iniciar()
-        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Habitaciones de un piso
         r.pestana("Pisos")
@@ -126,6 +126,8 @@ struct Recorrido {
 
         let app = XCUIApplication()
         app.launchArguments = ["-reiniciarSesion"]
+        // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
+        app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
 
         let r = Recorrido(app: app, carpeta: carpeta)
@@ -178,6 +180,8 @@ struct Recorrido {
     func relanzar(email: String, password: String) -> Recorrido {
         app.terminate()
         app.launchArguments = ["-reiniciarSesion"]
+        // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
+        app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
         let campoEmail = app.textFields["Email"]
         esperar(campoEmail)
@@ -188,6 +192,23 @@ struct Recorrido {
         campoPassword.typeText(password)
         app.buttons["Iniciar sesión"].tap()
         return self
+    }
+
+    /// Primera notificación tocable: los avisos del mismo tipo van agrupados y hay que desplegar el grupo.
+    func primeraNotificacion() -> XCUIElement {
+        let fila = app.buttons["filaNotificacion"].firstMatch
+        let grupo = app.descendants(matching: .any).matching(identifier: "grupoNotificaciones").firstMatch
+        let limite = Date().addingTimeInterval(15)
+        while Date() < limite, !fila.exists, !grupo.exists { pausa(0.5) }
+        if !fila.exists, grupo.exists {
+            grupo.tap()
+            pausa(1)
+            // Dentro del grupo las filas heredan su identificador: la primera tras la cabecera es un aviso.
+            let delGrupo = app.buttons.matching(identifier: "grupoNotificaciones")
+            if delGrupo.count > 1 { return delGrupo.element(boundBy: 1) }
+        }
+        esperar(fila)
+        return fila
     }
 
     func pestana(_ nombre: String) {
@@ -217,7 +238,7 @@ extension CapturasUITests {
     @MainActor
     func test4C() throws {
         let r = try Recorrido.iniciar()
-        r.esperar(r.elemento(contiene: "Cash flow previsto de la cartera"))
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Cobros
         r.pestana("Cobros")
@@ -229,7 +250,8 @@ extension CapturasUITests {
         r.capturar("02-cobros-pagos")
         r.app.swipeDown()
 
-        r.app.buttons["Registrar"].firstMatch.tap()
+        // El botón de cada fila se anuncia como "Registrar pago de <inquilino>".
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch.tap()
         r.esperar(r.app.navigationBars["Registrar pago"])
         r.pausa(1)
         r.capturar("03-registrar-pago")
@@ -254,16 +276,17 @@ extension CapturasUITests {
         r.app.buttons["filaContrato"].firstMatch.swipeRight()
 
         r.app.buttons["filaContrato"].firstMatch.tap()
-        r.esperar(r.app.buttons["Contrato de arrendamiento (PDF)"])
+        r.esperar(r.app.navigationBars["Contrato"])
         r.capturar("08-contrato-detalle")
 
-        r.app.buttons["Contrato de arrendamiento (PDF)"].tap()
+        // Con la actualización de renta y la fianza, los documentos quedan más abajo.
+        r.desplazarHasta(r.app.buttons["Contrato de arrendamiento (PDF)"]).tap()
         r.esperar(r.app.buttons["Imprimir"], timeout: 20)
         r.pausa(2)
         r.capturar("09-contrato-pdf")
         r.app.buttons["Cerrar"].tap()
 
-        r.app.buttons["Enviar recordatorio de pago"].tap()
+        r.desplazarHasta(r.app.buttons["Enviar recordatorio de pago"]).tap()
         r.pausa(3)
         r.capturar("10-recordatorio-compartir")
         r.cerrarHojaCompartir()
@@ -317,9 +340,9 @@ extension CapturasUITests {
 
         // Notificaciones
         r.app.buttons["campana"].tap()
-        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
+        let aviso = r.primeraNotificacion()
         r.capturar("04-notificaciones")
-        r.app.buttons["filaNotificacion"].firstMatch.tap()
+        aviso.tap()
         r.pausa(3)
         r.capturar("05-notificacion-abre-su-pantalla")
         r.atras()
@@ -340,7 +363,7 @@ extension CapturasUITests {
         // Estadísticas
         r.atras()
         r.app.buttons["Estadísticas"].tap()
-        r.esperar(r.elemento(contiene: "Tasa de ocupación"))
+        r.esperar(r.elemento(contiene: "Habitaciones por estado"))
         r.pausa(1.5)
         r.capturar("09-estadisticas")
         r.app.swipeUp()
@@ -408,7 +431,7 @@ extension CapturasUITests {
         // PDF de la calculadora
         r.pestana("Más")
         r.app.buttons["Calculadora de rentabilidad"].tap()
-        r.esperar(r.app.staticTexts["Rent. bruta"])
+        r.esperar(r.app.staticTexts["Rentabilidad bruta"].firstMatch)
         r.pausa(2)
         r.desplazarHasta(r.app.buttons["Ver desglose completo"]).tap()
         r.app.buttons["Exportar PDF"].tap()
@@ -698,7 +721,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         r.app.buttons["campana"].tap()
-        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
+        _ = r.primeraNotificacion()
         r.pausa(1)
         r.capturar("01-notificaciones")
         r.atras()
@@ -817,7 +840,24 @@ extension CapturasUITests {
     func testFase5Recibos() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        // Un pago propio de este mes (al empezar el mes no hay ninguno): se registra desde la app y se borra al final.
+        let datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
+        let antes = try datos.idsPagosDelMes()
+        defer { if let ahora = try? datos.idsPagosDelMes() { datos.borrarPagos(ahora.subtracting(antes)) } }
         r.pestana("Cobros")
+        r.desplazarHasta(r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch).tap()
+        r.esperar(r.app.navigationBars["Registrar pago"])
+        // Guardar se activa cuando llegan los contratos y el importe de la renta.
+        let guardar = r.app.buttons["Guardar"]
+        let listo = Date().addingTimeInterval(15)
+        while Date() < listo, !guardar.isEnabled { r.pausa(0.5) }
+        r.capturar("00-registrar-pago-prellenado")
+        guardar.tap()
+        // El pago llega a la API (y es el que se borrará al final).
+        let hasta = Date().addingTimeInterval(10)
+        while Date() < hasta, (try? datos.idsPagosDelMes().subtracting(antes).isEmpty) != false { r.pausa(0.5) }
+        XCTAssertFalse(try datos.idsPagosDelMes().subtracting(antes).isEmpty, "El pago no se registró")
+        r.app.swipeDown()
         let fila = r.desplazarHasta(r.app.buttons["filaPago"].firstMatch)
         r.pausa(1)
         r.capturar("01-cobros-pagos")
@@ -1009,10 +1049,18 @@ extension CapturasUITests {
         r.capturar("01-conciliacion")
         r.app.buttons["Cerrar"].tap()
 
+        // Contrato nuevo y sin firmar del inquilino de demo (habitación 990): no depende de pasadas anteriores.
+        let env = ProcessInfo.processInfo.environment
+        var datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
+        let idInquilino = try DatosPrueba.idInquilino(api: datos.api, email: try XCTUnwrap(env["CAPTURAS_INQUILINO_EMAIL"]),
+                                                      password: try XCTUnwrap(env["CAPTURAS_INQUILINO_PASSWORD"]))
+        _ = try datos.contratoSinFirmar(idInquilino: idInquilino)
+        defer { datos.limpiar() }
+
         r.pestana("Más")
         r.app.buttons["Contratos"].tap()
-        let natalia = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Natalia")).firstMatch
-        r.desplazarHasta(natalia).tap()
+        let contrato = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Hab. \(DatosPrueba.numeroHabitacion)")).firstMatch
+        r.desplazarHasta(contrato).tap()
         r.esperar(r.app.navigationBars["Contrato"])
         r.pausa(2)
         let firmar = r.desplazarHasta(r.app.buttons["botonFirmarArrendatario"])
@@ -1035,11 +1083,11 @@ extension CapturasUITests {
         r.esperar(campo)
         campo.tap()
         campo.typeText("Hola, Natalia: el viernes pasa el fontanero por la mañana.")
+        let enviado = "el viernes pasa el fontanero"
         r.app.buttons["botonEnviarMensaje"].tap()
-        r.pausa(2)
+        r.esperar(r.elemento(contiene: enviado))
         r.capturar("05-chat-propietario")
 
-        let env = ProcessInfo.processInfo.environment
         if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
             let ri = r.relanzar(email: email, password: password)
             ri.esperar(ri.app.navigationBars["Mi alquiler"])
@@ -1048,7 +1096,7 @@ extension CapturasUITests {
             ri.pausa(1)
             ri.capturar("06-bandeja-inquilino")
             ri.app.buttons["filaConversacion"].firstMatch.tap()
-            ri.pausa(2)
+            ri.esperar(ri.elemento(contiene: enviado))
             ri.capturar("07-chat-inquilino")
         }
     }

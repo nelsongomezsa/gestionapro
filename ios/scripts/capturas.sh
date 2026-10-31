@@ -5,6 +5,7 @@
 # Uso:  CAPTURAS_EMAIL=... CAPTURAS_PASSWORD=... ios/scripts/capturas.sh 4A [http://localhost:8081]
 # Necesita la API en marcha en esa URL (por defecto la de Debug, localhost:8080).
 # Opcional: CAPTURAS_INQUILINO_EMAIL y CAPTURAS_INQUILINO_PASSWORD para las pantallas del inquilino.
+# Opcional: CAPTURAS_DB (base de pruebas, nunca la real) para retirar al final lo que crean los tests.
 set -uo pipefail
 
 fase=${1:?Indica la fase, p. ej. 4A}
@@ -26,6 +27,10 @@ xcrun simctl status_bar "$udid" override --time "9:41" --batteryState charged --
 extra=()
 # Por línea de comandos la URL va tal cual (el truco "/$()/" solo hace falta en .xcconfig).
 [[ -n "$api" ]] && extra=("API_BASE_URL=$api") && echo "API: $api"
+# Los tests que crean datos (Fase 6) solo reciben la API si se declara una base de pruebas:
+# así nunca escriben en la base real a través de la API del 8080.
+api_datos=""
+[[ -n "$api" && -n "${CAPTURAS_DB:-}" && "${CAPTURAS_DB:-}" != gestion_alquileres_pro ]] && api_datos=$api
 log=$(mktemp -t capturas)
 fallos=0
 
@@ -36,6 +41,7 @@ for modo in claro oscuro; do
   rm -rf "$destino"
   echo "== $fase ($modo)"
   TEST_RUNNER_CAPTURAS_DIR="$destino" \
+  TEST_RUNNER_CAPTURAS_API="$api_datos" \
   TEST_RUNNER_CAPTURAS_EMAIL="$CAPTURAS_EMAIL" \
   TEST_RUNNER_CAPTURAS_PASSWORD="$CAPTURAS_PASSWORD" \
   TEST_RUNNER_CAPTURAS_INQUILINO_EMAIL="${CAPTURAS_INQUILINO_EMAIL:-}" \
@@ -56,6 +62,14 @@ for modo in claro oscuro; do
   # Y comprimidas (paleta de colores): ocupan una cuarta parte sin diferencia visible.
   command -v pngquant >/dev/null && pngquant --quality=70-95 --speed 1 --skip-if-larger --force --ext .png --strip "$destino"/*.png(N) 2>/dev/null
   ls "$destino" 2>/dev/null | wc -l | xargs echo "capturas:"
+  # Datos que crean los tests (habitación 990): solo en la base de pruebas, nunca en la real.
+  if [[ -n "${CAPTURAS_DB:-}" ]]; then
+    if [[ "$CAPTURAS_DB" == gestion_alquileres_pro ]]; then
+      echo "CAPTURAS_DB no puede ser la base real; no se limpia nada" >&2
+    else
+      "${MYSQL:-mysql}" -uroot "$CAPTURAS_DB" < "$raiz/ios/scripts/limpiar-datos-uitest.sql" && echo "datos de prueba retirados de $CAPTURAS_DB"
+    fi
+  fi
 done
 
 xcrun simctl ui "$udid" appearance light
