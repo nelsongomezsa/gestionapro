@@ -27,3 +27,6 @@ gestionap:
     # Modelo simulado: los tests nunca llaman a la API de Claude.
     simulado: true
     limite-diario: 5
+  limites:
+    # Los tests entran muchas veces desde 127.0.0.1; el límite por IP se prueba aparte.
+    por-ip: 100000

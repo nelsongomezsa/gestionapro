@@ -6,6 +6,8 @@ enum APIError: Error, Equatable, LocalizedError {
     case noAutorizado(ErrorAPI?)
     /// Cualquier otra respuesta no 2xx, con el cuerpo de error de la API si lo había.
     case respuesta(status: Int, ErrorAPI?)
+    /// 429: demasiados intentos de login o registro. Segundos de la cabecera Retry-After, si venía.
+    case demasiadosIntentos(reintentarEn: Int?)
     /// No se pudo llegar al servidor.
     case sinConexion
     case red(String)
@@ -19,6 +21,10 @@ enum APIError: Error, Equatable, LocalizedError {
             guard let cuerpo else { return "Error del servidor (código \(status))." }
             guard let errores = cuerpo.errores, !errores.isEmpty else { return cuerpo.mensaje }
             return ([cuerpo.mensaje] + errores.map { "• \($0.campo): \($0.mensaje)" }).joined(separator: "\n")
+        case let .demasiadosIntentos(segundos):
+            guard let segundos, segundos > 0 else { return "Demasiados intentos. Prueba de nuevo en unos minutos." }
+            let minutos = max(1, (segundos + 59) / 60)
+            return "Demasiados intentos. Prueba de nuevo en \(minutos) \(minutos == 1 ? "minuto" : "minutos")."
         case .sinConexion:
             return "No se puede conectar con el servidor. Comprueba que la API está en marcha."
         case let .red(detalle):
@@ -32,6 +38,7 @@ enum APIError: Error, Equatable, LocalizedError {
     var codigo: String? {
         switch self {
         case let .noAutorizado(cuerpo), let .respuesta(_, cuerpo): cuerpo?.codigo
+        case .demasiadosIntentos: "DEMASIADOS_INTENTOS"
         default: nil
         }
     }

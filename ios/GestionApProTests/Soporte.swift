@@ -83,7 +83,8 @@ final class ProtocoloMock: URLProtocol, @unchecked Sendable {
         do {
             let (status, datos) = try servidor.responder(a: peticion)
             let respuesta = HTTPURLResponse(url: peticion.url!, statusCode: status, httpVersion: "HTTP/1.1",
-                                            headerFields: ["Content-Type": "application/json"])!
+                                            headerFields: ["Content-Type": "application/json"]
+                                                .merging(status == 429 ? ["Retry-After": "540"] : [:]) { a, _ in a })!
             client?.urlProtocol(self, didReceive: respuesta, cacheStoragePolicy: .notAllowed)
             client?.urlProtocol(self, didLoad: datos)
             client?.urlProtocolDidFinishLoading(self)

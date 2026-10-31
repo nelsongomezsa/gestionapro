@@ -101,6 +101,9 @@ final class APIClient: Sendable {
         }
         guard (200..<300).contains(http.statusCode) else {
             let cuerpo = try? JSONCoding.decoder().decode(ErrorAPI.self, from: datos)
+            if http.statusCode == 429 {
+                throw .demasiadosIntentos(reintentarEn: http.value(forHTTPHeaderField: "Retry-After").flatMap { Int($0) })
+            }
             if http.statusCode == 401 && requiereAuth {
                 await alNoAutorizado()
                 throw .noAutorizado(cuerpo)

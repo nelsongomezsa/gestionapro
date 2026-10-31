@@ -24,7 +24,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     ResponseEntity<ErrorResponse> api(ApiException e, HttpServletRequest req) {
-        return responder(e.getStatus(), e.getCodigo(), e.getMessage(), req);
+        ResponseEntity<ErrorResponse> r = responder(e.getStatus(), e.getCodigo(), e.getMessage(), req);
+        if (e.getReintentarEn() == null) return r;
+        return ResponseEntity.status(r.getStatusCode())
+                .header(org.springframework.http.HttpHeaders.RETRY_AFTER, String.valueOf(e.getReintentarEn()))
+                .body(r.getBody());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

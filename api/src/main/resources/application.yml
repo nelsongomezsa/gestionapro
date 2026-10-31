@@ -42,6 +42,11 @@ gestionap:
   renta:
     # Ninguna actualización supera el IRAV (LAU art. 18.1, redacción del RDL 29/2026).
     tope-irav: true
+  limites:
+    # Login y registro: por IP, todas las peticiones; por email, solo los fallos. Superado: 429 con Retry-After.
+    ventana: 15m
+    por-ip: 20
+    fallos-por-email: 5
   ia:
     # Asistente (fase 7). La clave va SOLO en la variable de entorno ANTHROPIC_API_KEY del servidor.
     # Por defecto Claude Haiku 5.5, el más económico (admite herramientas e imágenes); otro con ASISTENTE_MODELO.

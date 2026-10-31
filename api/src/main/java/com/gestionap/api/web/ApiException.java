@@ -12,11 +12,24 @@ public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
     private final String codigo;
+    /** Segundos para la cabecera Retry-After (solo en 429). */
+    private final Long reintentarEn;
 
     public ApiException(HttpStatus status, String codigo, String mensaje) {
+        this(status, codigo, mensaje, null);
+    }
+
+    private ApiException(HttpStatus status, String codigo, String mensaje, Long reintentarEn) {
         super(mensaje);
         this.status = status;
         this.codigo = codigo;
+        this.reintentarEn = reintentarEn;
+    }
+
+    public static ApiException demasiadosIntentos(long segundos) {
+        long minutos = Math.max(1, (segundos + 59) / 60);
+        return new ApiException(HttpStatus.TOO_MANY_REQUESTS, "DEMASIADOS_INTENTOS",
+                "Demasiados intentos. Prueba de nuevo en " + minutos + (minutos == 1 ? " minuto" : " minutos"), segundos);
     }
 
     public static ApiException badRequest(String codigo, String mensaje) {

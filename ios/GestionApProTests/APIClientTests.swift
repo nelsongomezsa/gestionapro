@@ -114,6 +114,17 @@ struct APIClientTests {
         #expect(APIError.respuesta(status: 500, nil).errorDescription == "Error del servidor (código 500).")
     }
 
+    @Test func demasiadosIntentos_usaRetryAfterParaElMensaje() async throws {
+        let servidor = ServidorMock { _ in (429, Data(#"{"status":429,"codigo":"DEMASIADOS_INTENTOS","mensaje":"x"}"#.utf8)) }
+
+        await #expect(throws: APIError.demasiadosIntentos(reintentarEn: 540)) {
+            try await cliente(servidor).enviar(.pisos)
+        }
+        #expect(APIError.demasiadosIntentos(reintentarEn: 540).errorDescription == "Demasiados intentos. Prueba de nuevo en 9 minutos.")
+        #expect(APIError.demasiadosIntentos(reintentarEn: 30).errorDescription == "Demasiados intentos. Prueba de nuevo en 1 minuto.")
+        #expect(APIError.demasiadosIntentos(reintentarEn: nil).codigo == "DEMASIADOS_INTENTOS")
+    }
+
     @Test func servidorCaido_esSinConexion() async throws {
         let servidor = ServidorMock { _ in throw URLError(.cannotConnectToHost) }
 
