@@ -2,7 +2,9 @@ package com.gestionap.api.repository;
 
 import com.gestionap.api.domain.EstadoIncidencia;
 import com.gestionap.api.domain.Incidencia;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Collection;
@@ -37,4 +39,9 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Integer>
             where p.id in :idsPiso and i.estado = :estado and i.costeReparacion > 0
             """)
     List<Incidencia> resueltasConCoste(Collection<Integer> idsPiso, EstadoIncidencia estado);
+
+    /** Bloquea la incidencia hasta el final de la transacción (cupo de fotos). */
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select i from Incidencia i where i.id = :id")
+    Incidencia bloquear(Integer id);
 }

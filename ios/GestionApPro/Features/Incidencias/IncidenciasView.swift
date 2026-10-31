@@ -134,6 +134,7 @@ struct IncidenciaDetalleView: View {
     @State private var confirmarBorrado = false
     @State private var error: String?
     @State private var modeloFotos = ModeloFotos()
+    @State private var chat = false
 
     private var gestiona: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -177,6 +178,15 @@ struct IncidenciaDetalleView: View {
 
                 SeccionFotos(modelo: modeloFotos)
 
+                Section {
+                    Button { chat = true } label: {
+                        Label(gestiona ? "Escribir al inquilino sobre esta incidencia" : "Escribir al propietario sobre esta incidencia",
+                              systemImage: "bubble.left.and.bubble.right")
+                    }
+                    .accessibilityIdentifier("botonMensajesIncidencia")
+                }
+                .filaLista()
+
                 Section("Detalles") {
                     LabeledContent("Habitación", value: "Hab. \(i.habitacion.numero)")
                     LabeledContent("Piso", value: "\(i.piso.direccion), \(i.piso.ciudad)")
@@ -213,6 +223,12 @@ struct IncidenciaDetalleView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await cargar() }
         .fotosIncidencia(modeloFotos, incidencia: id, api: sesion.api, puedeBorrarTodas: gestiona)
+        .sheet(isPresented: $chat) {
+            NavigationStack {
+                ChatView(hilo: .incidencia(id))
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = false } } }
+            }
+        }
         .alertaError($error)
     }
 

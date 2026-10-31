@@ -109,7 +109,7 @@ class GastoIntegrationTest extends IntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON).content(gasto("IBI", "50")))
                 .andReturn().getResponse().getContentAsString();
         int id = com.fasterxml.jackson.databind.json.JsonMapper.builder().build().readTree(respuesta).get("id").asInt();
-        byte[] png = {(byte) 0x89, 'P', 'N', 'G', 13, 10, 26, 10};
+        byte[] png = FotosInventarioIntegrationTest.PNG;
         mvc.perform(multipart("/api/gastos/" + id + "/factura").file(new MockMultipartFile("archivo", "f.png", "image/png", png))
                         .header("Authorization", token))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.tieneFactura").value(true));

@@ -40,6 +40,7 @@ public class ArchivoService {
             byte[] datos = archivo.getBytes();
             String tipo = tipoReal(datos);
             if (tipo == null) throw ApiException.badRequest("TIPO_NO_ADMITIDO", "Solo fotos (JPEG, PNG, HEIC) o PDF");
+            if (!completo(datos, tipo)) throw ApiException.badRequest("ARCHIVO_DANADO", "El archivo está dañado o incompleto");
             String ext = switch (tipo) {
                 case "image/jpeg" -> "jpg";
                 case "image/png" -> "png";
@@ -78,6 +79,20 @@ public class ArchivoService {
         Path p = raiz.resolve(relativa).normalize();
         if (!p.startsWith(raiz)) throw ApiException.badRequest("RUTA_NO_VALIDA", "Ruta no válida");
         return p;
+    }
+
+    /** JPEG y PNG se decodifican enteros; un PDF debe terminar con su marca %%EOF. HEIC no se puede decodificar en Java. */
+    static boolean completo(byte[] d, String tipo) {
+        try {
+            return switch (tipo) {
+                case "image/jpeg", "image/png" -> javax.imageio.ImageIO.read(new java.io.ByteArrayInputStream(d)) != null;
+                case "application/pdf" -> new String(d, Math.max(0, d.length - 1024), Math.min(1024, d.length),
+                        java.nio.charset.StandardCharsets.ISO_8859_1).contains("%%EOF");
+                default -> true;
+            };
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     /** Tipo por los primeros bytes (firma del formato), o null si no es uno admitido. */

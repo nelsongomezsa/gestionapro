@@ -208,7 +208,9 @@ public class ResumenFiscalService {
     }
 
     private static void fila(StringBuilder s, String concepto, BigDecimal importe) {
-        s.append('"').append(concepto.replace("\"", "\"\"")).append("\";").append(importe.setScale(2, RoundingMode.HALF_UP)
+        // Un texto que empieza por = + - @ lo ejecutaría la hoja de cálculo como fórmula.
+        String seguro = concepto.matches("^[=+\\-@].*") ? "'" + concepto : concepto;
+        s.append('"').append(seguro.replace("\"", "\"\"")).append("\";").append(importe.setScale(2, RoundingMode.HALF_UP)
                 .toPlainString().replace('.', ',')).append('\n');
     }
 

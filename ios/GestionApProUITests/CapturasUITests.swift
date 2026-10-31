@@ -280,7 +280,7 @@ extension CapturasUITests {
         if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
             let ri = r.relanzar(email: email, password: password)
             ri.esperar(ri.app.navigationBars["Mi alquiler"])
-            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
             ri.capturar("12-inquilino-mi-alquiler")
             ri.pestana("Perfil")
             ri.pausa(1)
@@ -754,7 +754,7 @@ extension CapturasUITests {
             throw XCTSkip("Faltan CAPTURAS_INQUILINO_EMAIL o CAPTURAS_INQUILINO_PASSWORD")
         }
         let ri = r.relanzar(email: email, password: password)
-        ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+        ri.esperar(ri.app.navigationBars["Mi alquiler"])
         ri.pausa(1)
         ri.capturar("02-mi-alquiler")
         ri.app.swipeUp()
@@ -838,11 +838,12 @@ extension CapturasUITests {
         let env = ProcessInfo.processInfo.environment
         if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
             let ri = r.relanzar(email: email, password: password)
-            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
-            ri.app.swipeUp()
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
+            let pago = ri.app.buttons.matching(NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@", "€", "2026")).firstMatch
+            ri.desplazarHasta(pago)
             ri.pausa(1)
             ri.capturar("05-inquilino-pagos")
-            ri.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "€")).firstMatch.tap()
+            pago.tap()
             ri.esperar(ri.app.buttons["Cerrar"], timeout: 20)
             ri.pausa(2)
             ri.capturar("06-inquilino-recibo")
@@ -887,7 +888,7 @@ extension CapturasUITests {
         let env = ProcessInfo.processInfo.environment
         if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
             let ri = r.relanzar(email: email, password: password)
-            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
             ri.desplazarHasta(ri.elemento(contiene: "Depósito"))
             ri.pausa(1)
             ri.capturar("04-inquilino-fianza")
@@ -898,14 +899,14 @@ extension CapturasUITests {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
         r.app.buttons["campana"].tap()
-        r.esperar(r.app.buttons["filaNotificacion"].firstMatch)
-        r.pausa(1)
+        r.esperar(r.app.navigationBars["Notificaciones"])
+        r.pausa(2)
         r.capturar("01-avisos-propietario")
 
         let env = ProcessInfo.processInfo.environment
         if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
             let ri = r.relanzar(email: email, password: password)
-            ri.esperar(ri.app.buttons["Ver contrato (PDF)"])
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
             ri.app.buttons["campana"].tap()
             ri.esperar(ri.app.navigationBars["Notificaciones"])
             ri.pausa(1)
@@ -921,6 +922,8 @@ extension CapturasUITests {
         let natalia = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Natalia")).firstMatch
         r.desplazarHasta(natalia).tap()
         r.esperar(r.app.navigationBars["Contrato"])
+        // La propuesta lee el IRAV del INE: la primera vez tarda unos segundos.
+        r.pausa(4)
         r.desplazarHasta(r.app.buttons["botonActualizarRenta"])
         r.pausa(1)
         r.capturar("01-renta-propuesta")
@@ -938,6 +941,57 @@ extension CapturasUITests {
         r.desplazarHasta(r.elemento(contiene: "IRAV (INE)"))
         r.pausa(1)
         r.capturar("03-renta-historial")
+    }
+    @MainActor
+    func testFase5GastosFotos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Avenida del Puerto")).firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
+        r.desplazarHasta(r.app.buttons["enlaceGastos"])
+        r.pausa(1)
+        r.capturar("01-piso-gastos-reales")
+        r.app.buttons["enlaceGastos"].tap()
+        r.esperar(r.app.buttons["filaGasto"].firstMatch)
+        r.pausa(1)
+        r.capturar("02-gastos")
+        r.app.buttons["botonNuevoGasto"].tap()
+        r.esperar(r.app.navigationBars["Nuevo gasto"])
+        r.pausa(1)
+        r.capturar("03-gasto-nuevo")
+        r.app.buttons["Cancelar"].tap()
+        r.atras()
+        r.desplazarHasta(r.app.buttons["enlaceResumenFiscal"]).tap()
+        r.esperar(r.app.navigationBars["Resumen fiscal"])
+        r.app.buttons["Año siguiente"].tap()
+        r.pausa(2)
+        r.capturar("04-resumen-fiscal")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("05-resumen-fiscal-notas")
+
+        r.pestana("Incidencias")
+        r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
+        r.app.buttons["filaIncidencia"].firstMatch.tap()
+        r.desplazarHasta(r.app.buttons["botonAnadirFotos"])
+        r.pausa(2)
+        r.capturar("06-incidencia-fotos")
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
+            ri.desplazarHasta(ri.app.buttons["Inventarios de la habitación"]).tap()
+            ri.esperar(ri.app.buttons["filaInventario"].firstMatch)
+            ri.app.buttons["filaInventario"].firstMatch.tap()
+            ri.pausa(2)
+            ri.capturar("07-inventario")
+            ri.app.swipeUp()
+            ri.pausa(1)
+            ri.capturar("08-inventario-final")
+        }
     }
 }
 

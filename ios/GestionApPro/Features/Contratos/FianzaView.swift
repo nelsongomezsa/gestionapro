@@ -97,7 +97,7 @@ struct SeccionFianza: View {
 
 extension View {
     /// Carga la fianza y presenta sus formularios; se pone en la pantalla, fuera de la List.
-    func fianza(_ modelo: ModeloFianza, contrato id: Int?, renta: Decimal, api: APIClient) -> some View {
+    func fianza(_ modelo: ModeloFianza, contrato id: Int?, renta: Decimal, inicio: Date? = nil, api: APIClient) -> some View {
         @Bindable var modelo = modelo
         return self
             .task(id: id) { if let id { await modelo.cargar(contrato: id, con: api) } }
@@ -106,7 +106,9 @@ extension View {
                     if let id {
                         switch h {
                         case .editar:
-                            FianzaFormView(idContrato: id, actual: modelo.fianza ?? nil, rentaMensual: renta) { modelo.fianza = .some($0) }
+                            FianzaFormView(idContrato: id, actual: modelo.fianza ?? nil, rentaMensual: renta, inicioContrato: inicio) {
+                                modelo.fianza = .some($0)
+                            }
                         case .devolver:
                             if let f = modelo.fianza ?? nil {
                                 DevolucionFianzaView(fianza: f) { modelo.fianza = .some($0) }
@@ -126,6 +128,8 @@ struct FianzaFormView: View {
     let idContrato: Int
     let actual: Fianza?
     let rentaMensual: Decimal
+    /// La fianza se entrega al firmar: es la fecha propuesta para la entrega y el depósito.
+    var inicioContrato: Date? = nil
     let alGuardar: (Fianza) -> Void
 
     @State private var importe: Decimal?
@@ -188,7 +192,13 @@ struct FianzaFormView: View {
             }
         }
         .onAppear {
-            guard let f = actual else { importe = rentaMensual; return }
+            guard let f = actual else {
+                importe = rentaMensual
+                let inicio = min(inicioContrato ?? .now, .now)
+                fechaCobro = inicio
+                fechaDeposito = inicio
+                return
+            }
             importe = f.importe
             cobrada = f.fechaCobro != nil
             fechaCobro = f.fechaCobro ?? .now

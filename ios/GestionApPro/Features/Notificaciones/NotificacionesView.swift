@@ -31,27 +31,22 @@ struct NotificacionesView: View {
                         .listRowBackground(Color.clear)
                 }
                 Section {
-                    ForEach(visibles) { n in
-                        // Un botón y no un NavigationLink con un gesto añadido: el gesto anulaba la navegación.
-                        Button {
-                            Task { await marcar(n) }
-                            if conDestinos, let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
-                        } label: {
-                            HStack {
-                                FilaNotificacion(notificacion: n)
-                                if conDestinos, n.destino != nil {
-                                    Image(systemName: "chevron.right").font(Tema.Fuente.etiqueta)
-                                        .foregroundStyle(Tema.Color.textoSecundario)
+                    // Varios avisos del mismo tipo se agrupan en una fila ("10 cobros vencidos este mes").
+                    ForEach(Self.grupos(visibles), id: \.clave) { g in
+                        if g.avisos.count == 1, let n = g.avisos.first {
+                            fila(n)
+                        } else {
+                            DisclosureGroup {
+                                ForEach(g.avisos) { fila($0) }
+                            } label: {
+                                HStack(spacing: Tema.Espacio.s) {
+                                    IconoEtiqueta(icono: g.avisos[0].icono, tono: g.avisos[0].tono)
+                                    Text(Notificacion.resumen(tipo: g.tipo, cantidad: g.avisos.count,
+                                                              mes: Notificacion.mensuales.contains(g.tipo) ? g.avisos[0].fecha : nil))
+                                        .font(Tema.Fuente.subtitulo)
                                 }
                             }
-                            .contentShape(.rect)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("filaNotificacion")
-                        .swipeActions {
-                            if !n.leida {
-                                Button("Leída", systemImage: "envelope.open") { Task { await marcar(n) } }.tint(Tema.Color.primarioRelleno)
-                            }
+                            .accessibilityIdentifier("grupoNotificaciones")
                         }
                     }
                 }
@@ -71,11 +66,53 @@ struct NotificacionesView: View {
         .alertaError($error)
     }
 
+    /// Grupos por tipo (y por mes en los mensuales), en el orden del aviso más reciente de cada uno.
+    static func grupos(_ lista: [Notificacion]) -> [(clave: String, tipo: String, avisos: [Notificacion])] {
+        var orden: [String] = []
+        var porClave: [String: [Notificacion]] = [:]
+        for n in lista {
+            var clave = n.tipo
+            if Notificacion.mensuales.contains(n.tipo) {
+                let c = Calendar.current.dateComponents([.year, .month], from: n.fecha)
+                clave += "-\(c.year ?? 0)-\(c.month ?? 0)"
+            }
+            if porClave[clave] == nil { orden.append(clave) }
+            porClave[clave, default: []].append(n)
+        }
+        return orden.map { ($0, porClave[$0]?.first?.tipo ?? $0, porClave[$0] ?? []) }
+    }
+
+    @ViewBuilder
+    private func fila(_ n: Notificacion) -> some View {
+        // Un botón y no un NavigationLink con un gesto añadido: el gesto anulaba la navegación.
+        Button {
+            Task { await marcar(n) }
+            if conDestinos, let destino = n.destino.flatMap(Self.destino) { abrir(destino) }
+        } label: {
+            HStack {
+                FilaNotificacion(notificacion: n)
+                if conDestinos, n.destino != nil {
+                    Image(systemName: "chevron.right").font(Tema.Fuente.etiqueta)
+                        .foregroundStyle(Tema.Color.textoSecundario)
+                }
+            }
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("filaNotificacion")
+        .swipeActions {
+            if !n.leida {
+                Button("Leída", systemImage: "envelope.open") { Task { await marcar(n) } }.tint(Tema.Color.primarioRelleno)
+            }
+        }
+    }
+
     nonisolated static func destino(_ d: Notificacion.Destino) -> DestinoInicio? {
         switch d.pantalla {
         case "CONTRATO": .contrato(d.id)
         case "INCIDENCIA": .incidencia(d.id)
         case "HABITACION": .habitacion(d.id)
+        case "MENSAJES": .mensajes(d.id)
         default: nil
         }
     }

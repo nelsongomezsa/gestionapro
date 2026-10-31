@@ -8,6 +8,7 @@ struct MiAlquilerView: View {
     @State private var error: String?
     @State private var modeloFianza = ModeloFianza()
     @State private var modeloRenta = ModeloRenta()
+    @State private var modeloFirmas = ModeloFirmas()
     @State private var noLeidas = 0
     @State private var verAvisos = false
 
@@ -41,6 +42,7 @@ struct MiAlquilerView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                         }
+                        SeccionFirma(modelo: modeloFirmas, partes: [.arrendatario]) { Task { await abrirFirmado(c) } }
                         SeccionRenta(modelo: modeloRenta)
                         SeccionFianza(modelo: modeloFianza, idContrato: c.id)
                         Section {
@@ -108,6 +110,7 @@ struct MiAlquilerView: View {
             .alertaError($error)
             .fianza(modeloFianza, contrato: contratoPrincipal?.id, renta: contratoPrincipal?.precioMensual ?? 0, api: sesion.api)
             .actualizacionRenta(modeloRenta, contrato: contratoPrincipal?.id, gestor: false, api: sesion.api)
+            .firmas(modeloFirmas, contrato: contratoPrincipal?.id, api: sesion.api)
         }
     }
 
@@ -139,6 +142,15 @@ struct MiAlquilerView: View {
             documento = DocumentoPDF(titulo: "Recibo \(p.recibo ?? "")".trimmingCharacters(in: .whitespaces),
                                      datos: try await sesion.api.descargar(Rutas.reciboPago(p.id)))
             if p.recibo == nil { await cargar() }
+        } catch .noAutorizado {
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func abrirFirmado(_ c: Contrato) async {
+        do {
+            documento = DocumentoPDF(titulo: "Mi contrato firmado", datos: try await sesion.api.descargar(Rutas.pdfFirmado(c.id)))
         } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription

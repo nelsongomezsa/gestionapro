@@ -16,6 +16,8 @@ struct ContratoDetalleView: View {
     @State private var error: String?
     @State private var modeloFianza = ModeloFianza()
     @State private var modeloRenta = ModeloRenta()
+    @State private var modeloFirmas = ModeloFirmas()
+    @State private var chat = false
 
     private var esGestor: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -61,6 +63,10 @@ struct ContratoDetalleView: View {
 
                 SeccionFianza(modelo: modeloFianza, idContrato: c.id, editable: esGestor)
 
+                SeccionFirma(modelo: modeloFirmas, partes: esGestor ? ParteFirma.allCases : []) {
+                    Task { await abrirPDFFirmado(c) }
+                }
+
                 Section("Documentos y avisos") {
                     Button { Task { await abrirPDF(c) } } label: {
                         Label("Contrato de arrendamiento (PDF)", systemImage: "doc.text.magnifyingglass")
@@ -74,6 +80,11 @@ struct ContratoDetalleView: View {
                         }
                     }
                     Button { verMapa = true } label: { Label("Ver en el mapa", systemImage: "map") }
+                    Button { chat = true } label: {
+                        Label(esGestor ? "Mensajes con \(c.inquilino.nombre)" : "Mensajes con el propietario",
+                              systemImage: "bubble.left.and.bubble.right")
+                    }
+                    .accessibilityIdentifier("botonMensajesContrato")
                 }
                 .filaLista()
 
@@ -117,7 +128,15 @@ struct ContratoDetalleView: View {
             }
         }
         .task { await cargar() }
-        .fianza(modeloFianza, contrato: id, renta: estado.valor?.precioMensual ?? 0, api: sesion.api)
+        .fianza(modeloFianza, contrato: id, renta: estado.valor?.precioMensual ?? 0, inicio: estado.valor?.fechaInicio,
+                api: sesion.api)
+        .firmas(modeloFirmas, contrato: id, api: sesion.api)
+        .sheet(isPresented: $chat) {
+            NavigationStack {
+                ChatView(hilo: .contrato(id))
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = false } } }
+            }
+        }
         .actualizacionRenta(modeloRenta, contrato: id, gestor: esGestor, api: sesion.api) {
             await cargar()
             alCambiar()
@@ -140,6 +159,16 @@ struct ContratoDetalleView: View {
         } catch .noAutorizado {
         } catch {
             if estado.valor == nil { estado = .error(error.localizedDescription) } else { self.error = error.localizedDescription }
+        }
+    }
+
+    private func abrirPDFFirmado(_ c: Contrato) async {
+        do {
+            documento = DocumentoPDF(titulo: "Contrato firmado · \(c.inquilino.nombre)",
+                                     datos: try await sesion.api.descargar(Rutas.pdfFirmado(c.id)))
+        } catch .noAutorizado {
+        } catch {
+            self.error = error.localizedDescription
         }
     }
 

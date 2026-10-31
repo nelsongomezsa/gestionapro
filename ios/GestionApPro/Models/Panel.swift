@@ -181,6 +181,28 @@ struct Notificacion: Decodable, Identifiable, Hashable, Sendable {
         }
     }
 
+    /// Tipos que se repiten cada mes: se agrupan por mes, no solo por tipo.
+    static let mensuales: Set<String> = ["cobro_vencido", "pago_pendiente", "recordatorio_enviado"]
+
+    /// "10 cobros vencidos este mes": resumen de varios avisos del mismo tipo (y mes, si es mensual).
+    static func resumen(tipo: String, cantidad n: Int, mes: Date? = nil, hoy: Date = .now) -> String {
+        let cuando: String
+        if let mes, !Calendar.current.isDate(mes, equalTo: hoy, toGranularity: .month) {
+            cuando = "en " + mes.formatted(.dateTime.month(.wide).locale(Formato.locale))
+        } else {
+            cuando = "este mes"
+        }
+        return switch tipo {
+        case "cobro_vencido": "\(n) cobros vencidos \(cuando)"
+        case "pago_pendiente": "\(n) pagos pendientes \(cuando)"
+        case "contrato_vence": "\(n) contratos vencen en menos de 30 días"
+        case "incidencia_antigua": "\(n) incidencias sin resolver hace más de 7 días"
+        case "mantenimiento_largo": "\(n) habitaciones en mantenimiento más de 30 días"
+        case "recordatorio_enviado": "\(n) recordatorios de pago enviados \(cuando)"
+        default: "\(n) avisos"
+        }
+    }
+
     var tono: Tono {
         switch tipo {
         case "pago_pendiente", "incidencia_antigua", "cobro_vencido", "pago_atrasado": .negativo

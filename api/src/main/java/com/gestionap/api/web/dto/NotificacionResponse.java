@@ -19,11 +19,15 @@ public record NotificacionResponse(
         @Schema(description = "Pantalla a la que lleva al tocarla (RutasNotificacion del escritorio), con el id concreto")
         Destino destino) {
 
-    /** pantalla: CONTRATO, INCIDENCIA o HABITACION. */
+    /** pantalla: CONTRATO, INCIDENCIA, HABITACION o MENSAJES (id = contrato). */
     public record Destino(String pantalla, Integer id) {}
 
     private static final Pattern REFERENCIA = Pattern.compile(
-            "^(contrato_vence|pago_pendiente|cobro_vencido|recordatorio_enviado|pago_atrasado|recordatorio_pago|incidencia_antigua|mantenimiento_largo)_(\\d+)");
+            "^(contrato_vence|pago_pendiente|cobro_vencido|recordatorio_enviado|pago_atrasado|recordatorio_pago|incidencia_antigua|mantenimiento_largo|mensaje)_(\\d+)");
+
+    public NotificacionResponse comoNoLeida() {
+        return new NotificacionResponse(id, tipo, titulo, descripcion, fecha, false, destino);
+    }
 
     public static NotificacionResponse de(Notificacion n) {
         return new NotificacionResponse(n.getId(), n.getTipo(), n.getTitulo(), n.getDescripcion(), Textos.conZona(n.getFecha()),
@@ -39,6 +43,7 @@ public record NotificacionResponse(
             case "contrato_vence", "pago_pendiente", "cobro_vencido", "recordatorio_enviado",
                  "pago_atrasado", "recordatorio_pago" -> "CONTRATO";
             case "incidencia_antigua" -> "INCIDENCIA";
+            case "mensaje" -> "MENSAJES";
             default -> "HABITACION";
         };
         return new Destino(pantalla, Integer.valueOf(m.group(2)));

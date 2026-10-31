@@ -171,6 +171,44 @@ extension Endpoint where Respuesta == [HistorialRenta] {
     }
 }
 
+// MARK: Mensajes y firmas
+
+/// Hilo de un contrato o de una incidencia (la API resuelve su contrato).
+enum HiloMensajes: Hashable, Sendable {
+    case contrato(Int)
+    case incidencia(Int)
+
+    var ruta: String {
+        switch self {
+        case let .contrato(id): "/api/contratos/\(id)/mensajes"
+        case let .incidencia(id): "/api/incidencias/\(id)/mensajes"
+        }
+    }
+}
+
+extension Rutas {
+    static func firmar(contrato id: Int, parte: ParteFirma) -> String { "/api/contratos/\(id)/firmas/\(parte.rawValue)" }
+    static func pdfFirmado(_ id: Int) -> String { "/api/contratos/\(id)/pdf-firmado" }
+}
+
+extension Endpoint where Respuesta == [Conversacion] {
+    static let conversaciones = Endpoint(metodo: "GET", ruta: "/api/conversaciones")
+}
+
+extension Endpoint where Respuesta == [MensajeChat] {
+    static func mensajes(_ hilo: HiloMensajes) -> Self { Endpoint(metodo: "GET", ruta: hilo.ruta) }
+}
+
+extension Endpoint where Respuesta == MensajeChat {
+    static func enviarMensaje(_ hilo: HiloMensajes, texto: String) -> Self {
+        Endpoint(metodo: "POST", ruta: hilo.ruta, cuerpo: json(MensajeRequest(texto: texto, idIncidencia: nil)))
+    }
+}
+
+extension Endpoint where Respuesta == EstadoFirmas {
+    static func firmas(contrato id: Int) -> Self { Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/firmas") }
+}
+
 // MARK: Gastos
 
 extension Rutas {

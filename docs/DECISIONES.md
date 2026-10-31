@@ -27,3 +27,16 @@
   - Tope: el art. 18.1 de la LAU, en la redacción del Real Decreto-ley 29/2026, de 6 de octubre (BOE-A-2026-20823), dice que «en todo caso» el incremento no puede superar el IRAV. Ese RDL extiende el límite a los contratos anteriores a la Ley 12/2023, pero lo liga a sus prórrogas y deja dudas; además, a 31-10-2026 hay que confirmar su convalidación (el RDL 26/2026, de contenido parecido, fue derogado por el Congreso). Por prudencia la API limita siempre al IRAV (nunca se propone más) y se puede desactivar con `gestionap.renta.tope-irav=false`. El propietario puede aplicar menos que el máximo.
   - Migración V5 aplicada a gestion_alquileres_pro el 31-10-2026 con copia previa.
 
+## Avisos, datos de demo y capturas (31-10-2026)
+- Avisos: cada uno se crea una sola vez por referencia (tipo + contrato, incidencia o habitación + periodo). La
+  generación bloquea la fila del usuario, porque la lista y el contador se piden a la vez y duplicaban avisos.
+  Las copias que ya hubiera (las creaba el escritorio cada día) se muestran una vez, cuentan una vez y se marcan
+  leídas juntas; un script de datos borró las existentes. En la app se agrupan por tipo, y por mes los mensuales.
+- Datos de demo: DNI 00000001R… (8 cifras y letra de control válida, para no romper validaciones del escritorio),
+  emails @example.com (dominio reservado) y teléfonos 600 000 0NN.
+- Fianzas: la entrega y el depósito proponen la fecha de inicio del contrato.
+- Recibos: si al propietario le falta nombre o DNI, la app avisa antes de generarlo y ofrece completarlos.
+- Capturas: el repositorio solo guarda el escaparate (docs/capturas/destacadas, comprimido) y el vídeo; las de
+  trabajo van a docs/capturas-local/, ignorada por git. No se ha reescrito el historial: las capturas antiguas
+  siguen en commits anteriores.
+

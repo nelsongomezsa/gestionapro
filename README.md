@@ -38,7 +38,15 @@ La app de escritorio solo se usa desde un ordenador. Esta API abre los mismos da
 - **Calculadora** con resumen que se recalcula al escribir, ITP por comunidad, desglose y gráfico con Swift Charts.
 - Sistema de diseño propio (morado de la marca, cifras con dígitos alineados) en modo claro y oscuro, con importes en formato español (`2.500,00 €`).
 
-Capturas en [`docs/capturas/`](docs/capturas/README.md) y avance frente al escritorio en [`docs/PARIDAD.md`](docs/PARIDAD.md).
+<p>
+<img src="docs/capturas/destacadas/oscuro/02-inicio.png" width="180">
+<img src="docs/capturas/destacadas/claro/04-piso.png" width="180">
+<img src="docs/capturas/destacadas/oscuro/08-renta.png" width="180">
+<img src="docs/capturas/destacadas/claro/14-mi-alquiler.png" width="180">
+</p>
+
+Más capturas, en claro y oscuro, en [`docs/capturas/`](docs/capturas/README.md); vídeo del recorrido en
+[`docs/video/recorrido.mp4`](docs/video/recorrido.mp4); funciones frente al escritorio en [`docs/PARIDAD.md`](docs/PARIDAD.md).
 
 
 ## Stack

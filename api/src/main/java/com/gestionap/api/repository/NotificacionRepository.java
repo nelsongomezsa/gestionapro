@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,21 +17,26 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Inte
 
     long countByIdUsuarioAndLeidaFalse(Integer idUsuario);
 
-    Optional<Notificacion> findByIdAndIdUsuario(Integer id, Integer idUsuario);
-
-    /**
-     * ¿Hay ya un aviso con esta referencia sin leer, o creado hoy? El escritorio solo miraba
-     * "creado hoy" y repetía cada día los avisos sin leer; aquí no se duplican.
-     */
+    /** Sin leer contando una vez cada referencia (el escritorio puede haber creado el mismo aviso varias veces). */
     @Query("""
-            select count(n) > 0 from Notificacion n
-            where n.idUsuario = :idUsuario and n.referencia = :referencia
-              and (n.leida = false or n.fecha >= :inicioDeHoy)
+            select count(distinct n.referencia) from Notificacion n
+            where n.idUsuario = :idUsuario and n.leida = false and n.referencia is not null
             """)
-    boolean existeVigente(Integer idUsuario, String referencia, LocalDateTime inicioDeHoy);
+    long contarReferenciasNoLeidas(Integer idUsuario);
+
+    long countByIdUsuarioAndLeidaFalseAndReferenciaIsNull(Integer idUsuario);
+
+    /** Marca leídas todas las copias de un aviso (y refresca las ya cargadas). */
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("update Notificacion n set n.leida = true where n.idUsuario = :idUsuario and n.referencia = :referencia")
+    int marcarLeidasPorReferencia(Integer idUsuario, String referencia);
+
+    Optional<Notificacion> findByIdAndIdUsuario(Integer id, Integer idUsuario);
 
     /** Para los avisos que se dan una sola vez (aunque ya se hayan leído). */
     boolean existsByIdUsuarioAndReferencia(Integer idUsuario, String referencia);
+
+    boolean existsByIdUsuarioAndReferenciaAndLeidaFalse(Integer idUsuario, String referencia);
 
     @Modifying
     @Query("update Notificacion n set n.leida = true where n.idUsuario = :idUsuario and n.leida = false")

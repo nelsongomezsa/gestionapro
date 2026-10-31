@@ -14,7 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,7 +25,8 @@ import java.util.stream.Collectors;
  * Avisos de NotificacionDAO del escritorio: contrato que vence en 30 días, pago pendiente del
  * mes, incidencia sin resolver más de 7 días y habitación en mantenimiento más de 30 días.
  * Se generan al consultar (como al abrir la campana en el escritorio), solo con lo del
- * propietario, y no se repite un aviso que siga sin leer.
+ * propietario. Cada aviso se crea una sola vez por referencia (tipo + contrato, incidencia o
+ * habitación + periodo, p. ej. "pago_pendiente_12_2026_10").
  *
  * Nuevo en la API (fase 5): "cobro vencido" para quien gestiona, pasado el día límite de pago
  * sin ningún pago del mes, y para el inquilino un recordatorio unos días antes y un aviso si
@@ -41,12 +45,13 @@ public class NotificacionService {
     private final IncidenciaRepository incidencias;
     private final HabitacionRepository habitaciones;
     private final InquilinoRepository inquilinos;
+    private final UsuarioRepository usuarios;
     private final int diaLimite;
     private final int diasAviso;
 
     public NotificacionService(NotificacionRepository notificaciones, ContratoRepository contratos, PagoRepository pagos,
                                IncidenciaRepository incidencias, HabitacionRepository habitaciones,
-                               InquilinoRepository inquilinos,
+                               InquilinoRepository inquilinos, UsuarioRepository usuarios,
                                @Value("${gestionap.cobros.dia-limite:7}") int diaLimite,
                                @Value("${gestionap.cobros.dias-aviso:3}") int diasAviso) {
         this.notificaciones = notificaciones;
@@ -55,6 +60,7 @@ public class NotificacionService {
         this.incidencias = incidencias;
         this.habitaciones = habitaciones;
         this.inquilinos = inquilinos;
+        this.usuarios = usuarios;
         this.diaLimite = diaLimite;
         this.diasAviso = diasAviso;
     }
@@ -68,19 +74,34 @@ public class NotificacionService {
         return diasAviso;
     }
 
+    /**
+     * Cada aviso una vez: si la base tiene copias de la misma referencia (el escritorio las
+     * repetía cada día), se devuelve solo la más reciente, sin leer si alguna lo está.
+     */
     @Transactional
     public List<NotificacionResponse> listar(boolean soloNoLeidas, UsuarioAutenticado actor) {
         generar(actor);
-        var lista = soloNoLeidas
-                ? notificaciones.findByIdUsuarioAndLeidaFalseOrderByFechaDescIdDesc(actor.id(), Limit.of(MAX_LISTA))
-                : notificaciones.findByIdUsuarioOrderByFechaDescIdDesc(actor.id(), Limit.of(MAX_LISTA));
-        return lista.stream().map(NotificacionResponse::de).toList();
+        var todas = soloNoLeidas
+                ? notificaciones.findByIdUsuarioAndLeidaFalseOrderByFechaDescIdDesc(actor.id(), Limit.of(MAX_LISTA * 4))
+                : notificaciones.findByIdUsuarioOrderByFechaDescIdDesc(actor.id(), Limit.of(MAX_LISTA * 4));
+        Map<String, Notificacion> porReferencia = new LinkedHashMap<>();
+        Set<String> conNoLeida = new HashSet<>();
+        for (Notificacion n : todas) {
+            String clave = n.getReferencia() != null ? n.getReferencia() : "#" + n.getId();
+            if (!n.isLeida()) conNoLeida.add(clave);
+            porReferencia.putIfAbsent(clave, n);
+        }
+        return porReferencia.entrySet().stream().limit(MAX_LISTA).map(e -> {
+            var r = NotificacionResponse.de(e.getValue());
+            return conNoLeida.contains(e.getKey()) && r.leida() ? r.comoNoLeida() : r;
+        }).toList();
     }
 
     @Transactional
     public long noLeidas(UsuarioAutenticado actor) {
         generar(actor);
-        return notificaciones.countByIdUsuarioAndLeidaFalse(actor.id());
+        return notificaciones.contarReferenciasNoLeidas(actor.id())
+                + notificaciones.countByIdUsuarioAndLeidaFalseAndReferenciaIsNull(actor.id());
     }
 
     @Transactional
@@ -88,6 +109,7 @@ public class NotificacionService {
         Notificacion n = notificaciones.findByIdAndIdUsuario(id, actor.id())
                 .orElseThrow(() -> ApiException.noEncontrado("Notificación"));
         n.setLeida(true);
+        if (n.getReferencia() != null) notificaciones.marcarLeidasPorReferencia(actor.id(), n.getReferencia());
         return NotificacionResponse.de(n);
     }
 
@@ -103,18 +125,20 @@ public class NotificacionService {
 
     /** Con la fecha como parámetro para poder probar cada día del mes. */
     void generar(UsuarioAutenticado actor, LocalDate hoy) {
+        // De uno en uno por usuario: la lista y el contador se piden a la vez y, sin bloqueo,
+        // las dos peticiones creaban el mismo aviso.
+        usuarios.bloquear(actor.id());
         if (actor.rol() == Rol.INQUILINO) {
             generarInquilino(actor, hoy);
             return;
         }
         Integer prop = actor.esAdmin() ? null : actor.id();
-        LocalDateTime inicioHoy = hoy.atStartOfDay();
         List<Contrato> activos = contratos.buscar(prop, null, null).stream().filter(c -> c.estaActivoEn(hoy)).toList();
 
         for (Contrato c : activos) {
             if (!c.getFechaFin().isAfter(hoy.plusDays(30))) {
-                crearSiNoExiste(actor.id(), "contrato_vence_" + c.getId(), "contrato_vence", "Contrato próximo a vencer",
-                        "Contrato de " + c.getInquilino().getNombreCompleto() + " vence el " + c.getFechaFin().format(FECHA), inicioHoy);
+                crearUnaVez(actor.id(), "contrato_vence_" + c.getId(), "contrato_vence", "Contrato próximo a vencer",
+                        "Contrato de " + c.getInquilino().getNombreCompleto() + " vence el " + c.getFechaFin().format(FECHA));
             }
         }
 
@@ -126,8 +150,8 @@ public class NotificacionService {
             // Pasado el día límite, "Cobro vencido" sustituye a "Pago pendiente" (no se avisa dos veces).
             boolean vencido = hoy.isAfter(vence) && !c.getFechaInicio().isAfter(vence);
             if (!conPagoEsteMes.contains(c.getId()) && !vencido) {
-                crearSiNoExiste(actor.id(), "pago_pendiente_" + c.getId() + "_" + mes, "pago_pendiente", "Pago pendiente este mes",
-                        c.getInquilino().getNombreCompleto() + " no tiene pago registrado este mes", inicioHoy);
+                crearUnaVez(actor.id(), "pago_pendiente_" + c.getId() + "_" + mes, "pago_pendiente", "Pago pendiente este mes",
+                        c.getInquilino().getNombreCompleto() + " no tiene pago registrado este mes");
             }
         }
 
@@ -142,9 +166,9 @@ public class NotificacionService {
 
         for (Incidencia i : incidencias.buscar(prop, null, null, Set.of(EstadoIncidencia.pendiente, EstadoIncidencia.en_proceso))) {
             if (!i.getFecha().isAfter(hoy.minusDays(7))) {
-                crearSiNoExiste(actor.id(), "incidencia_antigua_" + i.getId(), "incidencia_antigua",
+                crearUnaVez(actor.id(), "incidencia_antigua_" + i.getId(), "incidencia_antigua",
                         "Incidencia sin resolver > 7 días",
-                        recortar(i.getDescripcion(), 120) + " (Hab. " + i.getHabitacion().getNumero() + ")", inicioHoy);
+                        recortar(i.getDescripcion(), 120) + " (Hab. " + i.getHabitacion().getNumero() + ")");
             }
         }
 
@@ -153,9 +177,9 @@ public class NotificacionService {
                 .filter(c -> !c.getFechaFin().isBefore(hace30)).map(c -> c.getHabitacion().getId()).collect(Collectors.toSet());
         for (Habitacion h : habitaciones.buscar(prop, null, EstadoHabitacion.mantenimiento)) {
             if (!conContratoReciente.contains(h.getId())) {
-                crearSiNoExiste(actor.id(), "mantenimiento_largo_" + h.getId(), "mantenimiento_largo",
+                crearUnaVez(actor.id(), "mantenimiento_largo_" + h.getId(), "mantenimiento_largo",
                         "Habitación en mantenimiento > 30 días",
-                        "Hab. " + h.getNumero() + " — " + h.getPiso().getDireccion(), inicioHoy);
+                        "Hab. " + h.getNumero() + " — " + h.getPiso().getDireccion());
             }
         }
     }
@@ -186,9 +210,9 @@ public class NotificacionService {
         return notificaciones.existsByIdUsuarioAndReferencia(idUsuario, referencia);
     }
 
-    /** Avisos que se dan una sola vez por referencia (uno por contrato y mes). */
-    void crearUnaVez(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion) {
-        if (notificaciones.existsByIdUsuarioAndReferencia(idUsuario, referencia)) return;
+    /** Para los mensajes: un aviso sin leer por conversación; leído, el siguiente mensaje avisa de nuevo. */
+    public void avisarSinRepetirMientrasNoLeido(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion) {
+        if (notificaciones.existsByIdUsuarioAndReferenciaAndLeidaFalse(idUsuario, referencia)) return;
         Notificacion n = new Notificacion();
         n.setIdUsuario(idUsuario);
         n.setReferencia(referencia);
@@ -199,9 +223,9 @@ public class NotificacionService {
         notificaciones.save(n);
     }
 
-    private void crearSiNoExiste(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion,
-                                 LocalDateTime inicioHoy) {
-        if (notificaciones.existeVigente(idUsuario, referencia, inicioHoy)) return;
+    /** Avisos que se dan una sola vez por referencia (uno por contrato y mes). */
+    void crearUnaVez(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion) {
+        if (notificaciones.existsByIdUsuarioAndReferencia(idUsuario, referencia)) return;
         Notificacion n = new Notificacion();
         n.setIdUsuario(idUsuario);
         n.setReferencia(referencia);

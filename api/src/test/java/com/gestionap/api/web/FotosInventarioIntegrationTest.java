@@ -75,8 +75,11 @@ class FotosInventarioIntegrationTest extends IntegrationTest {
         mvc.perform(multipart(url).file(archivo("hola".getBytes(), "falso.png")).header("Authorization", t))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.codigo").value("TIPO_NO_ADMITIDO"));
-        mvc.perform(multipart(url).file(archivo("%PDF-1.4 x".getBytes(), "doc.pdf")).header("Authorization", t))
+        mvc.perform(multipart(url).file(archivo("%PDF-1.4 x\n%%EOF".getBytes(), "doc.pdf")).header("Authorization", t))
                 .andExpect(jsonPath("$.codigo").value("TIPO_NO_ADMITIDO"));
+        // Cabecera de PNG pero imagen cortada: dañada.
+        mvc.perform(multipart(url).file(archivo(java.util.Arrays.copyOf(PNG, 20), "cortada.png")).header("Authorization", t))
+                .andExpect(jsonPath("$.codigo").value("ARCHIVO_DANADO"));
     }
 
     @Test

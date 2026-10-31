@@ -94,7 +94,9 @@ class ResumenFiscalIntegrationTest extends IntegrationTest {
         assertThat(new String(pdf, 0, 5)).isEqualTo("%PDF-");
         var csv = mvc.perform(get(url + "/csv").param("anio", "2025").header("Authorization", t))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsByteArray();
-        assertThat(new String(csv, StandardCharsets.UTF_8)).contains("Concepto;Importe").contains("1000,00");
+        assertThat(new String(csv, StandardCharsets.UTF_8)).contains("Concepto;Importe").contains("1000,00")
+                // Ningún concepto empieza por "=" (no se ejecuta como fórmula al abrirlo).
+                .doesNotContain("\n\"=");
         mvc.perform(get(url).param("anio", "2025").header("Authorization", token("bea@test.com"))).andExpect(status().isNotFound());
     }
 }

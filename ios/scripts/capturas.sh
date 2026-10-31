@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Capturas de una fase en modo claro y oscuro, en docs/capturas/<fase>/{claro,oscuro}/.
+# Capturas de trabajo de una fase en claro y oscuro, en docs/capturas-local/<fase>/{claro,oscuro}/ (no se versionan;
+# el escaparate del repositorio está en docs/capturas/destacadas/).
 #
 # Uso:  CAPTURAS_EMAIL=... CAPTURAS_PASSWORD=... ios/scripts/capturas.sh 4A [http://localhost:8081]
 # Necesita la API en marcha en esa URL (por defecto la de Debug, localhost:8080).
@@ -31,7 +32,7 @@ fallos=0
 for modo in claro oscuro; do
   [[ $modo == claro ]] && xcrun simctl ui "$udid" appearance light || xcrun simctl ui "$udid" appearance dark
   # CAPTURAS_CARPETA cambia la carpeta de destino (p. ej. rediseno/inicio).
-  destino="$raiz/docs/capturas/${CAPTURAS_CARPETA:-$fase}/$modo"
+  destino="$raiz/docs/capturas-local/${CAPTURAS_CARPETA:-$fase}/$modo"
   rm -rf "$destino"
   echo "== $fase ($modo)"
   TEST_RUNNER_CAPTURAS_DIR="$destino" \

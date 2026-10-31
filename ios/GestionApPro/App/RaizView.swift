@@ -52,6 +52,8 @@ struct PestanasView: View {
                     .tabItem { Label("Mi alquiler", systemImage: "key") }
                 IncidenciasView()
                     .tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
+                NavigationStack { ConversacionesView() }
+                    .tabItem { Label("Mensajes", systemImage: "bubble.left.and.bubble.right") }
                 NavigationStack { PerfilView(usuario: usuario) }
                     .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
             }

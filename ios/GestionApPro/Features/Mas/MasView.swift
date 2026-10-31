@@ -4,7 +4,7 @@ import SwiftUI
 /// (`navigationDestination(for:)`): mezclarla con enlaces de vista dentro de la misma pila
 /// hacía que algunos enlaces de las pantallas abiertas desde aquí no navegaran.
 enum SeccionMas: Hashable {
-    case perfil, inquilinos, contratos, calendario, estadisticas, calculadora, usuarios
+    case perfil, inquilinos, contratos, mensajes, calendario, estadisticas, calculadora, usuarios
 }
 
 /// Pestaña "Más": el resto de secciones del escritorio.
@@ -34,6 +34,7 @@ struct MasView: View {
                 Section("Gestión") {
                     enlace("Inquilinos", icono: "person.2", color: Tema.Color.iconoAzul, a: .inquilinos)
                     enlace("Contratos", icono: "doc.text", color: Tema.Color.iconoAzul, a: .contratos)
+                    enlace("Mensajes", icono: "bubble.left.and.bubble.right", color: Tema.Color.iconoAzul, a: .mensajes)
                     enlace("Calendario", icono: "calendar", color: Tema.Color.iconoAzul, a: .calendario)
                     enlace("Estadísticas", icono: "chart.xyaxis.line", color: Tema.Color.iconoAzul, a: .estadisticas)
                 }
@@ -63,6 +64,7 @@ struct MasView: View {
         case .perfil: PerfilView(usuario: usuario)
         case .inquilinos: InquilinosView()
         case .contratos: ContratosView()
+        case .mensajes: ConversacionesView()
         case .calendario: CalendarioView()
         case .estadisticas: EstadisticasView()
         case .calculadora: CalculadoraView()

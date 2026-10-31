@@ -1,28 +1,17 @@
-# Capturas de la app iOS
+# Capturas destacadas
 
-Una carpeta por fase del plan, con las mismas pantallas en `claro/` y `oscuro/`.
-Hechas en el simulador **iPhone 18 Pro (iOS 27)** contra la API en `dev`, con los datos de demo.
+Escaparate de la app en el simulador iPhone 18 Pro (iOS 27), en modo claro y oscuro, con datos de
+demostración inventados. Las capturas de trabajo de cada fase se generan en `docs/capturas-local/`
+(no se versionan) con `ios/scripts/capturas.sh`.
 
-| Fase | Pantallas |
+Vídeo del recorrido: [`docs/video/recorrido.mp4`](../video/recorrido.mp4).
+
+| | |
 |---|---|
-| [4A](4A/) | Login, Inicio, Pisos, detalle de piso, Más, calculadora y su desglose, perfil |
-| [4B](4B/) | Habitaciones (lista, deslizar, alta), mapa del piso, inquilinos, ficha, QR de pago, invitación, datos de cobro |
-| [4C](4C/) | Cobros (resumen del mes, pendientes, registrar pago, mes anterior), contratos (filtros, finalizar deslizando, detalle, PDF, recordatorio, nuevo) y «Mi alquiler» del inquilino |
-| [4D](4D/) | Inicio (KPIs con tendencia, gráfico, alertas, vencimientos, actividad), informe mensual en PDF, notificaciones y su destino, calendario con detalle del día, estadísticas |
-| [4E](4E/) | Incidencias (lista, avanzar deslizando, detalle, nueva), detalle de piso con gráfico, contratos, pagos e incidencias, datos financieros, ficha y calculadora en PDF, mapa de todos los pisos, incidencias del inquilino |
-| [4F](4F/) | Búsqueda global, gestión de usuarios (lista, desactivar deslizando, nuevo), perfil completo con mis estadísticas, editar nombre y email, cambiar contraseña, mi actividad y registro del inquilino con código |
-| [Rediseño](rediseno/) | Todas las pantallas con el sistema de diseño premium, en claro y oscuro, con la comparación antes/después |
-
-## Cómo regenerarlas
-
-Las genera un recorrido de UI (`ios/GestionApProUITests/CapturasUITests.swift`) que inicia
-sesión, navega por la app y guarda cada pantalla. Con la API en marcha:
-
-```bash
-CAPTURAS_EMAIL=<email> CAPTURAS_PASSWORD=<contraseña> ios/scripts/capturas.sh 4A
-# o, si la API está en otro puerto:
-CAPTURAS_EMAIL=<email> CAPTURAS_PASSWORD=<contraseña> ios/scripts/capturas.sh 4A http://localhost:8081
-```
-
-Las credenciales solo se pasan por variables de entorno; no se guardan en el repositorio.
-El script fija la barra de estado (9:41, batería llena) y repite el recorrido en modo oscuro.
+| **Acceso**<br><img src="destacadas/claro/01-acceso.png" width="200"> <img src="destacadas/oscuro/01-acceso.png" width="200"> | **Inicio: cobrado del mes, indicadores y tendencia**<br><img src="destacadas/claro/02-inicio.png" width="200"> <img src="destacadas/oscuro/02-inicio.png" width="200"> |
+| **Cartera de pisos**<br><img src="destacadas/claro/03-pisos.png" width="200"> <img src="destacadas/oscuro/03-pisos.png" width="200"> | **Detalle de piso y rentabilidad**<br><img src="destacadas/claro/04-piso.png" width="200"> <img src="destacadas/oscuro/04-piso.png" width="200"> |
+| **Cobros del mes**<br><img src="destacadas/claro/05-cobros.png" width="200"> <img src="destacadas/oscuro/05-cobros.png" width="200"> | **Recibo en PDF numerado**<br><img src="destacadas/claro/06-recibo.png" width="200"> <img src="destacadas/oscuro/06-recibo.png" width="200"> |
+| **Contrato**<br><img src="destacadas/claro/07-contrato.png" width="200"> <img src="destacadas/oscuro/07-contrato.png" width="200"> | **Actualización de renta con el IRAV del INE**<br><img src="destacadas/claro/08-renta.png" width="200"> <img src="destacadas/oscuro/08-renta.png" width="200"> |
+| **Ficha de inquilino**<br><img src="destacadas/claro/09-inquilino.png" width="200"> <img src="destacadas/oscuro/09-inquilino.png" width="200"> | **Avisos agrupados**<br><img src="destacadas/claro/10-avisos.png" width="200"> <img src="destacadas/oscuro/10-avisos.png" width="200"> |
+| **Estadísticas**<br><img src="destacadas/claro/11-estadisticas.png" width="200"> <img src="destacadas/oscuro/11-estadisticas.png" width="200"> | **Resumen fiscal anual (orientativo)**<br><img src="destacadas/claro/12-resumen-fiscal.png" width="200"> <img src="destacadas/oscuro/12-resumen-fiscal.png" width="200"> |
+| **Calculadora de rentabilidad**<br><img src="destacadas/claro/13-calculadora.png" width="200"> <img src="destacadas/oscuro/13-calculadora.png" width="200"> | **Vista del inquilino**<br><img src="destacadas/claro/14-mi-alquiler.png" width="200"> <img src="destacadas/oscuro/14-mi-alquiler.png" width="200"> |

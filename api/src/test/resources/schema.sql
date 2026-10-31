@@ -210,3 +210,29 @@ CREATE TABLE ElementosInventario (
     foto_tipo      VARCHAR(50),
     orden          INT NOT NULL DEFAULT 0
 );
+
+-- V7: mensajes y firmas de contratos.
+CREATE TABLE Mensajes (
+    id_mensaje     INT AUTO_INCREMENT PRIMARY KEY,
+    id_contrato    INT NOT NULL REFERENCES Contratos (id_contrato) ON DELETE CASCADE,
+    id_incidencia  INT REFERENCES Incidencias (id_incidencia) ON DELETE SET NULL,
+    id_autor       INT REFERENCES Usuarios (id_usuario) ON DELETE SET NULL,
+    texto          TEXT NOT NULL,
+    fecha          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    leido          TINYINT(1) NOT NULL DEFAULT 0
+);
+
+CREATE TABLE FirmasContrato (
+    id_firma       INT AUTO_INCREMENT PRIMARY KEY,
+    id_contrato    INT NOT NULL REFERENCES Contratos (id_contrato) ON DELETE CASCADE,
+    parte          VARCHAR(12) NOT NULL,
+    nombre         VARCHAR(150) NOT NULL,
+    dni            VARCHAR(20),
+    id_usuario     INT REFERENCES Usuarios (id_usuario) ON DELETE SET NULL,
+    imagen_ruta    VARCHAR(255) NOT NULL,
+    fecha          DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ip             VARCHAR(45),
+    huella_pdf     VARCHAR(64) NOT NULL,
+    proveedor      VARCHAR(30) NOT NULL DEFAULT 'EN_PANTALLA',
+    CONSTRAINT uk_firma_contrato_parte UNIQUE (id_contrato, parte)
+);

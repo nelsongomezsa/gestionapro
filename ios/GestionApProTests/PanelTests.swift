@@ -85,4 +85,17 @@ struct FechasConZonaTests {
         let c = Calendar(identifier: .gregorian).dateComponents(in: TimeZone(identifier: "UTC")!, from: fecha)
         #expect((c.day, c.hour, c.minute) == (30, 2, 30))
     }
+
+    @Test("Los avisos del mismo tipo se agrupan, en el orden del más reciente")
+    @MainActor
+    func gruposDeAvisos() throws {
+        let lista = try Fixture.decodificar([Notificacion].self, de: "notificaciones")
+        let grupos = NotificacionesView.grupos(lista)
+        #expect(grupos.reduce(0) { $0 + $1.avisos.count } == lista.count)
+        #expect(Set(grupos.map(\.clave)).count == grupos.count)
+        #expect(grupos.first?.tipo == lista.first?.tipo)
+        #expect(Notificacion.resumen(tipo: "cobro_vencido", cantidad: 10) == "10 cobros vencidos este mes")
+        let septiembre = Calendar.current.date(byAdding: .month, value: -1, to: .now)!
+        #expect(Notificacion.resumen(tipo: "pago_pendiente", cantidad: 3, mes: septiembre).hasPrefix("3 pagos pendientes en "))
+    }
 }

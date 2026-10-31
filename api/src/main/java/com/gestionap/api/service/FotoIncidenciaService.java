@@ -4,6 +4,7 @@ import com.gestionap.api.domain.FotoIncidencia;
 import com.gestionap.api.domain.Incidencia;
 import com.gestionap.api.domain.Rol;
 import com.gestionap.api.repository.FotoIncidenciaRepository;
+import com.gestionap.api.repository.IncidenciaRepository;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.web.ApiException;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,15 @@ public class FotoIncidenciaService {
     private final IncidenciaService incidencias;
     private final ArchivoService archivos;
     private final ActividadService actividad;
+    private final IncidenciaRepository incidenciasRepo;
 
     public FotoIncidenciaService(FotoIncidenciaRepository fotos, IncidenciaService incidencias, ArchivoService archivos,
-                                 ActividadService actividad) {
+                                 ActividadService actividad, IncidenciaRepository incidenciasRepo) {
         this.fotos = fotos;
         this.incidencias = incidencias;
         this.archivos = archivos;
         this.actividad = actividad;
+        this.incidenciasRepo = incidenciasRepo;
     }
 
     @Transactional(readOnly = true)
@@ -46,6 +49,8 @@ public class FotoIncidenciaService {
     @Transactional
     public Foto subir(Integer idIncidencia, MultipartFile archivo, UsuarioAutenticado actor) {
         Incidencia i = incidencias.cargarVisible(idIncidencia, actor);
+        // Dos subidas a la vez no pueden pasar del cupo: la incidencia queda bloqueada hasta el commit.
+        incidenciasRepo.bloquear(idIncidencia);
         if (fotos.countByIncidenciaId(idIncidencia) >= MAXIMO_FOTOS) {
             throw ApiException.conflicto("DEMASIADAS_FOTOS", "Una incidencia admite " + MAXIMO_FOTOS + " fotos");
         }

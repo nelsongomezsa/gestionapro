@@ -188,9 +188,14 @@ public class InventarioService {
     private Cell foto(ElementoInventario e, PdfFont normal) {
         if (e.getFotoRuta() == null) return celda("—", normal);
         if (e.getFotoTipo().equals("image/heic")) return celda("Foto en la app (HEIC)", normal);
-        byte[] datos = archivos.leer(e.getFotoRuta(), e.getFotoTipo()).datos();
-        return new Cell().add(new Image(ImageDataFactory.create(datos)).setAutoScale(true).setMaxHeight(90))
-                .setBorder(Border.NO_BORDER).setPadding(4);
+        try {
+            byte[] datos = archivos.leer(e.getFotoRuta(), e.getFotoTipo()).datos();
+            return new Cell().add(new Image(ImageDataFactory.create(datos)).setAutoScale(true).setMaxHeight(90))
+                    .setBorder(Border.NO_BORDER).setPadding(4);
+        } catch (RuntimeException fallo) {
+            // Una foto que no se puede incrustar no impide generar el resto del inventario.
+            return celda("Foto en la app", normal);
+        }
     }
 
     private static String estado(ElementoInventario.Estado e) {

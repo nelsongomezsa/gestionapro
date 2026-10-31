@@ -8,6 +8,8 @@ struct CobrosView: View {
     @State private var paraBorrar: Pago?
     @State private var documento: DocumentoPDF?
     @State private var aviso: String?
+    @State private var faltanDatos: Pago?
+    @State private var datosCobro = false
 
     var body: some View {
         @Bindable var vm = vm
@@ -65,13 +67,13 @@ struct CobrosView: View {
                         }
                         ForEach(vm.pagosVisibles) { p in
                             // Tocar un pago abre su recibo; el menú permite enviarlo por email.
-                            Button { Task { await abrirRecibo(p) } } label: { FilaPago(pago: p) }
+                            Button { pedirRecibo(p) } label: { FilaPago(pago: p) }
                                 .buttonStyle(.plain)
                                 .accessibilityHint("Abre el recibo en PDF")
                                 .accessibilityIdentifier("filaPago")
                                 .swipeActions { Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = p } }
                                 .contextMenu {
-                                    Button("Ver recibo", systemImage: "doc.text") { Task { await abrirRecibo(p) } }
+                                    Button("Ver recibo", systemImage: "doc.text") { pedirRecibo(p) }
                                     Button("Enviar recibo por email", systemImage: "envelope") { Task { await enviarRecibo(p) } }
                                 }
                         }
@@ -115,12 +117,32 @@ struct CobrosView: View {
             }
             .alertaError($vm.error)
             .visorPDF($documento)
+            .alert("Faltan tus datos fiscales", isPresented: Binding(get: { faltanDatos != nil }, set: { if !$0 { faltanDatos = nil } })) {
+                Button("Completar datos") { datosCobro = true }
+                Button("Generar igualmente") { if let p = faltanDatos { Task { await abrirRecibo(p) } } }
+                Button("Cancelar", role: .cancel) {}
+            } message: {
+                Text("El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo.")
+            }
+            .sheet(isPresented: $datosCobro) {
+                if let u = sesion.usuario { NavigationStack { DatosCobroView(usuario: u) } }
+            }
             .alert("Recibo", isPresented: Binding(get: { aviso != nil }, set: { if !$0 { aviso = nil } })) {
                 Button("Aceptar", role: .cancel) {}
             } message: {
                 Text(aviso ?? "")
             }
         }
+    }
+
+    /// El recibo lleva el nombre y el DNI del arrendador: si faltan, se avisa antes de generarlo.
+    private var faltanDatosFiscales: Bool {
+        guard let u = sesion.usuario, u.rol == .propietario else { return false }
+        return u.nombre.trimmingCharacters(in: .whitespaces).isEmpty || (u.dni ?? "").trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    private func pedirRecibo(_ p: Pago) {
+        if faltanDatosFiscales { faltanDatos = p } else { Task { await abrirRecibo(p) } }
     }
 
     private func abrirRecibo(_ p: Pago) async {

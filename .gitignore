@@ -14,3 +14,6 @@ ios/build/
 xcuserdata/
 DerivedData/
 out/
+
+# Capturas de trabajo (se generan con ios/scripts/capturas.sh; en el repo solo docs/capturas/destacadas)
+docs/capturas-local/
