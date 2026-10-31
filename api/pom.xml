@@ -21,8 +21,16 @@
         <java.version>21</java.version>
         <jjwt.version>0.13.0</jjwt.version>
         <springdoc.version>2.8.17</springdoc.version>
-        <!-- Misma versión que la app de escritorio (iText 7, AGPL) -->
-        <itext.version>7.2.5</itext.version>
+        <!-- iText 7 (AGPL), como el escritorio; último parche de la rama 7.2 -->
+        <itext.version>7.2.6</itext.version>
+        <!-- Parches de seguridad sobre las versiones que fija Spring Boot 3.5.16 (trivy/osv-scanner) -->
+        <tomcat.version>10.1.61</tomcat.version>
+        <jackson-bom.version>2.21.8</jackson-bom.version>
+        <mariadb.version>3.5.11</mariadb.version>
+        <log4j2.version>2.26.1</log4j2.version>
+        <commons-lang3.version>3.21.0</commons-lang3.version>
+        <opentelemetry.version>1.67.0</opentelemetry.version>
+        <bouncycastle.version>1.86</bouncycastle.version>
     </properties>
 
     <dependencies>
@@ -81,6 +89,11 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
             <version>${itext.version}</version>
+            <!-- iText 7.2 trae BouncyCastle 1.70 (jdk15on, sin parches): se cambia por jdk18on, mismos paquetes. -->
+            <exclusions>
+                <exclusion><groupId>org.bouncycastle</groupId><artifactId>bcprov-jdk15on</artifactId></exclusion>
+                <exclusion><groupId>org.bouncycastle</groupId><artifactId>bcpkix-jdk15on</artifactId></exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -97,7 +110,17 @@
         <dependency>
             <groupId>com.anthropic</groupId>
             <artifactId>anthropic-java</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>${bouncycastle.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>${bouncycastle.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
