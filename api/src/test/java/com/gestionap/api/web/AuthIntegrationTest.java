@@ -65,6 +65,30 @@ class AuthIntegrationTest extends IntegrationTest {
                 .andExpect(status().isOk());
 
         assertThat(usuarios.findById(u.getId()).orElseThrow().getPasswordHash()).startsWith("$2");
+        assertThat(usuarios.findById(u.getId()).orElseThrow().isDebeCambiarPassword()).isTrue();
+    }
+
+    @Test
+    void passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera() throws Exception {
+        var u = datos.usuario("caducada@test.com", Rol.PROPIETARIO);
+        u.setDebeCambiarPassword(true);
+        String t = token("caducada@test.com");
+
+        mvc.perform(get("/api/pisos").header("Authorization", t))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.codigo").value("PASSWORD_CADUCADA"));
+        mvc.perform(get("/api/me").header("Authorization", t))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.debeCambiarPassword").value(true));
+
+        mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put("/api/me/password")
+                        .header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("actual", "secreta123", "nueva", "Nueva-frase-segura-2026"))))
+                .andExpect(status().is2xxSuccessful());
+
+        mvc.perform(get("/api/pisos").header("Authorization", t)).andExpect(status().isOk());
+        mvc.perform(get("/api/me").header("Authorization", t))
+                .andExpect(jsonPath("$.debeCambiarPassword").doesNotExist());
     }
 
     @Test

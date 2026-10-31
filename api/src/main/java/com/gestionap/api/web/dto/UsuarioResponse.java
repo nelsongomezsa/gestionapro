@@ -12,4 +12,6 @@ public record UsuarioResponse(
         Integer idInquilino,
         String dni,
         @Schema(description = "IBAN para el QR de pago de sus inquilinos, con espacios cada 4 caracteres")
-        String iban) {}
+        String iban,
+        @Schema(description = "true si tiene que cambiar la contraseña antes de seguir (solo aparece entonces)")
+        Boolean debeCambiarPassword) {}

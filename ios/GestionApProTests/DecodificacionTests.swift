@@ -20,6 +20,13 @@ struct DecodificacionTests {
         #expect(u.rol == .admin)
         #expect(u.rol.gestionaPisos)
         #expect(u.idInquilino == nil)
+        #expect(u.debeCambiarPassword == nil)
+    }
+
+    @Test func me_conPasswordCaducada() throws {
+        let datos = Data(#"{"id":2,"nombre":"Ana","email":"ana@x.com","rol":"PROPIETARIO","debeCambiarPassword":true}"#.utf8)
+        let u = try JSONCoding.decoder().decode(Usuario.self, from: datos)
+        #expect(u.debeCambiarPassword == true)
     }
 
     @Test func pisos_losOchoDeLaBD() throws {

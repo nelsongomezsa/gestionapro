@@ -41,4 +41,8 @@ public class Usuario {
 
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
+
+    /** V9: contraseña antigua (SHA-256). Hasta cambiarla, la API solo deja ver el perfil y cambiarla. */
+    @Column(name = "debe_cambiar_password", nullable = false)
+    private boolean debeCambiarPassword;
 }

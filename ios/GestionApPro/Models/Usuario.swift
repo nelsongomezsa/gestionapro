@@ -11,6 +11,8 @@ struct Usuario: Codable, Equatable, Sendable {
     var dni: String? = nil
     /// Con espacios cada 4 caracteres; lo usa el QR de pago de sus inquilinos.
     var iban: String? = nil
+    /// true si su contraseña era antigua: hasta cambiarla, la API solo deja ver el perfil y cambiarla.
+    var debeCambiarPassword: Bool? = nil
 }
 
 enum Rol: String, Codable, Sendable {

@@ -49,6 +49,7 @@ public class GestionUsuariosService {
         }
         politica.exigir(req.nueva());
         u.setPasswordHash(encoder.encode(req.nueva()));
+        u.setDebeCambiarPassword(false);
         actividad.registrar(u.getId(), "CAMBIAR_PASSWORD", "Contraseña cambiada desde la app");
     }
 

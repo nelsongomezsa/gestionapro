@@ -249,6 +249,8 @@ struct CambiarPasswordView: View {
     @State private var guardando = false
     @State private var error: String?
     @State private var hecho = false
+    /// Contraseña antigua: no se puede cancelar, solo cambiarla o cerrar sesión.
+    var obligatorio = false
 
     /// Mensaje del primer problema del formulario, o nil si se puede enviar.
     var problema: String? { CambiarPasswordView.validar(actual: actual, nueva: nueva, repetida: repetida) }
@@ -263,6 +265,14 @@ struct CambiarPasswordView: View {
 
     var body: some View {
         Form {
+            if obligatorio {
+                Section {
+                    Label("Por seguridad, tu contraseña se guardaba con un sistema antiguo. Elige una nueva para seguir.",
+                          systemImage: "lock.rotation")
+                        .accessibilityIdentifier("avisoPasswordCaducada")
+                }
+                .filaLista()
+            }
             Section {
                 SecureField("Contraseña actual", text: $actual)
                     .textContentType(.password)
@@ -292,7 +302,13 @@ struct CambiarPasswordView: View {
         .estiloLista()
         .navigationTitle("Cambiar contraseña")
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }
+            ToolbarItem(placement: .cancellationAction) {
+                if obligatorio {
+                    Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
+                } else {
+                    Button("Cancelar") { cerrar() }
+                }
+            }
             ToolbarItem(placement: .confirmationAction) {
                 if guardando { ProgressView() } else {
                     Button("Guardar") { Task { await guardar() } }.disabled(problema != nil)
@@ -300,7 +316,10 @@ struct CambiarPasswordView: View {
             }
         }
         .alert("Contraseña cambiada", isPresented: $hecho) {
-            Button("Aceptar") { cerrar() }
+            Button("Aceptar") {
+                // Obligatoria: se vuelve a pedir /api/me, que ya no la marca, y se entra en la app.
+                if obligatorio { Task { await sesion.restaurar() } } else { cerrar() }
+            }
         } message: {
             Text("La próxima vez que inicies sesión usa la nueva contraseña.")
         }

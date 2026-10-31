@@ -67,7 +67,8 @@ public class UsuarioService {
                 ? inquilinos.findByUsuarioId(u.getId()).map(Inquilino::getId).orElse(null)
                 : null;
         return new UsuarioResponse(u.getId(), u.getNombre(), u.getEmail(), u.getRol(), idInquilino, u.getDni(),
-                u.getIban() == null ? null : Textos.ibanLegible(u.getIban()));
+                u.getIban() == null ? null : Textos.ibanLegible(u.getIban()),
+                u.isDebeCambiarPassword() ? Boolean.TRUE : null);
     }
 
     private Usuario cargar(UsuarioAutenticado actor) {

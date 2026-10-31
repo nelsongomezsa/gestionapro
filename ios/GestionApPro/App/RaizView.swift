@@ -25,6 +25,8 @@ struct RaizView: View {
                         .tint(Tema.Color.primarioRelleno)
                     Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
                 }
+            case let .conectado(usuario) where usuario.debeCambiarPassword == true:
+                NavigationStack { CambiarPasswordView(obligatorio: true) }
             case let .conectado(usuario):
                 PestanasView(usuario: usuario)
                     .overlay {

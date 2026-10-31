@@ -59,6 +59,8 @@ public class AuthService {
         // Igual que el escritorio: un hash SHA-256 antiguo se sustituye por BCrypt al entrar.
         if (encoder.upgradeEncoding(u.getPasswordHash())) {
             u.setPasswordHash(encoder.encode(password));
+            // Era SHA-256 sin sal (quizá ya expuesta): además de rehashearla, se obliga a cambiarla.
+            u.setDebeCambiarPassword(true);
         }
         actividad.registrar(u.getId(), "LOGIN_API", "Inicio de sesión desde la app móvil");
         return new Sesion(u, jwt.generar(u));
