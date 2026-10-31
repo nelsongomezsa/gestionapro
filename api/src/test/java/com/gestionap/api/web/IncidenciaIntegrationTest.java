@@ -79,6 +79,16 @@ class IncidenciaIntegrationTest extends IntegrationTest {
         mvc.perform(post("/api/incidencias").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
                         .content(json(conInquilino)))
                 .andExpect(status().isCreated());
+        // Un inquilino de otro piso del mismo propietario no: vería en su app una incidencia ajena.
+        Piso otroPiso = datos.piso("Calle de Ana 9", alquilada.getPiso().getCiudad(), alquilada.getPiso().getPropietario());
+        Inquilino deOtroPiso = datos.inquilinoDe(alquilada.getPiso().getPropietario(), "33333333C");
+        datos.contrato(datos.habitacion(otroPiso, 1, EstadoHabitacion.alquilada), deOtroPiso, "400.00", hoy.minusMonths(1), hoy.plusMonths(11));
+        var ajeno = nueva(libre.getId(), "Pintar");
+        ajeno.put("idInquilino", deOtroPiso.getId());
+        mvc.perform(post("/api/incidencias").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(ajeno)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.codigo").value("INQUILINO_NO_VALIDO"));
     }
 
     @Test

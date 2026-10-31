@@ -76,6 +76,15 @@ public class IncidenciaService {
                 inq = inquilinos.findById(req.idInquilino())
                         .filter(x -> actor.esAdmin() || inquilinos.esVisiblePara(x.getId(), actor.id()))
                         .orElseThrow(() -> ApiException.noEncontrado("Inquilino"));
+                // Solo alguien con contrato en ese piso (p. ej., una habitación vacía del piso donde vive):
+                // si no, vería en su app una incidencia de un piso que no es el suyo.
+                Integer idInq = inq.getId();
+                Integer idPiso = h.getPiso().getId();
+                boolean viveEnElPiso = contratos.buscar(null, idInq, null).stream()
+                        .anyMatch(c -> c.getHabitacion().getPiso().getId().equals(idPiso));
+                if (!viveEnElPiso) {
+                    throw ApiException.badRequest("INQUILINO_NO_VALIDO", "Ese inquilino no tiene contrato en este piso");
+                }
             } else {
                 // La tabla exige inquilino: se usa el del contrato activo de la habitación.
                 inq = contratos.activosDeHabitaciones(List.of(h.getId()), hoy).stream().findFirst()

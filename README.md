@@ -165,6 +165,7 @@ cd ios && xcodebuild test -scheme GestionApPro -destination 'platform=iOS Simula
 | Documento | Contenido |
 |---|---|
 | [`docs/CASO_DE_ESTUDIO.md`](docs/CASO_DE_ESTUDIO.md) | El proyecto contado para una entrevista: problema, decisiones, resultados |
+| [`docs/COMPARATIVA.md`](docs/COMPARATIVA.md) | Nota sincera frente a Rentila y Rentger: qué tiene y qué le falta para competir |
 | [`docs/PARIDAD.md`](docs/PARIDAD.md) | Cada función del escritorio y su equivalente, más lo nuevo |
 | [`docs/DECISIONES.md`](docs/DECISIONES.md) | Decisiones técnicas con su porqué |
 | [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) | Docker, variables y comparación de tres opciones de nube |
