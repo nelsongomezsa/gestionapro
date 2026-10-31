@@ -60,7 +60,7 @@ struct PerfilUsuariosTests {
         #expect(p.httpBody.map { String(decoding: $0, as: UTF8.self) } == #"{"rol":"ADMIN"}"#)
     }
 
-    @Test func validarNuevaPassword() {
+    @MainActor @Test func validarNuevaPassword() {
         #expect(CambiarPasswordView.validar(actual: "", nueva: "", repetida: "") == "")
         #expect(CambiarPasswordView.validar(actual: "a", nueva: "corta", repetida: "corta") != nil)
         #expect(CambiarPasswordView.validar(actual: "a", nueva: "nueve9999", repetida: "nueve9999") == "La nueva contraseña debe tener al menos 10 caracteres")

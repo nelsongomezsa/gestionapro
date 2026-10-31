@@ -137,6 +137,12 @@ enum Tema {
     enum Movimiento {
         static let suave = Animation.snappy(duration: 0.25)
     }
+
+    /// Liquid Glass: solo para controles y navegación que flotan sobre el contenido; las tarjetas siguen sólidas.
+    enum Cristal {
+        /// Tinte azul marino de la marca, sutil para que el cristal siga dejando ver el fondo.
+        static let tinte = Color.primarioRelleno.opacity(0.18)
+    }
 }
 
 /// Tono semántico de un dato o estado.

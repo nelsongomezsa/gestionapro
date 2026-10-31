@@ -209,8 +209,10 @@ struct SelectorMes: View {
                 .accessibilityLabel("Mes siguiente")
                 .disabled(maximo.map { mes >= $0 } ?? false)
         }
-        .buttonStyle(.bordered)
+        // Controles sobre el contenido: cristal, y tamaño grande para llegar a 44 pt de área táctil.
+        .buttonStyle(.glass)
         .buttonBorderShape(.circle)
+        .controlSize(.large)
         .tint(Tema.Color.primario)
     }
 }

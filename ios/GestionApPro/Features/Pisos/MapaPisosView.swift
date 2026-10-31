@@ -54,7 +54,7 @@ struct MapaPisosView: View {
             let peticion = MKLocalSearch.Request()
             peticion.naturalLanguageQuery = "\(p.direccion), \(p.ciudad.nombre), España"
             if let item = try? await MKLocalSearch(request: peticion).start().mapItems.first {
-                situados.append((p, item.placemark.coordinate))
+                situados.append((p, item.location.coordinate))
             }
         }
     }
