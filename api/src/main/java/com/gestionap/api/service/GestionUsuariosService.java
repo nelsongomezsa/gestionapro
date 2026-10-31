@@ -1,5 +1,7 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.security.PoliticaContrasenas;
+
 import com.gestionap.api.domain.Rol;
 import com.gestionap.api.domain.Usuario;
 import com.gestionap.api.repository.UsuarioRepository;
@@ -11,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,13 +24,15 @@ import java.util.Locale;
 @Service
 public class GestionUsuariosService {
 
-    private static final int MAX_BYTES_PASSWORD = 72;
 
     private final UsuarioRepository usuarios;
     private final PasswordEncoder encoder;
+    private final PoliticaContrasenas politica;
     private final ActividadService actividad;
 
-    public GestionUsuariosService(UsuarioRepository usuarios, PasswordEncoder encoder, ActividadService actividad) {
+    public GestionUsuariosService(UsuarioRepository usuarios, PasswordEncoder encoder, ActividadService actividad,
+                                  PoliticaContrasenas politica) {
+        this.politica = politica;
         this.usuarios = usuarios;
         this.encoder = encoder;
         this.actividad = actividad;
@@ -41,10 +44,10 @@ public class GestionUsuariosService {
         if (!encoder.matches(req.actual(), u.getPasswordHash())) {
             throw ApiException.badRequest("PASSWORD_ACTUAL_INCORRECTA", "La contraseña actual no es correcta");
         }
-        exigirLongitud(req.nueva());
         if (encoder.matches(req.nueva(), u.getPasswordHash())) {
             throw ApiException.badRequest("PASSWORD_IGUAL", "La nueva contraseña debe ser distinta de la actual");
         }
+        politica.exigir(req.nueva());
         u.setPasswordHash(encoder.encode(req.nueva()));
         actividad.registrar(u.getId(), "CAMBIAR_PASSWORD", "Contraseña cambiada desde la app");
     }
@@ -59,7 +62,7 @@ public class GestionUsuariosService {
         if (req.rol() == Rol.INQUILINO) {
             throw ApiException.badRequest("ROL_NO_PERMITIDO", "Los inquilinos se dan de alta con una invitación desde su ficha");
         }
-        exigirLongitud(req.password());
+        politica.exigir(req.password());
         String email = req.email().trim().toLowerCase(Locale.ROOT);
         if (usuarios.existsByEmail(email)) throw ApiException.conflicto("EMAIL_EN_USO", "Ya existe una cuenta con ese email");
         Usuario u = new Usuario();
@@ -106,9 +109,4 @@ public class GestionUsuariosService {
         return usuarios.findById(id).orElseThrow(() -> ApiException.noEncontrado("Usuario"));
     }
 
-    private static void exigirLongitud(String password) {
-        if (password.getBytes(StandardCharsets.UTF_8).length > MAX_BYTES_PASSWORD) {
-            throw ApiException.badRequest("PASSWORD_DEMASIADO_LARGA", "La contraseña es demasiado larga");
-        }
-    }
 }

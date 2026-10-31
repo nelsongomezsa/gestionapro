@@ -30,3 +30,6 @@ gestionap:
   limites:
     # Los tests entran muchas veces desde 127.0.0.1; el límite por IP se prueba aparte.
     por-ip: 100000
+  hibp:
+    # Sin red en los tests: la consulta a Have I Been Pwned se prueba con un servidor local.
+    url: ""

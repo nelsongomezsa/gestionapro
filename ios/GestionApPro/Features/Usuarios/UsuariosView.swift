@@ -122,7 +122,7 @@ struct NuevoUsuarioView: View {
     @State private var error: String?
 
     private var valido: Bool {
-        !nombre.trimmingCharacters(in: .whitespaces).isEmpty && email.contains("@") && (8...72).contains(password.count)
+        !nombre.trimmingCharacters(in: .whitespaces).isEmpty && email.contains("@") && (10...72).contains(password.count)
     }
 
     var body: some View {
@@ -135,7 +135,7 @@ struct NuevoUsuarioView: View {
                     .autocorrectionDisabled()
                 SecureField("Contraseña inicial", text: $password).textContentType(.newPassword)
             } footer: {
-                Text("Mínimo 8 caracteres. Pásasela a la persona para que la cambie desde su perfil.")
+                Text("Mínimo 10 caracteres. Pásasela a la persona para que la cambie desde su perfil.")
             }
             .filaLista()
             Section {

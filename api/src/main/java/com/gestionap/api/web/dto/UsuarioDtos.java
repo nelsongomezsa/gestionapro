@@ -11,7 +11,7 @@ public final class UsuarioDtos {
 
     public record CambioPasswordRequest(
             @NotBlank String actual,
-            @NotBlank @Size(min = 8, max = 72, message = "debe tener entre 8 y 72 caracteres") String nueva) {}
+            @NotBlank @Size(min = 10, max = 72, message = "debe tener entre 10 y 72 caracteres") String nueva) {}
 
     /** Fila de la gestión de usuarios (solo admin). */
     public record UsuarioAdmin(Integer id, String nombre, String email, Rol rol, boolean activo) {
@@ -23,7 +23,7 @@ public final class UsuarioDtos {
     public record NuevoUsuarioRequest(
             @NotBlank @Size(max = 100) String nombre,
             @NotBlank @Email @Size(max = 100) String email,
-            @NotBlank @Size(min = 8, max = 72, message = "debe tener entre 8 y 72 caracteres") String password,
+            @NotBlank @Size(min = 10, max = 72, message = "debe tener entre 10 y 72 caracteres") String password,
             @Schema(description = "ADMIN o PROPIETARIO; los inquilinos se dan de alta con una invitación") @NotNull Rol rol) {}
 
     public record CambioActivoRequest(@NotNull Boolean activo) {}

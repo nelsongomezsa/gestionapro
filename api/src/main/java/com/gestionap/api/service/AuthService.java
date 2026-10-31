@@ -1,5 +1,7 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.security.PoliticaContrasenas;
+
 import com.gestionap.api.domain.Invitacion;
 import com.gestionap.api.domain.Inquilino;
 import com.gestionap.api.domain.Rol;
@@ -14,15 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Service
 public class AuthService {
 
-    /** BCrypt solo usa los primeros 72 bytes; más largo se rechaza en vez de truncarlo en silencio. */
-    private static final int MAX_BYTES_PASSWORD = 72;
     private static final int MAX_NOMBRE = 100;
 
     private final UsuarioRepository usuarios;
@@ -31,12 +30,14 @@ public class AuthService {
     private final PasswordEncoder encoder;
     private final JwtService jwt;
     private final ActividadService actividad;
+    private final PoliticaContrasenas politica;
     /** Hash de relleno: si el email no existe se compara igual, para no delatarlo por el tiempo de respuesta. */
     private final String hashRelleno;
 
     public AuthService(UsuarioRepository usuarios, InquilinoRepository inquilinos,
                        InvitacionRepository invitaciones, PasswordEncoder encoder,
-                       JwtService jwt, ActividadService actividad) {
+                       JwtService jwt, ActividadService actividad, PoliticaContrasenas politica) {
+        this.politica = politica;
         this.usuarios = usuarios;
         this.inquilinos = inquilinos;
         this.invitaciones = invitaciones;
@@ -70,9 +71,6 @@ public class AuthService {
      */
     @Transactional
     public Sesion registrarInquilino(RegistroInquilinoRequest req) {
-        if (req.password().getBytes(StandardCharsets.UTF_8).length > MAX_BYTES_PASSWORD) {
-            throw ApiException.badRequest("PASSWORD_DEMASIADO_LARGA", "La contraseña es demasiado larga");
-        }
         LocalDateTime ahora = LocalDateTime.now();
         Invitacion inv = invitaciones.findByCodigoHash(InvitacionService.hashCodigo(req.codigo()))
                 .filter(i -> i.esUsable(ahora))
@@ -89,6 +87,7 @@ public class AuthService {
         if (usuarios.existsByEmail(email)) {
             throw ApiException.conflicto("EMAIL_EN_USO", "Ya existe una cuenta con ese email");
         }
+        politica.exigir(req.password());
 
         Usuario u = new Usuario();
         u.setNombre(truncar(inquilino.getNombreCompleto(), MAX_NOMBRE));

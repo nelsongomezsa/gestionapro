@@ -255,7 +255,7 @@ struct CambiarPasswordView: View {
 
     static func validar(actual: String, nueva: String, repetida: String) -> String? {
         if actual.isEmpty || nueva.isEmpty { return "" }
-        if nueva.count < 8 { return "La nueva contraseña debe tener al menos 8 caracteres" }
+        if nueva.count < 10 { return "La nueva contraseña debe tener al menos 10 caracteres" }
         if nueva.count > 72 { return "La nueva contraseña es demasiado larga" }
         if nueva != repetida { return "Las contraseñas nuevas no coinciden" }
         return nil
@@ -280,7 +280,7 @@ struct CambiarPasswordView: View {
                 if let p = problema, !p.isEmpty, !repetida.isEmpty {
                     Text(p).foregroundStyle(Tema.Color.aviso)
                 } else {
-                    Text("Mínimo 8 caracteres.")
+                    Text("Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas.")
                 }
             }
             .filaLista()

@@ -47,6 +47,9 @@ gestionap:
     ventana: 15m
     por-ip: 20
     fallos-por-email: 5
+  hibp:
+    # Contraseñas filtradas (Have I Been Pwned, k-anonymity: solo viajan 5 caracteres del SHA-1). Vacío = desactivado.
+    url: ${HIBP_URL:https://api.pwnedpasswords.com/range/}
   ia:
     # Asistente (fase 7). La clave va SOLO en la variable de entorno ANTHROPIC_API_KEY del servidor.
     # Por defecto Claude Haiku 5.5, el más económico (admite herramientas e imágenes); otro con ASISTENTE_MODELO.

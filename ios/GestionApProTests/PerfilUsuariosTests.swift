@@ -63,8 +63,10 @@ struct PerfilUsuariosTests {
     @Test func validarNuevaPassword() {
         #expect(CambiarPasswordView.validar(actual: "", nueva: "", repetida: "") == "")
         #expect(CambiarPasswordView.validar(actual: "a", nueva: "corta", repetida: "corta") != nil)
-        #expect(CambiarPasswordView.validar(actual: "a", nueva: "larga-123", repetida: "otra-1234") == "Las contraseñas nuevas no coinciden")
-        #expect(CambiarPasswordView.validar(actual: "a", nueva: "larga-123", repetida: "larga-123") == nil)
+        #expect(CambiarPasswordView.validar(actual: "a", nueva: "nueve9999", repetida: "nueve9999") == "La nueva contraseña debe tener al menos 10 caracteres")
+        #expect(CambiarPasswordView.validar(actual: "a", nueva: "diez-chars", repetida: "diez-chars") == nil)
+        #expect(CambiarPasswordView.validar(actual: "a", nueva: "larga-12345", repetida: "otra-123456") == "Las contraseñas nuevas no coinciden")
+        #expect(CambiarPasswordView.validar(actual: "a", nueva: "larga-12345", repetida: "larga-12345") == nil)
     }
 
     @Test @MainActor func registroDeInquilino_iniciaSesion() async throws {

@@ -15,7 +15,7 @@ struct RegistroInquilinoView: View {
 
     private var problema: String? {
         if codigo.trimmingCharacters(in: .whitespaces).isEmpty || !email.contains("@") || password.isEmpty { return "" }
-        if password.count < 8 { return "La contraseña debe tener al menos 8 caracteres" }
+        if password.count < 10 { return "La contraseña debe tener al menos 10 caracteres" }
         if password != repetida { return "Las contraseñas no coinciden" }
         return nil
     }
@@ -44,7 +44,7 @@ struct RegistroInquilinoView: View {
                 if let p = problema, !p.isEmpty, !repetida.isEmpty {
                     Text(p).foregroundStyle(Tema.Color.aviso)
                 } else {
-                    Text("Mínimo 8 caracteres.")
+                    Text("Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas.")
                 }
             }
             .filaLista()

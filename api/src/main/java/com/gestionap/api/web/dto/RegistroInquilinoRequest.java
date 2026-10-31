@@ -9,4 +9,4 @@ public record RegistroInquilinoRequest(
         @Schema(description = "Código de invitación que generó el propietario", example = "K7M2-QX9P-4TBW")
         @NotBlank String codigo,
         @NotBlank @Email @Size(max = 100) String email,
-        @NotBlank @Size(min = 8, max = 72, message = "debe tener entre 8 y 72 caracteres") String password) {}
+        @NotBlank @Size(min = 10, max = 72, message = "debe tener entre 10 y 72 caracteres") String password) {}
