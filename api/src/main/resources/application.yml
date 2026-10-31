@@ -44,7 +44,8 @@ gestionap:
     tope-irav: true
   ia:
     # Asistente (fase 7). La clave va SOLO en la variable de entorno ANTHROPIC_API_KEY del servidor.
-    modelo: claude-opus-5-5
+    # Por defecto Claude Haiku 5.5, el más económico (admite herramientas e imágenes); otro con ASISTENTE_MODELO.
+    modelo: ${ASISTENTE_MODELO:claude-haiku-5-5}
     limite-diario: 40
   push:
     # APNs (notificaciones push). Vacío = desactivado. Necesita una cuenta de pago de Apple Developer.

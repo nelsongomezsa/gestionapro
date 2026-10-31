@@ -34,12 +34,13 @@ import java.util.stream.Collectors;
  * El asistente con la API de Claude (SDK oficial de Java). La clave se lee SOLO de la variable
  * de entorno ANTHROPIC_API_KEY del servidor; sin ella el asistente queda desactivado.
  *
- * - Modelo: Claude Opus 5.5 (configurable en gestionap.ia.modelo).
+ * - Modelo: Claude Haiku 5.5 por defecto, el más económico (variable ASISTENTE_MODELO para cambiarlo).
  * - Bucle de herramientas propio: las herramientas son nuestras (servicios con los permisos del
  *   usuario); cada respuesta del modelo se devuelve entera en el historial, con sus bloques de
  *   pensamiento, como pide la API.
  * - Fallback del servidor ante un rechazo de los clasificadores de seguridad
- *   ("server-side-fallback-2026-07-01", modo "default"); si aun así se rechaza, se dice al usuario.
+ *   ("server-side-fallback-2026-07-01", modo "default") solo en los modelos que lo admiten (Haiku 5.5 no);
+ *   si se rechaza, se dice al usuario.
  */
 @Slf4j
 @Component
@@ -51,7 +52,11 @@ public class ModeloClaude implements ModeloIA {
     private final String modelo;
     private final AnthropicClient cliente;
 
-    public ModeloClaude(@Value("${gestionap.ia.modelo:claude-opus-5-5}") String modelo) {
+    /** Modelos que aceptan el fallback del servidor ante un rechazo (Claude API). */
+    private static final java.util.Set<String> CON_FALLBACK = java.util.Set.of(
+            "claude-fable-5-1", "claude-opus-5-5", "claude-opus-5", "claude-sonnet-5-5");
+
+    public ModeloClaude(@Value("${gestionap.ia.modelo:claude-haiku-5-5}") String modelo) {
         this.modelo = modelo;
         String clave = System.getenv("ANTHROPIC_API_KEY");
         this.cliente = clave == null || clave.isBlank() ? null : AnthropicOkHttpClient.fromEnv();
@@ -71,9 +76,11 @@ public class ModeloClaude implements ModeloIA {
                 .maxTokens(16000L)
                 .system(instrucciones)
                 // Preguntas de gestión: esfuerzo medio basta y responde antes.
-                .outputConfig(OutputConfig.builder().effort(OutputConfig.Effort.MEDIUM).build())
-                .putAdditionalHeader("anthropic-beta", "server-side-fallback-2026-07-01")
-                .putAdditionalBodyProperty("fallbacks", JsonValue.from("default"));
+                .outputConfig(OutputConfig.builder().effort(OutputConfig.Effort.MEDIUM).build());
+        if (CON_FALLBACK.contains(modelo)) {
+            peticion.putAdditionalHeader("anthropic-beta", "server-side-fallback-2026-07-01")
+                    .putAdditionalBodyProperty("fallbacks", JsonValue.from("default"));
+        }
         herramientas.forEach(h -> peticion.addTool(herramienta(h)));
         for (Turno t : historial) {
             if (t.delUsuario()) peticion.addUserMessage(t.texto());

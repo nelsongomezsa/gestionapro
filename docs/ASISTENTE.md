@@ -16,9 +16,11 @@
 Cada consulta cuenta para un límite diario por usuario (40 por defecto, `gestionap.ia.limite-diario`) y
 queda en Actividad, sin el texto de la conversación. Solo pueden usarlo el propietario y el administrador.
 
-Modelo: Claude Opus 5.5 (`claude-opus-5-5`, configurable en `gestionap.ia.modelo`), con el SDK oficial de
-Java. Si los filtros de seguridad rechazan una petición, la API reintenta con otro modelo (*fallback* del
-servidor). Si aun así no puede, el asistente lo dice.
+Modelo: **Claude Haiku 5.5** (`claude-haiku-5-5`), el más económico de la generación actual, que admite
+herramientas e imágenes, con el SDK oficial de Java. Se cambia con la variable de entorno `ASISTENTE_MODELO`
+(por ejemplo, `claude-sonnet-5-5` o `claude-opus-5-5` si alguna respuesta se queda corta). Si los filtros de
+seguridad rechazan una petición, el asistente lo dice. En Sonnet 5.5 y Opus 5.5 la API reintenta antes con
+otro modelo (*fallback* del servidor); Haiku 5.5 no tiene esa opción.
 
 ## Sin clave
 
@@ -49,7 +51,7 @@ La clave **nunca** va en la app ni en el repositorio: solo en el servidor, como 
    mvn spring-boot:run -Dspring-boot.run.profiles=dev
    ```
 
-   En el arranque debe salir `Asistente activo con el modelo claude-opus-5-5`
+   En el arranque debe salir `Asistente activo con el modelo claude-haiku-5-5`
    (si sale `Asistente desactivado: falta ANTHROPIC_API_KEY`, la variable no se ha cargado).
 
 ## Prueba real
@@ -65,8 +67,33 @@ Con la API arrancada y la app en el simulador, entra como propietario:
 5. Gastos de un piso → Nuevo gasto → foto de una factura → «Rellenar con el asistente». Revisa los datos.
 6. Nueva incidencia → escribe «Sale agua por debajo del lavabo» → «Sugerir categoría y urgencia».
 
-Coste orientativo: cada pregunta usa unos pocos miles de tokens (a 4 $ y 20 $ por millón de tokens de
-entrada y salida en Claude Opus 5.5), es decir, céntimos por consulta.
+## Coste aproximado
+
+Precios oficiales de la API ([platform.claude.com/docs/en/about-claude/pricing](https://platform.claude.com/docs/en/about-claude/pricing),
+consultados el 31-10-2026), en dólares por millón de tokens:
+
+| Modelo | Entrada | Salida |
+|---|---|---|
+| Claude Haiku 5.5 (por defecto; prompts de hasta 100.000 tokens) | 0,10 $ | 0,50 $ |
+| Claude Sonnet 5.5 | 2 $ | 10 $ |
+| Claude Opus 5.5 | 4 $ | 20 $ |
+
+Una consulta típica («¿Quién me debe este mes?») son unas 3 llamadas al modelo, porque pide una o dos
+herramientas y luego responde. Cada llamada reenvía las instrucciones (unos 380 tokens), la definición de
+las 8 herramientas (unos 700) y el texto que la API añade al usar herramientas (286 tokens en Haiku 5.5).
+También reenvía lo que devolvieron las herramientas: entre 2,8 y 7,7 KB con los datos de demo, es decir,
+unos 1.000-2.500 tokens cada una. En total, del orden de **12.000 tokens de entrada y 2.000 de salida**,
+contando el razonamiento.
+
+| | Haiku 5.5 | Sonnet 5.5 | Opus 5.5 |
+|---|---|---|---|
+| Una consulta | ≈ 0,002 $ (0,2 céntimos) | ≈ 0,04 $ | ≈ 0,09 $ |
+| 1.000 consultas | ≈ 2 $ | ≈ 44 $ | ≈ 88 $ |
+| Leer una factura (foto ≈ 1.700 tokens) | ≈ 0,0005 $ | ≈ 0,01 $ | ≈ 0,02 $ |
+| Máximo de un usuario al día (límite de 40) | ≈ 0,09 $ | ≈ 1,8 $ | ≈ 3,5 $ |
+
+Son estimaciones: el coste real de cada llamada sale en el `usage` de la respuesta y en la consola de
+Anthropic. Con una cartera más grande, las respuestas de las herramientas crecen y la consulta cuesta más.
 
 Comprobación sin la app:
 

@@ -23,6 +23,7 @@ cada proveedor antes de decidir).
 | `JWT_SECRET` | Sí | `openssl rand -base64 48`; distinto del de desarrollo |
 | `GESTIONAP_ARCHIVOS_DIR` | No | `/data/archivos` (montar un volumen persistente ahí) |
 | `ANTHROPIC_API_KEY` | No | Activa el asistente (ver `docs/ASISTENTE.md`) |
+| `ASISTENTE_MODELO` | No | Modelo del asistente; por defecto `claude-haiku-5-5`, el más económico |
 | `MAIL_HOST`, `MAIL_USER`, `MAIL_PASS`, `MAIL_FROM` | No | Recibos y recordatorios por email |
 | `SWAGGER_ENABLED` | No | `false` en producción |
 
