@@ -166,6 +166,10 @@ struct CampoNumerico: View {
             }
         }
         .onAppear { texto = Self.formatear(valor) }
+        // Valor que llega de fuera (p. ej., el importe al cargar los contratos): se muestra si no se está escribiendo.
+        .onChange(of: valor) { _, nuevo in
+            if !enfocado, Formato.numeroEditable.number(from: texto)?.doubleValue != nuevo { texto = Self.formatear(nuevo) }
+        }
     }
 
     private static func formatear(_ v: Double) -> String {
