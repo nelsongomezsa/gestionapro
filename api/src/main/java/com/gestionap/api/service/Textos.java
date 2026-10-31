@@ -30,6 +30,11 @@ public final class Textos {
     }
 
     /** "octubre 2026". El escritorio usaba DATE_FORMAT/MMMM, que depende del idioma del servidor. */
+    /** "Gómez" → "Gomez": para buscar sin distinguir tildes. */
+    public static String sinTildes(String texto) {
+        return java.text.Normalizer.normalize(texto, java.text.Normalizer.Form.NFD).replaceAll("\\p{M}", "");
+    }
+
     /** 1.234,50 € */
     public static String euros(BigDecimal importe) {
         return NumberFormat.getCurrencyInstance(ES).format(importe);

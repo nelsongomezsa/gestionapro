@@ -42,6 +42,10 @@ gestionap:
   renta:
     # Ninguna actualización supera el IRAV (LAU art. 18.1, redacción del RDL 29/2026).
     tope-irav: true
+  ia:
+    # Asistente (fase 7). La clave va SOLO en la variable de entorno ANTHROPIC_API_KEY del servidor.
+    modelo: claude-opus-5-5
+    limite-diario: 40
   recordatorios:
     # Email de recordatorio a los inquilinos (solo si hay email configurado). "-" lo desactiva.
     cron: "0 0 9 * * *"

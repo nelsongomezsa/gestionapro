@@ -1,0 +1,11 @@
+{
+  "respuesta": "Natalia Castro López tiene pendiente la renta de octubre (450,00 €).",
+  "acciones": [
+    {"tipo": "REGISTRAR_PAGO", "resumen": "Registrar pago de 450,00 € de Natalia Castro López (2026-10-31)",
+     "datos": {"idContrato": 20, "cantidad": 450.00, "fechaPago": "2026-10-31", "metodoPago": "transferencia"}},
+    {"tipo": "RECORDATORIO", "resumen": "Recordatorio para Natalia Castro López",
+     "datos": {"idContrato": 20, "texto": "Hola, Natalia..."}}
+  ],
+  "usadosHoy": 3,
+  "limiteDiario": 40
+}

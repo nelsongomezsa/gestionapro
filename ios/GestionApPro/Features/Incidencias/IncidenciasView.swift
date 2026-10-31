@@ -278,6 +278,8 @@ struct NuevaIncidenciaView: View {
     @State private var coste = 0.0
     @State private var guardando = false
     @State private var error: String?
+    @State private var clasificacion: ClasificacionIncidencia?
+    @State private var clasificando = false
 
     private var gestiona: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -302,6 +304,19 @@ struct NuevaIncidenciaView: View {
                 }
                 Section {
                     TextField("Describe el problema", text: $descripcion, axis: .vertical).lineLimit(3...6)
+                    if gestiona && descripcion.count >= 10 {
+                        if clasificando {
+                            HStack { ProgressView(); Text("Clasificando…") }
+                        } else if let c = clasificacion {
+                            Label("\(c.categoria.capitalized) · urgencia \(c.urgencia.lowercased()). \(c.motivo)", systemImage: "sparkles")
+                                .font(Tema.Fuente.detalle)
+                                .foregroundStyle(c.urgencia == "ALTA" ? Tema.Color.negativo : Tema.Color.textoSecundario)
+                        } else {
+                            Button { Task { await clasificar() } } label: {
+                                Label("Sugerir categoría y urgencia", systemImage: "sparkles")
+                            }
+                        }
+                    }
                 } header: {
                     Text("Qué pasa")
                 } footer: {
@@ -336,6 +351,15 @@ struct NuevaIncidenciaView: View {
                 Task { habitaciones = idPiso == nil ? [] : ((try? await sesion.api.enviar(.habitaciones(piso: idPiso))) ?? []) }
             }
         }
+    }
+
+    /// Sugerencia del asistente (si está activo); solo informa, no cambia nada.
+    private func clasificar() async {
+        clasificando = true
+        defer { clasificando = false }
+        do { clasificacion = try await sesion.api.enviar(.clasificarIncidencia(descripcion)) }
+        catch .noAutorizado {}
+        catch { self.error = error.localizedDescription }
     }
 
     private func guardar() async {

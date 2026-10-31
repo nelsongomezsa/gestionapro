@@ -151,6 +151,8 @@ struct GastoFormView: View {
     @State private var documento: DocumentoPDF?
     @State private var imagenFactura: UIImage?
     @State private var guardando = false
+    @State private var leyendo = false
+    @State private var aviso: String?
     @State private var error: String?
 
     private var deIncidencia: Bool { gasto?.idIncidencia != nil }
@@ -199,6 +201,17 @@ struct GastoFormView: View {
                     Label(textoFoto, systemImage: "camera")
                 }
                 Button { importandoPDF = true } label: { Label("Elegir un PDF", systemImage: "doc.badge.plus") }
+                if factura?.tipo == "image/jpeg" && !deIncidencia {
+                    if leyendo {
+                        HStack { ProgressView(); Text("Leyendo la factura…") }
+                    } else {
+                        Button { Task { await leerConAsistente() } } label: {
+                            Label("Rellenar con el asistente", systemImage: "sparkles")
+                        }
+                        .accessibilityIdentifier("botonLeerFactura")
+                    }
+                }
+                if let aviso { Text(aviso).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.aviso) }
             }
             .filaLista()
             if let error {
@@ -240,6 +253,26 @@ struct GastoFormView: View {
         }
         .visorPDF($documento)
         .task { await preparar() }
+    }
+
+    /// El asistente propone los datos de la factura; el usuario los revisa antes de guardar.
+    private func leerConAsistente() async {
+        guard let f = factura else { return }
+        leyendo = true
+        defer { leyendo = false }
+        do {
+            let p = try await sesion.api.subir(Rutas.leerFactura, archivo: f.datos, nombre: "factura.jpg", tipo: "image/jpeg",
+                                               respuesta: PropuestaGastoIA.self)
+            categoria = p.categoria
+            if let c = p.concepto, !c.isEmpty { concepto = [p.proveedor, c].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · ") }
+            if p.importe > 0 { importe = p.importe }
+            if let texto = p.fecha, let d = try? Date(texto, strategy: .iso8601.year().month().day()), d <= .now { fecha = d }
+            aviso = "Datos propuestos por el asistente: revísalos antes de guardar."
+                + ((p.observaciones ?? "").isEmpty ? "" : " \(p.observaciones ?? "")")
+        } catch .noAutorizado {
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     private func preparar() async {

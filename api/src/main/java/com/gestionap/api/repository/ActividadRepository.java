@@ -21,4 +21,7 @@ public interface ActividadRepository extends JpaRepository<Actividad, Integer> {
             select a from Actividad a where a.idUsuario = :idUsuario and (a.accion is null or a.accion not like 'LOGIN%')
             order by a.fecha desc, a.id desc""")
     List<Actividad> recientesSinAccesosDe(Integer idUsuario, Limit limite);
+
+    /** Usos del asistente de un usuario desde una hora (para el límite diario). */
+    long countByIdUsuarioAndAccionStartingWithAndFechaGreaterThanEqual(Integer idUsuario, String prefijo, java.time.LocalDateTime desde);
 }

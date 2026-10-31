@@ -1052,6 +1052,16 @@ extension CapturasUITests {
             ri.capturar("07-chat-inquilino")
         }
     }
+    @MainActor
+    func testFase7() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Más")
+        r.app.buttons["enlaceAsistente"].tap()
+        r.esperar(r.app.navigationBars["Asistente"])
+        r.pausa(2)
+        r.capturar("01-asistente")
+    }
 }
 
 @MainActor

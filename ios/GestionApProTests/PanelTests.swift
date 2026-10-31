@@ -98,4 +98,15 @@ struct FechasConZonaTests {
         let septiembre = Calendar.current.date(byAdding: .month, value: -1, to: .now)!
         #expect(Notificacion.resumen(tipo: "pago_pendiente", cantidad: 3, mes: septiembre).hasPrefix("3 pagos pendientes en "))
     }
+
+    @Test("Asistente: respuesta con acciones propuestas")
+    func asistente() throws {
+        let r = try Fixture.decodificar(ContestacionAsistente.self, de: "asistente")
+        #expect(r.acciones.count == 2)
+        #expect(r.acciones[0].tipo == .registrarPago)
+        #expect(r.acciones[0].datos.cantidad == 450)
+        #expect(r.acciones[0].datos.metodoPago == .transferencia)
+        #expect(r.acciones[1].tipo == .recordatorio)
+        #expect(r.usadosHoy == 3)
+    }
 }

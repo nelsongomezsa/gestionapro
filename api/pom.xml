@@ -88,6 +88,12 @@
             <version>${itext.version}</version>
         </dependency>
 
+        <!-- Asistente con IA (fase 7): SDK oficial de la API de Claude. La clave solo en ANTHROPIC_API_KEY. -->
+        <dependency>
+            <groupId>com.anthropic</groupId>
+            <artifactId>anthropic-java</artifactId>
+            <version>3.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

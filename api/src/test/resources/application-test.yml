@@ -23,3 +23,7 @@ gestionap:
     url: ""
   archivos:
     dir: ${java.io.tmpdir}/gestionap-archivos-test
+  ia:
+    # Modelo simulado: los tests nunca llaman a la API de Claude.
+    simulado: true
+    limite-diario: 5
