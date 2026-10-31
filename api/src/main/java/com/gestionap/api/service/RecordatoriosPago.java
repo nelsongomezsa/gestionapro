@@ -29,6 +29,9 @@ public class RecordatoriosPago {
     private final PagoRepository pagos;
     private final NotificacionService notificaciones;
     private final EmailService email;
+    private PushService push;
+    private com.gestionap.api.repository.DispositivoRepository dispositivos;
+    private com.gestionap.api.repository.UsuarioRepository usuarios;
 
     public RecordatoriosPago(ContratoRepository contratos, PagoRepository pagos, NotificacionService notificaciones,
                              EmailService email) {
@@ -38,11 +41,37 @@ public class RecordatoriosPago {
         this.email = email;
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    void push(PushService push, com.gestionap.api.repository.DispositivoRepository dispositivos,
+              com.gestionap.api.repository.UsuarioRepository usuarios) {
+        this.push = push;
+        this.dispositivos = dispositivos;
+        this.usuarios = usuarios;
+    }
+
     /** Cada día a las 9:00 (hora de Madrid). "-" en gestionap.recordatorios.cron lo desactiva. */
     @Scheduled(cron = "${gestionap.recordatorios.cron:0 0 9 * * *}", zone = "Europe/Madrid")
     @Transactional
     public void enviarDelDia() {
         enviar(LocalDate.now());
+        avisosConPush(LocalDate.now());
+    }
+
+    /**
+     * Con push configurado, genera los avisos del día de quien tiene un iPhone registrado: así le
+     * llegan (cobro vencido, recordatorio de pago…) sin tener que abrir la app.
+     */
+    @Transactional
+    public int avisosConPush(LocalDate hoy) {
+        if (push == null || !push.configurado()) return 0;
+        int usuariosConAvisos = 0;
+        for (var u : usuarios.findAll()) {
+            if (u.isActivo() && !dispositivos.findByIdUsuario(u.getId()).isEmpty()) {
+                notificaciones.generarPara(u, hoy);
+                usuariosConAvisos++;
+            }
+        }
+        return usuariosConAvisos;
     }
 
     /** Devuelve cuántos recordatorios ha enviado (para los tests). */

@@ -209,6 +209,14 @@ extension Endpoint where Respuesta == EstadoFirmas {
     static func firmas(contrato id: Int) -> Self { Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/firmas") }
 }
 
+// MARK: Dispositivos (push)
+
+extension Endpoint where Respuesta == SinContenido {
+    static func registrarDispositivo(token: String) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/dispositivos", cuerpo: json(["token": token]))
+    }
+}
+
 // MARK: Asistente
 
 extension Rutas {

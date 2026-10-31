@@ -236,3 +236,12 @@ CREATE TABLE FirmasContrato (
     proveedor      VARCHAR(30) NOT NULL DEFAULT 'EN_PANTALLA',
     CONSTRAINT uk_firma_contrato_parte UNIQUE (id_contrato, parte)
 );
+
+-- V8: dispositivos para notificaciones push.
+CREATE TABLE Dispositivos (
+    id_dispositivo INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario     INT NOT NULL REFERENCES Usuarios (id_usuario) ON DELETE CASCADE,
+    token          VARCHAR(200) NOT NULL UNIQUE,
+    plataforma     VARCHAR(10) NOT NULL DEFAULT 'IOS',
+    fecha_alta     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -21,6 +21,13 @@ targets:
     platform: iOS
     sources:
       - GestionApPro
+      - Compartido
+    dependencies:
+      - target: GestionApProWidget
+    entitlements:
+      path: Config/GestionApPro.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.gestionap.GestionApPro]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gestionap.GestionApPro
@@ -32,6 +39,7 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_NSFaceIDUsageDescription: "Para desbloquear GestionAp con tu cara."
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
       configs:
         # El plist de Debug es el único con excepción ATS (solo red local).
@@ -39,6 +47,32 @@ targets:
           INFOPLIST_FILE: Config/Info-Debug.plist
         Release:
           INFOPLIST_FILE: Config/Info-Release.plist
+  # Widget de Inicio (cobros del mes). Lee el resumen que guarda la app en el App Group.
+  GestionApProWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Widget
+      - Compartido
+    info:
+      path: Config/Info-Widget.plist
+      properties:
+        CFBundleDisplayName: GestionAp
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Config/GestionApProWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.gestionap.GestionApPro]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gestionap.GestionApPro.Widget
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        SKIP_INSTALL: YES
   GestionApProTests:
     type: bundle.unit-test
     platform: iOS

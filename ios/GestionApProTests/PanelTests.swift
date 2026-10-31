@@ -109,4 +109,18 @@ struct FechasConZonaTests {
         #expect(r.acciones[1].tipo == .recordatorio)
         #expect(r.usadosHoy == 3)
     }
+
+    @Test("Widget: el resumen se guarda en el App Group, calcula el progreso y se borra al cerrar sesión")
+    func resumenWidget() throws {
+        ResumenWidget.borrar()
+        #expect(ResumenWidget.leer() == nil)
+        ResumenWidget(mes: "octubre", cobrado: 5730, esperado: 11460, pendientes: 10, incidenciasAbiertas: 12,
+                      actualizado: .now).guardar()
+        let leido = try #require(ResumenWidget.leer())
+        #expect(leido.mes == "octubre")
+        #expect(abs(leido.progreso - 0.5) < 0.001)
+        #expect(ResumenWidget(mes: "x", cobrado: 10, esperado: 0, pendientes: 0, incidenciasAbiertas: 0, actualizado: .now).progreso == 0)
+        ResumenWidget.borrar()
+        #expect(ResumenWidget.leer() == nil)
+    }
 }

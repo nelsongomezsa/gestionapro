@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 import Observation
 
 /// Estado de la sesión: token en el Keychain + usuario de GET /api/me.
@@ -80,8 +81,18 @@ final class SesionStore {
         if case .conectado = estado { estado = .conectado(usuario) }
     }
 
+    /// Envía a la API el token de push de este iPhone (si lo hay y hay sesión). Sin cuenta de pago de
+    /// Apple no habrá token y no pasa nada.
+    func registrarDispositivo() async {
+        guard case .conectado = estado, let token = UserDefaults.standard.string(forKey: DelegadoApp.claveToken) else { return }
+        _ = try? await api.enviar(.registrarDispositivo(token: token))
+    }
+
     func cerrarSesion() {
         tokens.borrar()
+        // Que el widget no siga enseñando los cobros de una sesión cerrada.
+        ResumenWidget.borrar()
+        WidgetCenter.shared.reloadAllTimelines()
         estado = .sinSesion
     }
 

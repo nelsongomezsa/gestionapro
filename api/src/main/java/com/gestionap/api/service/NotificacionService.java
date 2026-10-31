@@ -46,12 +46,13 @@ public class NotificacionService {
     private final HabitacionRepository habitaciones;
     private final InquilinoRepository inquilinos;
     private final UsuarioRepository usuarios;
+    private final PushService push;
     private final int diaLimite;
     private final int diasAviso;
 
     public NotificacionService(NotificacionRepository notificaciones, ContratoRepository contratos, PagoRepository pagos,
                                IncidenciaRepository incidencias, HabitacionRepository habitaciones,
-                               InquilinoRepository inquilinos, UsuarioRepository usuarios,
+                               InquilinoRepository inquilinos, UsuarioRepository usuarios, PushService push,
                                @Value("${gestionap.cobros.dia-limite:7}") int diaLimite,
                                @Value("${gestionap.cobros.dias-aviso:3}") int diasAviso) {
         this.notificaciones = notificaciones;
@@ -61,6 +62,7 @@ public class NotificacionService {
         this.habitaciones = habitaciones;
         this.inquilinos = inquilinos;
         this.usuarios = usuarios;
+        this.push = push;
         this.diaLimite = diaLimite;
         this.diasAviso = diasAviso;
     }
@@ -68,6 +70,12 @@ public class NotificacionService {
     /** Día del mes en que vence la renta (el límite si el mes es más corto). */
     public LocalDate vencimiento(YearMonth mes) {
         return mes.atDay(Math.min(diaLimite, mes.lengthOfMonth()));
+    }
+
+    /** Para la tarea diaria de push: genera los avisos de un usuario aunque no abra la app. */
+    @Transactional
+    public void generarPara(Usuario u, LocalDate hoy) {
+        generar(new UsuarioAutenticado(u.getId(), u.getEmail(), u.getNombre(), u.getRol()), hoy);
     }
 
     public int diasAviso() {
@@ -223,6 +231,7 @@ public class NotificacionService {
         n.setDescripcion(descripcion);
         n.setFecha(LocalDateTime.now());
         notificaciones.save(n);
+        push.enviar(idUsuario, titulo, descripcion);
     }
 
     /** Avisos que se dan una sola vez por referencia (uno por contrato y mes). */
@@ -236,6 +245,7 @@ public class NotificacionService {
         n.setDescripcion(descripcion);
         n.setFecha(LocalDateTime.now());
         notificaciones.save(n);
+        push.enviar(idUsuario, titulo, descripcion);
     }
 
     private static String hace(long dias) {

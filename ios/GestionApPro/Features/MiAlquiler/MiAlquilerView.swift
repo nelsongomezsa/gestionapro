@@ -128,7 +128,10 @@ struct MiAlquilerView: View {
         do {
             async let c = sesion.api.enviar(.contratos())
             async let p = sesion.api.enviar(.pagos())
-            estado = .cargado(try await (c, p))
+            let datos = try await (c, p)
+            estado = .cargado(datos)
+            if let activo = datos.0.first(where: \.activo) { await AvisosLocales.programarInquilino(renta: activo.precioMensual) }
+            await sesion.registrarDispositivo()
         } catch let e as APIError {
             if case .noAutorizado = e { return }
             if estado.valor == nil { estado = .error(e.localizedDescription) } else { error = e.localizedDescription }

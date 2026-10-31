@@ -3,7 +3,9 @@ import SwiftUI
 /// Login o pestañas según la sesión y el rol.
 struct RaizView: View {
     @Environment(SesionStore.self) private var sesion
+    @Environment(\.scenePhase) private var fase
     @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
+    @State private var bloqueo = BloqueoBiometrico()
 
     var body: some View {
         Group {
@@ -25,10 +27,20 @@ struct RaizView: View {
                 }
             case let .conectado(usuario):
                 PestanasView(usuario: usuario)
+                    .overlay {
+                        if bloqueo.bloqueado { PantallaBloqueo(bloqueo: bloqueo).transition(.opacity) }
+                    }
             }
         }
         .preferredColorScheme(apariencia.esquema)
-        .task { await sesion.restaurar() }
+        .task {
+            bloqueo.bloquearSiProcede()
+            await sesion.restaurar()
+        }
+        .onChange(of: fase) { _, nueva in
+            // Al volver de segundo plano se pide otra vez Face ID.
+            if nueva == .background { bloqueo.bloquearSiProcede() }
+        }
     }
 }
 

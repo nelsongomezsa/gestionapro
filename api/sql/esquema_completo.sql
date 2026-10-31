@@ -1,5 +1,5 @@
 -- =====================================================================
--- gestionapro-api · Esquema completo (escritorio + V1–V7), SIN datos.
+-- gestionapro-api · Esquema completo (escritorio + V1–V8), SIN datos.
 -- Para crear la base en un servidor nuevo (ver docs/DESPLIEGUE.md):
 --   mysql -h <host> -u <usuario> -p <base> < esquema_completo.sql
 -- Generado con mysqldump --no-data a partir de gestion_alquileres_pro (MariaDB 10.4).
@@ -386,3 +386,14 @@ CREATE TABLE `actividad` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+CREATE TABLE `dispositivos` (
+  `id_dispositivo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `token` varchar(200) NOT NULL,
+  `plataforma` varchar(10) NOT NULL DEFAULT 'IOS',
+  `fecha_alta` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_dispositivo`),
+  UNIQUE KEY `uk_dispositivos_token` (`token`),
+  KEY `fk_dispositivos_usuario` (`id_usuario`),
+  CONSTRAINT `fk_dispositivos_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `Usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;

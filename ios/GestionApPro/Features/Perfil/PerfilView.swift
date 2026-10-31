@@ -14,6 +14,9 @@ struct PerfilView: View {
     @State private var hoja: Hoja?
     @State private var resumen: Dashboard?
     @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
+    @AppStorage(BloqueoBiometrico.clave) private var entrarConFaceID = false
+    @AppStorage(AvisosLocales.clave) private var recordatorios = false
+    @State private var sinPermiso = false
 
     private enum Hoja: String, Identifiable {
         case editar, password, cobro
@@ -84,6 +87,41 @@ struct PerfilView: View {
                 }
                 .filaLista()
             }
+
+            Section {
+                Toggle("Recordatorios en este iPhone", isOn: $recordatorios)
+                    .accessibilityIdentifier("interruptorRecordatorios")
+                    .onChange(of: recordatorios) { _, activo in
+                        Task {
+                            if activo {
+                                if await AvisosLocales.activar() == false {
+                                    recordatorios = false
+                                    sinPermiso = true
+                                }
+                            } else {
+                                AvisosLocales.desactivar()
+                            }
+                        }
+                    }
+            } footer: {
+                Text(sinPermiso
+                     ? "Permite las notificaciones de GestionAp en los Ajustes del iPhone."
+                     : actual.rol.gestionaPisos
+                        ? "El día \(AvisosLocales.diaLimite + 1) de cada mes, revisar los cobros, y una semana antes de que termine un contrato."
+                        : "Tres días antes de que venza la renta de cada mes.")
+            }
+            .filaLista()
+
+            Section {
+                Toggle("Entrar con \(BloqueoBiometrico.biometria ?? "Face ID")", isOn: $entrarConFaceID)
+                    .disabled(BloqueoBiometrico.biometria == nil && !entrarConFaceID)
+                    .accessibilityIdentifier("interruptorFaceID")
+            } footer: {
+                Text(BloqueoBiometrico.biometria == nil
+                     ? "Configura Face ID en los Ajustes del iPhone para usarlo aquí."
+                     : "La app se bloquea al abrirla o al volver a ella, y se desbloquea con tu cara o el código del iPhone.")
+            }
+            .filaLista()
 
             Section {
                 Picker("Apariencia", selection: $apariencia) {

@@ -46,6 +46,13 @@ gestionap:
     # Asistente (fase 7). La clave va SOLO en la variable de entorno ANTHROPIC_API_KEY del servidor.
     modelo: claude-opus-5-5
     limite-diario: 40
+  push:
+    # APNs (notificaciones push). Vacío = desactivado. Necesita una cuenta de pago de Apple Developer.
+    clave: ${APNS_KEY_PATH:}
+    id-clave: ${APNS_KEY_ID:}
+    equipo: ${APNS_TEAM_ID:}
+    bundle: com.gestionap.GestionApPro
+    produccion: ${APNS_PRODUCCION:false}
   recordatorios:
     # Email de recordatorio a los inquilinos (solo si hay email configurado). "-" lo desactiva.
     cron: "0 0 9 * * *"

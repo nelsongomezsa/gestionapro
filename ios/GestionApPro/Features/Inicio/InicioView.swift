@@ -1,5 +1,6 @@
 import Charts
 import SwiftUI
+import WidgetKit
 
 /// Destinos que se abren desde Inicio (incluidos los de las notificaciones).
 enum DestinoInicio: Hashable {
@@ -213,6 +214,15 @@ struct InicioView: View {
         return nombre.isEmpty ? "Inicio" : "Hola, \(nombre)"
     }
 
+    /// Guarda el resumen del mes para el widget y le pide que se redibuje.
+    private func actualizarWidget(_ d: Dashboard) async {
+        let resumen = try? await sesion.api.enviar(.resumenPagos(mes: .actual))
+        ResumenWidget(mes: resumen?.nombreMes.components(separatedBy: " ").first ?? "este mes",
+                      cobrado: d.cobradoMes, esperado: d.esperadoMes, pendientes: resumen?.pendientes.count ?? 0,
+                      incidenciasAbiertas: d.incidenciasPendientes + d.incidenciasEnProceso, actualizado: .now).guardar()
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
     private func cargar() async {
         do {
             async let d = sesion.api.enviar(.dashboard)
@@ -220,6 +230,9 @@ struct InicioView: View {
             let (dashboard, total) = try await (d, n)
             withAnimation(Tema.Movimiento.suave) { estado = .cargado(dashboard) }
             noLeidas = total.total
+            await actualizarWidget(dashboard)
+            await AvisosLocales.programarPropietario(vencimientos: dashboard.proximosVencimientos)
+            await sesion.registrarDispositivo()
         } catch let e as APIError {
             if case .noAutorizado = e { return }
             if estado.valor == nil { estado = .error(e.localizedDescription) } else { error = e.localizedDescription }
