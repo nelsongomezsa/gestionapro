@@ -19,7 +19,7 @@ public record NotificacionResponse(
         @Schema(description = "Pantalla a la que lleva al tocarla (RutasNotificacion del escritorio), con el id concreto")
         Destino destino) {
 
-    /** pantalla: CONTRATO, INCIDENCIA, HABITACION o MENSAJES (id = contrato). */
+    /** pantalla: CONTRATO, INCIDENCIA, HABITACION, MENSAJES (id = contrato) o MENSAJES_INCIDENCIA (id = incidencia). */
     public record Destino(String pantalla, Integer id) {}
 
     private static final Pattern REFERENCIA = Pattern.compile(
@@ -35,8 +35,13 @@ public record NotificacionResponse(
     }
 
     /** Las referencias del escritorio llevan el id: "contrato_vence_12", "pago_pendiente_12_2026_10"... */
+    private static final Pattern MENSAJE_INCIDENCIA = Pattern.compile("^mensaje_\\d+_i(\\d+)");
+
     static Destino destino(String referencia) {
         if (referencia == null) return null;
+        // Mensajes sobre una incidencia: se abre su hilo, no el general del contrato.
+        Matcher incidencia = MENSAJE_INCIDENCIA.matcher(referencia);
+        if (incidencia.find()) return new Destino("MENSAJES_INCIDENCIA", Integer.valueOf(incidencia.group(1)));
         Matcher m = REFERENCIA.matcher(referencia);
         if (!m.find()) return null;
         String pantalla = switch (m.group(1)) {

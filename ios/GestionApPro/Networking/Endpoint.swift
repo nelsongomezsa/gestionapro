@@ -209,6 +209,18 @@ extension Endpoint where Respuesta == EstadoFirmas {
     static func firmas(contrato id: Int) -> Self { Endpoint(metodo: "GET", ruta: "/api/contratos/\(id)/firmas") }
 }
 
+// MARK: Conciliación bancaria
+
+extension Rutas {
+    static let analizarExtracto = "/api/conciliacion/analizar"
+}
+
+extension Endpoint where Respuesta == ConciliacionConfirmada {
+    static func confirmarConciliacion(_ req: ConfirmarConciliacion) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/conciliacion/confirmar", cuerpo: json(req))
+    }
+}
+
 // MARK: Gastos
 
 extension Rutas {

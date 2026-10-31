@@ -42,7 +42,7 @@ struct MiAlquilerView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                         }
-                        SeccionFirma(modelo: modeloFirmas, partes: [.arrendatario]) { Task { await abrirFirmado(c) } }
+                        SeccionFirma(modelo: modeloFirmas, idContrato: c.id, partes: [.arrendatario]) { Task { await abrirFirmado(c) } }
                         SeccionRenta(modelo: modeloRenta)
                         SeccionFianza(modelo: modeloFianza, idContrato: c.id)
                         Section {

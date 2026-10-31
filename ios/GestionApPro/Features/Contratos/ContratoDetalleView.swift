@@ -63,7 +63,7 @@ struct ContratoDetalleView: View {
 
                 SeccionFianza(modelo: modeloFianza, idContrato: c.id, editable: esGestor)
 
-                SeccionFirma(modelo: modeloFirmas, partes: esGestor ? ParteFirma.allCases : []) {
+                SeccionFirma(modelo: modeloFirmas, idContrato: c.id, partes: esGestor ? ParteFirma.allCases : []) {
                     Task { await abrirPDFFirmado(c) }
                 }
 

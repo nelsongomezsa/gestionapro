@@ -12,6 +12,7 @@ enum DestinoInicio: Hashable {
     case habitacion(Int)
     case incidencia(Int)
     case mensajes(Int)
+    case mensajesIncidencia(Int)
 }
 
 /// Inicio (Dashboard del escritorio): lo cobrado del mes como cifra principal, indicadores,
@@ -162,6 +163,7 @@ struct InicioView: View {
                 case let .inquilino(id): InquilinoFichaView(id: id)
                 case let .contrato(id): ContratoDetalleView(id: id)
                 case let .mensajes(id): ChatView(hilo: .contrato(id))
+                case let .mensajesIncidencia(id): ChatView(hilo: .incidencia(id))
                 case let .habitacion(id): HabitacionDestinoView(id: id)
                 case let .incidencia(id): IncidenciaDestinoView(id: id)
                 }

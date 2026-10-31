@@ -80,6 +80,10 @@ class MensajesFirmasIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.length()").value(1));
         mvc.perform(get("/api/conversaciones").header("Authorization", token("ana@test.com")))
                 .andExpect(jsonPath("$[0].asunto").value(org.hamcrest.Matchers.startsWith("Incidencia: Gotera")));
+        // El aviso al propietario lleva a ese hilo de la incidencia.
+        mvc.perform(get("/api/notificaciones").header("Authorization", token("ana@test.com")))
+                .andExpect(jsonPath("$[?(@.tipo == 'mensaje')].destino.pantalla").value("MENSAJES_INCIDENCIA"))
+                .andExpect(jsonPath("$[?(@.tipo == 'mensaje')].destino.id").value(gotera.getId()));
         // Lo mismo desde la incidencia, sin saber el contrato.
         mvc.perform(get("/api/incidencias/" + gotera.getId() + "/mensajes").header("Authorization", token("ana@test.com")))
                 .andExpect(jsonPath("$.length()").value(1))

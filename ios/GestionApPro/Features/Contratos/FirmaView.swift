@@ -4,13 +4,16 @@ import SwiftUI
 @MainActor @Observable
 final class ModeloFirmas {
     var estado: EstadoFirmas?
+    /// La carga falló: se muestra con un botón para reintentar (en vez de quedarse cargando).
+    var fallo: String?
     var firmando: ParteFirma?
     var error: String?
 
     func cargar(contrato id: Int, con api: APIClient) async {
+        fallo = nil
         do { estado = try await api.enviar(.firmas(contrato: id)) }
         catch .noAutorizado {}
-        catch { self.error = error.localizedDescription }
+        catch { fallo = error.localizedDescription }
     }
 
     func firmada(_ parte: ParteFirma) -> EstadoFirmas.Firma? {
@@ -20,7 +23,9 @@ final class ModeloFirmas {
 
 /// Sección "Firma": quién ha firmado, botones para firmar y el PDF firmado.
 struct SeccionFirma: View {
+    @Environment(SesionStore.self) private var sesion
     let modelo: ModeloFirmas
+    let idContrato: Int
     /// El propietario puede recoger las dos firmas en su iPhone si firman en persona.
     let partes: [ParteFirma]
     let abrirPDF: () -> Void
@@ -44,6 +49,9 @@ struct SeccionFirma: View {
                 if !e.firmas.isEmpty {
                     Button(action: abrirPDF) { Label("Contrato firmado (PDF)", systemImage: "doc.richtext") }
                 }
+            } else if let fallo = modelo.fallo {
+                Label(fallo, systemImage: "exclamationmark.triangle").foregroundStyle(Tema.Color.negativo)
+                Button("Reintentar") { Task { await modelo.cargar(contrato: idContrato, con: sesion.api) } }
             } else {
                 ProgressView().frame(maxWidth: .infinity)
             }

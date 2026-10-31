@@ -1,0 +1,8 @@
+{
+  "propuestas": [
+    {"indice": 0, "movimiento": {"fecha": "2026-10-02", "concepto": "TRANSFERENCIA DE NATALIA CASTRO LOPEZ ALQUILER", "importe": 450.00, "saldo": null},
+     "propuesta": {"idContrato": 20, "inquilino": "Natalia Castro López", "numeroHabitacion": 1, "direccion": "Gran Vía 18, 5º C", "renta": 450.00,
+                   "puntuacion": 100, "confianza": "ALTA", "yaRegistrado": false, "preseleccionada": true}}
+  ],
+  "sinPropuesta": [{"fecha": "2026-10-05", "concepto": "DEVOLUCION RECIBO", "importe": 12.40, "saldo": null}]
+}

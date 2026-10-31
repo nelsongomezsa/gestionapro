@@ -212,6 +212,8 @@ public class NotificacionService {
 
     /** Para los mensajes: un aviso sin leer por conversación; leído, el siguiente mensaje avisa de nuevo. */
     public void avisarSinRepetirMientrasNoLeido(Integer idUsuario, String referencia, String tipo, String titulo, String descripcion) {
+        // Dos mensajes a la vez no pueden crear dos avisos de la misma conversación.
+        usuarios.bloquear(idUsuario);
         if (notificaciones.existsByIdUsuarioAndReferenciaAndLeidaFalse(idUsuario, referencia)) return;
         Notificacion n = new Notificacion();
         n.setIdUsuario(idUsuario);

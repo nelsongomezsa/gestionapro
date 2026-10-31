@@ -113,6 +113,7 @@ struct NotificacionesView: View {
         case "INCIDENCIA": .incidencia(d.id)
         case "HABITACION": .habitacion(d.id)
         case "MENSAJES": .mensajes(d.id)
+        case "MENSAJES_INCIDENCIA": .mensajesIncidencia(d.id)
         default: nil
         }
     }

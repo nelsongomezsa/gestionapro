@@ -10,6 +10,7 @@ struct CobrosView: View {
     @State private var aviso: String?
     @State private var faltanDatos: Pago?
     @State private var datosCobro = false
+    @State private var conciliando = false
 
     var body: some View {
         @Bindable var vm = vm
@@ -99,6 +100,10 @@ struct CobrosView: View {
                     Button("Registrar pago", systemImage: "plus") { nuevoPago = PagoPrellenado(idContrato: nil, importe: nil) }
                 }
                 ToolbarItem(placement: .secondaryAction) {
+                    Button("Conciliar con el banco", systemImage: "building.columns") { conciliando = true }
+                        .accessibilityIdentifier("botonConciliar")
+                }
+                ToolbarItem(placement: .secondaryAction) {
                     Picker("Inquilino", selection: $vm.filtroInquilino) {
                         Text("Todos los inquilinos").tag(Int?.none)
                         ForEach(vm.inquilinosDelMes, id: \.id) { Text($0.nombre).tag(Int?.some($0.id)) }
@@ -107,6 +112,9 @@ struct CobrosView: View {
             }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
+            .sheet(isPresented: $conciliando) {
+                NavigationStack { ConciliacionView { Task { await vm.cargar(con: sesion.api) } } }
+            }
             .sheet(item: $nuevoPago) { p in
                 PagoFormView(idContrato: p.idContrato, importe: p.importe) { _ in Task { await vm.cargar(con: sesion.api) } }
             }

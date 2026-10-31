@@ -993,6 +993,65 @@ extension CapturasUITests {
             ri.capturar("08-inventario-final")
         }
     }
+    @MainActor
+    func testFase6() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Cobros")
+        // Las acciones secundarias van en el botón "•••" de la barra (el último).
+        let barra = r.app.navigationBars["Cobros"]
+        r.esperar(barra)
+        barra.buttons.element(boundBy: barra.buttons.count - 1).tap()
+        r.pausa(1)
+        r.app.buttons["Conciliar con el banco"].firstMatch.tap()
+        r.esperar(r.app.navigationBars["Conciliar con el banco"])
+        r.pausa(1)
+        r.capturar("01-conciliacion")
+        r.app.buttons["Cerrar"].tap()
+
+        r.pestana("Más")
+        r.app.buttons["Contratos"].tap()
+        let natalia = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Natalia")).firstMatch
+        r.desplazarHasta(natalia).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.pausa(2)
+        let firmar = r.desplazarHasta(r.app.buttons["botonFirmarArrendatario"])
+        r.capturar("02-contrato-firma")
+        firmar.tap()
+        let lienzo = r.app.descendants(matching: .any).matching(identifier: "lienzoFirma").firstMatch
+        r.esperar(lienzo)
+        let a = lienzo.coordinate(withNormalizedOffset: CGVector(dx: 0.15, dy: 0.6))
+        let b = lienzo.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.3))
+        let c = lienzo.coordinate(withNormalizedOffset: CGVector(dx: 0.8, dy: 0.65))
+        a.press(forDuration: 0.1, thenDragTo: b)
+        b.press(forDuration: 0.1, thenDragTo: c)
+        r.pausa(1)
+        r.capturar("03-panel-firma")
+        r.app.buttons["Firmar"].tap()
+        r.pausa(2)
+        r.capturar("04-contrato-firmado-parte")
+        r.desplazarHasta(r.app.buttons["botonMensajesContrato"]).tap()
+        let campo = r.app.descendants(matching: .any).matching(identifier: "campoMensaje").firstMatch
+        r.esperar(campo)
+        campo.tap()
+        campo.typeText("Hola, Natalia: el viernes pasa el fontanero por la mañana.")
+        r.app.buttons["botonEnviarMensaje"].tap()
+        r.pausa(2)
+        r.capturar("05-chat-propietario")
+
+        let env = ProcessInfo.processInfo.environment
+        if let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty, let password = env["CAPTURAS_INQUILINO_PASSWORD"] {
+            let ri = r.relanzar(email: email, password: password)
+            ri.esperar(ri.app.navigationBars["Mi alquiler"])
+            ri.pestana("Mensajes")
+            ri.esperar(ri.app.buttons["filaConversacion"].firstMatch)
+            ri.pausa(1)
+            ri.capturar("06-bandeja-inquilino")
+            ri.app.buttons["filaConversacion"].firstMatch.tap()
+            ri.pausa(2)
+            ri.capturar("07-chat-inquilino")
+        }
+    }
 }
 
 @MainActor

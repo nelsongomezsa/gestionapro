@@ -95,19 +95,21 @@ public class FirmaService {
         }
         String huella = huella(c);
         var anterior = firmas.findByContratoIdOrderByFechaAsc(idContrato).stream().filter(f -> f.getParte() == parte).findFirst();
-        if (anterior.isPresent()) {
-            if (anterior.get().getHuellaPdf().equals(huella)) {
-                throw ApiException.conflicto("YA_FIRMADO", "Esta parte ya ha firmado el contrato");
-            }
-            // El contrato cambió (p. ej., la renta): la firma anterior ya no vale y se sustituye.
-            archivos.borrar(anterior.get().getImagenRuta());
-            firmas.delete(anterior.get());
-            firmas.flush();
+        if (anterior.isPresent() && anterior.get().getHuellaPdf().equals(huella)) {
+            throw ApiException.conflicto("YA_FIRMADO", "Esta parte ya ha firmado el contrato");
         }
+        // Primero se guarda y valida la imagen nueva; la anterior solo se borra cuando la nueva ya está en la base.
         var guardada = archivos.guardar("firmas", imagen);
         if (!guardada.tipo().equals("image/png")) {
             archivos.borrar(guardada.ruta());
             throw ApiException.badRequest("TIPO_NO_ADMITIDO", "La firma se envía como imagen PNG");
+        }
+        String imagenAnterior = null;
+        if (anterior.isPresent()) {
+            // El contrato cambió (p. ej., la renta): la firma anterior ya no vale y se sustituye.
+            imagenAnterior = anterior.get().getImagenRuta();
+            firmas.delete(anterior.get());
+            firmas.flush();
         }
         FirmaContrato f = new FirmaContrato();
         f.setContrato(c);
@@ -130,6 +132,7 @@ public class FirmaService {
             archivos.borrar(guardada.ruta());
             throw ApiException.conflicto("YA_FIRMADO", "Esta parte ya ha firmado el contrato");
         }
+        if (imagenAnterior != null) archivos.borrar(imagenAnterior);
         actividad.registrar(actor.id(), "FIRMAR_CONTRATO", "Contrato #" + idContrato + " · " + parte.name().toLowerCase());
         return estado(idContrato, actor);
     }

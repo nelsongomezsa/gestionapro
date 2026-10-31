@@ -113,4 +113,13 @@ struct APIClientDescargasTests {
         #expect(nombreMes(p.periodoIndice) == "septiembre de 2026")
         #expect(nombreMes(nil) == nil)
     }
+
+    @Test("Conciliación: propuesta con confianza alta preseleccionada y un ingreso sin contrato")
+    func conciliacion() throws {
+        let a = try Fixture.decodificar(AnalisisConciliacion.self, de: "conciliacion")
+        #expect(a.propuestas.count == 1)
+        #expect(a.propuestas[0].propuesta.confianza == "ALTA")
+        #expect(a.propuestas[0].propuesta.preseleccionada)
+        #expect(a.sinPropuesta.first?.importe == Decimal(string: "12.4"))
+    }
 }
