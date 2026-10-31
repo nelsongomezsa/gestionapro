@@ -1,5 +1,7 @@
 package com.gestionap.api.web;
 
+import jakarta.validation.Valid;
+
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.ConciliacionService;
 import com.gestionap.api.web.dto.ConciliacionDtos;
@@ -36,7 +38,7 @@ public class ConciliacionController {
 
     @Operation(summary = "Confirma los pagos seleccionados y emite sus recibos")
     @PostMapping("/confirmar")
-    public ConciliacionDtos.ConfirmarResponse confirmar(@RequestBody ConciliacionDtos.ConfirmarRequest request,
+    public ConciliacionDtos.ConfirmarResponse confirmar(@Valid @RequestBody ConciliacionDtos.ConfirmarRequest request,
                                                          @AuthenticationPrincipal UsuarioAutenticado actor) {
         return new ConciliacionDtos.ConfirmarResponse(conciliacion.confirmar(request.pagos(), actor));
     }

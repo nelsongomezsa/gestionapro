@@ -57,7 +57,11 @@ class DispositivosPushTest extends IntegrationTest {
         mvc.perform(post("/api/dispositivos").header("Authorization", token("ana@test.com"))
                         .contentType(MediaType.APPLICATION_JSON).content(json(Map.of("token", "no-es-un-token"))))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.codigo").value("TOKEN_NO_VALIDO"));
+                .andExpect(jsonPath("$.codigo").value("VALIDACION"));
+        mvc.perform(post("/api/dispositivos").header("Authorization", token("ana@test.com"))
+                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.codigo").value("VALIDACION"));
     }
 
     @Test

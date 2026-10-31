@@ -76,6 +76,26 @@ class ConciliacionIntegrationTest extends IntegrationTest {
                 .andExpect(status().isConflict());
     }
 
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {
+            "{}",
+            "{\"pagos\":[]}",
+            "{\"pagos\":[null]}",
+            "{\"pagos\":[{\"fecha\":\"2026-01-01\",\"importe\":\"450.00\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"importe\":\"450.00\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"fecha\":\"2026-01-01\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"fecha\":\"2026-01-01\",\"importe\":\"0\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"fecha\":\"2026-01-01\",\"importe\":\"-450.00\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"fecha\":\"2026-01-01\",\"importe\":\"450.001\"}]}",
+            "{\"pagos\":[{\"idContrato\":ID,\"fecha\":\"2999-01-01\",\"importe\":\"450.00\"}]}"})
+    void confirmarConDatosNoValidos_es400ConMensaje_nunca500(String cuerpo) throws Exception {
+        mvc.perform(post("/api/conciliacion/confirmar").header("Authorization", token("ana@test.com"))
+                        .contentType(MediaType.APPLICATION_JSON).content(cuerpo.replace("ID", contrato.getId().toString())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.codigo").value("VALIDACION"))
+                .andExpect(jsonPath("$.mensaje").isNotEmpty());
+    }
+
     @Test
     void inquilinoNoPuedeAnalizar() throws Exception {
         contrato.getInquilino().setUsuario(datos.usuario("lucia@test.com", Rol.INQUILINO));

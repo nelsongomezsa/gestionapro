@@ -1,5 +1,9 @@
 package com.gestionap.api.web;
 
+import jakarta.validation.constraints.Pattern;
+
+import jakarta.validation.Valid;
+
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.PushService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/dispositivos")
 public class DispositivoController {
 
-    public record Registro(@NotBlank String token) {}
+    /** Token de APNs: hexadecimal, 32 a 200 caracteres. */
+    public record Registro(@NotBlank @Pattern(regexp = "[0-9a-fA-F]{32,200}", message = "token de dispositivo no válido") String token) {}
 
     private final PushService push;
 
@@ -25,7 +30,7 @@ public class DispositivoController {
     @Operation(summary = "Registra el token de APNs de este iPhone para el usuario")
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void registrar(@RequestBody Registro r, @AuthenticationPrincipal UsuarioAutenticado actor) {
+    public void registrar(@Valid @RequestBody Registro r, @AuthenticationPrincipal UsuarioAutenticado actor) {
         push.registrar(actor.id(), r.token());
     }
 
