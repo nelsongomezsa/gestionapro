@@ -6,10 +6,10 @@
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)
 ![Swift](https://img.shields.io/badge/Swift%206-SwiftUI%20·%20iOS%2017-F05138?logo=swift&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-199%20API%20·%2079%20iOS-2ea44f)
+![Tests](https://img.shields.io/badge/tests-220%20API%20·%2081%20iOS-2ea44f)
 ![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-yellow)
 
-> **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing room rentals in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 199 API tests and 79 iOS tests.
+> **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing room rentals in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
 
 <p>
 <img src="docs/capturas/destacadas/oscuro/02-inicio.png" width="180" alt="Inicio en modo oscuro">
@@ -148,9 +148,9 @@ Están razonadas en [`docs/DECISIONES.md`](docs/DECISIONES.md). Las principales:
 ## Tests
 
 ```bash
-cd api && mvn test            # 199 tests en H2, sin MariaDB ni red
+cd api && mvn test            # 220 tests en H2, sin MariaDB ni red
 cd ios && xcodebuild test -scheme GestionApPro -destination 'platform=iOS Simulator,name=iPhone 18 Pro' \
-  -only-testing:GestionApProTests   # 79 tests
+  -only-testing:GestionApProTests   # 81 tests
 ```
 
 - **API:** integración con MockMvc de cada módulo (roles y aislamiento entre propietarios), reglas de
@@ -186,4 +186,4 @@ Código propio bajo licencia [MIT](LICENSE). La API usa iText 7, que es AGPL: al
 
 ## Autor
 
-**Nelson Gómez Sánchez** · Estudiante de DAM y del Máster en Data & Analytics · [nelsongomezsa.github.io](https://nelsongomezsa.github.io) · [LinkedIn](https://www.linkedin.com/in/nelson-gómez-sánchez)
+**Nelson Gómez Sánchez** · Desarrollo de software y datos · Java, SQL y Python · Buscando prácticas en IT en Madrid desde febrero de 2027 · [nelsongomezsa.github.io](https://nelsongomezsa.github.io) · [LinkedIn](https://www.linkedin.com/in/nelson-gómez-sánchez)

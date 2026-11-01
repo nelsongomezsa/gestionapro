@@ -27,7 +27,7 @@ Los dos son **productos en producción**, con miles de usuarios, soporte, web y 
   amortización del 3 % y del mobiliario), en PDF y CSV.
 - **Asistente con IA** que consulta la cartera y propone acciones que confirma el usuario. No he visto nada
   equivalente en sus fichas.
-- **Calidad técnica comprobable:** 199 tests en la API y 79 en iOS, control de acceso probado módulo a
+- **Calidad técnica comprobable:** 220 tests en la API y 81 en iOS, control de acceso probado módulo a
   módulo, diseño accesible en modo claro y oscuro.
 
 ## Dónde está por detrás (lo que faltaría para competir)

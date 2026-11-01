@@ -27,8 +27,8 @@ producto comercial (comparable a Rentila o Rentger).
 
 ## 3. Qué construí
 
-- **API REST** (Spring Boot 3.5, Java 21): 100 endpoints, JWT y tres roles, con 199 tests automáticos.
-- **App iOS** nativa (SwiftUI, Swift 6) para propietario e inquilino, con un sistema de diseño propio y 79 tests.
+- **API REST** (Spring Boot 3.5, Java 21): 100 endpoints, JWT y tres roles, con 220 tests automáticos.
+- **App iOS** nativa (SwiftUI, Swift 6) para propietario e inquilino, con un sistema de diseño propio y 81 tests.
 - Funciones nuevas sobre lo que ya hacía el escritorio:
   - Recibos numerados y fianzas.
   - Actualización de renta con índices oficiales.
@@ -101,7 +101,7 @@ crear cuentas ni gastar.
 | Indicador | Valor |
 |---|---|
 | Código | ≈ 11.000 líneas de Java y ≈ 11.500 de Swift |
-| Tests | 199 en la API y 79 en iOS, en CI con GitHub Actions |
+| Tests | 220 en la API y 81 en iOS, en CI con GitHub Actions |
 | Migraciones de base | 8, todas aditivas; el escritorio sigue funcionando |
 | Repositorio | Capturas de trabajo fuera del repositorio: los archivos versionados pasaron de 18,5 a 5,6 MB |
 | Coste de la IA | ≈ 0,002 $ por consulta con Claude Haiku 5.5 (estimación con precios oficiales) |
