@@ -44,3 +44,19 @@ struct AccesosTests {
         #expect(!sin.contains("contexto"))
     }
 }
+
+@MainActor
+struct ProductoTests {
+    @Test func accionPendiente_seConsumeUnaSolaVez() {
+        let a = AccionPendiente()
+        a.acceso = .pago
+        #expect(a.tomar() == .pago)
+        #expect(a.tomar() == nil)
+    }
+
+    @Test func bienvenida_soloLaPrimeraVez_yNuncaEnLosTestsDeUI() {
+        #expect(BienvenidaView.debeMostrarse(vista: false, argumentos: []))
+        #expect(!BienvenidaView.debeMostrarse(vista: true, argumentos: []))
+        #expect(!BienvenidaView.debeMostrarse(vista: false, argumentos: ["-reiniciarSesion"]))
+    }
+}

@@ -4,6 +4,13 @@
 <dict>
 	<key>APIBaseURL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>FondoArranque</string>
+		<key>UIImageName</key>
+		<string>LogoArranque</string>
+	</dict>
 	<!-- SOLO Debug: permite HTTP a la red local (localhost:8080 desde el simulador).
 	     No cubre dominios de Internet; Release no lleva esta clave. -->
 	<key>NSAppTransportSecurity</key>

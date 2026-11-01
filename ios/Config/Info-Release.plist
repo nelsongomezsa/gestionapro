@@ -4,5 +4,12 @@
 <dict>
 	<key>APIBaseURL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>FondoArranque</string>
+		<key>UIImageName</key>
+		<string>LogoArranque</string>
+	</dict>
 </dict>
 </plist>

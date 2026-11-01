@@ -56,6 +56,9 @@ struct PestanasView: View {
     @State private var pantalla = PantallaActual()
     @State private var abierto: AccesoRapido?
     @State private var chat: Conversacion?
+    @State private var pendiente = AccionPendiente.compartida
+    @AppStorage(BienvenidaView.clave) private var bienvenidaVista = false
+    @State private var bienvenida = false
 
     var body: some View {
         Group {
@@ -81,6 +84,13 @@ struct PestanasView: View {
                 .contentMargins(.bottom, 64, for: .scrollContent)
                 .overlay { BurbujaAsistente(contexto: pantalla.contexto) { abierto = .asistente } }
                 .sheet(item: $abierto, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { hoja($0) }
+                // Atajos de Siri y Spotlight: abren su hoja al llegar (también si la app estaba cerrada).
+                .onChange(of: pendiente.acceso) { _, nuevo in if nuevo != nil { abierto = pendiente.tomar() } }
+                .onAppear {
+                    if let a = pendiente.tomar() { abierto = a }
+                    else if BienvenidaView.debeMostrarse(vista: bienvenidaVista) { bienvenida = true }
+                }
+                .sheet(isPresented: $bienvenida, onDismiss: { bienvenidaVista = true }) { BienvenidaView() }
             } else {
                 TabView {
                     MiAlquilerView()
