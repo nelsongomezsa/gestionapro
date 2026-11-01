@@ -10,10 +10,17 @@ struct IncidenciasView: View {
     @State private var paraBorrar: Incidencia?
     @State private var error: String?
 
+    /// En su propia pestaña lleva su pila; dentro de Más usa la de Más.
+    var enPila = true
+
     private var gestiona: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
     var body: some View {
-        NavigationStack {
+        if enPila { NavigationStack { contenido } } else { contenido }
+    }
+
+    private var contenido: some View {
+        Group {
             VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { lista in
                 let visibles = filtro == nil ? lista : lista.filter { $0.estado == filtro }
                 List {

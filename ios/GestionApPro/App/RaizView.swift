@@ -60,51 +60,69 @@ struct PestanasView: View {
     @AppStorage(BienvenidaView.clave) private var bienvenidaVista = false
     @State private var bienvenida = false
 
+    /// Pestaña elegida (el «+» no es una pestaña: abre el menú de crear).
+    @State private var seleccion: Pestana = .inicio
+    @State private var creando = false
+    @AppStorage(Preferencias.pestanaInicio) private var pestanaInicio = Pestana.inicio.rawValue
+
+    /// Contador por pestaña para volver a su raíz al pulsarla otra vez (se recrea su pila).
+    @State private var reinicios: [Pestana: Int] = [:]
+
+    private var items: [ItemPestana] {
+        if usuario.rol.gestionaPisos {
+            [ItemPestana(pestana: .inicio, titulo: "Inicio", nombre: "Inicio", icono: "house"),
+             ItemPestana(pestana: .pisos, titulo: "Pisos", nombre: "Pisos", icono: "building.2"),
+             ItemPestana(pestana: .cobros, titulo: "Cobros", nombre: "Cobros", icono: "eurosign.circle"),
+             ItemPestana(pestana: .mensajes, titulo: "Mensajes", nombre: "Mensajes", icono: "bubble.left.and.bubble.right", globo: buzon.sinLeer),
+             ItemPestana(pestana: .mas, titulo: "Más", nombre: "Más", icono: "ellipsis.circle")]
+        } else {
+            [ItemPestana(pestana: .alquiler, titulo: "Mi alquiler", nombre: "Mi alquiler", icono: "key"),
+             ItemPestana(pestana: .incidencias, titulo: "Incidencias", nombre: "Incidencias", icono: "wrench.and.screwdriver"),
+             ItemPestana(pestana: .mensajes, titulo: "Mensajes", nombre: "Mensajes", icono: "bubble.left.and.bubble.right", globo: buzon.sinLeer),
+             ItemPestana(pestana: .perfil, titulo: "Perfil", nombre: "Perfil", icono: "person.crop.circle")]
+        }
+    }
+
     var body: some View {
-        Group {
-            if usuario.rol.gestionaPisos {
-                TabView {
-                    InicioView().tabItem { Label("Inicio", systemImage: "house") }
-                    PisosListaView().tabItem { Label("Pisos", systemImage: "building.2") }
-                    CobrosView().tabItem { Label("Cobros", systemImage: "eurosign.circle") }
-                    IncidenciasView().tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
-                    MasView(usuario: usuario).tabItem { Label("Más", systemImage: "ellipsis.circle") }
-                        .badge(buzon.sinLeer)
-                }
-                // Barra propia sobre las pestañas (no `tabViewBottomAccessory`: con él, tras cerrar una hoja
-                // abierta desde una pestaña, la navegación de esa pestaña dejaba de responder).
-                .overlay(alignment: .bottom) {
-                    BarraAccesos(abierto: $abierto)
-                        .padding(.horizontal, Tema.Espacio.s)
-                        .fondoCristal(en: .capsule, interactivo: false)
-                        .padding(.horizontal, Tema.Espacio.m + 4)
-                        .padding(.bottom, 62)
-                }
-                // Las listas dejan sitio al final para que la barra no tape la última fila.
-                .contentMargins(.bottom, 64, for: .scrollContent)
-                .overlay { BurbujaAsistente(contexto: pantalla.contexto) { abierto = .asistente } }
-                .sheet(item: $abierto, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { hoja($0) }
-                // Atajos de Siri y Spotlight: abren su hoja al llegar (también si la app estaba cerrada).
-                .onChange(of: pendiente.acceso) { _, nuevo in if nuevo != nil { abierto = pendiente.tomar() } }
-                .onAppear {
-                    if let a = pendiente.tomar() { abierto = a }
-                    else if BienvenidaView.debeMostrarse(vista: bienvenidaVista) { bienvenida = true }
-                }
-                .sheet(isPresented: $bienvenida, onDismiss: { bienvenidaVista = true }) { BienvenidaView() }
-            } else {
-                TabView {
-                    MiAlquilerView()
-                        .tabItem { Label("Mi alquiler", systemImage: "key") }
-                    IncidenciasView()
-                        .tabItem { Label("Incidencias", systemImage: "wrench.and.screwdriver") }
-                    NavigationStack { ConversacionesView() }
-                        .tabItem { Label("Mensajes", systemImage: "bubble.left.and.bubble.right") }
-                        .badge(buzon.sinLeer)
-                    NavigationStack { PerfilView(usuario: usuario) }
-                        .tabItem { Label("Perfil", systemImage: "person.crop.circle") }
-                }
+        TabView(selection: $seleccion) {
+            ForEach(items) { item in
+                contenido(de: item.pestana)
+                    .id("\(item.pestana.rawValue)-\(reinicios[item.pestana, default: 0])")
+                    // La barra del sistema se oculta: solo hay una fila de controles, la propia.
+                    .toolbar(.hidden, for: .tabBar)
+                    // Hueco invisible del alto de la barra: el último elemento de cada lista queda a la vista.
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        Color.clear.frame(height: pantalla.sinBarra > 0 ? 0 : BarraPestanas.alto + 6)
+                    }
+                    .tag(item.pestana)
             }
         }
+        .overlay(alignment: .bottom) {
+            if pantalla.sinBarra == 0 {
+                BarraPestanas(items: items, seleccion: $seleccion,
+                              repetir: { reinicios[$0, default: 0] += 1 },
+                              crear: { creando = true })
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(Tema.Movimiento.suave, value: pantalla.sinBarra == 0)
+        .onAppear {
+            let inicial = Pestana(rawValue: pestanaInicio) ?? .inicio
+            seleccion = Pestana.de(inicial, gestiona: usuario.rol.gestionaPisos)
+            if let a = pendiente.tomar() { abierto = a }
+            else if usuario.rol.gestionaPisos, BienvenidaView.debeMostrarse(vista: bienvenidaVista) { bienvenida = true }
+        }
+        .sheet(isPresented: $creando) {
+            MenuCrear(opciones: usuario.rol.gestionaPisos ? [.pago, .incidencia, .gasto, .mensajeNuevo] : [.incidencia, .mensajeNuevo]) { o in
+                creando = false
+                // Tras cerrar el menú, se abre la acción elegida.
+                Task { try? await Task.sleep(for: .milliseconds(350)); abierto = o }
+            }
+        }
+        .sheet(item: $abierto, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { hoja($0) }
+        // Atajos de Siri y Spotlight: abren su hoja al llegar (también si la app estaba cerrada).
+        .onChange(of: pendiente.acceso) { _, nuevo in if nuevo != nil { abierto = pendiente.tomar() } }
+        .sheet(isPresented: $bienvenida, onDismiss: { bienvenidaVista = true }) { BienvenidaView() }
         .environment(buzon)
         .environment(pantalla)
         .overlay(alignment: .top) {
@@ -122,7 +140,7 @@ struct PestanasView: View {
         .animation(Tema.Movimiento.suave, value: buzon.nuevo?.id)
         .sheet(item: $chat, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { c in
             NavigationStack {
-                ChatView(hilo: c.idIncidencia.map { .incidencia($0) } ?? .contrato(c.idContrato))
+                ChatView(hilo: c.idIncidencia.map { .incidencia($0) } ?? .contrato(c.idContrato), titulo: c.con)
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = nil } } }
             }
             .presentationDetents([.medium, .large])
@@ -134,6 +152,21 @@ struct PestanasView: View {
                 await buzon.actualizar(con: sesion.api)
                 try? await Task.sleep(for: .seconds(60))
             }
+        }
+    }
+
+    @ViewBuilder
+    private func contenido(de pestana: Pestana) -> some View {
+        switch pestana {
+        case .inicio: InicioView()
+        case .pisos: PisosListaView()
+        case .cobros: CobrosView()
+        case .mensajes: NavigationStack { ConversacionesView() }
+        case .mas: MasView(usuario: usuario)
+        case .alquiler: MiAlquilerView()
+        case .incidencias: IncidenciasView()
+        case .perfil: NavigationStack { PerfilView(usuario: usuario) }
+        case .nuevo: EmptyView()
         }
     }
 
@@ -151,6 +184,15 @@ struct PestanasView: View {
                 ConversacionesView()
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
             }
+        case .mensajeNuevo:
+            if usuario.rol.gestionaPisos {
+                NuevoMensajeView()
+            } else {
+                NavigationStack {
+                    ConversacionesView()
+                        .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
+                }
+            }
         case .asistente:
             NavigationStack {
                 AsistenteView(contexto: pantalla.contexto)
@@ -159,4 +201,21 @@ struct PestanasView: View {
             .presentationDetents([.medium, .large])
         }
     }
+}
+
+/// Pestañas de la app. "nuevo" es el botón «+» (no se queda seleccionado).
+enum Pestana: String, CaseIterable, Identifiable {
+    case inicio, pisos, cobros, mensajes, mas, alquiler, incidencias, perfil, nuevo
+    var id: String { rawValue }
+
+    /// Pestaña de inicio válida para el rol (la del otro rol cae en la primera).
+    static func de(_ p: Pestana, gestiona: Bool) -> Pestana {
+        let validas: [Pestana] = gestiona ? [.inicio, .pisos, .cobros, .mensajes, .mas] : [.alquiler, .incidencias, .mensajes, .perfil]
+        return validas.contains(p) ? p : validas[0]
+    }
+}
+
+/// Claves de las preferencias que se guardan en el iPhone.
+enum Preferencias {
+    static let pestanaInicio = "ajustes.pestanaInicio"
 }

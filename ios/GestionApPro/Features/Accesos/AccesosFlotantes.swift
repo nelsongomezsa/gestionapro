@@ -1,104 +1,98 @@
 import SwiftUI
 
-/// Acciones que se abren desde los accesos flotantes.
+/// Lo que se crea desde el botón «+» (y desde Siri), más el panel del asistente.
 enum AccesoRapido: String, Identifiable {
-    case pago, incidencia, gasto, mensajes, asistente
+    case pago, incidencia, gasto, mensajeNuevo, mensajes, asistente
     var id: String { rawValue }
+
+    var titulo: LocalizedStringKey {
+        switch self {
+        case .pago: "Cobro"
+        case .incidencia: "Incidencia"
+        case .gasto: "Gasto"
+        case .mensajeNuevo: "Mensaje nuevo"
+        case .mensajes: "Mensajes"
+        case .asistente: "Asistente"
+        }
+    }
+
+    var icono: String {
+        switch self {
+        case .pago: "eurosign.circle"
+        case .incidencia: "wrench.and.screwdriver"
+        case .gasto: "cart"
+        case .mensajeNuevo: "square.and.pencil"
+        case .mensajes: "bubble.left.and.bubble.right"
+        case .asistente: "sparkles"
+        }
+    }
 }
 
-/// Barra de accesos rápidos sobre la barra de pestañas (accesorio de iOS 26: cristal fundido con
-/// la barra, sin tapar el contenido): Mensajes con su contador, registrar pago, incidencia y gasto.
-struct BarraAccesos: View {
-    @Environment(BuzonMensajes.self) private var buzon
-    @Binding var abierto: AccesoRapido?
+/// Hoja del botón «+» (a la derecha de la barra de pestañas): lo que más se crea, a un toque.
+struct MenuCrear: View {
+    let opciones: [AccesoRapido]
+    let elegir: (AccesoRapido) -> Void
 
     var body: some View {
-        HStack(spacing: 0) {
-            boton("Mensajes", icono: "bubble.left.and.bubble.right", acceso: .mensajes, id: "accesoMensajes")
-                .overlay(alignment: .top) {
-                    if buzon.sinLeer > 0 {
-                        Text(buzon.sinLeer > 99 ? "99+" : "\(buzon.sinLeer)")
-                            .font(.caption2.weight(.bold)).monospacedDigit()
-                            .foregroundStyle(.white)
-                            .padding(.horizontal, 5).padding(.vertical, 1)
-                            .background(Tema.Color.negativo, in: .capsule)
-                            .offset(x: 14, y: -2)
-                            .accessibilityHidden(true)
+        NavigationStack {
+            List(opciones) { o in
+                Button { elegir(o) } label: {
+                    Label { Text(o.titulo).foregroundStyle(Tema.Color.texto) } icon: {
+                        IconoSeccion(icono: o.icono, relleno: Tema.Color.iconoAzul)
                     }
+                    .frame(minHeight: 44)
                 }
-                .accessibilityLabel(buzon.sinLeer > 0 ? "Mensajes, \(buzon.sinLeer) sin leer" : "Mensajes")
-            boton("Cobro", icono: "eurosign.circle", acceso: .pago, id: "accesoPago")
-                .accessibilityLabel("Registrar pago")
-            boton("Incidencia", icono: "wrench.and.screwdriver", acceso: .incidencia, id: "accesoIncidencia")
-                .accessibilityLabel("Nueva incidencia")
-            boton("Gasto", icono: "cart", acceso: .gasto, id: "accesoGasto")
-                .accessibilityLabel("Nuevo gasto")
-        }
-    }
-
-    private func boton(_ titulo: String, icono: String, acceso: AccesoRapido, id: String) -> some View {
-        Button { abierto = acceso } label: {
-            VStack(spacing: 1) {
-                Image(systemName: icono).font(.body.weight(.medium)).foregroundStyle(Tema.Color.primario)
-                // Texto en el color principal: en azul sobre el cristal no llegaba al contraste mínimo.
-                Text(titulo).font(.caption2.weight(.semibold)).foregroundStyle(Tema.Color.texto)
-                    .lineLimit(1).minimumScaleFactor(0.8)
+                .accessibilityIdentifier("crear-\(o.rawValue)")
             }
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .contentShape(.rect)
+            .navigationTitle("Crear")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier(id)
+        .presentationDetents([.height(CGFloat(130 + opciones.count * 64)), .medium])
+        .presentationDragIndicator(.visible)
     }
 }
 
-/// Burbuja del asistente: un botón de cristal que se arrastra y se queda pegado al borde izquierdo
-/// o derecho. Solo aparece si el asistente está activo y no se ha ocultado en Perfil; abre el chat
-/// sabiendo qué piso o contrato está en pantalla.
-struct BurbujaAsistente: View {
+/// Mensaje nuevo: se elige el contrato (inquilino) y se abre su conversación.
+struct NuevoMensajeView: View {
     @Environment(SesionStore.self) private var sesion
-    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
-    let contexto: ContextoPantalla?
-    let abrir: () -> Void
-
-    @AppStorage("asistente.flotante") private var asistenteFlotante = true
-    @AppStorage("burbuja.izquierda") private var izquierda = false
-    /// Distancia al borde inferior del área segura.
-    @AppStorage("burbuja.altura") private var altura = 150.0
-    @State private var disponible = false
-    @State private var arrastre: CGSize = .zero
+    @Environment(\.dismiss) private var cerrar
+    @State private var contratos: [Contrato]?
 
     var body: some View {
-        GeometryReader { geo in
-            if disponible && asistenteFlotante {
-                Button(action: abrir) {
-                    Image(systemName: "sparkles").font(.title3.weight(.semibold)).frame(width: 52, height: 52)
-                }
-                .buttonStyle(.plain)
-                .foregroundStyle(Tema.Color.primario)
-                .fondoCristal(en: .circle)
-                .accessibilityLabel(contexto.map { "Asistente, preguntar sobre \($0.descripcion)" } ?? "Asistente")
-                .accessibilityHint("Arrástralo para moverlo a otro borde")
-                .accessibilityIdentifier("burbujaAsistente")
-                .padding(.horizontal, Tema.Espacio.s)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: izquierda ? .bottomLeading : .bottomTrailing)
-                .padding(.bottom, altura)
-                .offset(arrastre)
-                .gesture(
-                    DragGesture(minimumDistance: 10)
-                        .onChanged { arrastre = $0.translation }
-                        .onEnded { fin in
-                            withAnimation(reducirMovimiento ? nil : .snappy) {
-                                izquierda = fin.predictedEndLocation.x < geo.size.width / 2
-                                altura = min(max(altura - fin.translation.height, 80), max(geo.size.height - 120, 80))
-                                arrastre = .zero
+        NavigationStack {
+            Group {
+                if let contratos {
+                    if contratos.isEmpty {
+                        EstadoVacio(icono: "bubble.left.and.bubble.right", titulo: "Sin contratos activos",
+                                    mensaje: "Los mensajes van ligados a un contrato.")
+                    } else {
+                        List(contratos) { c in
+                            NavigationLink(value: c) {
+                                HStack(spacing: Tema.Espacio.s) {
+                                    AvatarIniciales(nombre: c.inquilino.nombre, tamano: Tema.Tamano.icono)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(c.inquilino.nombre).foregroundStyle(Tema.Color.texto)
+                                        Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
+                                            .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
+                                    }
+                                }
                             }
+                            .accessibilityIdentifier("contratoMensajeNuevo")
                         }
-                )
-                .transition(.scale.combined(with: .opacity))
+                    }
+                } else {
+                    EsqueletoCarga()
+                }
+            }
+            .navigationTitle("Mensaje nuevo")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: Contrato.self) { c in ChatView(hilo: .contrato(c.id), titulo: c.inquilino.nombre) }
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } } }
+            .task {
+                contratos = ((try? await sesion.api.enviar(.contratos(filtro: .activos))) ?? [])
+                    .sorted { $0.inquilino.nombre.localizedStandardCompare($1.inquilino.nombre) == .orderedAscending }
             }
         }
-        .task { disponible = (try? await sesion.api.enviar(.estadoAsistente))?.disponible ?? false }
     }
 }
 

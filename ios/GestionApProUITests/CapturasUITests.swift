@@ -151,8 +151,15 @@ struct Recorrido {
     @discardableResult
     func desplazarHasta(_ elemento: XCUIElement) -> XCUIElement {
         var intentos = 0
-        while !(elemento.exists && elemento.isHittable) && intentos < 8 {
-            app.swipeUp()
+        // También se sigue si el elemento queda bajo la barra de pestañas (abajo del todo): ahí el toque
+        // lo recibiría la barra.
+        func bajoLaBarra() -> Bool { elemento.exists && elemento.frame.maxY > app.frame.maxY - 100 }
+        while (!(elemento.exists && elemento.isHittable) || bajoLaBarra()) && intentos < 8 {
+            if elemento.exists && elemento.isHittable {
+                app.swipeUp(velocity: .slow)
+            } else {
+                app.swipeUp()
+            }
             intentos += 1
         }
         // Si se ha deslizado, esperar a que pare la inercia: un toque sobre una lista en
@@ -212,7 +219,26 @@ struct Recorrido {
     }
 
     func pestana(_ nombre: String) {
-        app.tabBars.buttons[nombre].tap()
+        let boton = app.buttons["pestana:\(nombre)"].firstMatch
+        boton.tap()
+        // Más guarda su pila (Incidencias, Contratos...): un segundo toque la devuelve a su raíz, como en iOS.
+        if nombre == "Más" { pausa(0.5); boton.tap() }
+    }
+
+    /// Propietario: Incidencias está en Más (pulsar Más vuelve a su raíz).
+    func incidencias() {
+        pestana("Más")
+        pestana("Más")
+        desplazarHasta(app.buttons["enlaceIncidencias"]).tap()
+        esperar(app.navigationBars["Incidencias"])
+    }
+
+    /// Botón «+» de la barra de pestañas y una opción de su menú.
+    func crear(_ opcion: String) {
+        app.buttons["botonCrear"].tap()
+        let boton = app.buttons["crear-\(opcion)"]
+        esperar(boton)
+        boton.tap()
     }
 
     func atras() {
@@ -380,7 +406,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Incidencias
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.capturar("01-incidencias")
         r.app.buttons["filaIncidencia"].firstMatch.swipeRight()
@@ -685,7 +711,7 @@ extension CapturasUITests {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.pausa(1)
         r.capturar("01-incidencias")
@@ -821,7 +847,7 @@ extension CapturasUITests {
 
         r.pestana("Cobros")
         r.pausa(2.5)
-        r.pestana("Incidencias")
+        r.incidencias()
         r.pausa(2.5)
 
         r.pestana("Más")
@@ -1014,7 +1040,7 @@ extension CapturasUITests {
         r.pausa(1)
         r.capturar("05-resumen-fiscal-notas")
 
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.app.buttons["filaIncidencia"].firstMatch.tap()
         r.desplazarHasta(r.app.buttons["botonAnadirFotos"])
@@ -1102,43 +1128,61 @@ extension CapturasUITests {
             ri.capturar("07-chat-inquilino")
         }
     }
-    /// Accesos rápidos sobre la barra de pestañas: cobro, gasto y mensajes desde cualquier pestaña.
+    /// Navegación final: «+» a la derecha de las pestañas, Mensajes como pestaña y Cobros hasta el final.
     @MainActor
     func testIngenieroAccesos() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
         r.pausa(1)
-        r.capturar("01-inicio-accesos")
+        r.capturar("01-inicio")
 
         r.pestana("Pisos")
-        r.app.buttons["accesoPago"].tap()
+        r.app.buttons["botonCrear"].tap()
+        r.esperar(r.app.buttons["crear-pago"])
+        r.pausa(1)
+        r.capturar("02-menu-crear")
+        r.app.buttons["crear-pago"].tap()
         r.esperar(r.app.buttons["cobroPendiente"].firstMatch)
-        r.capturar("02-cobro-desde-pisos")
+        r.capturar("03-cobro-pendientes")
         r.app.buttons["cobroPendiente"].firstMatch.tap()
         r.esperar(r.app.buttons["Guardar"])
-        r.pausa(1)
-        r.capturar("02b-cobro-prellenado")
         r.app.buttons["Cancelar"].firstMatch.tap()
         r.pausa(1)
         r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
 
-        r.app.buttons["accesoGasto"].tap()
+        r.crear("gasto")
         r.esperar(r.app.navigationBars["¿De qué piso?"])
-        r.pausa(1)
-        r.capturar("03-gasto-elige-piso")
         r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
 
-        r.app.buttons["accesoMensajes"].tap()
+        r.crear("mensajeNuevo")
+        r.esperar(r.app.buttons["contratoMensajeNuevo"].firstMatch)
+        r.app.buttons["contratoMensajeNuevo"].firstMatch.tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "campoMensaje").firstMatch)
+        r.capturar("04-mensaje-nuevo-chat")
+        r.atras()
+        r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
+
+        r.pestana("Mensajes")
         r.esperar(r.app.buttons["filaConversacion"].firstMatch)
-        r.capturar("04-mensajes-desde-pisos")
-        r.app.buttons["Cerrar"].tap()
+        r.capturar("05-mensajes")
+        r.app.buttons["filaConversacion"].firstMatch.tap()
+        r.pausa(1.5)
+        r.capturar("06-chat-con-nombre")
+        r.atras()
+        r.pausa(1)
 
         r.pestana("Cobros")
-        let fila = r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch
-        r.esperar(fila)
-        fila.press(forDuration: 1.0)
+        r.esperar(r.texto(empiezaPor: "Pendientes de cobro"))
+        for _ in 0..<12 { r.app.swipeUp(velocity: .fast) }
+        r.pausa(1.5)
+        r.capturar("07-cobros-final-lista")
+
+        r.incidencias()
         r.pausa(1)
-        r.capturar("05-cobros-menu-contextual")
+        r.capturar("08-incidencias-desde-mas")
     }
 
     /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas
@@ -1159,7 +1203,7 @@ extension CapturasUITests {
         r.pestana("Pisos"); auditar("Pisos")
         r.pestana("Cobros"); auditar("Cobros")
         r.pestana("Más"); auditar("Mas")
-        r.app.buttons["accesoMensajes"].tap()
+        r.pestana("Mensajes")
         r.esperar(r.app.buttons["filaConversacion"].firstMatch)
         auditar("Mensajes")
     }

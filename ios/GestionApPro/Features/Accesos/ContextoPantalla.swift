@@ -27,6 +27,23 @@ enum ContextoPantalla: Equatable, Sendable {
 @Observable
 final class PantallaActual {
     var contexto: ContextoPantalla?
+    /// Pantallas abiertas que llevan su propia barra abajo (el chat): mientras haya alguna, se oculta
+    /// la barra de pestañas, como en Mensajes.
+    var sinBarra = 0
+}
+
+private struct OcultarBarraPestanas: ViewModifier {
+    @Environment(PantallaActual.self) private var pantalla: PantallaActual?
+    func body(content: Content) -> some View {
+        content
+            .onAppear { pantalla?.sinBarra += 1 }
+            .onDisappear { pantalla.map { $0.sinBarra = max(0, $0.sinBarra - 1) } }
+    }
+}
+
+extension View {
+    /// Oculta la barra de pestañas mientras esta pantalla está abierta.
+    func sinBarraDePestanas() -> some View { modifier(OcultarBarraPestanas()) }
 }
 
 private struct DeclararContexto: ViewModifier {
