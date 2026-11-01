@@ -1141,6 +1141,41 @@ extension CapturasUITests {
         r.capturar("05-cobros-menu-contextual")
     }
 
+    /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas
+    /// principales. Anota cada problema en el log ("AUDITORIA|pantalla|tipo|descripción") sin cortar el recorrido.
+    @MainActor
+    func testIngenieroAccesibilidad() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        func auditar(_ pantalla: String) {
+            r.pausa(1.5)
+            try? r.app.performAccessibilityAudit(for: [.sufficientElementDescription, .hitRegion, .contrast, .elementDetection, .textClipped]) { issue in
+                let elemento = issue.element.map { "\($0.elementType.rawValue):\($0.label)" } ?? "-"
+                print("AUDITORIA|\(pantalla)|\(issue.auditType.rawValue)|\(issue.compactDescription)|\(elemento)")
+                return true
+            }
+        }
+        auditar("Inicio")
+        r.pestana("Pisos"); auditar("Pisos")
+        r.pestana("Cobros"); auditar("Cobros")
+        r.pestana("Más"); auditar("Mas")
+        r.app.buttons["accesoMensajes"].tap()
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        auditar("Mensajes")
+    }
+
+    /// Tiempo de arranque en frío (métrica de XCTest, 3 iteraciones).
+    @MainActor
+    func testIngenieroArranque() throws {
+        let opciones = XCTMeasureOptions()
+        opciones.iterationCount = 3
+        measure(metrics: [XCTApplicationLaunchMetric()], options: opciones) {
+            let app = XCUIApplication()
+            app.launchEnvironment["TZ"] = "Europe/Madrid"
+            app.launch()
+        }
+    }
+
     @MainActor
     func testFase7() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)

@@ -39,14 +39,15 @@ struct BarraAccesos: View {
     private func boton(_ titulo: String, icono: String, acceso: AccesoRapido, id: String) -> some View {
         Button { abierto = acceso } label: {
             VStack(spacing: 1) {
-                Image(systemName: icono).font(.body.weight(.medium))
-                Text(titulo).font(.caption2.weight(.medium)).lineLimit(1).minimumScaleFactor(0.8)
+                Image(systemName: icono).font(.body.weight(.medium)).foregroundStyle(Tema.Color.primario)
+                // Texto en el color principal: en azul sobre el cristal no llegaba al contraste mínimo.
+                Text(titulo).font(.caption2.weight(.semibold)).foregroundStyle(Tema.Color.texto)
+                    .lineLimit(1).minimumScaleFactor(0.8)
             }
             .frame(maxWidth: .infinity, minHeight: 44)
             .contentShape(.rect)
         }
         .buttonStyle(.plain)
-        .foregroundStyle(Tema.Color.primario)
         .accessibilityIdentifier(id)
     }
 }
