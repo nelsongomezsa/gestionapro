@@ -64,13 +64,16 @@ public class AsistenteService {
     private final GastoService gastos;
     private final HabitacionRepository habitaciones;
     private final ControlAcceso acceso;
+    private final InquilinoService inquilinos;
     private final ObjectMapper json;
     private final int limiteDiario;
 
     public AsistenteService(ModeloIA modelo, ActividadRepository actividadRepo, ActividadService actividad, PanelService panel,
                             PagoService pagos, ContratoService contratos, IncidenciaService incidencias, GastoService gastos,
                             HabitacionRepository habitaciones, ControlAcceso acceso, ObjectMapper json,
+                            InquilinoService inquilinos,
                             @Value("${gestionap.ia.limite-diario:40}") int limiteDiario) {
+        this.inquilinos = inquilinos;
         this.modelo = modelo;
         this.actividadRepo = actividadRepo;
         this.actividad = actividad;
@@ -109,6 +112,11 @@ public class AsistenteService {
                 yield "el contrato #" + k.getId() + " de " + k.getInquilino().getNombreCompleto() + " (habitación "
                         + k.getHabitacion().getNumero() + " de " + k.getHabitacion().getPiso().getDireccion() + ", renta "
                         + k.getPrecioMensual().toPlainString() + " €, del " + k.getFechaInicio() + " al " + k.getFechaFin() + ")";
+            }
+            case "INQUILINO" -> {
+                // Sin DNI, teléfono ni email: el modelo no los necesita para responder.
+                var i = inquilinos.cargarVisible(c.id(), actor);
+                yield "la ficha del inquilino #" + i.getId() + " (" + i.getNombreCompleto() + ")";
             }
             default -> throw ApiException.badRequest("CONTEXTO_NO_VALIDO", "Contexto no válido");
         };

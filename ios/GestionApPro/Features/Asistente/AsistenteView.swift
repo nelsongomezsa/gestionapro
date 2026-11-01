@@ -28,8 +28,17 @@ struct AsistenteView: View {
     var body: some View {
         Group {
             if let e = estado, !e.disponible {
-                EstadoVacio(icono: "sparkles", titulo: "Asistente desactivado", mensaje: e.mensaje)
-                    .accessibilityIdentifier("asistenteDesactivado")
+                VStack(spacing: Tema.Espacio.m) {
+                    if let contexto {
+                        Label("Preguntas sobre \(contexto.descripcion)", systemImage: "scope")
+                            .font(Tema.Fuente.nota.weight(.semibold))
+                            .foregroundStyle(Tema.Color.primario)
+                            .accessibilityIdentifier("contextoAsistente")
+                    }
+                    EstadoVacio(icono: "sparkles", titulo: "Asistente desactivado", mensaje: e.mensaje)
+                        .accessibilityIdentifier("asistenteDesactivado")
+                }
+                .padding(.top, Tema.Espacio.l)
             } else {
                 chat
             }

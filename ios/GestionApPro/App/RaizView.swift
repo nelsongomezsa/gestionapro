@@ -97,6 +97,14 @@ struct PestanasView: View {
                     .tag(item.pestana)
             }
         }
+        .overlay {
+            if usuario.rol.gestionaPisos {
+                LenguetaAsistente {
+                    Haptica.suave()
+                    abierto = .asistente
+                }
+            }
+        }
         .overlay(alignment: .bottom) {
             if pantalla.sinBarra == 0 {
                 BarraPestanas(items: items, seleccion: $seleccion,
@@ -198,7 +206,10 @@ struct PestanasView: View {
                 AsistenteView(contexto: pantalla.contexto)
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
             }
-            .presentationDetents([.medium, .large])
+            // Unos 2/3 de la pantalla; se amplía o se cierra deslizando.
+            .presentationDetents([.fraction(0.66), .large])
+            .presentationDragIndicator(.visible)
+            .presentationBackgroundInteraction(.enabled(upThrough: .fraction(0.66)))
         }
     }
 }
@@ -218,4 +229,12 @@ enum Pestana: String, CaseIterable, Identifiable {
 /// Claves de las preferencias que se guardan en el iPhone.
 enum Preferencias {
     static let pestanaInicio = "ajustes.pestanaInicio"
+    static let lengueta = "ajustes.asistente.lengueta"
+    static let lenguetaPosicion = "ajustes.asistente.lengueta.posicion"
+    static let vibracion = "ajustes.vibracion"
+
+    /// Lectura para código que no es una vista (las vistas usan @AppStorage).
+    static func activado(_ clave: String, porDefecto: Bool = true) -> Bool {
+        UserDefaults.standard.object(forKey: clave) as? Bool ?? porDefecto
+    }
 }

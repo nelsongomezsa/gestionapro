@@ -87,7 +87,7 @@ class ContratoPagoIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].vencimiento").value("CRITICO"))
                 .andExpect(jsonPath("$[0].diasRestantes").value(5))
-                .andExpect(jsonPath("$[0].inquilino.nombre").value("Ana García 22222222B"));
+                .andExpect(jsonPath("$[0].inquilino.nombre").value("Ana García 2B"));
         mvc.perform(get("/api/contratos").header("Authorization", token("bea@test.com")))
                 .andExpect(jsonPath("$.length()").value(0));
     }
@@ -175,7 +175,7 @@ class ContratoPagoIntegrationTest extends IntegrationTest {
                         .content(json(pago(venceProntoPedro.getId(), "500.00", hoy))))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.metodoPago").value("efectivo"))
-                .andExpect(jsonPath("$.inquilino.nombre").value("Ana García 22222222B"))
+                .andExpect(jsonPath("$.inquilino.nombre").value("Ana García 2B"))
                 .andReturn().getResponse().getContentAsString();
         int id = leer(cuerpo).get("id").asInt();
 

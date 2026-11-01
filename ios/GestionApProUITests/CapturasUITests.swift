@@ -871,7 +871,8 @@ extension CapturasUITests {
         // Un pago propio de este mes (al empezar el mes no hay ninguno): se registra desde la app y se borra al final.
         let datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
         let antes = try datos.idsPagosDelMes()
-        defer { if let ahora = try? datos.idsPagosDelMes() { datos.borrarPagos(ahora.subtracting(antes)) } }
+        // Se ejecuta aunque el test falle a mitad (un `defer` no llega si XCTest corta el test).
+        addTeardownBlock { if let ahora = try? datos.idsPagosDelMes() { datos.borrarPagos(ahora.subtracting(antes)) } }
         r.pestana("Cobros")
         r.desplazarHasta(r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch).tap()
         r.esperar(r.app.navigationBars["Registrar pago"])
@@ -1083,7 +1084,8 @@ extension CapturasUITests {
         let idInquilino = try DatosPrueba.idInquilino(api: datos.api, email: try XCTUnwrap(env["CAPTURAS_INQUILINO_EMAIL"]),
                                                       password: try XCTUnwrap(env["CAPTURAS_INQUILINO_PASSWORD"]))
         _ = try datos.contratoSinFirmar(idInquilino: idInquilino)
-        defer { datos.limpiar() }
+        let creados = datos
+        addTeardownBlock { creados.limpiar() }
 
         r.pestana("Más")
         r.app.buttons["Contratos"].tap()
@@ -1183,6 +1185,36 @@ extension CapturasUITests {
         r.incidencias()
         r.pausa(1)
         r.capturar("08-incidencias-desde-mas")
+    }
+
+    /// Lengüeta del asistente: se ve en el borde, abre el panel (desactivado sin clave) con el contexto
+    /// de la pantalla, se cierra deslizando y VoiceOver la anuncia como botón «Asistente».
+    @MainActor
+    func testFinalLengueta() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        let lengueta = r.app.otherElements["lenguetaAsistente"].exists ? r.app.otherElements["lenguetaAsistente"] : r.app.buttons["lenguetaAsistente"]
+        r.esperar(lengueta)
+        XCTAssertEqual(lengueta.label, "Asistente")
+        r.pausa(1)
+        r.capturar("01-lengueta-cerrada")
+        lengueta.tap()
+        r.esperar(r.app.navigationBars["Asistente"])
+        r.pausa(1.5)
+        r.capturar("02-lengueta-abierta")
+        // Se cierra arrastrando la hoja hacia abajo desde su borde superior.
+        let arriba = r.app.navigationBars["Asistente"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2))
+        arriba.press(forDuration: 0.1, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98)))
+        r.pausa(1.5)
+        XCTAssertFalse(r.app.navigationBars["Asistente"].exists, "El panel se cierra deslizando")
+
+        r.pestana("Pisos")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.staticTexts["Rentabilidad bruta"].firstMatch)
+        lengueta.tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "contextoAsistente").firstMatch)
+        r.pausa(1)
+        r.capturar("03-lengueta-con-contexto-piso")
     }
 
     /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas

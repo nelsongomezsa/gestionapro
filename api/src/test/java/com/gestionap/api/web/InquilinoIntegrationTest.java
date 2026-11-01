@@ -163,7 +163,7 @@ class InquilinoIntegrationTest extends IntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.beneficiario").value("Usuario ana@test.com"))
                 .andExpect(jsonPath("$.importe").value(450.00))
-                .andExpect(jsonPath("$.concepto").value(startsWith("Alquiler Hab.3 Ana García 11111111A ")))
+                .andExpect(jsonPath("$.concepto").value(startsWith("Alquiler Hab.3 Ana García 1A ")))
                 .andExpect(jsonPath("$.payload").value(startsWith("BCD\n002\n1\nSCT\n\nUsuario ana@test.com\nES9121000418450200051332\nEUR450.00\n")));
     }
 

@@ -19,8 +19,8 @@ public final class AsistenteDtos {
 
     public record Turno(@NotNull Boolean delUsuario, @NotBlank @Size(max = 4000) String texto) {}
 
-    /** Pantalla desde la que se pregunta (piso o contrato abierto): el asistente responde con ese contexto. */
-    public record Contexto(@NotNull @Pattern(regexp = "PISO|CONTRATO", message = "debe ser PISO o CONTRATO") String tipo,
+    /** Pantalla desde la que se pregunta (piso, contrato o inquilino abierto): el asistente responde con ese contexto. */
+    public record Contexto(@NotNull @Pattern(regexp = "PISO|CONTRATO|INQUILINO", message = "debe ser PISO, CONTRATO o INQUILINO") String tipo,
                            @NotNull @Positive Integer id) {}
 
     public record Pregunta(@NotBlank @Size(max = 2000) String mensaje, @Size(max = 20) List<@Valid Turno> historial,

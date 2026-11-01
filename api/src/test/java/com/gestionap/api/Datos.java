@@ -80,7 +80,9 @@ public class Datos {
     public Inquilino inquilino(String dni, String email) {
         Inquilino i = new Inquilino();
         i.setNombre("Ana");
-        i.setApellidos("García " + dni);
+        // Apellidos distintos por inquilino, pero sin el DNI: así se puede comprobar que el DNI no sale
+        // por donde no debe (p. ej., en el contexto que recibe el asistente).
+        i.setApellidos("García " + dni.charAt(0) + dni.charAt(dni.length() - 1));
         i.setDni(dni);
         i.setEmail(email);
         return inquilinos.save(i);

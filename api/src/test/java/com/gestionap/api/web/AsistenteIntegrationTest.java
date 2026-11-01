@@ -66,6 +66,16 @@ class AsistenteIntegrationTest extends IntegrationTest {
                 .andExpect(status().isOk());
         org.assertj.core.api.Assertions.assertThat(modelo.instruccionesRecibidas).contains("contrato #" + deLucia.getId());
 
+        mvc.perform(post("/api/asistente/conversar").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("mensaje", "¿Paga bien?", "contexto", Map.of("tipo", "INQUILINO", "id", deLucia.getInquilino().getId())))))
+                .andExpect(status().isOk());
+        org.assertj.core.api.Assertions.assertThat(modelo.instruccionesRecibidas)
+                .contains("inquilino #" + deLucia.getInquilino().getId())
+                .doesNotContain(deLucia.getInquilino().getDni());
+        mvc.perform(post("/api/asistente/conversar").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("mensaje", "¿Y esta?", "contexto", Map.of("tipo", "INQUILINO", "id", deBea.getInquilino().getId())))))
+                .andExpect(status().isNotFound());
+
         // Contrato de otra propietaria: 404, y no llega nada al modelo.
         modelo.instruccionesRecibidas = null;
         mvc.perform(post("/api/asistente/conversar").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)

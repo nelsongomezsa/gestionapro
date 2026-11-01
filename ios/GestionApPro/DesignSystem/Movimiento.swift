@@ -6,9 +6,12 @@ import UIKit
 /// vista ya no llegaría a sonar.
 @MainActor
 enum Haptica {
-    static func exito() { UINotificationFeedbackGenerator().notificationOccurred(.success) }
-    static func error() { UINotificationFeedbackGenerator().notificationOccurred(.error) }
-    static func impacto() { UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
+    /// Se puede desactivar en Ajustes › Vibración.
+    private static var activa: Bool { Preferencias.activado(Preferencias.vibracion) }
+    static func exito() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.success) } }
+    static func error() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.error) } }
+    static func impacto() { if activa { UIImpactFeedbackGenerator(style: .medium).impactOccurred() } }
+    static func suave() { if activa { UIImpactFeedbackGenerator(style: .soft).impactOccurred() } }
 }
 
 /// Aparición escalonada y breve de las tarjetas de una pantalla. Con Reducir movimiento, sin desplazamiento.

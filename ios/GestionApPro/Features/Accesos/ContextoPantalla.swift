@@ -5,11 +5,13 @@ import SwiftUI
 enum ContextoPantalla: Equatable, Sendable {
     case piso(Int)
     case contrato(Int)
+    case inquilino(Int)
 
     var paraAPI: PreguntaAsistente.Contexto {
         switch self {
         case let .piso(id): .init(tipo: "PISO", id: id)
         case let .contrato(id): .init(tipo: "CONTRATO", id: id)
+        case let .inquilino(id): .init(tipo: "INQUILINO", id: id)
         }
     }
 
@@ -17,6 +19,7 @@ enum ContextoPantalla: Equatable, Sendable {
         switch self {
         case .piso: "este piso"
         case .contrato: "este contrato"
+        case .inquilino: "este inquilino"
         }
     }
 }
@@ -58,7 +61,7 @@ private struct DeclararContexto: ViewModifier {
 }
 
 extension View {
-    /// Declara el contexto de esta pantalla para el asistente flotante.
+    /// Declara el contexto de esta pantalla para el asistente (lengüeta).
     func contextoAsistente(_ contexto: ContextoPantalla) -> some View {
         modifier(DeclararContexto(contexto: contexto))
     }
