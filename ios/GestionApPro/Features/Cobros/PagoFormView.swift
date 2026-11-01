@@ -79,10 +79,12 @@ struct PagoFormView: View {
                               metodoPago: metodo, fechaPago: FechaAPI.texto(fecha))
         do {
             let p = try await sesion.api.enviar(.registrarPago(req))
+            Haptica.exito()
             alGuardar(p)
             cerrar()
         } catch .noAutorizado {
         } catch {
+            Haptica.error()
             self.error = error.localizedDescription
         }
     }

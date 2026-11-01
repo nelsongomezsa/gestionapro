@@ -22,6 +22,7 @@ final class LoginViewModel {
             try await sesion.iniciarSesion(email: email.trimmingCharacters(in: .whitespaces), password: password)
             password = ""
         } catch {
+            Haptica.error()
             self.error = error.localizedDescription
         }
     }

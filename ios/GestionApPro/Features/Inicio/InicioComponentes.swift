@@ -4,6 +4,8 @@ import SwiftUI
 /// Barras de ingresos por mes. Al tocar (o arrastrar) un mes se ve su importe arriba;
 /// sin tocar, el del mes actual, que va resaltado como en el escritorio.
 struct GraficoIngresos: View {
+    /// Las barras crecen al aparecer (sin animación con Reducir movimiento).
+    @State private var dibujado = false
     let meses: [ImporteMes]
     @State private var seleccion: String?
     @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
@@ -34,7 +36,7 @@ struct GraficoIngresos: View {
                 .accessibilityHidden(true)
             }
             Chart(meses, id: \.mes) { m in
-                BarMark(x: .value("Mes", m.etiqueta), y: .value("Cobrado", m.importe.double), width: .ratio(0.55))
+                BarMark(x: .value("Mes", m.etiqueta), y: .value("Cobrado", dibujado ? m.importe.double : 0), width: .ratio(0.55))
                     .foregroundStyle(m == elegido ? Tema.Color.primario : Tema.Color.primario.opacity(0.35))
                     .clipShape(.rect(cornerRadius: Tema.Radio.pequeno / 2))
                     // VoiceOver recorre los meses uno a uno (y ofrece el gráfico sonoro de Swift Charts).
@@ -42,6 +44,9 @@ struct GraficoIngresos: View {
                     .accessibilityValue(Formato.euros(m.importe))
             }
             .chartXSelection(value: $seleccion)
+            .onAppear {
+                if reducirMovimiento { dibujado = true } else { withAnimation(Tema.Movimiento.entrada.delay(0.15)) { dibujado = true } }
+            }
             .chartYAxis {
                 AxisMarks(values: .automatic(desiredCount: 3)) { valor in
                     AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5, dash: [3, 3])).foregroundStyle(Tema.Color.borde)

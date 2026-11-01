@@ -32,13 +32,16 @@ struct InicioView: View {
                         HeroeInicio(dashboard: d, generandoInforme: vm.generandoInforme) {
                             Task { await vm.informe(con: sesion.api) }
                         }
-                        IndicadoresInicio(dashboard: d)
+                        .aparicion(0)
+                        IndicadoresInicio(dashboard: d).aparicion(1)
                         SeccionTarjeta(titulo: "Ingresos cobrados") {
                             GraficoIngresos(meses: d.ingresosUltimos6Meses).frame(height: 220)
                         }
-                        AlertasInicio(alertas: InicioViewModel.alertas(d))
-                        VencimientosInicio(contratos: d.proximosVencimientos)
+                        .aparicion(2)
+                        AlertasInicio(alertas: InicioViewModel.alertas(d)).aparicion(3)
+                        VencimientosInicio(contratos: d.proximosVencimientos).aparicion(4)
                         ActividadInicio(actividades: Array(d.actividadReciente.prefix(InicioViewModel.actividadesVisibles)))
+                            .aparicion(5)
                     }
                     .padding(.horizontal, Tema.Espacio.m)
                     .padding(.bottom, Tema.Espacio.l)

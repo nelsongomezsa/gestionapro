@@ -24,6 +24,7 @@ struct TarjetaKPI: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .contentTransition(.numericText())
+                    .animation(Tema.Movimiento.suave, value: valor)
                 // Con texto grande de accesibilidad, el título pasa a varias líneas en vez de encogerse.
                 Text(titulo)
                     .font(Tema.Fuente.detalle.weight(.medium))

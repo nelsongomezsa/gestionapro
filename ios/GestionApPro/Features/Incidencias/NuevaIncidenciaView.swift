@@ -106,6 +106,7 @@ struct NuevaIncidenciaView: View {
                                     costeReparacion: gestiona && coste > 0 ? Decimal(string: String(format: "%.2f", coste)) : nil)
         do {
             let i = try await sesion.api.enviar(.crearIncidencia(req))
+            Haptica.exito()
             alGuardar(i)
             cerrar()
         } catch .noAutorizado {

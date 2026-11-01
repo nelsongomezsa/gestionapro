@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct PisosListaView: View {
+    /// Tarjeta → detalle con zoom (el sistema lo simplifica con Reducir movimiento).
+    @Namespace private var zoom
     @Environment(SesionStore.self) private var sesion
     @State private var vm = PisosViewModel()
 
@@ -11,7 +13,7 @@ struct PisosListaView: View {
             }
             .background(Tema.Color.fondo)
             .navigationTitle("Pisos")
-            .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0) }
+            .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0).navigationTransition(.zoom(sourceID: $0.id, in: zoom)) }
             .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
             .toolbar {
@@ -65,6 +67,7 @@ struct PisosListaView: View {
 
                     ForEach(pisos) { piso in
                         NavigationLink(value: piso) { TarjetaPiso(piso: piso) }
+                            .matchedTransitionSource(id: piso.id, in: zoom)
                             .contextMenu {
                                 if let url = URL(string: "maps://?q=" + "\(piso.direccion), \(piso.ciudad.nombre)"
                                     .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {

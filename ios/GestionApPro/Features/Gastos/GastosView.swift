@@ -315,6 +315,7 @@ struct GastoFormView: View {
                 _ = try await sesion.api.subir(Rutas.facturaGasto(guardado.id), archivo: f.datos, nombre: f.nombre, tipo: f.tipo,
                                                respuesta: Gasto.self)
             }
+            Haptica.exito()
             alGuardar()
             cerrar()
         } catch .noAutorizado {

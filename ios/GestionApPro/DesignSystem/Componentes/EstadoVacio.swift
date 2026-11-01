@@ -51,10 +51,7 @@ struct VistaCarga<Valor, Contenido: View>: View {
     var body: some View {
         switch estado {
         case .cargando:
-            ProgressView()
-                .controlSize(.large)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .accessibilityLabel("Cargando")
+            EsqueletoCarga()
         case let .error(mensaje):
             ScrollView { EstadoVacio.error(mensaje, reintentar: reintentar) }
         case let .cargado(valor):

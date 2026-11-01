@@ -25,6 +25,8 @@ struct TarjetaHero<Contenido: View>: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     .contentTransition(.numericText())
+                    .animation(Tema.Movimiento.suave, value: valor)
+                    .contentTransition(.numericText())
             }
             .accessibilityElement(children: .combine)
             contenido

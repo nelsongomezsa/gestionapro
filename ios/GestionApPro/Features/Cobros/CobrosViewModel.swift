@@ -57,6 +57,7 @@ final class CobrosViewModel {
     func borrar(_ p: Pago, con api: APIClient) async {
         do {
             _ = try await api.enviar(.borrarPago(id: p.id))
+            Haptica.impacto()
             await cargar(con: api)
         } catch .noAutorizado {
         } catch {

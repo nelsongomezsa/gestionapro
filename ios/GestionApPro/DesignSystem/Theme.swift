@@ -136,6 +136,8 @@ enum Tema {
 
     enum Movimiento {
         static let suave = Animation.snappy(duration: 0.25)
+        /// Entrada de tarjetas y contenido: resorte corto, sin rebote visible.
+        static let entrada = Animation.spring(duration: 0.4, bounce: 0.1)
     }
 
     /// Liquid Glass: solo para controles y navegación que flotan sobre el contenido; las tarjetas siguen sólidas.
