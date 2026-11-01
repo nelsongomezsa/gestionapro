@@ -34,6 +34,8 @@ struct PagoFormView: View {
                         ForEach(MetodoPago.allCases) { Text($0.nombre).tag($0) }
                     }
                     DatePicker("Fecha", selection: $fecha, in: ...Date.now, displayedComponents: .date)
+                        // La API guarda la fecha de Madrid: se muestra la misma para que no cambie al guardar.
+                        .environment(\.timeZone, TimeZone(identifier: "Europe/Madrid")!)
                 }
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }

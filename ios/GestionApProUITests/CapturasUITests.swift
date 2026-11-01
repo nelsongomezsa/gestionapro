@@ -750,7 +750,9 @@ extension CapturasUITests {
         r.app.buttons["Cancelar"].tap()
         r.atras()
 
-        r.app.buttons["enlacePerfil"].tap()
+        // Tras volver de Usuarios la lista aún se recoloca: se espera antes de tocar Perfil.
+        r.pausa(1)
+        r.app.buttons["enlacePerfil"].firstMatch.tap()
         r.esperar(r.app.navigationBars["Perfil"])
         r.pausa(1)
         r.capturar("06-perfil")

@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Tarjeta de un piso: dirección completa, semáforo, ocupación y cash flow.
 struct TarjetaPiso: View {
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
     let piso: Piso
 
     private var ocupacion: Double {
@@ -20,9 +21,15 @@ struct TarjetaPiso: View {
                     Text(piso.ciudad.nombre)
                         .font(Tema.Fuente.detalle)
                         .foregroundStyle(Tema.Color.textoSecundario)
+                    // Con texto grande la insignia va debajo: a la derecha se partía ("Exce-lente").
+                    if tamanoTexto.isAccessibilitySize {
+                        piso.metricas?.calificacion.insignia ?? Calificacion?.none.insignia
+                    }
                 }
                 Spacer(minLength: Tema.Espacio.xs)
-                piso.metricas?.calificacion.insignia ?? Calificacion?.none.insignia
+                if !tamanoTexto.isAccessibilitySize {
+                    piso.metricas?.calificacion.insignia ?? Calificacion?.none.insignia
+                }
             }
 
             HStack(alignment: .lastTextBaseline) {

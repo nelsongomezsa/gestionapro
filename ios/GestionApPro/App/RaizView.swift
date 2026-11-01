@@ -68,7 +68,17 @@ struct PestanasView: View {
                     MasView(usuario: usuario).tabItem { Label("Más", systemImage: "ellipsis.circle") }
                         .badge(buzon.sinLeer)
                 }
-                .tabViewBottomAccessory { BarraAccesos(abierto: $abierto) }
+                // Barra propia sobre las pestañas (no `tabViewBottomAccessory`: con él, tras cerrar una hoja
+                // abierta desde una pestaña, la navegación de esa pestaña dejaba de responder).
+                .overlay(alignment: .bottom) {
+                    BarraAccesos(abierto: $abierto)
+                        .padding(.horizontal, Tema.Espacio.s)
+                        .fondoCristal(en: .capsule, interactivo: false)
+                        .padding(.horizontal, Tema.Espacio.m + 4)
+                        .padding(.bottom, 62)
+                }
+                // Las listas dejan sitio al final para que la barra no tape la última fila.
+                .contentMargins(.bottom, 64, for: .scrollContent)
                 .overlay { BurbujaAsistente(contexto: pantalla.contexto) { abierto = .asistente } }
                 .sheet(item: $abierto, onDismiss: { Task { await buzon.actualizar(con: sesion.api) } }) { hoja($0) }
             } else {
