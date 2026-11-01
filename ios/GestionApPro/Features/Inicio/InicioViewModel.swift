@@ -59,6 +59,14 @@ final class InicioViewModel {
         d.alertas.filter { $0.tipo != "OCUPACION" }
     }
 
+    /// La comparación con el mes anterior confunde al empezar el mes (todavía casi nadie ha pagado):
+    /// no se muestra los 5 primeros días (hora de Madrid) ni con 0 € cobrados.
+    static func mostrarComparacion(cobrado: Decimal, hoy: Date = .now) -> Bool {
+        var calendario = Calendar(identifier: .gregorian)
+        calendario.timeZone = TimeZone(identifier: "Europe/Madrid")!
+        return cobrado > 0 && calendario.component(.day, from: hoy) > 5
+    }
+
     static func saludo(nombre: String?) -> String {
         let primero = nombre?.split(separator: " ").first.map(String.init) ?? ""
         return primero.isEmpty ? String(localized: "Inicio") : String(localized: "Hola, \(primero)")

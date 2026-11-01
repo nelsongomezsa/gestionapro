@@ -103,7 +103,8 @@ struct IncidenciaDetalleView: View {
         .fotosIncidencia(modeloFotos, incidencia: id, api: sesion.api, puedeBorrarTodas: gestiona)
         .sheet(isPresented: $chat) {
             NavigationStack {
-                ChatView(hilo: .incidencia(id))
+                ChatView(hilo: .incidencia(id),
+                         titulo: gestiona ? estado.valor?.inquilino.nombre : String(localized: "Mi propietario"))
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = false } } }
             }
         }

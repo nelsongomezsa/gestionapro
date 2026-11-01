@@ -134,7 +134,8 @@ struct ContratoDetalleView: View {
         .firmas(modeloFirmas, contrato: id, api: sesion.api)
         .sheet(isPresented: $chat) {
             NavigationStack {
-                ChatView(hilo: .contrato(id))
+                ChatView(hilo: .contrato(id),
+                         titulo: esGestor ? estado.valor?.inquilino.nombre : String(localized: "Mi propietario"))
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { chat = false } } }
             }
         }

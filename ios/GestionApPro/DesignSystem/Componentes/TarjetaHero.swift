@@ -20,6 +20,7 @@ struct TarjetaHero<Contenido: View>: View {
                     accesorio
                 }
                 Text(valor)
+                    .importePrivado()
                     .font(Tema.Fuente.cifraHeroe)
                     .foregroundStyle(Tema.Color.texto)
                     .lineLimit(1)
@@ -71,6 +72,7 @@ struct DatoCompacto: View {
                 .font(Tema.Fuente.nota)
                 .foregroundStyle(Tema.Color.textoSecundario)
             Text(valor)
+                .importePrivado()
                 .font(Tema.Fuente.cifraPequena)
                 .foregroundStyle(tono?.color ?? Tema.Color.texto)
                 .fixedSize(horizontal: false, vertical: true)

@@ -69,3 +69,22 @@ struct EsqueletoCarga: View {
         RoundedRectangle(cornerRadius: radio).fill(Tema.Color.superficieElevada).frame(maxWidth: .infinity).frame(height: alto)
     }
 }
+
+/// Modo privado (Ajustes › Seguridad › Ocultar importes): la cifra se emborrona y se ve al tocarla.
+private struct ImportePrivado: ViewModifier {
+    @AppStorage(Preferencias.ocultarImportes) private var ocultar = false
+    @State private var visible = false
+
+    func body(content: Content) -> some View {
+        content
+            .blur(radius: ocultar && !visible ? 9 : 0)
+            .contentShape(.rect)
+            .onTapGesture { if ocultar { withAnimation(Tema.Movimiento.suave) { visible.toggle() } } }
+            .accessibilityValue(ocultar && !visible ? Text("Oculto. Toca dos veces para verlo.") : Text(""))
+            .onChange(of: ocultar) { _, _ in visible = false }
+    }
+}
+
+extension View {
+    func importePrivado() -> some View { modifier(ImportePrivado()) }
+}

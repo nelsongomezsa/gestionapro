@@ -15,6 +15,8 @@ struct AjustesView: View {
     @AppStorage(Preferencias.pestanaInicio) private var pestanaInicio = Pestana.inicio.rawValue
     @AppStorage(BloqueoBiometrico.clave) private var entrarConFaceID = false
     @AppStorage(Preferencias.ocultarEnSelector) private var ocultarEnSelector = true
+    @AppStorage(Preferencias.ocultarImportes) private var ocultarImportes = false
+    @State private var confirmarRestablecer = false
     @AppStorage(Preferencias.vibracion) private var vibracion = true
     @AppStorage(Preferencias.lengueta) private var lengueta = true
     @State private var confirmarSalida = false
@@ -62,10 +64,12 @@ struct AjustesView: View {
                     .accessibilityIdentifier("interruptorFaceID")
                 Toggle("Ocultar en el selector de apps", isOn: $ocultarEnSelector)
                     .accessibilityIdentifier("interruptorOcultarSelector")
+                Toggle("Ocultar importes", isOn: $ocultarImportes)
+                    .accessibilityIdentifier("interruptorOcultarImportes")
             } header: {
                 Text("Seguridad")
             } footer: {
-                Text("Al abrir la app y al volver a ella se pide \(BloqueoBiometrico.biometria ?? "Face ID") o el código del iPhone. Con «Ocultar», el contenido no se ve al cambiar de app.")
+                Text("Al abrir la app y al volver a ella se pide \(BloqueoBiometrico.biometria ?? "Face ID") o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas.")
             }
             .filaLista()
 
@@ -109,6 +113,10 @@ struct AjustesView: View {
                     Label(cacheVaciada ? "Caché vaciada" : "Vaciar la caché", systemImage: cacheVaciada ? "checkmark.circle" : "trash")
                 }
                 .accessibilityIdentifier("botonVaciarCache")
+                Button(role: .destructive) { confirmarRestablecer = true } label: {
+                    Label("Restablecer los ajustes", systemImage: "arrow.counterclockwise")
+                }
+                .accessibilityIdentifier("botonRestablecerAjustes")
             }
             .filaLista()
 
@@ -146,6 +154,21 @@ struct AjustesView: View {
         .confirmationDialog("¿Cerrar sesión?", isPresented: $confirmarSalida, titleVisibility: .visible) {
             Button("Cerrar sesión", role: .destructive) { sesion.cerrarSesion() }
         }
+        .confirmationDialog("¿Restablecer los ajustes de la app?", isPresented: $confirmarRestablecer, titleVisibility: .visible) {
+            Button("Restablecer", role: .destructive) { Self.restablecer() }
+        } message: {
+            Text("Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian.")
+        }
+    }
+
+    /// Borra las preferencias guardadas en el iPhone (no la sesión ni los datos del servidor).
+    static func restablecer() {
+        let claves = [Apariencia.clave, Preferencias.tamanoTexto, Preferencias.negrita, Preferencias.pestanaInicio,
+                      BloqueoBiometrico.clave, Preferencias.ocultarEnSelector, Preferencias.ocultarImportes,
+                      Preferencias.vibracion, Preferencias.lengueta, Preferencias.lenguetaPosicion,
+                      Preferencias.avisosCobros, Preferencias.avisosIncidencias, Preferencias.avisosMensajes,
+                      Preferencias.avisosContratos, Preferencias.diaRecordatorio]
+        claves.forEach { UserDefaults.standard.removeObject(forKey: $0) }
     }
 }
 

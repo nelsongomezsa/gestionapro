@@ -247,6 +247,8 @@ enum Preferencias {
     static let tamanoTexto = "ajustes.texto.tamano"
     static let negrita = "ajustes.texto.negrita"
     static let ocultarEnSelector = "ajustes.seguridad.ocultarEnSelector"
+    /// Modo privado: las cifras principales se ocultan hasta tocarlas (como en las apps de bancos).
+    static let ocultarImportes = "ajustes.privacidad.ocultarImportes"
     static let avisosCobros = "ajustes.avisos.cobros"
     static let avisosIncidencias = "ajustes.avisos.incidencias"
     static let avisosMensajes = "ajustes.avisos.mensajes"

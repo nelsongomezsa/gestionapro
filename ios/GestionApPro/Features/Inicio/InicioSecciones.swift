@@ -11,7 +11,7 @@ struct HeroeInicio: View {
         let pendiente = max(d.esperadoMes - d.cobradoMes, 0)
         let progreso = d.esperadoMes > 0 ? (d.cobradoMes / d.esperadoMes).double : 0
         TarjetaHero(titulo: "Cobrado este mes", valor: Formato.euros(d.cobradoMes),
-                    accesorio: d.tendenciaPct.map { t in
+                    accesorio: (InicioViewModel.mostrarComparacion(cobrado: d.cobradoMes) ? d.tendenciaPct : nil).map { t in
                         AnyView(InsigniaEstado(texto: "\(Formato.porcentaje(abs(t))) vs. \(d.mesComparado).",
                                                tono: Tono.signo(t),
                                                icono: t >= 0 ? "arrow.up.right" : "arrow.down.right")

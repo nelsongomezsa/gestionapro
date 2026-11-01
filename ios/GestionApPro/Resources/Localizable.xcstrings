@@ -1601,6 +1601,38 @@
         }
       }
     },
+    "Ocultar importes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide amounts"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar importes"
+          }
+        }
+      }
+    },
+    "Oculto. Toca dos veces para verlo.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hidden. Double-tap to show it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oculto. Toca dos veces para verlo."
+          }
+        }
+      }
+    },
     "Ocupación": {
       "localizations": {
         "en": {
@@ -1917,6 +1949,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Registrar pago"
+          }
+        }
+      }
+    },
+    "Restablecer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
+          }
+        }
+      }
+    },
+    "Restablecer los ajustes": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset settings"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer los ajustes"
           }
         }
       }
@@ -2257,6 +2321,22 @@
         }
       }
     },
+    "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They return to their defaults; your account and data don’t change."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian."
+          }
+        }
+      }
+    },
     "WhatsApp": {
       "localizations": {
         "en": {
@@ -2365,6 +2445,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "¿Eliminar tu cuenta para siempre?"
+          }
+        }
+      }
+    },
+    "¿Restablecer los ajustes de la app?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset the app’s settings?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer los ajustes de la app?"
           }
         }
       }

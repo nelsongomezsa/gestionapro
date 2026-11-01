@@ -22,4 +22,13 @@ struct AjustesTests {
         #expect(Pestana.de(.alquiler, gestiona: true) == .inicio)
         #expect(Pestana.de(.mensajes, gestiona: false) == .mensajes)
     }
+
+    @MainActor @Test func comparacionDelMes_noSeMuestraAlEmpezarElMesNiSinCobros() {
+        let f = ISO8601DateFormatter()
+        let dia3 = f.date(from: "2026-11-03T10:00:00Z")!
+        let dia6 = f.date(from: "2026-11-06T10:00:00Z")!
+        #expect(!InicioViewModel.mostrarComparacion(cobrado: 700, hoy: dia3))
+        #expect(InicioViewModel.mostrarComparacion(cobrado: 700, hoy: dia6))
+        #expect(!InicioViewModel.mostrarComparacion(cobrado: 0, hoy: dia6))
+    }
 }
