@@ -125,21 +125,16 @@ struct Recorrido {
         try FileManager.default.createDirectory(at: carpeta, withIntermediateDirectories: true)
 
         let app = XCUIApplication()
-        app.launchArguments = ["-reiniciarSesion"]
+        app.launchArguments = argumentos()
         // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
         app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
 
         let r = Recorrido(app: app, carpeta: carpeta)
-        let campoEmail = app.textFields["Email"]
+        let campoEmail = app.textFields["campoEmail"]
         r.esperar(campoEmail)
         if capturarLogin { r.capturar("01-login") }
-        campoEmail.tap()
-        campoEmail.typeText(email)
-        let campoPassword = app.secureTextFields["Contraseña"]
-        campoPassword.tap()
-        campoPassword.typeText(password)
-        app.buttons["Iniciar sesión"].tap()
+        r.entrar(email: email, password: password)
         return r
     }
 
@@ -186,19 +181,32 @@ struct Recorrido {
     /// Cierra la app y entra con otra cuenta.
     func relanzar(email: String, password: String) -> Recorrido {
         app.terminate()
-        app.launchArguments = ["-reiniciarSesion"]
+        app.launchArguments = Self.argumentos()
         // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
         app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
-        let campoEmail = app.textFields["Email"]
-        esperar(campoEmail)
+        esperar(app.textFields["campoEmail"])
+        entrar(email: email, password: password)
+        return self
+    }
+
+    func entrar(email: String, password: String) {
+        let campoEmail = app.textFields["campoEmail"]
         campoEmail.tap()
         campoEmail.typeText(email)
-        let campoPassword = app.secureTextFields["Contraseña"]
+        let campoPassword = app.secureTextFields["campoPassword"]
         campoPassword.tap()
         campoPassword.typeText(password)
-        app.buttons["Iniciar sesión"].tap()
-        return self
+        app.buttons["botonEntrar"].tap()
+    }
+
+    /// CAPTURAS_IDIOMA=en abre la app en inglés.
+    static func argumentos() -> [String] {
+        var a = ["-reiniciarSesion"]
+        if let idioma = ProcessInfo.processInfo.environment["CAPTURAS_IDIOMA"], !idioma.isEmpty {
+            a += ["-AppleLanguages", "(\(idioma))", "-AppleLocale", idioma == "en" ? "en_US" : "es_ES"]
+        }
+        return a
     }
 
     /// Primera notificación tocable: los avisos del mismo tipo van agrupados y hay que desplegar el grupo.
@@ -528,6 +536,8 @@ extension CapturasUITests {
         r.capturar("08-perfil")
         r.desplazarHasta(r.elemento(contiene: "Incidencias abiertas"))
         r.capturar("09-perfil-estadisticas")
+        r.app.swipeDown(); r.app.swipeDown()
+        r.pausa(1)
         r.desplazarHasta(r.app.buttons["botonEditarPerfil"]).tap()
         r.esperar(r.app.navigationBars["Editar perfil"])
         r.capturar("10-editar-perfil")
@@ -544,7 +554,7 @@ extension CapturasUITests {
 
         // Registro del inquilino con su código
         r.app.terminate()
-        r.app.launchArguments = ["-reiniciarSesion"]
+        r.app.launchArguments = Recorrido.argumentos()
         r.app.launch()
         r.esperar(r.app.buttons["botonTengoCodigo"])
         r.app.buttons["botonTengoCodigo"].tap()
@@ -817,7 +827,7 @@ extension CapturasUITests {
         ri.capturar("04-perfil-inquilino")
 
         ri.app.terminate()
-        ri.app.launchArguments = ["-reiniciarSesion"]
+        ri.app.launchArguments = Recorrido.argumentos()
         ri.app.launch()
         ri.app.buttons["botonTengoCodigo"].tap()
         ri.esperar(ri.app.navigationBars["Crear mi cuenta"])
@@ -1215,6 +1225,95 @@ extension CapturasUITests {
         r.esperar(r.app.descendants(matching: .any).matching(identifier: "contextoAsistente").firstMatch)
         r.pausa(1)
         r.capturar("03-lengueta-con-contexto-piso")
+    }
+
+    /// Ajustes completo (desde Más y desde Perfil): apariencia con efecto inmediato, texto, notificaciones,
+    /// datos, cuenta y acerca de.
+    @MainActor
+    func testFinalAjustes() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+        r.pausa(1)
+        r.capturar("01-ajustes-arriba")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-ajustes-medio")
+        for _ in 0..<4 { r.app.swipeUp() }
+        r.pausa(1.5)
+        r.capturar("03-ajustes-abajo")
+        r.app.swipeDown(); r.app.swipeDown()
+        r.pausa(1)
+
+        r.app.buttons["enlaceTexto"].tap()
+        r.esperar(r.app.switches["interruptorTamanoSistema"])
+        let tamanoSistema = r.app.switches["interruptorTamanoSistema"]
+        func pulsarInterruptor(_ e: XCUIElement) {
+            let interior = e.switches.firstMatch
+            if interior.exists { interior.tap() } else { e.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap() }
+        }
+        pulsarInterruptor(tamanoSistema)
+        r.pausa(1)
+        r.capturar("04a-texto-tras-pulsar")
+        r.esperar(r.app.sliders["deslizadorTexto"])
+        r.app.sliders["deslizadorTexto"].adjust(toNormalizedSliderPosition: 0.75)
+        r.pausa(1)
+        r.capturar("04-texto")
+        pulsarInterruptor(tamanoSistema)
+        r.atras()
+
+        r.app.buttons["enlaceNotificaciones"].tap()
+        r.pausa(1)
+        r.capturar("05-notificaciones")
+        r.atras()
+
+        r.desplazarHasta(r.app.buttons["enlaceAcercaDe"]).tap()
+        r.pausa(1)
+        r.capturar("06-acerca-de")
+        r.app.buttons["enlaceLicencias"].tap()
+        r.pausa(1)
+        r.capturar("07-licencias")
+        r.atras(); r.atras()
+
+        // Desde Perfil también se llega.
+        r.pestana("Más")
+        r.app.buttons["enlacePerfil"].firstMatch.tap()
+        r.desplazarHasta(r.app.buttons["enlaceAjustesPerfil"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+    }
+
+    /// Eliminar cuenta con una cuenta de prueba creada por la API (base de pruebas): doble confirmación
+    /// y contraseña; al terminar vuelve al login y esa cuenta ya no entra.
+    @MainActor
+    func testFinalEliminarCuenta() throws {
+        let datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
+        let email = "baja.uitest.\(Int(Date().timeIntervalSince1970))@example.com"
+        let password = "Prueba-Baja-\(UUID().uuidString.prefix(8))"
+        _ = try DatosPrueba.pedir(datos.api, "POST", "/api/usuarios",
+                                  ["nombre": "Cuenta de prueba", "email": email, "password": password, "rol": "PROPIETARIO"], token: datos.token)
+
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        _ = r.relanzar(email: email, password: password)
+        r.esperar(r.app.buttons["pestana:Más"])
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.desplazarHasta(r.app.buttons["ajustesEliminarCuenta"]).tap()
+        let campo = r.app.secureTextFields["campoPasswordEliminar"]
+        r.esperar(campo)
+        campo.tap()
+        campo.typeText(password)
+        r.capturar("01-eliminar-cuenta")
+        r.app.buttons["botonEliminarCuenta"].tap()
+        r.esperar(r.app.alerts.firstMatch)
+        r.capturar("02-confirmacion")
+        r.app.alerts.firstMatch.buttons["Eliminar"].tap()
+        r.esperar(r.app.textFields["campoEmail"], timeout: 20)
+        r.capturar("03-vuelve-al-login")
+        // La cuenta ya no entra.
+        XCTAssertThrowsError(try DatosPrueba.pedir(datos.api, "POST", "/api/auth/login", ["email": email, "password": password]))
     }
 
     /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas

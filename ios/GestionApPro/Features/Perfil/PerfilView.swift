@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Destinos que se abren desde el perfil.
 enum DestinoPerfil: Hashable {
-    case actividad
+    case actividad, ajustes
 }
 
 /// Perfil del escritorio: datos de la cuenta, editar nombre y email, cambiar contraseña,
@@ -13,11 +13,6 @@ struct PerfilView: View {
     @State private var confirmarSalida = false
     @State private var hoja: Hoja?
     @State private var resumen: Dashboard?
-    @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
-    @AppStorage(Preferencias.lengueta) private var asistenteFlotante = true
-    @AppStorage(BloqueoBiometrico.clave) private var entrarConFaceID = false
-    @AppStorage(AvisosLocales.clave) private var recordatorios = false
-    @State private var sinPermiso = false
 
     private enum Hoja: String, Identifiable {
         case editar, password, cobro
@@ -90,59 +85,14 @@ struct PerfilView: View {
             }
 
             Section {
-                Toggle("Recordatorios en este iPhone", isOn: $recordatorios)
-                    .accessibilityIdentifier("interruptorRecordatorios")
-                    .onChange(of: recordatorios) { _, activo in
-                        Task {
-                            if activo {
-                                if await AvisosLocales.activar() == false {
-                                    recordatorios = false
-                                    sinPermiso = true
-                                }
-                            } else {
-                                AvisosLocales.desactivar()
-                            }
-                        }
-                    }
-            } footer: {
-                Text(sinPermiso
-                     ? "Permite las notificaciones de GestionAp en los Ajustes del iPhone."
-                     : actual.rol.gestionaPisos
-                        ? "El día \(AvisosLocales.diaLimite + 1) de cada mes, revisar los cobros, y una semana antes de que termine un contrato."
-                        : "Tres días antes de que venza la renta de cada mes.")
-            }
-            .filaLista()
-
-            Section {
-                Toggle("Entrar con \(BloqueoBiometrico.biometria ?? "Face ID")", isOn: $entrarConFaceID)
-                    .disabled(BloqueoBiometrico.biometria == nil && !entrarConFaceID)
-                    .accessibilityIdentifier("interruptorFaceID")
-            } footer: {
-                Text(BloqueoBiometrico.biometria == nil
-                     ? "Configura Face ID en los Ajustes del iPhone para usarlo aquí."
-                     : "La app se bloquea al abrirla o al volver a ella, y se desbloquea con tu cara o el código del iPhone.")
-            }
-            .filaLista()
-
-            Section {
-                Picker("Apariencia", selection: $apariencia) {
-                    ForEach(Apariencia.allCases) { Text($0.nombre).tag($0) }
+                NavigationLink(value: DestinoPerfil.ajustes) {
+                    Label("Ajustes", systemImage: "gearshape")
                 }
-                .accessibilityIdentifier("selectorApariencia")
+                .accessibilityIdentifier("enlaceAjustesPerfil")
             } footer: {
-                Text("Automático sigue el modo claro u oscuro del iPhone.")
+                Text("Apariencia, texto, seguridad, notificaciones, idioma, datos y cuenta.")
             }
             .filaLista()
-
-            if usuario.rol.gestionaPisos {
-                Section {
-                    Toggle("Lengüeta del asistente", isOn: $asistenteFlotante)
-                        .accessibilityIdentifier("interruptorAsistenteFlotante")
-                } footer: {
-                    Text("Una pestaña fina en el borde derecho abre el asistente; conoce el piso, contrato o inquilino que tengas abierto.")
-                }
-                .filaLista()
-            }
 
             Section {
                 Button("Cerrar sesión", role: .destructive) { confirmarSalida = true }
@@ -160,8 +110,11 @@ struct PerfilView: View {
         }
         .estiloLista()
         .navigationTitle("Perfil")
-        .navigationDestination(for: DestinoPerfil.self) { _ in
-            ActividadView(soloMia: true)
+        .navigationDestination(for: DestinoPerfil.self) { destino in
+            switch destino {
+            case .actividad: ActividadView(soloMia: true)
+            case .ajustes: AjustesView(usuario: actual)
+            }
         }
         .sheet(item: $hoja) { hoja in
             NavigationStack {

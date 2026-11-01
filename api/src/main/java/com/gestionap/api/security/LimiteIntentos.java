@@ -53,6 +53,23 @@ public class LimiteIntentos {
         sumar(claveIp(ip), ahora);
     }
 
+    /** Acciones de un usuario ya identificado (cambiar contraseña, eliminar cuenta): solo cuentan los fallos. */
+    public void comprobarUsuario(Integer idUsuario) {
+        exigir(claveUsuario(idUsuario), maxFallosPorEmail, reloj.instant());
+    }
+
+    public void falloUsuario(Integer idUsuario) {
+        sumar(claveUsuario(idUsuario), reloj.instant());
+    }
+
+    public void aciertoUsuario(Integer idUsuario) {
+        ventanas.remove(claveUsuario(idUsuario));
+    }
+
+    private static String claveUsuario(Integer id) {
+        return "usuario:" + id;
+    }
+
     public void fallo(String email) {
         if (email != null) sumar(claveEmail(email), reloj.instant());
     }

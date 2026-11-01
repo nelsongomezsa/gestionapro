@@ -41,7 +41,7 @@ struct SeccionTarjeta<Contenido: View, Accion: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
             HStack(alignment: .firstTextBaseline) {
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
                     .font(Tema.Fuente.tituloSeccion)
                     .foregroundStyle(Tema.Color.texto)
                     .accessibilityAddTraits(.isHeader)
@@ -65,14 +65,14 @@ extension SeccionTarjeta where Accion == EmptyView {
 
 /// Apariencia elegida en Perfil. Por defecto sigue al sistema.
 enum Apariencia: String, CaseIterable, Identifiable {
-    case sistema, oscuro, claro
+    case sistema, claro, oscuro
 
     static let clave = "apariencia"
     var id: String { rawValue }
 
     var nombre: String {
         switch self {
-        case .sistema: "Automático"
+        case .sistema: "Sistema"
         case .oscuro: "Oscuro"
         case .claro: "Claro"
         }

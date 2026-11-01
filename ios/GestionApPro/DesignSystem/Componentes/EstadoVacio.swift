@@ -12,7 +12,7 @@ struct EstadoVacio: View {
         ContentUnavailableView {
             Label(titulo, systemImage: icono)
         } description: {
-            if let mensaje { Text(mensaje) }
+            if let mensaje { Text(LocalizedStringKey(mensaje)) }
         } actions: {
             if let accionTitulo, let accion {
                 Button(accionTitulo, action: accion)

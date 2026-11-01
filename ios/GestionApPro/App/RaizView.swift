@@ -6,6 +6,7 @@ struct RaizView: View {
     @Environment(\.scenePhase) private var fase
     @AppStorage(Apariencia.clave) private var apariencia: Apariencia = .sistema
     @State private var bloqueo = BloqueoBiometrico()
+    @AppStorage(Preferencias.ocultarEnSelector) private var ocultarEnSelector = true
 
     var body: some View {
         Group {
@@ -35,6 +36,17 @@ struct RaizView: View {
             }
         }
         .preferredColorScheme(apariencia.esquema)
+        // Ajustes › Texto: tamaño propio de la app (si no, el del iPhone) y negrita.
+        .modifier(TextoDeLaApp())
+        // Ajustes › Seguridad: con la app en el selector de apps no se ve el contenido.
+        .overlay {
+            if ocultarEnSelector && fase != .active {
+                ZStack {
+                    Tema.Color.fondo.ignoresSafeArea()
+                    Image("LogoArranque").accessibilityHidden(true)
+                }
+            }
+        }
         .task {
             bloqueo.bloquearSiProcede()
             await sesion.restaurar()
@@ -90,10 +102,9 @@ struct PestanasView: View {
                     .id("\(item.pestana.rawValue)-\(reinicios[item.pestana, default: 0])")
                     // La barra del sistema se oculta: solo hay una fila de controles, la propia.
                     .toolbar(.hidden, for: .tabBar)
-                    // Hueco invisible del alto de la barra: el último elemento de cada lista queda a la vista.
-                    .safeAreaInset(edge: .bottom, spacing: 0) {
-                        Color.clear.frame(height: pantalla.sinBarra > 0 ? 0 : BarraPestanas.alto + 6)
-                    }
+                    // Margen del alto de la barra en todo lo que se desplaza (también en las pantallas que se
+                    // abren dentro de la pestaña): el último elemento de cada lista queda a la vista.
+                    .contentMargins(.bottom, pantalla.sinBarra > 0 ? 0 : BarraPestanas.alto + 14, for: .scrollContent)
                     .tag(item.pestana)
             }
         }
@@ -232,9 +243,39 @@ enum Preferencias {
     static let lengueta = "ajustes.asistente.lengueta"
     static let lenguetaPosicion = "ajustes.asistente.lengueta.posicion"
     static let vibracion = "ajustes.vibracion"
+    /// Tamaño del texto dentro de la app: -1 sigue al del iPhone; si no, índice en `DynamicTypeSize.allCases`.
+    static let tamanoTexto = "ajustes.texto.tamano"
+    static let negrita = "ajustes.texto.negrita"
+    static let ocultarEnSelector = "ajustes.seguridad.ocultarEnSelector"
+    static let avisosCobros = "ajustes.avisos.cobros"
+    static let avisosIncidencias = "ajustes.avisos.incidencias"
+    static let avisosMensajes = "ajustes.avisos.mensajes"
+    static let avisosContratos = "ajustes.avisos.contratos"
+    /// Día del mes del recordatorio de cobro: 0 = automático (el de siempre según el rol).
+    static let diaRecordatorio = "ajustes.avisos.dia"
 
     /// Lectura para código que no es una vista (las vistas usan @AppStorage).
     static func activado(_ clave: String, porDefecto: Bool = true) -> Bool {
         UserDefaults.standard.object(forKey: clave) as? Bool ?? porDefecto
+    }
+}
+
+/// Tamaño del texto de la app (Ajustes › Texto) y negrita. Una sola rama: si cambiara de rama al mover
+/// el ajuste, SwiftUI recrearía toda la app (se perdían la pestaña y la navegación).
+struct TextoDeLaApp: ViewModifier {
+    @AppStorage(Preferencias.tamanoTexto) private var tamano = -1
+    @AppStorage(Preferencias.negrita) private var negrita = false
+
+    private var rango: ClosedRange<DynamicTypeSize> {
+        let tamanos = DynamicTypeSize.allCases
+        guard tamano >= 0 else { return tamanos.first!...tamanos.last! }
+        let t = tamanos[min(tamano, tamanos.count - 1)]
+        return t...t
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .dynamicTypeSize(rango)
+            .environment(\.legibilityWeight, negrita ? .bold : nil)
     }
 }

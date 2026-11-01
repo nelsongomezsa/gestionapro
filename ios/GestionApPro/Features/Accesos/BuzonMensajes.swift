@@ -19,7 +19,7 @@ final class BuzonMensajes {
     /// Separado de la red para poder probarlo.
     func aplicar(_ conversaciones: [Conversacion]) {
         let total = conversaciones.reduce(0) { $0 + Int($1.sinLeer) }
-        if !primeraCarga, total > sinLeer {
+        if !primeraCarga, total > sinLeer, Preferencias.activado(Preferencias.avisosMensajes) {
             nuevo = conversaciones.filter { $0.sinLeer > 0 && !$0.ultimoMio }.max { $0.fecha < $1.fecha }
         }
         sinLeer = total

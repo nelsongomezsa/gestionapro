@@ -26,7 +26,7 @@ struct TarjetaKPI: View {
                     .contentTransition(.numericText())
                     .animation(Tema.Movimiento.suave, value: valor)
                 // Con texto grande de accesibilidad, el título pasa a varias líneas en vez de encogerse.
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
                     .font(Tema.Fuente.detalle.weight(.medium))
                     .foregroundStyle(Tema.Color.texto)
                     .lineLimit(tamanoTexto.isAccessibilitySize ? 3 : 1)
@@ -37,7 +37,7 @@ struct TarjetaKPI: View {
                                    tono: Tono.signo(tendencia),
                                    icono: tendencia >= 0 ? "arrow.up.right" : "arrow.down.right")
                 } else if let detalle {
-                    Text(detalle)
+                    Text(LocalizedStringKey(detalle))
                         .font(Tema.Fuente.nota)
                         .foregroundStyle(Tema.Color.textoSecundario)
                         .lineLimit(1)

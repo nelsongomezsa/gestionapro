@@ -361,6 +361,7 @@ CREATE TABLE `Usuarios` (
   `rol` enum('admin','usuario','inquilino') NOT NULL DEFAULT 'usuario',
   `activo` tinyint(1) NOT NULL DEFAULT 1,
   `debe_cambiar_password` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1: contraseña antigua (SHA-256 sin sal); la API solo deja cambiarla',
+  `fecha_baja` datetime DEFAULT NULL COMMENT 'Cuenta eliminada por su titular: datos personales anonimizados; se conservan contratos y pagos',
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `uq_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;

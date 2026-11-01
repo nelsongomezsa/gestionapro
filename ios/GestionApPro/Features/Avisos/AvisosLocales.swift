@@ -11,6 +11,11 @@ enum AvisosLocales {
     static let diaLimite = 7
 
     static var activados: Bool { UserDefaults.standard.bool(forKey: clave) }
+    /// Día elegido en Ajustes (0 = el de siempre).
+    private static func dia(porDefecto: Int) -> Int {
+        let d = UserDefaults.standard.integer(forKey: Preferencias.diaRecordatorio)
+        return (1...28).contains(d) ? d : porDefecto
+    }
 
     /// Pide permiso y, si se concede, registra el iPhone para push. Devuelve si hay permiso.
     static func activar() async -> Bool {
@@ -29,8 +34,11 @@ enum AvisosLocales {
         guard activados else { return }
         let centro = UNUserNotificationCenter.current()
         centro.removeAllPendingNotificationRequests()
-        await mensual(id: "cobros-vencidos", dia: diaLimite + 1, titulo: "Cobros del mes",
-                      texto: "Hoy es día \(diaLimite + 1): revisa quién no ha pagado la renta.")
+        if Preferencias.activado(Preferencias.avisosCobros) {
+            await mensual(id: "cobros-vencidos", dia: dia(porDefecto: diaLimite + 1), titulo: String(localized: "Cobros del mes"),
+                          texto: String(localized: "Revisa quién no ha pagado la renta."))
+        }
+        guard Preferencias.activado(Preferencias.avisosContratos) else { return }
         for c in vencimientos.prefix(20) {
             guard let aviso = Calendar.current.date(byAdding: .day, value: -7, to: c.fechaFin), aviso > .now else { continue }
             var cuando = Calendar.current.dateComponents([.year, .month, .day], from: aviso)
@@ -48,7 +56,8 @@ enum AvisosLocales {
     static func programarInquilino(renta: Decimal) async {
         guard activados else { return }
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        await mensual(id: "pagar-renta", dia: diaLimite - 3, titulo: "Recuerda pagar la renta",
+        guard Preferencias.activado(Preferencias.avisosCobros) else { return }
+        await mensual(id: "pagar-renta", dia: dia(porDefecto: diaLimite - 3), titulo: String(localized: "Recuerda pagar la renta"),
                       texto: "La renta (\(Formato.euros(renta))) vence el día \(diaLimite).")
     }
 

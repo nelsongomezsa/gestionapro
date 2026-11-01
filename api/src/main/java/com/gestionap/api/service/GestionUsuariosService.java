@@ -1,5 +1,6 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.security.LimiteIntentos;
 import com.gestionap.api.security.PoliticaContrasenas;
 
 import com.gestionap.api.domain.Rol;
@@ -28,11 +29,13 @@ public class GestionUsuariosService {
     private final UsuarioRepository usuarios;
     private final PasswordEncoder encoder;
     private final PoliticaContrasenas politica;
+    private final LimiteIntentos limites;
     private final ActividadService actividad;
 
     public GestionUsuariosService(UsuarioRepository usuarios, PasswordEncoder encoder, ActividadService actividad,
-                                  PoliticaContrasenas politica) {
+                                  PoliticaContrasenas politica, LimiteIntentos limites) {
         this.politica = politica;
+        this.limites = limites;
         this.usuarios = usuarios;
         this.encoder = encoder;
         this.actividad = actividad;
@@ -40,10 +43,13 @@ public class GestionUsuariosService {
 
     @Transactional
     public void cambiarPassword(CambioPasswordRequest req, UsuarioAutenticado actor) {
+        limites.comprobarUsuario(actor.id());
         Usuario u = usuarios.findById(actor.id()).orElseThrow(() -> ApiException.noEncontrado("Usuario"));
         if (!encoder.matches(req.actual(), u.getPasswordHash())) {
+            limites.falloUsuario(actor.id());
             throw ApiException.badRequest("PASSWORD_ACTUAL_INCORRECTA", "La contraseña actual no es correcta");
         }
+        limites.aciertoUsuario(actor.id());
         if (encoder.matches(req.nueva(), u.getPasswordHash())) {
             throw ApiException.badRequest("PASSWORD_IGUAL", "La nueva contraseña debe ser distinta de la actual");
         }
@@ -79,7 +85,7 @@ public class GestionUsuariosService {
 
     @Transactional
     public UsuarioAdmin cambiarActivo(Integer id, boolean activo, UsuarioAutenticado actor) {
-        Usuario u = cargar(id);
+        Usuario u = cargarNoEliminado(id);
         if (u.getId().equals(actor.id()) && !activo) {
             throw ApiException.conflicto("NO_PUEDES_DESACTIVARTE", "No puedes desactivar tu propia cuenta");
         }
@@ -90,7 +96,7 @@ public class GestionUsuariosService {
 
     @Transactional
     public UsuarioAdmin cambiarRol(Integer id, Rol rol, UsuarioAutenticado actor) {
-        Usuario u = cargar(id);
+        Usuario u = cargarNoEliminado(id);
         if (u.getRol() == Rol.INQUILINO) {
             throw ApiException.conflicto("INQUILINO_NO_CAMBIA_ROL",
                     "Las cuentas de inquilino no pueden cambiar de rol (le daría acceso a todos los datos)");
@@ -104,6 +110,13 @@ public class GestionUsuariosService {
         u.setRol(rol);
         actividad.registrar(actor.id(), "CAMBIAR_ROL", u.getNombre() + " → " + rol);
         return UsuarioAdmin.de(u);
+    }
+
+    /** Una cuenta eliminada por su titular no se reactiva ni cambia de rol. */
+    private Usuario cargarNoEliminado(Integer id) {
+        Usuario u = cargar(id);
+        if (u.getFechaBaja() != null) throw ApiException.conflicto("CUENTA_ELIMINADA", "Esta cuenta fue eliminada por su titular");
+        return u;
     }
 
     private Usuario cargar(Integer id) {

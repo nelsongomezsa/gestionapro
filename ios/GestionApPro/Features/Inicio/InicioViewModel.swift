@@ -61,7 +61,7 @@ final class InicioViewModel {
 
     static func saludo(nombre: String?) -> String {
         let primero = nombre?.split(separator: " ").first.map(String.init) ?? ""
-        return primero.isEmpty ? "Inicio" : "Hola, \(primero)"
+        return primero.isEmpty ? String(localized: "Inicio") : String(localized: "Hola, \(primero)")
     }
 
     /// Guarda el resumen del mes para el widget y le pide que se redibuje.

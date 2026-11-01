@@ -15,6 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     boolean existsByEmail(String email);
 
+    @org.springframework.data.jpa.repository.Query(
+            "select count(u) from Usuario u where u.rol = com.gestionap.api.domain.Rol.ADMIN and u.activo = true and u.fechaBaja is null")
+    long contarAdminsActivos();
+
     /** Bloquea la fila del usuario hasta el final de la transacción (generar avisos de uno en uno). */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select u from Usuario u where u.id = :id")

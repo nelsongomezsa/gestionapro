@@ -13,7 +13,7 @@ struct TarjetaHero<Contenido: View>: View {
         VStack(alignment: .leading, spacing: Tema.Espacio.m) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(titulo)
+                    Text(LocalizedStringKey(titulo))
                         .font(Tema.Fuente.detalle)
                         .foregroundStyle(Tema.Color.textoSecundario)
                     Spacer(minLength: Tema.Espacio.xs)
@@ -67,7 +67,7 @@ struct DatoCompacto: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-            Text(titulo)
+            Text(LocalizedStringKey(titulo))
                 .font(Tema.Fuente.nota)
                 .foregroundStyle(Tema.Color.textoSecundario)
             Text(valor)
@@ -111,7 +111,7 @@ struct BotonSecundario: View {
         Button(action: accion) {
             HStack(spacing: Tema.Espacio.xs) {
                 if cargando { ProgressView() } else if let icono { Image(systemName: icono) }
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
             }
             .font(Tema.Fuente.detalle.weight(.semibold))
             .foregroundStyle(Tema.Color.primario)
