@@ -44,7 +44,7 @@ struct RentabilidadHojaView: View {
                     Button("Cerrar", systemImage: "xmark") { cerrar() }
                 }
             }
-            .navigationDestination(isPresented: $simulando) { CalculadoraView(entrada: .desde(piso)) }
+            .navigationDestination(isPresented: $simulando) { CalculadoraView(entrada: .desde(piso), idPiso: piso.id, nombre: piso.direccion) }
             .task { await cargar() }
         }
     }

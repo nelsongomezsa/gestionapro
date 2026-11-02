@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Lo que se crea desde el botón «+» (y desde Siri), más el panel del asistente.
 enum AccesoRapido: String, Identifiable {
-    case pago, incidencia, gasto, mensajeNuevo, mensajes, asistente
+    case pago, incidencia, gasto, mensajeNuevo, mensajes, asistente, analisis
     var id: String { rawValue }
 
     var titulo: LocalizedStringKey {
@@ -13,6 +13,7 @@ enum AccesoRapido: String, Identifiable {
         case .mensajeNuevo: "Mensaje nuevo"
         case .mensajes: "Mensajes"
         case .asistente: "Asistente"
+        case .analisis: "Analizar un piso nuevo"
         }
     }
 
@@ -24,6 +25,7 @@ enum AccesoRapido: String, Identifiable {
         case .mensajeNuevo: "square.and.pencil"
         case .mensajes: "bubble.left.and.bubble.right"
         case .asistente: "sparkles"
+        case .analisis: "function"
         }
     }
 }
@@ -47,7 +49,7 @@ struct MenuCrear: View {
             .navigationTitle("Crear")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .presentationDetents([.height(CGFloat(130 + opciones.count * 64)), .medium])
+        .presentationDetents([.height(CGFloat(150 + opciones.count * 66)), .medium])
         .presentationDragIndicator(.visible)
     }
 }

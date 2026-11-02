@@ -23,7 +23,12 @@ struct PisosListaView: View {
                         .disabled(vm.estado.valor?.isEmpty ?? true)
                 }
             }
-            .navigationDestination(for: DestinoListaPisos.self) { _ in MapaPisosView(pisos: vm.estado.valor ?? []) }
+            .navigationDestination(for: DestinoListaPisos.self) { destino in
+                switch destino {
+                case .mapa: MapaPisosView(pisos: vm.estado.valor ?? [])
+                case .calculadora: CalculadoraView()
+                }
+            }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
         }
@@ -38,6 +43,12 @@ struct PisosListaView: View {
             LazyVStack(spacing: Tema.Espacio.s) {
                 ResumenCarteraView(resumen: vm.resumen)
                     .padding(.bottom, Tema.Espacio.xs)
+
+                // La calculadora sin pestaña propia: aquí, en el «+» y en cada piso (Simular).
+                NavigationLink(value: DestinoListaPisos.calculadora) { TarjetaAnalizarInversion() }
+                    .buttonStyle(EstiloPulsable())
+                    .accessibilityHint("Abre la calculadora de rentabilidad")
+                    .accessibilityIdentifier("analizarInversion")
 
                 if pisos.isEmpty {
                     if vm.estado.valor?.isEmpty == true {
@@ -127,4 +138,25 @@ extension Piso: Hashable {
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
-enum DestinoListaPisos: Hashable { case mapa }
+enum DestinoListaPisos: Hashable { case mapa, calculadora }
+
+/// Acceso a la calculadora desde Pisos: estudiar un piso antes de comprarlo.
+private struct TarjetaAnalizarInversion: View {
+    var body: some View {
+        HStack(spacing: Tema.Espacio.s) {
+            IconoEtiqueta(icono: "function", tono: .primario)
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+                Text("Analizar una inversión").font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                Text("Rentabilidad, hipoteca y cash flow de un piso antes de comprarlo; guarda y compara.")
+                    .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading)
+            }
+            Spacer(minLength: Tema.Espacio.xs)
+            ChevronTocable()
+        }
+        .tarjeta()
+        .contentShape(.rect)
+        .accessibilityElement(children: .combine)
+    }
+}

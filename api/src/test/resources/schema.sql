@@ -247,3 +247,13 @@ CREATE TABLE Dispositivos (
     plataforma     VARCHAR(10) NOT NULL DEFAULT 'IOS',
     fecha_alta     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE AnalisisInversion (
+    id_analisis         INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario          INT NOT NULL REFERENCES Usuarios (id_usuario) ON DELETE CASCADE,
+    id_piso             INT NULL REFERENCES Pisos (id_piso) ON DELETE SET NULL,
+    nombre              VARCHAR(80) NOT NULL,
+    datos               VARCHAR(2000) NOT NULL,
+    fecha_creacion      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

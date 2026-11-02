@@ -23,6 +23,16 @@
         }
       }
     },
+    "%@ (copia)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (copy)"
+          }
+        }
+      }
+    },
     "%@ a tiempo" : {
       "localizations" : {
         "en" : {
@@ -103,6 +113,16 @@
         }
       }
     },
+    "%@ de ocupación · %lld habitaciones libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ occupancy · %2$lld vacant rooms"
+          }
+        }
+      }
+    },
     "%@ meses" : {
       "localizations" : {
         "en" : {
@@ -149,6 +169,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · %@ al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@ per month"
           }
         }
       }
@@ -284,12 +314,32 @@
         }
       }
     },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
     "%lld altas · %lld bajas" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld new · %2$lld ended"
+          }
+        }
+      }
+    },
+    "%lld análisis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld analyses"
           }
         }
       }
@@ -360,6 +410,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld days"
+          }
+        }
+      }
+    },
+    "%lld en %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld in %2$@"
           }
         }
       }
@@ -450,6 +510,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "(Annual rent − annual expenses) ÷ total investment"
+          }
+        }
+      }
+    },
+    ", el mejor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", the best"
           }
         }
       }
@@ -584,6 +654,16 @@
         }
       }
     },
+    "Abre el análisis en la calculadora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the analysis in the calculator"
+          }
+        }
+      }
+    },
     "Abre el asistente sobre lo que tienes en pantalla" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -627,6 +707,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
+    "Abre la calculadora con los datos reales de este piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's actual data"
+          }
+        }
+      }
+    },
+    "Abre la calculadora de rentabilidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the yield calculator"
           }
         }
       }
@@ -893,6 +993,16 @@
         }
       }
     },
+    "Alquiler mensual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly rent"
+          }
+        }
+      }
+    },
     "Alquiler neto" : {
       "localizations" : {
         "en" : {
@@ -910,6 +1020,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analyse"
+          }
+        }
+      }
+    },
+    "Analizar un piso nuevo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse a new property"
+          }
+        }
+      }
+    },
+    "Analizar una inversión" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse an investment"
+          }
+        }
+      }
+    },
+    "Análisis del %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysis of %@"
+          }
+        }
+      }
+    },
+    "Análisis guardado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysis saved"
+          }
+        }
+      }
+    },
+    "Análisis guardados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved analyses"
           }
         }
       }
@@ -1037,6 +1197,16 @@
         }
       }
     },
+    "Añadir a la comparación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to comparison"
+          }
+        }
+      }
+    },
     "Año" : {
       "localizations" : {
         "en" : {
@@ -1053,6 +1223,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Previous year: %@"
+          }
+        }
+      }
+    },
+    "Años para recuperarla" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Years to recover it"
           }
         }
       }
@@ -1114,6 +1294,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buscar"
+          }
+        }
+      }
+    },
+    "Buscar por dirección o ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search by address or city"
           }
         }
       }
@@ -1213,6 +1403,16 @@
         }
       }
     },
+    "Capital aportado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equity contributed"
+          }
+        }
+      }
+    },
     "Capital propio" : {
       "localizations" : {
         "en" : {
@@ -1236,6 +1436,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cargando"
+          }
+        }
+      }
+    },
+    "Cargando…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading…"
+          }
+        }
+      }
+    },
+    "Cash flow al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly cash flow"
           }
         }
       }
@@ -1320,6 +1540,16 @@
         }
       }
     },
+    "Ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City"
+          }
+        }
+      }
+    },
     "Claro" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1380,6 +1610,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cobrado este mes"
+          }
+        }
+      }
+    },
+    "Cobrar %@ a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collect %1$@ from %2$@"
           }
         }
       }
@@ -1505,6 +1745,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compared with the previous year"
+          }
+        }
+      }
+    },
+    "Comparar %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare %lld"
+          }
+        }
+      }
+    },
+    "Comparar análisis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare analyses"
           }
         }
       }
@@ -1825,6 +2085,16 @@
       }
     },
     "Cuenta para los cobros" : {},
+    "Cuota de hipoteca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mortgage payment"
+          }
+        }
+      }
+    },
     "Código de invitación" : {},
     "Cómo se calcula" : {
       "localizations" : {
@@ -2073,6 +2343,16 @@
         }
       }
     },
+    "En la calculadora, pulsa Guardar para conservar una simulación y compararla después." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the calculator, tap Save to keep a simulation and compare it later."
+          }
+        }
+      }
+    },
     "En mantenimiento desde el %@" : {
       "localizations" : {
         "en" : {
@@ -2090,6 +2370,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In progress"
+          }
+        }
+      }
+    },
+    "En verde, el mejor valor de cada fila." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The best value in each row is in green."
           }
         }
       }
@@ -2243,6 +2533,16 @@
     },
     "Fianza" : {},
     "Fianza de %@." : {},
+    "Filtrar y ordenar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter and sort"
+          }
+        }
+      }
+    },
     "Fin" : {
       "localizations" : {
         "en" : {
@@ -2319,6 +2619,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Expenses"
+          }
+        }
+      }
+    },
+    "Gastos al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly expenses"
           }
         }
       }
@@ -2426,6 +2736,16 @@
       }
     },
     "Gestión de alquiler de habitaciones" : {},
+    "Guardado como «%@»" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved as “%@”"
+          }
+        }
+      }
+    },
     "Guardar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2439,6 +2759,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "Guardar análisis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save analysis"
+          }
+        }
+      }
+    },
+    "Guardar cambios" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save changes"
+          }
+        }
+      }
+    },
+    "Guardar como nuevo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save as new"
           }
         }
       }
@@ -2792,6 +3142,16 @@
       }
     },
     "Ingresos sin contrato (%@)" : {},
+    "Ingresos y gastos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income and expenses"
+          }
+        }
+      }
+    },
     "Ingresos y gastos por mes" : {
       "localizations" : {
         "en" : {
@@ -2879,6 +3239,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inventories"
+          }
+        }
+      }
+    },
+    "Inversión" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Investment"
           }
         }
       }
@@ -3142,6 +3512,26 @@
         }
       }
     },
+    "Mapa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Map"
+          }
+        }
+      }
+    },
+    "Marca 2 o 3 para compararlos lado a lado. Toca uno para abrirlo en la calculadora." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select 2 or 3 to compare them side by side. Tap one to open it in the calculator."
+          }
+        }
+      }
+    },
     "Marcar como disponible" : {
       "localizations" : {
         "en" : {
@@ -3182,6 +3572,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mensaje nuevo"
+          }
+        }
+      }
+    },
+    "Mensaje nuevo de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New message from %@"
           }
         }
       }
@@ -3386,6 +3786,16 @@
       }
     },
     "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar." : {},
+    "No se pudo conectar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't connect"
+          }
+        }
+      }
+    },
     "No se puede comparar: faltan datos en este piso o en los demás." : {
       "localizations" : {
         "en" : {
@@ -3408,6 +3818,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se puede deshacer."
+          }
+        }
+      }
+    },
+    "Nombre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
           }
         }
       }
@@ -3631,6 +4051,26 @@
       }
     },
     "Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha." : {},
+    "Ordenados por %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorted by %@"
+          }
+        }
+      }
+    },
+    "Ordenar por" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort by"
+          }
+        }
+      }
+    },
     "Organismo de tu comunidad autónoma" : {},
     "Orientativo" : {},
     "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza." : {},
@@ -3957,6 +4397,16 @@
         }
       }
     },
+    "Plusvalía a 10 años" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10-year capital gain"
+          }
+        }
+      }
+    },
     "Política de privacidad" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3970,6 +4420,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Política de privacidad"
+          }
+        }
+      }
+    },
+    "Ponle un nombre para encontrarlo y compararlo con otros." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Give it a name to find it and compare it with others."
           }
         }
       }
@@ -4011,6 +4471,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "By property · lowest first"
+          }
+        }
+      }
+    },
+    "Precio de compra" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase price"
           }
         }
       }
@@ -4073,6 +4543,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rank %1$lld: %2$@"
+          }
+        }
+      }
+    },
+    "Quitar de la comparación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove from comparison"
           }
         }
       }
@@ -4223,6 +4703,16 @@
         }
       }
     },
+    "Rentabilidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yield"
+          }
+        }
+      }
+    },
     "Rentabilidad bruta" : {
       "localizations" : {
         "en" : {
@@ -4239,6 +4729,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Net yield"
+          }
+        }
+      }
+    },
+    "Rentabilidad, hipoteca y cash flow de un piso antes de comprarlo; guarda y compara." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yield, mortgage and cash flow of a property before you buy it; save and compare."
+          }
+        }
+      }
+    },
+    "Responder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reply"
           }
         }
       }
@@ -4389,6 +4899,16 @@
         }
       }
     },
+    "Simular" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulate"
+          }
+        }
+      }
+    },
     "Simular en la calculadora" : {
       "localizations" : {
         "en" : {
@@ -4400,6 +4920,16 @@
       }
     },
     "Sin actividad registrada todavía." : {},
+    "Sin análisis guardados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No saved analyses"
+          }
+        }
+      }
+    },
     "Sin cobros atrasados" : {
       "localizations" : {
         "en" : {
@@ -4927,6 +5457,16 @@
         }
       }
     },
+    "Ver guardados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See saved"
+          }
+        }
+      }
+    },
     "Ver los %lld atrasados" : {
       "localizations" : {
         "en" : {
@@ -5141,6 +5681,16 @@
         }
       }
     },
+    "neta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "net"
+          }
+        }
+      }
+    },
     "ocupación" : {},
     "puntualidad" : {
       "localizations" : {
@@ -5148,6 +5698,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "on time"
+          }
+        }
+      }
+    },
+    "sin dato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no data"
           }
         }
       }
@@ -5178,6 +5738,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete the issue?"
+          }
+        }
+      }
+    },
+    "¿Borrar «%@»?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete “%@”?"
           }
         }
       }

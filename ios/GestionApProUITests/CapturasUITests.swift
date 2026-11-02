@@ -1492,6 +1492,66 @@ extension CapturasUITests {
         r.capturar("10-pdf")
     }
 
+    /// Fase 4 de inicio-tarjetas: calculadora desde Pisos, el «+» y cada piso; guardar y comparar.
+    @MainActor
+    func testFase4() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["analizarInversion"])
+        r.capturar("01-pisos-analizar-inversion")
+        r.app.buttons["analizarInversion"].tap()
+        r.esperar(r.app.buttons["guardarAnalisis"])
+        r.pausa(2)
+        r.capturar("02-calculadora")
+        func guardar(_ captura: String) {
+            r.app.buttons["guardarAnalisis"].tap()
+            r.esperar(r.app.alerts.firstMatch)
+            r.capturar(captura)
+            r.app.alerts.firstMatch.buttons["Guardar"].tap()
+            r.esperar(r.app.alerts["Análisis guardado"])
+        }
+        guardar("03-guardar-con-nombre")
+        r.app.alerts.firstMatch.buttons["Aceptar"].tap()
+        r.atras()
+
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.buttons["simularPiso"])
+        r.app.buttons["simularPiso"].tap()
+        r.esperar(r.app.buttons["guardarAnalisis"])
+        r.pausa(2)
+        r.capturar("04-simular-piso")
+        guardar("05-guardar-piso")
+        r.app.alerts.firstMatch.buttons["Ver guardados"].tap()
+        r.esperar(r.app.navigationBars["Análisis guardados"])
+        r.pausa(1)
+        let casillas = r.app.buttons.matching(identifier: "elegirAnalisis")
+        casillas.element(boundBy: 0).tap()
+        casillas.element(boundBy: 1).tap()
+        r.pausa(1)
+        r.capturar("06-guardados-elegidos")
+        r.app.buttons["comparar"].tap()
+        r.esperar(r.app.navigationBars["Comparar análisis"])
+        r.pausa(1)
+        r.capturar("07-comparar")
+        r.app.swipeUp()
+        r.capturar("08-comparar-abajo")
+        r.atras()
+        r.pausa(1)
+        r.atras()
+        r.pausa(1)
+        r.app.buttons["Cerrar"].firstMatch.tapSiExiste()
+        r.pausa(1)
+
+        r.app.buttons["botonCrear"].tap()
+        r.esperar(r.app.buttons["crear-analisis"])
+        r.capturar("09-menu-crear")
+        r.app.buttons["crear-analisis"].tap()
+        r.esperar(r.app.buttons["guardarAnalisis"])
+        r.pausa(2)
+        r.capturar("10-piso-nuevo")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {

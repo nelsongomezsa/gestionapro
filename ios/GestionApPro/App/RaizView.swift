@@ -134,7 +134,7 @@ struct PestanasView: View {
             else if usuario.rol.gestionaPisos, BienvenidaView.debeMostrarse(vista: bienvenidaVista) { bienvenida = true }
         }
         .sheet(isPresented: $creando) {
-            MenuCrear(opciones: usuario.rol.gestionaPisos ? [.pago, .incidencia, .gasto, .mensajeNuevo] : [.incidencia, .mensajeNuevo]) { o in
+            MenuCrear(opciones: usuario.rol.gestionaPisos ? [.pago, .incidencia, .gasto, .mensajeNuevo, .analisis] : [.incidencia, .mensajeNuevo]) { o in
                 creando = false
                 // Tras cerrar el menú, se abre la acción elegida.
                 Task { try? await Task.sleep(for: .milliseconds(350)); abierto = o }
@@ -213,6 +213,12 @@ struct PestanasView: View {
                     ConversacionesView()
                         .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
                 }
+            }
+        case .analisis:
+            // Un piso que aún no es tuyo: la calculadora en blanco, con guardar y comparar.
+            NavigationStack {
+                CalculadoraView(entrada: CalculadoraViewModel.vacio)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
             }
         case .asistente:
             NavigationStack {

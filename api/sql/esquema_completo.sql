@@ -1,5 +1,5 @@
 -- =====================================================================
--- gestionapro-api · Esquema completo (escritorio + V1–V8), SIN datos.
+-- gestionapro-api · Esquema completo (escritorio + V1–V11), SIN datos.
 -- Para crear la base en un servidor nuevo (ver docs/DESPLIEGUE.md):
 --   mysql -h <host> -u <usuario> -p <base> < esquema_completo.sql
 -- Generado con mysqldump --no-data a partir de gestion_alquileres_pro (MariaDB 10.4).
@@ -398,4 +398,19 @@ CREATE TABLE `dispositivos` (
   UNIQUE KEY `uk_dispositivos_token` (`token`),
   KEY `fk_dispositivos_usuario` (`id_usuario`),
   CONSTRAINT `fk_dispositivos_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `Usuarios` (`id_usuario`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+CREATE TABLE `AnalisisInversion` (
+  `id_analisis` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `id_piso` int(11) DEFAULT NULL COMMENT 'Piso del que salen los datos (botón Simular); NULL si es un piso nuevo',
+  `nombre` varchar(80) NOT NULL,
+  `datos` varchar(2000) NOT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id_analisis`),
+  KEY `idx_analisis_usuario` (`id_usuario`),
+  KEY `fk_analisis_piso` (`id_piso`),
+  CONSTRAINT `fk_analisis_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `Usuarios` (`id_usuario`) ON DELETE CASCADE,
+  CONSTRAINT `fk_analisis_piso` FOREIGN KEY (`id_piso`) REFERENCES `Pisos` (`id_piso`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;

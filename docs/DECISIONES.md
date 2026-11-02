@@ -40,3 +40,17 @@
   trabajo van a docs/capturas-local/, ignorada por git. No se ha reescrito el historial: las capturas antiguas
   siguen en commits anteriores.
 
+- Cobros atrasados: un mes anterior al actual sin ningún pago de un contrato vigente (el mismo criterio que el
+  resumen mensual), hasta 12 meses atrás (máximo 24). El retraso se cuenta desde el día 5, fin del plazo habitual.
+  Como los cobros se cuentan por la fecha del pago, Registrar propone el último día del mes adeudado (editable).
+  Los contratos ya terminados salen, pero sin Registrar (la API solo acepta pagos de contratos activos).
+  En Cobros se ven los 3 más antiguos y un enlace a la lista completa.
+- Agrupar por piso: un único componente (selector «Por piso / Todos» que se recuerda por pantalla y bloques
+  plegables con su resumen); por defecto «Todos», como estaba.
+- Estadísticas del periodo: la ocupación se calcula con los días cubiertos por contratos sobre las habitaciones
+  actuales (no hay historial de altas de habitaciones ni de mantenimiento) y sin contar días futuros; los meses
+  que aún no han empezado no tienen ocupación. Morosidad: meses vencidos sin pago y pagos tras el día 5.
+  El ranking de pisos va por resultado neto (ingresos − gastos reales del periodo). El PDF se genera en la app.
+- Análisis de inversión guardados (V11): se guarda la entrada de la calculadora y el resultado se recalcula al
+  leer (con los tipos de ITP vigentes). Cada usuario solo ve los suyos, también el admin; máximo 50.
+- Simular desde un piso: la comunidad autónoma no se deduce de la ciudad; la calculadora propone Madrid.

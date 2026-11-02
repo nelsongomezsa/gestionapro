@@ -561,3 +561,23 @@ extension Endpoint where Respuesta == Analisis {
                             URLQueryItem(name: "habitacion", value: habitacion.map(String.init))])
     }
 }
+
+// MARK: Análisis de inversión guardados
+
+extension Endpoint where Respuesta == [AnalisisGuardado] {
+    static let analisisGuardados = Endpoint(metodo: "GET", ruta: "/api/analisis-inversion")
+}
+
+extension Endpoint where Respuesta == AnalisisGuardado {
+    static func guardarAnalisis(_ req: AnalisisGuardadoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/analisis-inversion", cuerpo: json(req))
+    }
+
+    static func actualizarAnalisis(id: Int, _ req: AnalisisGuardadoRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/analisis-inversion/\(id)", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarAnalisis(id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/analisis-inversion/\(id)") }
+}

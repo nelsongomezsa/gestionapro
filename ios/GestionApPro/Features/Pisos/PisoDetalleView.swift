@@ -16,6 +16,7 @@ struct PisoDetalleView: View {
     @State private var error: String?
     /// Métrica de rentabilidad abierta en su hoja (con zoom desde la tarjeta).
     @State private var metricaAbierta: MetricaRentabilidad?
+    @State private var simulando = false
     @Namespace private var zoom
 
     init(piso: Piso) {
@@ -188,6 +189,11 @@ struct PisoDetalleView: View {
         .contextoAsistente(.piso(piso.id))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
+                Button("Simular") { simulando = true }
+                    .accessibilityHint("Abre la calculadora con los datos reales de este piso")
+                    .accessibilityIdentifier("simularPiso")
+            }
+            ToolbarItem(placement: .primaryAction) {
                 Button { Task { await exportar() } } label: {
                     if generandoPDF { ProgressView() } else { Label("Exportar PDF", systemImage: "doc.richtext") }
                 }
@@ -198,6 +204,12 @@ struct PisoDetalleView: View {
         .refreshable { await recargar() }
         .sheet(isPresented: $editando) {
             DatosFinancierosFormView(piso: piso) { piso = $0 }
+        }
+        .sheet(isPresented: $simulando) {
+            NavigationStack {
+                CalculadoraView(entrada: .desde(piso), idPiso: piso.id, nombre: piso.direccion)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { simulando = false } } }
+            }
         }
         .sheet(item: $metricaAbierta) { metrica in
             RentabilidadHojaView(piso: piso, metrica: metrica, ingresos: ingresos)
