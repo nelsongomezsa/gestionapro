@@ -372,6 +372,13 @@ extension Endpoint where Respuesta == ResumenPagos {
     }
 }
 
+extension Endpoint where Respuesta == [CobroAtrasado] {
+    /// Meses anteriores al actual (12 por defecto, máximo 24) sin ningún pago.
+    static func cobrosAtrasados(meses: Int = 12) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos/atrasados", consulta: [URLQueryItem(name: "meses", value: String(meses))])
+    }
+}
+
 extension Endpoint where Respuesta == Pago {
     static func registrarPago(_ req: PagoRequest) -> Self {
         Endpoint(metodo: "POST", ruta: "/api/pagos", cuerpo: json(req))

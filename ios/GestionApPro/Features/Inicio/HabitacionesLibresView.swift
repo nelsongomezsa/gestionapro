@@ -28,7 +28,7 @@ struct HabitacionesLibresView: View {
                                                               : "No hay habitaciones libres.")
                         .listRowBackground(Color.clear)
                 } else {
-                    Section(visibles.count == 1 ? "1 habitación" : "\(visibles.count) habitaciones") {
+                    Section(visibles.count == 1 ? String(localized: "1 habitación") : String(localized: "\(visibles.count) habitaciones")) {
                         ForEach(visibles) { h in
                             TarjetaTocable(pista: "Abre la habitación para crear un contrato", mostrarChevron: false,
                                            accion: { abrir(.fichaHabitacion(h)) }) { FilaHabitacionLibre(habitacion: h) }

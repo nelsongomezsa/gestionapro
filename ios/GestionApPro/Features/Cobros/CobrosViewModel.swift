@@ -7,6 +7,8 @@ final class CobrosViewModel {
     var mes: Mes = .actual
     private(set) var resumen: EstadoCarga<ResumenPagos> = .cargando
     private(set) var pagos: [Pago] = []
+    /// Meses anteriores sin pago (no dependen del mes elegido).
+    private(set) var atrasados: [CobroAtrasado] = []
     var filtroInquilino: Int?
     var busqueda = ""
     var error: String?
@@ -19,6 +21,13 @@ final class CobrosViewModel {
                 && (t.isEmpty || p.inquilino.nombre.localizedStandardContains(t) || p.piso.direccion.localizedStandardContains(t)
                     || String(p.numeroHabitacion) == t)
         }
+    }
+
+    /// Cuántos atrasados se ven en Cobros; el resto, en su lista.
+    static let atrasadosEnCobros = 3
+
+    var atrasadosVisibles: [CobroAtrasado] {
+        atrasados.filter { filtroInquilino == nil || $0.inquilino.id == filtroInquilino }
     }
 
     var totalVisible: Decimal { pagosVisibles.reduce(0) { $0 + $1.cantidad } }
@@ -36,9 +45,12 @@ final class CobrosViewModel {
         do {
             async let r = api.enviar(.resumenPagos(mes: mes))
             async let p = api.enviar(.pagos(mes: mes))
+            async let a = try? api.enviar(.cobrosAtrasados())
             let (nuevoResumen, nuevosPagos) = try await (r, p)
             resumen = .cargado(nuevoResumen)
             pagos = nuevosPagos
+            // Un fallo aquí no debe tapar el resumen del mes: se muestra lo que haya.
+            if let lista = await a { atrasados = lista }
             if let f = filtroInquilino, !inquilinosDelMes.contains(where: { $0.id == f }) { filtroInquilino = nil }
         } catch let e as APIError {
             if case .noAutorizado = e { return }

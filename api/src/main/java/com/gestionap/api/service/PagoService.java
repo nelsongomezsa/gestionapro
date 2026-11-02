@@ -7,6 +7,7 @@ import com.gestionap.api.repository.ContratoRepository;
 import com.gestionap.api.repository.PagoRepository;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.web.ApiException;
+import com.gestionap.api.web.dto.CobroAtrasadoResponse;
 import com.gestionap.api.web.dto.ContratoResponse;
 import com.gestionap.api.web.dto.PagoRequest;
 import com.gestionap.api.web.dto.PagoResponse;
@@ -18,6 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -86,6 +90,46 @@ public class PagoService {
                 suma(delMes.stream().map(Pago::getCantidad).toList()),
                 suma(pendientes.stream().map(ResumenPagosResponse.Pendiente::importe).toList()),
                 delMes.size(), pendientes);
+    }
+
+    /** Plazo habitual de pago: hasta el día 5 (el calendario del escritorio marca 1-5 como "esperado"). */
+    static final int DIA_LIMITE_PAGO = 5;
+    public static final int MESES_ATRASADOS_MAX = 24;
+
+    /**
+     * Cobros atrasados: cada mes anterior al actual (hasta {@code meses} atrás) en el que un
+     * contrato vigente no tuvo ningún pago, con el mismo criterio que el resumen mensual.
+     * Ordenados del más antiguo al más reciente.
+     */
+    @Transactional(readOnly = true)
+    public List<CobroAtrasadoResponse> atrasados(int meses, UsuarioAutenticado actor) {
+        if (meses < 1 || meses > MESES_ATRASADOS_MAX) {
+            throw ApiException.badRequest("PARAMETRO_INVALIDO", "meses debe estar entre 1 y " + MESES_ATRASADOS_MAX);
+        }
+        var alcance = acceso.alcance(actor);
+        LocalDate hoy = LocalDate.now();
+        YearMonth actual = YearMonth.from(hoy);
+        YearMonth desde = actual.minusMonths(meses);
+        YearMonth hasta = actual.minusMonths(1);
+        List<Contrato> lista = contratos.buscar(alcance.idPropietario(), alcance.idInquilino(), null);
+        Set<String> conPago = pagos.buscar(alcance.idPropietario(), alcance.idInquilino(), desde.atDay(1), hasta.atEndOfMonth())
+                .stream().map(p -> p.getContrato().getId() + "|" + YearMonth.from(p.getFechaPago()))
+                .collect(Collectors.toSet());
+        List<CobroAtrasadoResponse> res = new ArrayList<>();
+        for (Contrato c : lista) {
+            for (YearMonth m = desde; !m.isAfter(hasta); m = m.plusMonths(1)) {
+                boolean vigente = !c.getFechaInicio().isAfter(m.atEndOfMonth()) && !c.getFechaFin().isBefore(m.atDay(1));
+                if (!vigente || conPago.contains(c.getId() + "|" + m)) continue;
+                res.add(new CobroAtrasadoResponse(c.getId(),
+                        new ContratoResponse.InquilinoBreve(c.getInquilino().getId(), c.getInquilino().getNombreCompleto(),
+                                c.getInquilino().getDni(), c.getInquilino().getTelefono(), c.getInquilino().getEmail()),
+                        c.getHabitacion().getNumero(), PisoBreve.de(c.getHabitacion().getPiso()), m.toString(), Textos.mes(m),
+                        c.getPrecioMensual(), Math.max(0, ChronoUnit.DAYS.between(m.atDay(DIA_LIMITE_PAGO), hoy)),
+                        c.estaActivoEn(hoy)));
+            }
+        }
+        res.sort(Comparator.comparing(CobroAtrasadoResponse::mes).thenComparing(a -> a.inquilino().nombre()));
+        return res;
     }
 
     /** Como en el escritorio, solo para contratos activos. */

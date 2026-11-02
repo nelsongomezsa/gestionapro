@@ -6,6 +6,7 @@ struct ContratosView: View {
     @State private var creando = false
     @State private var paraFinalizar: Contrato?
     @State private var documento: DocumentoPDF?
+    @AppStorage(Agrupacion.clave("contratos")) private var agrupacion: Agrupacion = .todos
 
     /// `filtro`: el que viene puesto (desde Inicio, "Activos" o "Por vencer"); se puede cambiar.
     init(filtro: FiltroContratos = .activos) {
@@ -20,22 +21,20 @@ struct ContratosView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
 
+                SelectorAgrupacion(agrupacion: $agrupacion)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+
                 if vm.visibles.isEmpty {
                     EstadoVacio(icono: "doc.text", titulo: "Sin contratos",
                                 mensaje: vm.busqueda.isEmpty ? "No hay contratos «\(vm.filtro.nombre.lowercased())»." : "Ningún contrato coincide con la búsqueda.")
                         .listRowBackground(Color.clear)
+                } else if agrupacion == .porPiso {
+                    SeccionesPorPiso(grupos: AgrupadorPiso.agrupar(vm.visibles) { $0.piso }, pantalla: "contratos",
+                                     resumen: { ResumenPorPiso.contratos($0.elementos) }) { fila($0, mostrarPiso: false) }
                 } else {
                     Section("\(vm.visibles.count) contratos") {
-                        ForEach(vm.visibles) { c in
-                            NavigationLink(value: c) { FilaContratoCompleto(contrato: c) }
-                                .accessibilityIdentifier("filaContrato")
-                                .swipeActions(edge: .trailing) {
-                                    if c.activo {
-                                        Button("Finalizar", systemImage: "flag.checkered") { paraFinalizar = c }
-                                            .tint(Tema.Color.negativo)
-                                    }
-                                }
-                        }
+                        ForEach(vm.visibles) { fila($0, mostrarPiso: true) }
                     }
                     .filaLista()
                 }
@@ -61,6 +60,17 @@ struct ContratosView: View {
         }
         .visorPDF($documento)
         .alertaError($vm.error)
+    }
+
+    private func fila(_ c: Contrato, mostrarPiso: Bool) -> some View {
+        NavigationLink(value: c) { FilaContratoCompleto(contrato: c, mostrarPiso: mostrarPiso) }
+            .accessibilityIdentifier("filaContrato")
+            .swipeActions(edge: .trailing) {
+                if c.activo {
+                    Button("Finalizar", systemImage: "flag.checkered") { paraFinalizar = c }
+                        .tint(Tema.Color.negativo)
+                }
+            }
     }
 }
 

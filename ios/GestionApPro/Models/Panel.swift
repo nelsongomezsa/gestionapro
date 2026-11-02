@@ -37,6 +37,7 @@ struct Alerta: Decodable, Hashable, Sendable {
 
     var icono: String {
         switch tipo {
+        case "COBROS_ATRASADOS": "exclamationmark.triangle.fill"
         case "CONTRATOS_POR_VENCER": "calendar.badge.exclamationmark"
         case "INCIDENCIAS_PENDIENTES": "wrench.and.screwdriver"
         default: "chart.pie"

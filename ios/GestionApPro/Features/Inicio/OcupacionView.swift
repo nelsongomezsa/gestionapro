@@ -83,9 +83,9 @@ private struct FilaOcupacionPiso: View {
 
 /// "3 ocupadas · 1 libre · 1 en mantenimiento"
 func ocupacionTexto(_ o: Piso.Ocupacion) -> String {
-    var partes = [o.alquiladas == 1 ? "1 ocupada" : "\(o.alquiladas) ocupadas",
-                  o.disponibles == 1 ? "1 libre" : "\(o.disponibles) libres"]
-    if o.mantenimiento > 0 { partes.append("\(o.mantenimiento) en mantenimiento") }
+    var partes = [o.alquiladas == 1 ? String(localized: "1 ocupada") : String(localized: "\(o.alquiladas) ocupadas"),
+                  o.disponibles == 1 ? String(localized: "1 libre") : String(localized: "\(o.disponibles) libres")]
+    if o.mantenimiento > 0 { partes.append(String(localized: "\(o.mantenimiento) en mantenimiento")) }
     return partes.joined(separator: " · ")
 }
 

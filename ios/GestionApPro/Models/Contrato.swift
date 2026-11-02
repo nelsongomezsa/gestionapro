@@ -103,6 +103,38 @@ struct ResumenPagos: Decodable, Sendable {
     }
 }
 
+/// GET /api/pagos/atrasados: un mes anterior al actual sin ningún pago de un contrato vigente.
+struct CobroAtrasado: Decodable, Identifiable, Hashable, Sendable {
+    let idContrato: Int
+    let inquilino: InquilinoBreve
+    let numeroHabitacion: Int
+    let piso: PisoBreve
+    /// "2026-09"
+    let mes: String
+    let nombreMes: String
+    let importe: Decimal
+    let diasRetraso: Int
+    /// false si el contrato ya terminó: la API no deja registrar el pago.
+    let contratoActivo: Bool
+
+    var id: String { "\(idContrato)-\(mes)" }
+
+    /// Fecha con la que se registra el pago para que salde ese mes: el último día del mes adeudado.
+    /// (Los cobros se cuentan por la fecha del pago; se puede cambiar en el formulario.)
+    var fechaParaSaldar: Date? {
+        let partes = mes.split(separator: "-").compactMap { Int($0) }
+        guard partes.count == 2 else { return nil }
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone(identifier: "Europe/Madrid")!
+        guard let inicio = cal.date(from: DateComponents(year: partes[0], month: partes[1], day: 1)),
+              let fin = cal.date(byAdding: DateComponents(month: 1, day: -1), to: inicio) else { return nil }
+        return cal.date(bySettingHour: 12, minute: 0, second: 0, of: fin)
+    }
+
+    /// "Septiembre 2026" con mayúscula.
+    var mesTitulo: String { nombreMes.prefix(1).uppercased() + nombreMes.dropFirst() }
+}
+
 /// Mes de calendario (aaaa-mm), como espera la API.
 struct Mes: Hashable, Comparable, Sendable {
     let anio: Int

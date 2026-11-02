@@ -3,6 +3,7 @@ package com.gestionap.api.service;
 import com.gestionap.api.domain.*;
 import com.gestionap.api.repository.*;
 import com.gestionap.api.security.UsuarioAutenticado;
+import com.gestionap.api.web.dto.CobroAtrasadoResponse;
 import com.gestionap.api.web.dto.ContratoResponse;
 import com.gestionap.api.web.dto.PagoResponse;
 import com.gestionap.api.web.dto.PanelDtos.*;
@@ -88,7 +89,7 @@ public class PanelService {
                 pendientesInc.size() - incPendientes, cobrado, anterior, anteriorMismoDia, diaComparado,
                 Textos.mesCorto(mesAnterior), variacion(cobrado, anteriorMismoDia),
                 activos.stream().map(Contrato::getPrecioMensual).reduce(BigDecimal.ZERO, BigDecimal::add),
-                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes), proximos,
+                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes, pagoService.atrasados(12, actor)), proximos,
                 actividadReciente(actor, ACTIVIDAD_RECIENTE));
     }
 
@@ -201,8 +202,17 @@ public class PanelService {
                 .map(m -> new ImporteMes(m.toString(), Textos.mesCorto(m), porMes.getOrDefault(m, BigDecimal.ZERO))).toList();
     }
 
-    private static List<Alerta> alertas(Ocupacion ocupacion, List<ContratoResponse> proximos, long incidenciasPendientes) {
+    private static List<Alerta> alertas(Ocupacion ocupacion, List<ContratoResponse> proximos, long incidenciasPendientes,
+                                        List<CobroAtrasadoResponse> atrasados) {
         List<Alerta> alertas = new ArrayList<>();
+        if (!atrasados.isEmpty()) {
+            // Lo primero: dinero que se debe de meses ya cerrados.
+            BigDecimal total = atrasados.stream().map(CobroAtrasadoResponse::importe).reduce(BigDecimal.ZERO, BigDecimal::add);
+            alertas.add(new Alerta("COBROS_ATRASADOS",
+                    (atrasados.size() == 1 ? "1 cobro atrasado" : atrasados.size() + " cobros atrasados")
+                            + " · " + Textos.euros(total),
+                    "De meses anteriores; el más antiguo, de " + atrasados.getFirst().nombreMes(), "negativo"));
+        }
         if (!proximos.isEmpty()) {
             // Sin los nombres: ya aparecen en "Próximos vencimientos".
             alertas.add(new Alerta("CONTRATOS_POR_VENCER",

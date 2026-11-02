@@ -8,29 +8,29 @@ enum MetricaRentabilidad: String, CaseIterable, Identifiable, Hashable, Sendable
 
     var titulo: String {
         switch self {
-        case .bruta: "Rentabilidad bruta"
-        case .neta: "Rentabilidad neta"
-        case .cashOnCash: "Cash-on-cash"
-        case .per: "PER inmobiliario"
+        case .bruta: String(localized: "Rentabilidad bruta")
+        case .neta: String(localized: "Rentabilidad neta")
+        case .cashOnCash: String(localized: "Cash-on-cash")
+        case .per: String(localized: "PER inmobiliario")
         }
     }
 
     /// La fórmula en palabras.
     var formula: String {
         switch self {
-        case .bruta: "Alquiler anual ÷ inversión total"
-        case .neta: "(Alquiler anual − gastos anuales) ÷ inversión total"
-        case .cashOnCash: "Cash flow anual ÷ capital propio"
-        case .per: "Inversión total ÷ alquiler anual"
+        case .bruta: String(localized: "Alquiler anual ÷ inversión total")
+        case .neta: String(localized: "(Alquiler anual − gastos anuales) ÷ inversión total")
+        case .cashOnCash: String(localized: "Cash flow anual ÷ capital propio")
+        case .per: String(localized: "Inversión total ÷ alquiler anual")
         }
     }
 
     var explicacion: String {
         switch self {
-        case .bruta: "Lo que rinde el piso sin descontar gastos ni la hipoteca."
-        case .neta: "Lo que rinde tras los gastos del piso, antes de la financiación."
-        case .cashOnCash: "Lo que te devuelve al año el dinero que pusiste de tu bolsillo, ya pagada la hipoteca."
-        case .per: "Los años de alquiler que hacen falta para recuperar lo invertido."
+        case .bruta: String(localized: "Lo que rinde el piso sin descontar gastos ni la hipoteca.")
+        case .neta: String(localized: "Lo que rinde tras los gastos del piso, antes de la financiación.")
+        case .cashOnCash: String(localized: "Lo que te devuelve al año el dinero que pusiste de tu bolsillo, ya pagada la hipoteca.")
+        case .per: String(localized: "Los años de alquiler que hacen falta para recuperar lo invertido.")
         }
     }
 
@@ -54,23 +54,24 @@ enum MetricaRentabilidad: String, CaseIterable, Identifiable, Hashable, Sendable
     func pasos(_ piso: Piso, _ m: Piso.Metricas) -> [PasoCalculo] {
         let mensual = piso.ingresosMensuales
         let anual = mensual * 12
-        let alquiler = PasoCalculo(titulo: "Alquiler anual", valor: Formato.euros(anual),
-                                   nota: "\(Formato.euros(mensual)) al mes × 12")
-        let inversion = PasoCalculo(titulo: "Inversión total", valor: Formato.euros(m.inversionTotal),
-                                    nota: "Compra, impuestos, reforma y mobiliario")
+        let alquiler = PasoCalculo(titulo: String(localized: "Alquiler anual"), valor: Formato.euros(anual),
+                                   nota: String(localized: "\(Formato.euros(mensual)) al mes × 12"))
+        let inversion = PasoCalculo(titulo: String(localized: "Inversión total"), valor: Formato.euros(m.inversionTotal),
+                                    nota: String(localized: "Compra, impuestos, reforma y mobiliario"))
         switch self {
         case .bruta:
             return [alquiler, inversion.operando("÷"), resultado(m)]
         case .neta:
-            let gastos = PasoCalculo(titulo: "Gastos anuales", valor: "− " + Formato.euros(m.gastosAnuales),
-                                     nota: m.gastosReales == true ? "Gastos reales de los últimos 12 meses" : "Estimados con los datos del piso")
-            let neto = PasoCalculo(titulo: "Alquiler neto", valor: Formato.euros(anual - m.gastosAnuales))
+            let gastos = PasoCalculo(titulo: String(localized: "Gastos anuales"), valor: "− " + Formato.euros(m.gastosAnuales),
+                                     nota: m.gastosReales == true ? String(localized: "Gastos reales de los últimos 12 meses")
+                                                                   : String(localized: "Estimados con los datos del piso"))
+            let neto = PasoCalculo(titulo: String(localized: "Alquiler neto"), valor: Formato.euros(anual - m.gastosAnuales))
             return [alquiler, gastos, neto, inversion.operando("÷"), resultado(m)]
         case .cashOnCash:
-            let cf = PasoCalculo(titulo: "Cash flow anual", valor: Formato.euros(m.cashFlowMensual * 12),
-                                 nota: "\(Formato.euros(m.cashFlowMensual)) al mes × 12 (alquiler − hipoteca − gastos)")
-            let capital = PasoCalculo(titulo: "Capital propio", valor: Formato.euros(m.capitalPropio),
-                                      nota: "Inversión total menos la hipoteca")
+            let cf = PasoCalculo(titulo: String(localized: "Cash flow anual"), valor: Formato.euros(m.cashFlowMensual * 12),
+                                 nota: String(localized: "\(Formato.euros(m.cashFlowMensual)) al mes × 12 (alquiler − hipoteca − gastos)"))
+            let capital = PasoCalculo(titulo: String(localized: "Capital propio"), valor: Formato.euros(m.capitalPropio),
+                                      nota: String(localized: "Inversión total menos la hipoteca"))
             return [cf, capital.operando("÷"), resultado(m)]
         case .per:
             return [inversion, alquiler.operando("÷"), resultado(m)]
@@ -111,8 +112,9 @@ enum RankingRentabilidad {
     }
 
     static func texto(_ p: Posicion) -> String {
-        if p.de == 1 { return "Es el único piso con este dato" }
-        return p.puesto == 1 ? "El más rentable de \(p.de)" : "\(p.puesto).º más rentable de \(p.de)"
+        if p.de == 1 { return String(localized: "Es el único piso con este dato") }
+        return p.puesto == 1 ? String(localized: "El más rentable de \(p.de)")
+                             : String(localized: "\(p.puesto).º más rentable de \(p.de)")
     }
 }
 

@@ -18,6 +18,7 @@ enum DestinoInicio: Hashable {
     case fichaHabitacion(Habitacion)
     case contratos(FiltroContratos)
     case incidencias(FiltroIncidencias)
+    case atrasados
 }
 
 /// Inicio (Dashboard del escritorio): lo cobrado del mes como cifra principal, indicadores,
@@ -93,6 +94,7 @@ struct InicioView: View {
                 case let .fichaHabitacion(h):
                     HabitacionFichaView(habitacion: h) { c in ruta.append(.contrato(c.id)) }
                 case let .contratos(filtro): ContratosView(filtro: filtro).destinoZoom(destino, en: zoom)
+                case .atrasados: AtrasadosView().destinoZoom(destino, en: zoom)
                 case let .incidencias(filtro): IncidenciasView(enPila: false, filtro: filtro).destinoZoom(destino, en: zoom)
                 }
             }

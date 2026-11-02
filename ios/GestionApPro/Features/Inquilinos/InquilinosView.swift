@@ -7,6 +7,7 @@ struct InquilinosView: View {
     @State private var editando: Inquilino?
     @State private var paraBorrar: Inquilino?
     @State private var documento: DocumentoPDF?
+    @AppStorage(Agrupacion.clave("inquilinos")) private var agrupacion: Agrupacion = .todos
 
     var body: some View {
         @Bindable var vm = vm
@@ -16,21 +17,20 @@ struct InquilinosView: View {
                     Toggle("Solo con contrato activo", isOn: $vm.soloConContrato)
                 }
                 .filaLista()
+                SelectorAgrupacion(agrupacion: $agrupacion)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
                 if vm.visibles.isEmpty {
                     EstadoVacio(icono: "person.2", titulo: vm.busqueda.isEmpty && !vm.soloConContrato ? "Sin inquilinos" : "Sin resultados",
                                 mensaje: vm.busqueda.isEmpty && !vm.soloConContrato ? "Da de alta tu primer inquilino con +." : "Prueba con otro nombre, DNI o teléfono.")
                         .listRowBackground(Color.clear)
+                } else if agrupacion == .porPiso {
+                    SeccionesPorPiso(grupos: AgrupadorPiso.agrupar(vm.visibles) { $0.contratoActivo?.piso },
+                                     pantalla: "inquilinos", sinPiso: "Sin contrato activo",
+                                     resumen: { ResumenPorPiso.inquilinos($0.elementos) }) { fila($0) }
                 } else {
                     Section("\(vm.visibles.count) inquilinos") {
-                        ForEach(vm.visibles) { i in
-                            NavigationLink(value: i) { FilaInquilino(inquilino: i) }
-                                .contextMenu { AccionesContacto(telefono: i.telefono, email: i.email) }
-                                .accessibilityIdentifier("filaInquilino")
-                                .swipeActions(edge: .trailing) {
-                                    Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = i }
-                                    Button("Editar", systemImage: "pencil") { editando = i }.tint(Tema.Color.primario)
-                                }
-                        }
+                        ForEach(vm.visibles) { fila($0) }
                     }
                     .filaLista()
                 }
@@ -56,6 +56,16 @@ struct InquilinosView: View {
         }
         .visorPDF($documento)
         .alertaError($vm.error)
+    }
+
+    private func fila(_ i: Inquilino) -> some View {
+        NavigationLink(value: i) { FilaInquilino(inquilino: i) }
+            .contextMenu { AccionesContacto(telefono: i.telefono, email: i.email) }
+            .accessibilityIdentifier("filaInquilino")
+            .swipeActions(edge: .trailing) {
+                Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = i }
+                Button("Editar", systemImage: "pencil") { editando = i }.tint(Tema.Color.primario)
+            }
     }
 }
 

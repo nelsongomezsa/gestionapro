@@ -1,2945 +1,4755 @@
 {
-  "sourceLanguage": "es",
-  "strings": {
-    "": {},
-    "%@": {},
-    "%@ %@: %@ → %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ %2$@: %3$@ → %4$@"
+  "sourceLanguage" : "es",
+  "strings" : {
+    "" : {},
+    "%@" : {},
+    "%@ %@: %@ → %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@: %3$@ → %4$@"
           }
         }
       }
     },
-    "%@ (%@)": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ (%2$@)"
+    "%@ (%@)" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
           }
         }
       }
     },
-    "%@ de %@ alquiladas": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ de %2$@ alquiladas"
+    "%@ al mes × 12" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ per month × 12"
           }
         }
       }
     },
-    "%@ de %@ consultas hoy · respuestas generadas por IA, revísalas": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ de %2$@ consultas hoy · respuestas generadas por IA, revísalas"
+    "%@ al mes × 12 (alquiler − hipoteca − gastos)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ per month × 12 (rent − mortgage − expenses)"
           }
         }
       }
     },
-    "%@ de %@ esperados": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ de %2$@ esperados"
+    "%@ de %@ alquiladas" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ de %2$@ alquiladas"
           }
         }
       }
     },
-    "%@ de %@ habitaciones alquiladas": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ de %2$@ habitaciones alquiladas"
+    "%@ de %@ consultas hoy · respuestas generadas por IA, revísalas" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ de %2$@ consultas hoy · respuestas generadas por IA, revísalas"
           }
         }
       }
     },
-    "%@ de ocupación · %@ habitaciones libres": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ de ocupación · %2$@ habitaciones libres"
+    "%@ de %@ esperados" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ de %2$@ esperados"
           }
         }
       }
     },
-    "%@ · %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · %2$@"
+    "%@ de %@ habitaciones alquiladas" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ de %2$@ habitaciones alquiladas"
           }
         }
       }
     },
-    "%@ · Hab. %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · Hab. %2$@"
+    "%@ de ocupación · %@ habitaciones libres" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ de ocupación · %2$@ habitaciones libres"
           }
         }
       }
     },
-    "%@ · Hab. %@ · renta %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@ · Hab. %2$@ · renta %3$@"
+    "%@ un %@ frente a lo cobrado hasta el día %lld del mes anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ compared with collections up to day %3$lld of last month"
           }
         }
       }
     },
-    "%@, %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@, %2$@"
+    "%@ · %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@"
           }
         }
       }
     },
-    "%@, %@ sin leer": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@, %2$@ sin leer"
+    "%@ · %lld días de retraso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$lld days overdue"
           }
         }
       }
     },
-    "%@/255": {},
-    "%@: %@ a %@, IBAN %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "%1$@: %2$@ a %3$@, IBAN %4$@"
+    "%@ · Hab. %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · Hab. %2$@"
           }
         }
       }
     },
-    "Abre el asistente sobre lo que tienes en pantalla": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Opens the assistant about what is on screen"
+    "%@ · Hab. %@ · renta %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · Hab. %2$@ · renta %3$@"
           }
+        }
+      }
+    },
+    "%@ · Hab. %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · Room %2$lld"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@ de ocupación. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@ occupancy. %3$@"
+          }
+        }
+      }
+    },
+    "%@, %@ sin leer" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@ sin leer"
+          }
+        }
+      }
+    },
+    "%@, cobros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, income"
+          }
+        }
+      }
+    },
+    "%@, gastos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, expenses"
+          }
+        }
+      }
+    },
+    "%@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@. %2$@"
+          }
+        }
+      }
+    },
+    "%@/255" : {},
+    "%@: %@ a %@, IBAN %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@ a %3$@, IBAN %4$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld cobros atrasados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld overdue payments"
+          }
+        }
+      }
+    },
+    "%lld con la app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld with the app"
+          }
+        }
+      }
+    },
+    "%lld contratos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld leases"
+          }
+        }
+      }
+    },
+    "%lld contratos · %@ al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld leases · %2$@ per month"
+          }
+        }
+      }
+    },
+    "%lld de %lld alquiladas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld let"
+          }
+        }
+      }
+    },
+    "%lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld days"
+          }
+        }
+      }
+    },
+    "%lld en mantenimiento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld under maintenance"
+          }
+        }
+      }
+    },
+    "%lld habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld rooms"
+          }
+        }
+      }
+    },
+    "%lld incidencias" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld issues"
+          }
+        }
+      }
+    },
+    "%lld inquilinos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld tenants"
+          }
+        }
+      }
+    },
+    "%lld libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld vacant"
+          }
+        }
+      }
+    },
+    "%lld ocupadas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld let"
+          }
+        }
+      }
+    },
+    "%lld pendientes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pending"
+          }
+        }
+      }
+    },
+    "%lld.º más rentable de %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No. %1$lld most profitable of %2$lld"
+          }
+        }
+      }
+    },
+    "(Alquiler anual − gastos anuales) ÷ inversión total" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(Annual rent − annual expenses) ÷ total investment"
+          }
+        }
+      }
+    },
+    "0" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "0"
+          }
+        }
+      }
+    },
+    "1 cobro atrasado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 overdue payment"
+          }
+        }
+      }
+    },
+    "1 contrato · %@ al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 lease · %@ per month"
+          }
+        }
+      }
+    },
+    "1 día" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 day"
+          }
+        }
+      }
+    },
+    "1 habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 room"
+          }
+        }
+      }
+    },
+    "1 incidencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 issue"
+          }
+        }
+      }
+    },
+    "1 inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 tenant"
+          }
+        }
+      }
+    },
+    "1 libre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 vacant"
+          }
+        }
+      }
+    },
+    "1 ocupada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 let"
+          }
+        }
+      }
+    },
+    "1 pendiente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 pending"
+          }
+        }
+      }
+    },
+    "Abiertas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open"
+          }
+        }
+      }
+    },
+    "Abre cómo se calcula, su evolución y la comparación con tus otros pisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens how it's calculated, its trend and how it compares with your other properties"
+          }
+        }
+      }
+    },
+    "Abre el asistente sobre lo que tienes en pantalla" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the assistant about what is on screen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre el asistente sobre lo que tienes en pantalla"
+          }
+        }
+      }
+    },
+    "Abre el detalle del piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the property details"
+          }
+        }
+      }
+    },
+    "Abre el recibo en PDF" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the PDF receipt"
+          }
+        }
+      }
+    },
+    "Abre la calculadora con los datos de este piso para probar cambios" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
+    "Abre la habitación para crear un contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the room to create a lease"
+          }
+        }
+      }
+    },
+    "Abre la lista de habitaciones libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the list of vacant rooms"
+          }
+        }
+      }
+    },
+    "Abre la lista filtrada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the filtered list"
+          }
+        }
+      }
+    },
+    "Abre la ocupación de cada piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens occupancy by property"
+          }
+        }
+      }
+    },
+    "Abre las incidencias abiertas y en curso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens open and in-progress issues"
+          }
+        }
+      }
+    },
+    "Abre los contratos activos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens active leases"
+          }
+        }
+      }
+    },
+    "Abrir" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir"
+          }
+        }
+      }
+    },
+    "Abrir en Mapas" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Maps"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir en Mapas"
+          }
+        }
+      }
+    },
+    "Acciones" : {},
+    "Aceptar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar"
+          }
+        }
+      }
+    },
+    "Acerca de" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de"
+          }
+        }
+      }
+    },
+    "Acerca de GestionAp" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About GestionAp"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acerca de GestionAp"
+          }
+        }
+      }
+    },
+    "Actividad reciente" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent activity"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actividad reciente"
+          }
+        }
+      }
+    },
+    "Actualización de renta" : {},
+    "Administración" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administration"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Administración"
+          }
+        }
+      }
+    },
+    "Agrupar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group"
+          }
+        }
+      }
+    },
+    "Ajustes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes"
+          }
+        }
+      }
+    },
+    "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you open the app or return to it, %@ or the iPhone passcode is required. With “Hide in the app switcher”, content isn’t visible when switching apps; with “Hide amounts”, key figures show when you tap them."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas."
+          }
+        }
+      }
+    },
+    "Alertas" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alerts"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alertas"
+          }
+        }
+      }
+    },
+    "Alquilada hace %@ días" : {},
+    "Alquiler anual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual rent"
+          }
+        }
+      }
+    },
+    "Alquiler anual ÷ inversión total" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual rent ÷ total investment"
+          }
+        }
+      }
+    },
+    "Alquiler neto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Net rent"
+          }
+        }
+      }
+    },
+    "Analizando el extracto…" : {},
+    "Aparece como arrendador en los contratos en PDF." : {},
+    "Apariencia" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apariencia"
+          }
+        }
+      }
+    },
+    "Apariencia, texto, seguridad, notificaciones, idioma, datos y cuenta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance, text, security, notifications, language, data and account."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apariencia, texto, seguridad, notificaciones, idioma, datos y cuenta."
+          }
+        }
+      }
+    },
+    "Asistente" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistente"
+          }
+        }
+      }
+    },
+    "Asistente desactivado" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant disabled"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asistente desactivado"
+          }
+        }
+      }
+    },
+    "Atrasados (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overdue (%lld)"
+          }
+        }
+      }
+    },
+    "Automático" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático"
+          }
+        }
+      }
+    },
+    "Automático (día %@)" : {},
+    "Automático (día %lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic (day %lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automático (día %lld)"
+          }
+        }
+      }
+    },
+    "Añade un piso para ver su ocupación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a property to see its occupancy."
+          }
+        }
+      }
+    },
+    "Aún no hay mensajes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No messages yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay mensajes"
+          }
+        }
+      }
+    },
+    "Bloquear con %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lock with %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloquear con %@"
+          }
+        }
+      }
+    },
+    "Borrar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Buscar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar"
+          }
+        }
+      }
+    },
+    "Caché vaciada" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache cleared"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caché vaciada"
+          }
+        }
+      }
+    },
+    "Calculadora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculator"
+          }
+        }
+      }
+    },
+    "Calculadora de rentabilidad" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yield calculator"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculadora de rentabilidad"
+          }
+        }
+      }
+    },
+    "Calendario" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendario"
+          }
+        }
+      }
+    },
+    "Cambiar contraseña" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change password"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar contraseña"
+          }
+        }
+      }
+    },
+    "Cancelar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Capital propio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equity"
+          }
+        }
+      }
+    },
+    "Cargando" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando"
+          }
+        }
+      }
+    },
+    "Cash flow anual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual cash flow"
+          }
+        }
+      }
+    },
+    "Cash flow anual ÷ capital propio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual cash flow ÷ equity"
+          }
+        }
+      }
+    },
+    "Cash flow previsto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projected cash flow"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cash flow previsto"
+          }
+        }
+      }
+    },
+    "Cash-on-cash" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cash-on-cash"
+          }
+        }
+      }
+    },
+    "Cerrar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        }
+      }
+    },
+    "Cerrar sesión" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign out"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar sesión"
+          }
+        }
+      }
+    },
+    "Claro" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claro"
+          }
+        }
+      }
+    },
+    "Clasificando…" : {},
+    "Cobrado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collected"
+          }
+        }
+      }
+    },
+    "Cobrado %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collected %@"
+          }
+        }
+      }
+    },
+    "Cobrado %@ · pendiente %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collected %1$@ · pending %2$@"
+          }
+        }
+      }
+    },
+    "Cobrado este mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collected this month"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobrado este mes"
+          }
+        }
+      }
+    },
+    "Cobro" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobro"
+          }
+        }
+      }
+    },
+    "Cobro, incidencia, gasto o mensaje" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment, issue, expense or message"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobro, incidencia, gasto o mensaje"
+          }
+        }
+      }
+    },
+    "Cobros" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payments"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobros"
+          }
+        }
+      }
+    },
+    "Cobros atrasados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overdue payments"
+          }
+        }
+      }
+    },
+    "Cobros pendientes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending payments"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobros pendientes"
+          }
+        }
+      }
+    },
+    "Cobros y gastos reales por mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actual income and expenses by month"
+          }
+        }
+      }
+    },
+    "Cobros y gastos · 12 meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income and expenses · 12 months"
+          }
+        }
+      }
+    },
+    "Como el iPhone" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as iPhone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Como el iPhone"
+          }
+        }
+      }
+    },
+    "Compartir o guardar (%lld archivos)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share or save (%lld files)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compartir o guardar (%lld archivos)"
+          }
+        }
+      }
+    },
+    "Completar datos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete details"
+          }
+        }
+      }
+    },
+    "Compra" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase"
+          }
+        }
+      }
+    },
+    "Compra, impuestos, reforma y mobiliario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase, taxes, renovation and furniture"
+          }
+        }
+      }
+    },
+    "Comunicada el %@" : {},
+    "Comunidad autónoma" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region"
+          }
+        }
+      }
+    },
+    "Con contrato, el inquilino también lo ve en la app." : {},
+    "Conciliar con el banco" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconcile with bank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conciliar con el banco"
+          }
+        }
+      }
+    },
+    "Condiciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms"
+          }
+        }
+      }
+    },
+    "Confianza alta: el importe coincide con la renta y el concepto nombra al inquilino. Revisa las de confianza media o baja antes de marcarlas." : {},
+    "Confirma con tu contraseña" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm with your password"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirma con tu contraseña"
+          }
+        }
+      }
+    },
+    "Contactar con soporte" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact support"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contactar con soporte"
+          }
+        }
+      }
+    },
+    "Contacto" : {},
+    "Contraseña" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña"
+          }
+        }
+      }
+    },
+    "Contraseña olvidada" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraseña olvidada"
+          }
+        }
+      }
+    },
+    "Contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lease"
+          }
+        }
+      }
+    },
+    "Contrato activo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active lease"
+          }
+        }
+      }
+    },
+    "Contrato finalizado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lease ended"
+          }
+        }
+      }
+    },
+    "Contratos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leases"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contratos"
+          }
+        }
+      }
+    },
+    "Contratos activos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active leases"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contratos activos"
+          }
+        }
+      }
+    },
+    "Contratos por vencer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leases ending soon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contratos por vencer"
+          }
+        }
+      }
+    },
+    "Contratos vigentes en el mes sin ningún pago registrado." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leases active this month with no payment recorded."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contratos vigentes en el mes sin ningún pago registrado."
+          }
+        }
+      }
+    },
+    "Copiar dirección" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy address"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar dirección"
+          }
+        }
+      }
+    },
+    "Coste" : {},
+    "Crear" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear"
+          }
+        }
+      }
+    },
+    "Cuenta" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abre el asistente sobre lo que tienes en pantalla"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta"
           }
         }
       }
     },
-    "Abrir": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abrir"
+    "Cuenta para los cobros" : {},
+    "Código de invitación" : {},
+    "Cómo se calcula" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it's calculated"
           }
         }
       }
     },
-    "Abrir en Mapas": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open in Maps"
+    "Datos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Abrir en Mapas"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datos"
           }
         }
       }
     },
-    "Acciones": {},
-    "Aceptar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
+    "Datos financieros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Financial details"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aceptar"
+        }
+      }
+    },
+    "Daños, recibos pendientes…" : {},
+    "Depósito" : {},
+    "Desliza a la derecha para avanzar el estado y a la izquierda para borrar." : {},
+    "Desliza para editar, borrar o cambiar el estado." : {},
+    "Desliza para quitar uno. Las fotos se añaden después, desde el inventario." : {},
+    "Desplegado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expanded"
           }
         }
       }
     },
-    "Acerca de": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About"
+    "Día %@" : {},
+    "Día %lld" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day %lld"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acerca de"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día %lld"
           }
         }
       }
     },
-    "Acerca de GestionAp": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "About GestionAp"
+    "Día del recordatorio de cobro" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment reminder day"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Acerca de GestionAp"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día del recordatorio de cobro"
           }
         }
       }
     },
-    "Actividad reciente": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recent activity"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Actividad reciente"
+    "ES00 0000 0000 0000 0000 0000" : {},
+    "Editar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
           }
         }
       }
     },
-    "Actualización de renta": {},
-    "Administración": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Administration"
+    "Ejercicio %@" : {},
+    "El QR de pago necesita un contrato activo." : {},
+    "El email es el que usas para iniciar sesión." : {},
+    "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the language (Spanish or English) in iPhone Settings, on the GestionAp page."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Administración"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp."
           }
         }
       }
     },
-    "Ajustes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajustes"
+    "El más rentable de %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The most profitable of %lld"
           }
         }
       }
     },
-    "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "When you open the app or return to it, %@ or the iPhone passcode is required. With “Hide in the app switcher”, content isn’t visible when switching apps; with “Hide amounts”, key figures show when you tap them."
+    "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo." : {},
+    "El índice elegido supera el IRAV: el máximo es el IRAV (LAU, art. 18.1)." : {},
+    "Elementos (%@)" : {},
+    "Elige un contrato" : {},
+    "Elige un inquilino" : {},
+    "Elige un piso" : {},
+    "Elige una habitación" : {},
+    "Eliminar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar"
           }
         }
       }
     },
-    "Alertas": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alerts"
+    "Eliminar cuenta" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Alertas"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar cuenta"
           }
         }
       }
     },
-    "Alquilada hace %@ días": {},
-    "Analizando el extracto…": {},
-    "Aparece como arrendador en los contratos en PDF.": {},
-    "Apariencia": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance"
+    "Eliminar mi cuenta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete my account"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apariencia"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar mi cuenta"
           }
         }
       }
     },
-    "Apariencia, texto, seguridad, notificaciones, idioma, datos y cuenta.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance, text, security, notifications, language, data and account."
+    "Email" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apariencia, texto, seguridad, notificaciones, idioma, datos y cuenta."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
           }
         }
       }
     },
-    "Asistente": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Assistant"
+    "Empezar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get started"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Asistente"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empezar"
           }
         }
       }
     },
-    "Asistente desactivado": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Assistant disabled"
+    "En mantenimiento desde el %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under maintenance since %@"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Asistente desactivado"
+        }
+      }
+    },
+    "En muchas comunidades autónomas la fianza se deposita en un organismo público. Comprueba el plazo y el organismo de la tuya." : {},
+    "En proceso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In progress"
           }
         }
       }
     },
-    "Automático": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Automatic"
+    "Entrar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Automático"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrar"
           }
         }
       }
     },
-    "Automático (día %@)": {},
-    "Automático (día %lld)": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Automatic (day %lld)"
+    "Enviar recibo por email" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email receipt"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Automático (día %lld)"
+        }
+      }
+    },
+    "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino." : {},
+    "Es el único piso con este dato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's the only property with this figure"
           }
         }
       }
     },
-    "Aún no hay mensajes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No messages yet"
+    "Escanéalo desde la app del banco para pagar por transferencia SEPA." : {},
+    "Escribe el primero." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Write the first one."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aún no hay mensajes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribe el primero."
           }
         }
       }
     },
-    "Bloquear con %@": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lock with %@"
+    "Escribir a mi propietario" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Write to my landlord"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bloquear con %@"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribir a mi propietario"
           }
         }
       }
     },
-    "Buscar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Search"
+    "Estadísticas" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Buscar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estadísticas"
           }
         }
       }
     },
-    "Caché vaciada": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cache cleared"
+    "Estimados con los datos del piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated from the property's data"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Caché vaciada"
+        }
+      }
+    },
+    "Exportar PDF" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export PDF"
           }
         }
       }
     },
-    "Calculadora de rentabilidad": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Yield calculator"
+    "Exportar mis datos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export my data"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calculadora de rentabilidad"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportar mis datos"
           }
         }
       }
     },
-    "Calendario": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendar"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calendario"
+    "Faltan tus datos fiscales" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your tax details are missing"
           }
         }
       }
     },
-    "Cambiar contraseña": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Change password"
+    "Fecha" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cambiar contraseña"
+        }
+      }
+    },
+    "Fianza" : {},
+    "Fianza de %@." : {},
+    "Fin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End"
           }
         }
       }
     },
-    "Cancelar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancel"
+    "Finalizar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancelar"
+        }
+      }
+    },
+    "Finalizar hoy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End today"
           }
         }
       }
     },
-    "Cargando": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Loading"
+    "Financiación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Financing"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cargando"
+        }
+      }
+    },
+    "Firma" : {},
+    "Firma con el dedo dentro del recuadro." : {},
+    "Frente a tus pisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Against your properties"
           }
         }
       }
     },
-    "Cash flow previsto": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Projected cash flow"
+    "Funciona con el formato genérico y los extractos habituales de Santander, BBVA, CaixaBank, Sabadell e ING." : {},
+    "Gasto" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expense"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cash flow previsto"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasto"
           }
         }
       }
     },
-    "Cerrar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Close"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cerrar"
+    "Gastos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expenses"
           }
         }
       }
     },
-    "Cerrar sesión": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign out"
+    "Gastos anuales" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annual expenses"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cerrar sesión"
+        }
+      }
+    },
+    "Gastos mensuales" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly expenses"
           }
         }
       }
     },
-    "Claro": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Light"
+    "Gastos reales" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actual expenses"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Claro"
+        }
+      }
+    },
+    "Gastos reales de los últimos 12 meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actual expenses for the last 12 months"
           }
         }
       }
     },
-    "Clasificando…": {},
-    "Cobrado este mes": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collected this month"
+    "General" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cobrado este mes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
           }
         }
       }
     },
-    "Cobro": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Payment"
+    "Generar archivos CSV" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create CSV files"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cobro"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generar archivos CSV"
+          }
+        }
+      }
+    },
+    "Generar igualmente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate anyway"
           }
         }
       }
     },
-    "Cobro, incidencia, gasto o mensaje": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Payment, issue, expense or message"
+    "GestionAp PRO" : {},
+    "GestionAp PRO está bloqueada" : {},
+    "Gestión" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Management"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cobro, incidencia, gasto o mensaje"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestión"
           }
         }
       }
     },
-    "Cobros": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Payments"
+    "Gestión de alquiler de habitaciones" : {},
+    "Guardar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cobros"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
           }
         }
       }
     },
-    "Cobros pendientes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pending payments"
+    "Hab. %@ · %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hab. %1$@ · %2$@"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cobros pendientes"
+        }
+      }
+    },
+    "Hab. %@%@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hab. %1$@%2$@"
+          }
+        }
+      }
+    },
+    "Hab. %lld · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room %1$lld · %2$@"
           }
         }
       }
     },
-    "Como el iPhone": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Same as iPhone"
+    "Habitaciones libres" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free rooms"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Como el iPhone"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Habitaciones libres"
           }
         }
       }
     },
-    "Compartir o guardar (%lld archivos)": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Share or save (%lld files)"
+    "Habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Compartir o guardar (%lld archivos)"
+        }
+      }
+    },
+    "Habitación %@" : {},
+    "Habitación %@ · %@, %@" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Habitación %1$@ · %2$@, %3$@"
           }
         }
       }
     },
-    "Comunicada el %@": {},
-    "Con contrato, el inquilino también lo ve en la app.": {},
-    "Conciliar con el banco": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reconcile with bank"
+    "Habitación %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room %lld"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Conciliar con el banco"
+        }
+      }
+    },
+    "Habitación %lld, %@. %@ al mes. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room %1$lld, %2$@. %3$@ per month. %4$@"
           }
         }
       }
     },
-    "Confianza alta: el importe coincide con la renta y el concepto nombra al inquilino. Revisa las de confianza media o baja antes de marcarlas.": {},
-    "Confirma con tu contraseña": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Confirm with your password"
+    "Herramientas" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tools"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Confirma con tu contraseña"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herramientas"
           }
         }
       }
     },
-    "Contactar con soporte": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contact support"
+    "Hipoteca" : {},
+    "Hola, %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi, %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contactar con soporte"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola, %@"
           }
         }
       }
     },
-    "Contacto": {},
-    "Contraseña": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password"
+    "IBAN para el QR de pago de tus inquilinos." : {},
+    "Identificación" : {},
+    "Idioma" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contraseña"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma"
           }
         }
       }
     },
-    "Contraseña olvidada": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Forgot password"
+    "Importe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contraseña olvidada"
+        }
+      }
+    },
+    "Importes mensuales previstos. El cash flow es lo que queda tras la cuota y los gastos." : {},
+    "Impuesto de transmisiones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer tax"
           }
         }
       }
     },
-    "Contratos": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Leases"
+    "Incidencia" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issue"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contratos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incidencia"
           }
         }
       }
     },
-    "Contratos activos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Active leases"
+    "Incidencias" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issues"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contratos activos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incidencias"
           }
         }
       }
     },
-    "Contratos por vencer": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Leases ending soon"
+    "Incidencias abiertas" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open issues"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contratos por vencer"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incidencias abiertas"
+          }
+        }
+      }
+    },
+    "Incluir en mantenimiento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Include under maintenance"
           }
         }
       }
     },
-    "Contratos vigentes en el mes sin ningún pago registrado.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Leases active this month with no payment recorded."
+    "Informe del mes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly report"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Contratos vigentes en el mes sin ningún pago registrado."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informe del mes"
+          }
+        }
+      }
+    },
+    "Ingresos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income"
           }
         }
       }
     },
-    "Copiar dirección": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copy address"
+    "Ingresos cobrados" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collected income"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar dirección"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingresos cobrados"
           }
         }
       }
     },
-    "Coste": {},
-    "Crear": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create"
+    "Ingresos sin contrato (%@)" : {},
+    "Inicio" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Crear"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio"
           }
         }
       }
     },
-    "Cuenta": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Account"
+    "Inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tenant"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cuenta"
+        }
+      }
+    },
+    "Inquilino o dirección" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tenant or address"
           }
         }
       }
     },
-    "Cuenta para los cobros": {},
-    "Código de invitación": {},
-    "Datos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Data"
+    "Inquilino, dirección o habitación" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tenant, address or room"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Datos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inquilino, dirección o habitación"
           }
         }
       }
     },
-    "Daños, recibos pendientes…": {},
-    "Depósito": {},
-    "Desliza a la derecha para avanzar el estado y a la izquierda para borrar.": {},
-    "Desliza para editar, borrar o cambiar el estado.": {},
-    "Desliza para quitar uno. Las fotos se añaden después, desde el inventario.": {},
-    "Día %@": {},
-    "Día %lld": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day %lld"
+    "Inquilinos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tenants"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Día %lld"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inquilinos"
           }
         }
       }
     },
-    "Día del recordatorio de cobro": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Payment reminder day"
+    "Inventarios" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inventories"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Día del recordatorio de cobro"
+        }
+      }
+    },
+    "Inversión total" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total investment"
           }
         }
       }
     },
-    "ES00 0000 0000 0000 0000 0000": {},
-    "Ejercicio %@": {},
-    "El QR de pago necesita un contrato activo.": {},
-    "El email es el que usas para iniciar sesión.": {},
-    "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choose the language (Spanish or English) in iPhone Settings, on the GestionAp page."
+    "Inversión total menos la hipoteca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total investment minus the mortgage"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp."
+        }
+      }
+    },
+    "Inversión total ÷ alquiler anual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total investment ÷ annual rent"
           }
         }
       }
     },
-    "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo.": {},
-    "El índice elegido supera el IRAV: el máximo es el IRAV (LAU, art. 18.1).": {},
-    "Elementos (%@)": {},
-    "Elige un contrato": {},
-    "Elige un inquilino": {},
-    "Elige un piso": {},
-    "Elige una habitación": {},
-    "Eliminar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete"
+    "K7M2-QX9P-4TBW" : {},
+    "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The iPhone app only uses Apple frameworks (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents and WidgetKit)."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eliminar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit)."
+          }
+        }
+      }
+    },
+    "La cuota se calcula con amortización francesa, como en el escritorio." : {},
+    "La fecha de fin pasa a ser hoy y la habitación queda disponible." : {},
+    "La fecha propuesta es del mes que salda (%@); los cobros se cuentan por la fecha del pago." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The suggested date falls in the month it settles (%@); payments count by their date."
           }
         }
       }
     },
-    "Eliminar cuenta": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete account"
+    "La próxima vez que inicies sesión usa la nueva contraseña." : {},
+    "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications are off for GestionAp. Turn them on in iPhone Settings."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eliminar cuenta"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone."
           }
         }
       }
     },
-    "Eliminar mi cuenta": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete my account"
+    "Laura Martínez · Hab. 4 · Calle Mayor 15" : {},
+    "Lengüeta del asistente" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant tab"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Eliminar mi cuenta"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lengüeta del asistente"
+          }
+        }
+      }
+    },
+    "Leyendo la factura…" : {},
+    "Libre desde el %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vacant since %@"
           }
         }
       }
     },
-    "Email": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email"
+    "Licencias" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenses"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licencias"
           }
         }
       }
     },
-    "Empezar": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Get started"
+    "Licencias de terceros" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Third-party licenses"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empezar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licencias de terceros"
+          }
+        }
+      }
+    },
+    "Limpiar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear"
           }
         }
       }
     },
-    "En muchas comunidades autónomas la fianza se deposita en un organismo público. Comprueba el plazo y el organismo de la tuya.": {},
-    "Entrar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in"
+    "Llamar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Entrar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llamar"
           }
         }
       }
     },
-    "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino.": {},
-    "Escanéalo desde la app del banco para pagar por transferencia SEPA.": {},
-    "Escribe el primero.": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Write the first one."
+    "Lo que rinde el piso sin descontar gastos ni la hipoteca." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What the property yields before expenses and mortgage."
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escribe el primero."
+        }
+      }
+    },
+    "Lo que rinde tras los gastos del piso, antes de la financiación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What it yields after property expenses, before financing."
           }
         }
       }
     },
-    "Escribir a mi propietario": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Write to my landlord"
+    "Lo que te devuelve al año el dinero que pusiste de tu bolsillo, ya pagada la hipoteca." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What the money you put in returns each year, after the mortgage."
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Escribir a mi propietario"
+        }
+      }
+    },
+    "Los años de alquiler que hacen falta para recuperar lo invertido." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Years of rent needed to recover the investment."
           }
         }
       }
     },
-    "Estadísticas": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Statistics"
+    "Los cambios se aplican la próxima vez que se abra Inicio. Los avisos de incidencias llegarán como notificaciones push cuando el servidor las tenga activadas; los de mensajes también se muestran dentro de la app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes apply the next time Home opens. Issue alerts will arrive as push notifications once the server enables them; message alerts also show inside the app."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Estadísticas"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los cambios se aplican la próxima vez que se abra Inicio. Los avisos de incidencias llegarán como notificaciones push cuando el servidor las tenga activadas; los de mensajes también se muestran dentro de la app."
           }
         }
       }
     },
-    "Exportar mis datos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Export my data"
+    "Los gastos de incidencias resueltas con coste se añaden solos." : {},
+    "Los inquilinos crean su cuenta con el código de invitación de su ficha." : {},
+    "Los mensajes van ligados a un contrato." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messages belong to a lease."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exportar mis datos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los mensajes van ligados a un contrato."
           }
         }
       }
     },
-    "Fianza": {},
-    "Fianza de %@.": {},
-    "Firma": {},
-    "Firma con el dedo dentro del recuadro.": {},
-    "Funciona con el formato genérico y los extractos habituales de Santander, BBVA, CaixaBank, Sabadell e ING.": {},
-    "Gasto": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Expense"
+    "Mantén pulsado" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch and hold"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gasto"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantén pulsado"
+          }
+        }
+      }
+    },
+    "Marcar como disponible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark as available"
           }
         }
       }
     },
-    "General": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "General"
+    "Mensaje" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "General"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensaje"
           }
         }
       }
     },
-    "Generar archivos CSV": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create CSV files"
+    "Mensaje nuevo" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New message"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Generar archivos CSV"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensaje nuevo"
           }
         }
       }
     },
-    "GestionAp PRO": {},
-    "GestionAp PRO está bloqueada": {},
-    "Gestión": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Management"
+    "Mensajes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messages"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Gestión"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensajes"
           }
         }
       }
     },
-    "Gestión de alquiler de habitaciones": {},
-    "Guardar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
+    "Mensajes nuevos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New messages"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Guardar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensajes nuevos"
           }
         }
       }
     },
-    "Hab. %@ · %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Hab. %1$@ · %2$@"
+    "Mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Month"
           }
         }
       }
     },
-    "Hab. %@%@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Hab. %1$@%2$@"
+    "Mes anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous month"
           }
         }
       }
     },
-    "Habitaciones libres": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Free rooms"
+    "Mes siguiente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next month"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Habitaciones libres"
+        }
+      }
+    },
+    "Meses anteriores al actual en los que un contrato vigente no tuvo ningún pago. El retraso se cuenta desde el día 5." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous months in which an active lease had no payment. Delay is counted from the 5th."
           }
         }
       }
     },
-    "Habitación %@": {},
-    "Habitación %@ · %@, %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Habitación %1$@ · %2$@, %3$@"
+    "Meses anteriores sin ningún pago. El retraso se cuenta desde el día 5." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous months with no payment. Delay is counted from the 5th."
           }
         }
       }
     },
-    "Herramientas": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tools"
+    "Mi alquiler" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My rental"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Herramientas"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi alquiler"
           }
         }
       }
     },
-    "Hipoteca": {},
-    "Hola, %@": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hi, %@"
+    "Mi propietario" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My landlord"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hola, %@"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi propietario"
           }
         }
       }
     },
-    "IBAN para el QR de pago de tus inquilinos.": {},
-    "Identificación": {},
-    "Idioma": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Language"
+    "Mis pagos" : {},
+    "Más" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Idioma"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más"
           }
         }
       }
     },
-    "Importes mensuales previstos. El cash flow es lo que queda tras la cuota y los gastos.": {},
-    "Incidencia": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Issue"
+    "Método" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Method"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Incidencia"
+        }
+      }
+    },
+    "Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas." : {},
+    "Mínimo 10 caracteres. Pásasela a la persona para que la cambie desde su perfil." : {},
+    "No hay habitaciones libres ni en mantenimiento." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No vacant or under-maintenance rooms."
           }
         }
       }
     },
-    "Incidencias": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Issues"
+    "No hay habitaciones libres." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No vacant rooms."
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Incidencias"
+        }
+      }
+    },
+    "No puede superar el máximo." : {},
+    "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar." : {},
+    "No se puede comparar: faltan datos en este piso o en los demás." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't compare: data is missing for this or other properties."
           }
         }
       }
     },
-    "Incidencias abiertas": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open issues"
+    "No se puede deshacer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This can’t be undone."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Incidencias abiertas"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede deshacer."
           }
         }
       }
     },
-    "Informe del mes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monthly report"
+    "Nombre, DNI, teléfono o email" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name, ID, phone or email"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Informe del mes"
+        }
+      }
+    },
+    "Notas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes"
           }
         }
       }
     },
-    "Ingresos cobrados": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Collected income"
+    "Notificaciones" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingresos cobrados"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones"
           }
         }
       }
     },
-    "Ingresos sin contrato (%@)": {},
-    "Inicio": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Home"
+    "Notificaciones, %lld sin leer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications, %lld unread"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inicio"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaciones, %lld sin leer"
           }
         }
       }
     },
-    "Inquilino, dirección o habitación": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tenant, address or room"
+    "Novedades de GestionAp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s new in GestionAp"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inquilino, dirección o habitación"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novedades de GestionAp"
           }
         }
       }
     },
-    "Inquilinos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tenants"
+    "Nueva incidencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New issue"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inquilinos"
+        }
+      }
+    },
+    "Nuevo contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New lease"
           }
         }
       }
     },
-    "K7M2-QX9P-4TBW": {},
-    "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit).": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The iPhone app only uses Apple frameworks (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents and WidgetKit)."
+    "Nuevo inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New tenant"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit)."
+        }
+      }
+    },
+    "OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
     },
-    "La cuota se calcula con amortización francesa, como en el escritorio.": {},
-    "La fecha de fin pasa a ser hoy y la habitación queda disponible.": {},
-    "La próxima vez que inicies sesión usa la nueva contraseña.": {},
-    "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone.": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications are off for GestionAp. Turn them on in iPhone Settings."
+    "Obligatorio si no se devuelve entera." : {},
+    "Ocultar en el selector de apps" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide in the app switcher"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar en el selector de apps"
           }
         }
       }
     },
-    "Laura Martínez · Hab. 4 · Calle Mayor 15": {},
-    "Lengüeta del asistente": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Assistant tab"
+    "Ocultar importes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide amounts"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lengüeta del asistente"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar importes"
           }
         }
       }
     },
-    "Leyendo la factura…": {},
-    "Licencias": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Licenses"
+    "Oculto. Toca dos veces para verlo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hidden. Double-tap to show it."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Licencias"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oculto. Toca dos veces para verlo."
           }
         }
       }
     },
-    "Licencias de terceros": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Third-party licenses"
+    "Ocupación" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Occupancy"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Licencias de terceros"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocupación"
           }
         }
       }
     },
-    "Llamar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Call"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Llamar"
+    "Ocupación total" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total occupancy"
           }
         }
       }
     },
-    "Los cambios se aplican la próxima vez que se abra Inicio. Los avisos de incidencias llegarán como notificaciones push cuando el servidor las tenga activadas; los de mensajes también se muestran dentro de la app.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Changes apply the next time Home opens. Issue alerts will arrive as push notifications once the server enables them; message alerts also show inside the app."
+    "Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha." : {},
+    "Organismo de tu comunidad autónoma" : {},
+    "Orientativo" : {},
+    "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza." : {},
+    "Oscuro" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Los cambios se aplican la próxima vez que se abra Inicio. Los avisos de incidencias llegarán como notificaciones push cuando el servidor las tenga activadas; los de mensajes también se muestran dentro de la app."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oscuro"
           }
         }
       }
     },
-    "Los gastos de incidencias resueltas con coste se añaden solos.": {},
-    "Los inquilinos crean su cuenta con el código de invitación de su ficha.": {},
-    "Los mensajes van ligados a un contrato.": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Messages belong to a lease."
+    "Otro pago…" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other payment…"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Los mensajes van ligados a un contrato."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otro pago…"
           }
         }
       }
     },
-    "Mantén pulsado": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Touch and hold"
+    "PER inmobiliario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price-to-rent ratio"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mantén pulsado"
+        }
+      }
+    },
+    "Pago" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment"
           }
         }
       }
     },
-    "Mensaje": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Message"
+    "Pago de la renta" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rent payment"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensaje"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pago de la renta"
           }
         }
       }
     },
-    "Mensaje nuevo": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New message"
+    "Pagos registrados" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorded payments"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensaje nuevo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagos registrados"
           }
         }
       }
     },
-    "Mensajes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Messages"
+    "Pagos registrados (%@)" : {},
+    "Pagos registrados (%lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recorded payments (%lld)"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensajes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagos registrados (%lld)"
+          }
+        }
+      }
+    },
+    "Para alquilarla, márcala antes como disponible." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To rent it, mark it as available first."
           }
         }
       }
     },
-    "Mensajes nuevos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "New messages"
+    "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {},
+    "Pendiente de cobrar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mensajes nuevos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendiente de cobrar"
+          }
+        }
+      }
+    },
+    "Pendientes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending"
           }
         }
       }
     },
-    "Mi alquiler": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "My rental"
+    "Pendientes de cobro (%@)" : {},
+    "Pendientes de cobro (%lld)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending (%lld)"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mi alquiler"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendientes de cobro (%lld)"
           }
         }
       }
     },
-    "Mi propietario": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "My landlord"
+    "Pendientes de este mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due this month"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mi propietario"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendientes de este mes"
           }
         }
       }
     },
-    "Mis pagos": {},
-    "Más": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "More"
+    "Pensando…" : {},
+    "Perfil" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Más"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
           }
         }
       }
     },
-    "Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas.": {},
-    "Mínimo 10 caracteres. Pásasela a la persona para que la cambie desde su perfil.": {},
-    "No puede superar el máximo.": {},
-    "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar.": {},
-    "No se puede deshacer.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This can’t be undone."
+    "Personalizado" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se puede deshacer."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalizado"
           }
         }
       }
     },
-    "Notificaciones": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications"
+    "Pestaña al abrir" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tab at launch"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notificaciones"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pestaña al abrir"
+          }
+        }
+      }
+    },
+    "Piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property"
           }
         }
       }
     },
-    "Notificaciones, %lld sin leer": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications, %lld unread"
+    "Pisos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notificaciones, %lld sin leer"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pisos"
           }
         }
       }
     },
-    "Novedades de GestionAp": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What’s new in GestionAp"
+    "Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties, payments and expenses, separated by semicolons; they open in Excel or Numbers."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Novedades de GestionAp"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers."
           }
         }
       }
     },
-    "Obligatorio si no se devuelve entera.": {},
-    "Ocultar en el selector de apps": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hide in the app switcher"
+    "Plazo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Term"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ocultar en el selector de apps"
+        }
+      }
+    },
+    "Plegado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapsed"
           }
         }
       }
     },
-    "Ocultar importes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hide amounts"
+    "Política de privacidad" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy policy"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ocultar importes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidad"
           }
         }
       }
     },
-    "Oculto. Toca dos veces para verlo.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hidden. Double-tap to show it."
+    "Por %@" : {},
+    "Por piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oculto. Toca dos veces para verlo."
+        }
+      }
+    },
+    "Por piso · de menor a mayor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property · lowest first"
           }
         }
       }
     },
-    "Ocupación": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Occupancy"
+    "Preguntas sobre %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions about %@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ocupación"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preguntas sobre %@"
           }
         }
       }
     },
-    "Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha.": {},
-    "Organismo de tu comunidad autónoma": {},
-    "Orientativo": {},
-    "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza.": {},
-    "Oscuro": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dark"
+    "Pregúntale por tu cartera; las acciones que proponga las confirmas tú." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask about your portfolio; you confirm any action it proposes."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Oscuro"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pregúntale por tu cartera; las acciones que proponga las confirmas tú."
           }
         }
       }
     },
-    "Otro pago…": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Other payment…"
+    "Pregúntame por tu cartera. Si me pides registrar un pago o crear una incidencia, te lo preparo y tú lo confirmas." : {},
+    "Propuestas (%@)" : {},
+    "Próximos vencimientos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming lease ends"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Otro pago…"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximos vencimientos"
           }
         }
       }
     },
-    "Pago de la renta": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rent payment"
+    "Qué avisar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What to notify"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pago de la renta"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qué avisar"
+          }
+        }
+      }
+    },
+    "Qué pasa" : {},
+    "Recibo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receipt"
           }
         }
       }
     },
-    "Pagos registrados": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recorded payments"
+    "Recibo del IBI" : {},
+    "Recordatorios en este iPhone" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reminders on this iPhone"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pagos registrados"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorios en este iPhone"
           }
         }
       }
     },
-    "Pagos registrados (%@)": {},
-    "Pagos registrados (%lld)": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recorded payments (%lld)"
+    "Registrar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pagos registrados (%lld)"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar"
           }
         }
       }
     },
-    "Para la amortización del inmueble (3 % de la construcción, sin el suelo).": {},
-    "Pendiente de cobrar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pending"
+    "Registrar pago" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record payment"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pendiente de cobrar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registrar pago"
           }
         }
       }
     },
-    "Pendientes de cobro (%@)": {},
-    "Pendientes de cobro (%lld)": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pending (%lld)"
+    "Registrar pago de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record payment from %@"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pendientes de cobro (%lld)"
+        }
+      }
+    },
+    "Registrar pago de %@ de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record %1$@'s payment for %2$@"
           }
         }
       }
     },
-    "Pendientes de este mes": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Due this month"
+    "Reintentar" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pendientes de este mes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
           }
         }
       }
     },
-    "Pensando…": {},
-    "Perfil": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Profile"
+    "Rentabilidad bruta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gross yield"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Perfil"
+        }
+      }
+    },
+    "Rentabilidad neta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Net yield"
           }
         }
       }
     },
-    "Personalizado": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Custom"
+    "Restablecer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Personalizado"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer"
           }
         }
       }
     },
-    "Pestaña al abrir": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tab at launch"
+    "Restablecer los ajustes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset settings"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pestaña al abrir"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer los ajustes"
+          }
+        }
+      }
+    },
+    "Resueltas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolved"
           }
         }
       }
     },
-    "Pisos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Properties"
+    "Se borran tu nombre, email, DNI e IBAN y no podrás volver a entrar. Los contratos, pagos y recibos se conservan porque la ley obliga a guardarlos." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your name, email, ID number and IBAN are erased and you won’t be able to sign in again. Leases, payments and receipts are kept because the law requires it."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pisos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se borran tu nombre, email, DNI e IBAN y no podrás volver a entrar. Los contratos, pagos y recibos se conservan porque la ley obliga a guardarlos."
           }
         }
       }
     },
-    "Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Properties, payments and expenses, separated by semicolons; they open in Excel or Numbers."
+    "Se retienen %@" : {},
+    "Se usa en el QR de pago SEPA que generas para tus inquilinos. Se comprueban los dígitos de control." : {},
+    "Seguridad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Security"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguridad"
           }
         }
       }
     },
-    "Política de privacidad": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Privacy policy"
+    "Según los años para recuperar la inversión" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By years to recover the investment"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Política de privacidad"
+        }
+      }
+    },
+    "Según su %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By its %@"
           }
         }
       }
     },
-    "Por %@": {},
-    "Preguntas sobre %@": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Questions about %@"
+    "Servidor" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Preguntas sobre %@"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servidor"
           }
         }
       }
     },
-    "Pregúntale por tu cartera; las acciones que proponga las confirmas tú.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ask about your portfolio; you confirm any action it proposes."
+    "Simular en la calculadora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulate in the calculator"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pregúntale por tu cartera; las acciones que proponga las confirmas tú."
+        }
+      }
+    },
+    "Sin actividad registrada todavía." : {},
+    "Sin cobros atrasados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No overdue payments"
           }
         }
       }
     },
-    "Pregúntame por tu cartera. Si me pides registrar un pago o crear una incidencia, te lo preparo y tú lo confirmas.": {},
-    "Propuestas (%@)": {},
-    "Próximos vencimientos": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Upcoming lease ends"
+    "Sin cobros este mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No payments this month"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Próximos vencimientos"
+        }
+      }
+    },
+    "Sin contrato" : {},
+    "Sin contrato activo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active lease"
           }
         }
       }
     },
-    "Qué avisar": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What to notify"
+    "Sin contratos activos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active leases"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Qué avisar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin contratos activos"
           }
         }
       }
     },
-    "Qué pasa": {},
-    "Recibo del IBI": {},
-    "Recordatorios en este iPhone": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminders on this iPhone"
+    "Sin contratos anteriores" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No previous leases"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recordatorios en este iPhone"
+        }
+      }
+    },
+    "Sin datos financieros" : {},
+    "Sin habitaciones disponibles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No rooms available"
           }
         }
       }
     },
-    "Registrar": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Record"
+    "Sin incidencias abiertas" : {},
+    "Sin leer (%@)" : {},
+    "Sin pagos ni fines de contrato este día" : {},
+    "Sin pagos registrados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No payments recorded"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registrar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin pagos registrados"
           }
         }
       }
     },
-    "Registrar pago": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Record payment"
+    "Sin piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No property"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registrar pago"
+        }
+      }
+    },
+    "Sin pisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No properties"
           }
         }
       }
     },
-    "Reintentar": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try again"
+    "Sin vencimientos en los próximos 30 días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No leases ending in the next 30 days"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reintentar"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin vencimientos en los próximos 30 días"
           }
         }
       }
     },
-    "Rentabilidad bruta": {},
-    "Restablecer": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reset"
+    "Sistema" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restablecer"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sistema"
           }
         }
       }
     },
-    "Restablecer los ajustes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reset settings"
+    "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only changes text in GestionAp; the rest of your iPhone stays the same."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restablecer los ajustes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual."
+          }
+        }
+      }
+    },
+    "Solo con contrato activo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only with an active lease"
           }
         }
       }
     },
-    "Se borran tu nombre, email, DNI e IBAN y no podrás volver a entrar. Los contratos, pagos y recibos se conservan porque la ley obliga a guardarlos.": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your name, email, ID number and IBAN are erased and you won’t be able to sign in again. Leases, payments and receipts are kept because the law requires it."
+    "Solo se pueden borrar habitaciones sin contratos ni incidencias." : {},
+    "Solo se pueden borrar inquilinos sin contratos ni incidencias." : {},
+    "Subiendo…" : {},
+    "Tamaño del texto" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text size"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Se borran tu nombre, email, DNI e IBAN y no podrás volver a entrar. Los contratos, pagos y recibos se conservan porque la ley obliga a guardarlos."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamaño del texto"
           }
         }
       }
     },
-    "Se retienen %@": {},
-    "Se usa en el QR de pago SEPA que generas para tus inquilinos. Se comprueban los dígitos de control.": {},
-    "Seguridad": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Security"
+    "Te lo da tu propietario. Caduca a los pocos días; si no funciona, pídele uno nuevo." : {},
+    "Tema" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seguridad"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tema"
           }
         }
       }
     },
-    "Servidor": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Server"
+    "Texto" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Servidor"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto"
           }
         }
       }
     },
-    "Sin actividad registrada todavía.": {},
-    "Sin contrato": {},
-    "Sin contrato activo": {},
-    "Sin contratos activos": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No active leases"
+    "Texto en negrita" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bold text"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sin contratos activos"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto en negrita"
           }
         }
       }
     },
-    "Sin datos financieros": {},
-    "Sin incidencias abiertas": {},
-    "Sin leer (%@)": {},
-    "Sin pagos ni fines de contrato este día": {},
-    "Sin pagos registrados": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No payments recorded"
+    "Tiene hipoteca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Has a mortgage"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sin pagos registrados"
+        }
+      }
+    },
+    "Tipo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type"
           }
         }
       }
     },
-    "Sin vencimientos en los próximos 30 días": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No leases ending in the next 30 days"
+    "Tipo de ITP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer tax rate"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sin vencimientos en los próximos 30 días"
+        }
+      }
+    },
+    "Toca actualizar el %@" : {},
+    "Toca dos veces para plegarlo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-tap to collapse it"
+          }
+        }
+      }
+    },
+    "Toca dos veces para ver sus %lld elementos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double-tap to show its %lld items"
           }
         }
       }
     },
-    "Sistema": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "System"
+    "Todas" : {},
+    "Todas (%@)" : {},
+    "Todas las ciudades" : {},
+    "Todo a mano" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything at hand"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sistema"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo a mano"
+          }
+        }
+      }
+    },
+    "Todo alquilado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fully let"
           }
         }
       }
     },
-    "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Only changes text in GestionAp; the rest of your iPhone stays the same."
+    "Todo cobrado este mes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything collected this month"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo cobrado este mes"
           }
         }
       }
     },
-    "Solo se pueden borrar habitaciones sin contratos ni incidencias.": {},
-    "Solo se pueden borrar inquilinos sin contratos ni incidencias.": {},
-    "Subiendo…": {},
-    "Tamaño del texto": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text size"
+    "Todo el piso" : {},
+    "Todos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tamaño del texto"
+        }
+      }
+    },
+    "Todos los contratos del mes tienen algún pago" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every lease this month has a payment"
           }
         }
       }
     },
-    "Te lo da tu propietario. Caduca a los pocos días; si no funciona, pídele uno nuevo.": {},
-    "Tema": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Theme"
+    "Todos los contratos tienen pagos en los meses anteriores." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every lease has payments in previous months."
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tema"
+        }
+      }
+    },
+    "Todos los inquilinos" : {},
+    "Una foto ayuda a entender el problema y a presupuestar la reparación." : {},
+    "Usa la app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uses the app"
           }
         }
       }
     },
-    "Texto": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Text"
+    "Usar el tamaño del iPhone" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use iPhone text size"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Texto"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar el tamaño del iPhone"
           }
         }
       }
     },
-    "Texto en negrita": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bold text"
+    "Usuarios" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Users"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Texto en negrita"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuarios"
           }
         }
       }
     },
-    "Toca actualizar el %@": {},
-    "Todas": {},
-    "Todas (%@)": {},
-    "Todas las ciudades": {},
-    "Todo a mano": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Everything at hand"
+    "Vaciar la caché" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear cache"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Todo a mano"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaciar la caché"
+          }
+        }
+      }
+    },
+    "Valor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value"
           }
         }
       }
     },
-    "Todo cobrado este mes": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Everything collected this month"
+    "Valorar la app" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rate the app"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Todo cobrado este mes"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valorar la app"
           }
         }
       }
     },
-    "Todo el piso": {},
-    "Todos los inquilinos": {},
-    "Una foto ayuda a entender el problema y a presupuestar la reparación.": {},
-    "Usar el tamaño del iPhone": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use iPhone text size"
+    "Vence en %lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ends in %lld days"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usar el tamaño del iPhone"
+        }
+      }
+    },
+    "Vence hoy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ends today"
           }
         }
       }
     },
-    "Usuarios": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Users"
+    "Ver los %lld atrasados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See all %lld overdue"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usuarios"
+        }
+      }
+    },
+    "Ver recibo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View receipt"
+          }
+        }
+      }
+    },
+    "Ver toda la actividad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See all activity"
           }
         }
       }
     },
-    "Vaciar la caché": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clear cache"
+    "Ver todo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See all"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vaciar la caché"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver todo"
           }
         }
       }
     },
-    "Valorar la app": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rate the app"
+    "Versión" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Valorar la app"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión"
           }
         }
       }
     },
-    "Ver todo": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "See all"
+    "Vibración" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptics"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ver todo"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibración"
           }
         }
       }
     },
-    "Versión": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Version"
+    "Viene de una incidencia: su importe se cambia en la incidencia." : {},
+    "Vista previa" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Versión"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista previa"
           }
         }
       }
     },
-    "Vibración": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Haptics"
+    "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They return to their defaults; your account and data don’t change."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vibración"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian."
           }
         }
       }
     },
-    "Viene de una incidencia: su importe se cambia en la incidencia.": {},
-    "Vista previa": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Preview"
+    "WhatsApp" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vista previa"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
           }
         }
       }
     },
-    "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "They return to their defaults; your account and data don’t change."
+    "al mes" : {},
+    "de %@ habitaciones" : {},
+    "este contrato" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this lease"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vuelven a sus valores iniciales; tu cuenta y tus datos no cambian."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "este contrato"
           }
         }
       }
     },
-    "WhatsApp": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "WhatsApp"
+    "este inquilino" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this tenant"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "WhatsApp"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "este inquilino"
           }
         }
       }
     },
-    "al mes": {},
-    "de %@ habitaciones": {},
-    "este contrato": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "this lease"
+    "este piso" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this property"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "este contrato"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "este piso"
           }
         }
       }
     },
-    "este inquilino": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "this tenant"
+    "hoy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "today"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "este inquilino"
+        }
+      }
+    },
+    "ocupación" : {},
+    "¿Borrar a %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete %@?"
           }
         }
       }
     },
-    "este piso": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "this property"
+    "¿Borrar el pago de %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete the %@ payment?"
           }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "este piso"
+        }
+      }
+    },
+    "¿Borrar la incidencia?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete the issue?"
           }
         }
       }
     },
-    "ocupación": {},
-    "¿Cerrar sesión?": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign out?"
+    "¿Cerrar sesión?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign out?"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿Cerrar sesión?"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión?"
           }
         }
       }
     },
-    "¿De qué piso?": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Which property?"
+    "¿De qué piso?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which property?"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿De qué piso?"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿De qué piso?"
           }
         }
       }
     },
-    "¿Eliminar tu cuenta para siempre?": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete your account forever?"
+    "¿Eliminar tu cuenta para siempre?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete your account forever?"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿Eliminar tu cuenta para siempre?"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar tu cuenta para siempre?"
+          }
+        }
+      }
+    },
+    "¿Finalizar el contrato de %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End %@'s lease?"
           }
         }
       }
     },
-    "¿Restablecer los ajustes de la app?": {
-      "extractionState": "stale",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reset the app’s settings?"
+    "¿Restablecer los ajustes de la app?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset the app’s settings?"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿Restablecer los ajustes de la app?"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Restablecer los ajustes de la app?"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }

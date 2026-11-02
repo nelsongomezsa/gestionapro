@@ -1409,6 +1409,48 @@ extension CapturasUITests {
         r.capturar("01-asistente")
     }
 
+    /// Fase 2 de inicio-tarjetas: cobros atrasados y listas agrupadas por piso.
+    @MainActor
+    func testFase2() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        let alerta = r.app.buttons["alerta-COBROS_ATRASADOS"]
+        r.desplazarHasta(alerta)
+        r.capturar("01-inicio-alerta-atrasados")
+        alerta.tap()
+        r.esperar(r.app.navigationBars["Cobros atrasados"])
+        r.pausa(1)
+        r.capturar("02-lista-atrasados")
+        r.atras()
+
+        r.pestana("Cobros")
+        r.esperar(r.elemento(contiene: "Atrasados"))
+        r.pausa(1)
+        r.capturar("03-cobros-atrasados")
+        func agrupar(_ opcion: String) {
+            r.desplazarHasta(r.app.buttons[opcion].firstMatch).tap()
+            r.pausa(1)
+        }
+        agrupar("Por piso")
+        r.app.swipeUp()
+        r.capturar("04-cobros-por-piso")
+        r.app.buttons["cabeceraPiso"].firstMatch.tap()
+        r.pausa(1)
+        r.capturar("05-cobros-piso-plegado")
+        r.app.buttons["cabeceraPiso"].firstMatch.tapSiExiste()
+
+        for (nombre, captura) in [("Contratos", "06-contratos-por-piso"), ("Inquilinos", "07-inquilinos-por-piso")] {
+            r.pestana("Más")
+            r.desplazarHasta(r.app.buttons[nombre]).tap()
+            r.esperar(r.app.navigationBars[nombre])
+            agrupar("Por piso")
+            r.capturar(captura)
+        }
+        r.incidencias()
+        agrupar("Por piso")
+        r.capturar("08-incidencias-por-piso")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {

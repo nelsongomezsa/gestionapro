@@ -58,13 +58,22 @@ enum ResumenesInicio {
 
     /// "Libre desde el 1 sept. · 62 días" o "Sin contratos anteriores".
     static func textoLibre(_ h: Habitacion, hoy: Date = .now) -> String {
-        guard let desde = h.libreDesde, let dias = diasLibre(h, hoy: hoy) else { return "Sin contratos anteriores" }
+        guard let desde = h.libreDesde, let dias = diasLibre(h, hoy: hoy) else {
+            return String(localized: "Sin contratos anteriores")
+        }
         let fecha = desde.formatted(.dateTime.day().month(.abbreviated).locale(Formato.locale))
-        let estado = h.estado == .mantenimiento ? "En mantenimiento desde el" : "Libre desde el"
-        return switch dias {
-        case 0: "\(estado) \(fecha) · hoy"
-        case 1: "\(estado) \(fecha) · 1 día"
-        default: "\(estado) \(fecha) · \(dias) días"
+        if h.estado == .mantenimiento {
+            return String(localized: "En mantenimiento desde el \(fecha)") + " · " + duracion(dias)
+        }
+        return String(localized: "Libre desde el \(fecha)") + " · " + duracion(dias)
+    }
+
+    /// "hoy", "1 día", "12 días".
+    static func duracion(_ dias: Int) -> String {
+        switch dias {
+        case 0: String(localized: "hoy")
+        case 1: String(localized: "1 día")
+        default: String(localized: "\(dias) días")
         }
     }
 
@@ -73,6 +82,7 @@ enum ResumenesInicio {
     /// Lista ya filtrada que abre cada alerta de Inicio.
     static func destino(de alerta: Alerta) -> DestinoInicio? {
         switch alerta.tipo {
+        case "COBROS_ATRASADOS": .atrasados
         case "CONTRATOS_POR_VENCER": .contratos(.porVencer)
         case "INCIDENCIAS_PENDIENTES": .incidencias(.pendientes)
         case "OCUPACION": .ocupacion

@@ -2,6 +2,7 @@ package com.gestionap.api.web;
 
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.PagoService;
+import com.gestionap.api.web.dto.CobroAtrasadoResponse;
 import com.gestionap.api.web.dto.PagoRequest;
 import com.gestionap.api.web.dto.PagoResponse;
 import com.gestionap.api.web.dto.ResumenPagosResponse;
@@ -51,6 +52,13 @@ public class PagoController {
     public ResumenPagosResponse resumen(@Parameter(example = "2026-10") @RequestParam(required = false) YearMonth mes,
                                         @AuthenticationPrincipal UsuarioAutenticado actor) {
         return pagos.resumen(mes != null ? mes : YearMonth.now(), actor);
+    }
+
+    @Operation(summary = "Cobros atrasados: meses anteriores al actual sin ningún pago de un contrato vigente")
+    @GetMapping("/atrasados")
+    public List<CobroAtrasadoResponse> atrasados(@RequestParam(defaultValue = "12") int meses,
+                                                 @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return pagos.atrasados(meses, actor);
     }
 
     @Operation(summary = "Registra un pago de un contrato activo")

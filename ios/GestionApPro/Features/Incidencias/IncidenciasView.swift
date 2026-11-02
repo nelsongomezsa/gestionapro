@@ -9,6 +9,7 @@ struct IncidenciasView: View {
     @State private var creando = false
     @State private var paraBorrar: Incidencia?
     @State private var error: String?
+    @AppStorage(Agrupacion.clave("incidencias")) private var agrupacion: Agrupacion = .todos
 
     /// En su propia pestaña lleva su pila; dentro de Más (o de Inicio) usa la de fuera.
     var enPila: Bool
@@ -35,26 +36,20 @@ struct IncidenciasView: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
 
+                    SelectorAgrupacion(agrupacion: $agrupacion)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+
                     if visibles.isEmpty {
                         EstadoVacio(icono: "checkmark.seal", titulo: "Sin incidencias",
                                     mensaje: filtro == .todas ? "No hay incidencias registradas." : "No hay incidencias «\(filtro.nombre.lowercased())».")
                             .listRowBackground(Color.clear)
+                    } else if agrupacion == .porPiso {
+                        SeccionesPorPiso(grupos: AgrupadorPiso.agrupar(visibles) { $0.piso }, pantalla: "incidencias",
+                                         resumen: { ResumenPorPiso.incidencias($0.elementos) }) { fila($0, mostrarPiso: false) }
                     } else {
                         Section {
-                            ForEach(visibles) { i in
-                                NavigationLink(value: i.id) { FilaIncidencia(incidencia: i, mostrarEstado: filtro.variosEstados) }
-                                    .accessibilityIdentifier("filaIncidencia")
-                                    .swipeActions(edge: .leading) {
-                                        if gestiona, let accion = i.estado.accionSiguiente, let sig = i.estado.siguiente {
-                                            Button(accion, systemImage: sig.icono) { Task { await avanzar(i) } }.tint(sig.tono.color)
-                                        }
-                                    }
-                                    .swipeActions(edge: .trailing) {
-                                        if gestiona {
-                                            Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = i }
-                                        }
-                                    }
-                            }
+                            ForEach(visibles) { fila($0, mostrarPiso: true) }
                         } footer: {
                             if gestiona { Text("Desliza a la derecha para avanzar el estado y a la izquierda para borrar.") }
                         }
@@ -82,6 +77,21 @@ struct IncidenciasView: View {
             }
             .alertaError($error)
         }
+    }
+
+    private func fila(_ i: Incidencia, mostrarPiso: Bool) -> some View {
+        NavigationLink(value: i.id) { FilaIncidencia(incidencia: i, mostrarEstado: filtro.variosEstados, mostrarPiso: mostrarPiso) }
+            .accessibilityIdentifier("filaIncidencia")
+            .swipeActions(edge: .leading) {
+                if gestiona, let accion = i.estado.accionSiguiente, let sig = i.estado.siguiente {
+                    Button(accion, systemImage: sig.icono) { Task { await avanzar(i) } }.tint(sig.tono.color)
+                }
+            }
+            .swipeActions(edge: .trailing) {
+                if gestiona {
+                    Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = i }
+                }
+            }
     }
 
     private func cargar() async {

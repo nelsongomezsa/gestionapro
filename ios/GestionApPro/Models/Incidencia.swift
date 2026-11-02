@@ -144,11 +144,11 @@ enum FiltroIncidencias: Hashable, CaseIterable, Sendable {
 
     var nombre: String {
         switch self {
-        case .abiertas: "Abiertas"
-        case .pendientes: "Pendientes"
-        case .enProceso: "En proceso"
-        case .resueltas: "Resueltas"
-        case .todas: "Todas"
+        case .abiertas: String(localized: "Abiertas")
+        case .pendientes: String(localized: "Pendientes")
+        case .enProceso: String(localized: "En proceso")
+        case .resueltas: String(localized: "Resueltas")
+        case .todas: String(localized: "Todas")
         }
     }
 
