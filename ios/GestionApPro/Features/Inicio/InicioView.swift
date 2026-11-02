@@ -26,9 +26,12 @@ enum DestinoInicio: Hashable {
 /// búsqueda global y campana de notificaciones.
 struct InicioView: View {
     @Environment(SesionStore.self) private var sesion
+    @Environment(IrACobros.self) private var irACobros: IrACobros?
     @State private var vm = InicioViewModel()
     /// Ruta explícita: las notificaciones abren su pantalla añadiéndola aquí.
-    @State private var ruta: [DestinoInicio] = []
+    /// NavigationPath (no `[DestinoInicio]`): las pantallas abiertas desde aquí empujan sus propios
+    /// valores (DestinoPiso, Contrato, Int…) y una ruta tipada los ignoraba sin abrir nada.
+    @State private var ruta = NavigationPath()
     /// Tarjeta o alerta → su pantalla, con zoom.
     @Namespace private var zoom
 
@@ -38,9 +41,11 @@ struct InicioView: View {
             VistaCarga(estado: vm.estado, reintentar: { Task { await cargar() } }) { d in
                 ScrollView {
                     VStack(alignment: .leading, spacing: Tema.Espacio.l) {
-                        HeroeInicio(dashboard: d, generandoInforme: vm.generandoInforme) {
-                            Task { await vm.informe(con: sesion.api) }
-                        }
+                        HeroeInicio(dashboard: d, resumen: vm.resumenHeroe, mes: vm.mesHeroe,
+                                    generandoInforme: vm.generandoInforme,
+                                    cambiarMes: { m in Task { await vm.cambiarMesHeroe(m, con: sesion.api) } },
+                                    abrirCobros: { irACobros?.mes = vm.mesHeroe },
+                                    informe: { Task { await vm.informe(con: sesion.api) } })
                         .aparicion(0)
                         IndicadoresInicio(dashboard: d, zoom: zoom, abrir: abrir).aparicion(1)
                         SeccionTarjeta(titulo: "Ingresos cobrados") {
@@ -92,7 +97,7 @@ struct InicioView: View {
                 case .ocupacion: OcupacionView(abrir: abrir).destinoZoom(destino, en: zoom)
                 case .habitacionesLibres: HabitacionesLibresView(abrir: abrir).destinoZoom(destino, en: zoom)
                 case let .fichaHabitacion(h):
-                    HabitacionFichaView(habitacion: h) { c in ruta.append(.contrato(c.id)) }
+                    HabitacionFichaView(habitacion: h) { c in ruta.append(DestinoInicio.contrato(c.id)) }
                 case let .contratos(filtro): ContratosView(filtro: filtro).destinoZoom(destino, en: zoom)
                 case .atrasados: AtrasadosView().destinoZoom(destino, en: zoom)
                 case let .incidencias(filtro): IncidenciasView(enPila: false, filtro: filtro).destinoZoom(destino, en: zoom)

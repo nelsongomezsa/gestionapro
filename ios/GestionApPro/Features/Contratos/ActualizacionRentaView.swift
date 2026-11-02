@@ -27,7 +27,7 @@ private func conSigno(_ pct: Decimal) -> String {
 /// "septiembre de 2026" a partir de "2026-09".
 func nombreMes(_ periodo: String?) -> String? {
     guard let periodo, let fecha = try? Date(periodo + "-15", strategy: .iso8601.year().month().day()) else { return nil }
-    return fecha.formatted(.dateTime.month(.wide).year().locale(Formato.locale))
+    return fecha.formatted(.dateTime.month(.wide).year().locale(Formato.localeFechas))
 }
 
 /// Sección "Actualización de renta": propuesta (propietario) e historial (también el inquilino).

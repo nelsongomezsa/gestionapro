@@ -1,35 +1,108 @@
 import SwiftUI
 
-/// Lo cobrado del mes frente a lo esperado: la cifra que más importa al abrir la app.
+/// Lo cobrado en un mes frente a lo esperado: la cifra que más importa al abrir la app.
+/// Con las flechas (o deslizando) se ven meses anteriores, sin pasar de hoy; al tocarla se abre Cobros
+/// en ese mes. Las cifras salen del mismo cálculo que Cobros (resumen del mes).
 struct HeroeInicio: View {
     let dashboard: Dashboard
+    let resumen: ResumenPagos?
+    let mes: Mes
     let generandoInforme: Bool
+    let cambiarMes: (Mes) -> Void
+    let abrirCobros: () -> Void
     let informe: () -> Void
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
+
+    private var esActual: Bool { mes == .actual }
 
     var body: some View {
         let d = dashboard
-        let pendiente = max(d.esperadoMes - d.cobradoMes, 0)
-        let progreso = d.esperadoMes > 0 ? (d.cobradoMes / d.esperadoMes).double : 0
-        TarjetaHero(titulo: "Cobrado este mes", valor: Formato.euros(d.cobradoMes),
-                    accesorio: (InicioViewModel.mostrarComparacion(cobrado: d.cobradoMes) ? d.tendenciaPct : nil).map { t in
-                        AnyView(InsigniaEstado(texto: "\(Formato.porcentaje(abs(t))) vs. \(d.mesComparado).",
-                                               tono: Tono.signo(t),
-                                               icono: t >= 0 ? "arrow.up.right" : "arrow.down.right")
+        // Mientras llega el resumen del mes actual, las cifras del panel (las mismas salvo matices).
+        let cobrado = resumen?.cobrado ?? (esActual ? d.cobradoMes : 0)
+        let esperado = resumen?.esperado ?? (esActual ? d.esperadoMes : 0)
+        let pendiente = resumen?.pendiente ?? max(esperado - cobrado, 0)
+        let progreso = esperado > 0 ? min((cobrado / esperado).double, 1) : 0
+        TarjetaHero(titulo: esActual ? "Cobrado este mes" : String(localized: "Cobrado en \(Formato.mesEnFrase(mes.texto) ?? mes.nombre)"),
+                    valor: Formato.euros(cobrado),
+                    accesorio: (esActual && InicioViewModel.mostrarComparacion(cobrado: d.cobradoMes) ? d.tendenciaPct : nil).map { t in
+                        let anterior = Formato.mes(Mes.actual.anterior.texto, corto: true) ?? d.mesComparado
+                        return AnyView(InsigniaEstado(texto: "\(Formato.porcentaje(abs(t))) vs. \(anterior).",
+                                                      tono: Tono.signo(t),
+                                                      icono: t >= 0 ? "arrow.up.right" : "arrow.down.right")
                             .accessibilityLabel("\(t >= 0 ? "Sube" : "Baja") un \(Formato.porcentaje(abs(t))) frente a lo cobrado hasta el día \(d.diaComparado) del mes anterior"))
                     }) {
+            selectorMes
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: progreso, tono: .positivo)
-                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(d.esperadoMes)) esperados")
+                Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(esperado)) esperados")
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }
             ParDatos {
                 DatoCompacto(titulo: "Pendiente de cobrar", valor: Formato.euros(pendiente), tono: pendiente > 0 ? .aviso : .positivo)
             } derecha: {
-                DatoCompacto(titulo: "Cash flow previsto", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
+                if esActual {
+                    DatoCompacto(titulo: "Cash flow previsto", valor: Formato.euros(d.cashFlowMensual), tono: Tono.signo(d.cashFlowMensual))
+                } else if let r = resumen {
+                    DatoCompacto(titulo: "Pagos registrados", valor: "\(r.numeroPagos)")
+                }
             }
             BotonSecundario(titulo: "Informe del mes", icono: "doc.richtext", cargando: generandoInforme, accion: informe)
         }
+        .overlay(alignment: .topTrailing) {
+            if !esActual || !InicioViewModel.mostrarComparacion(cobrado: d.cobradoMes) || d.tendenciaPct == nil {
+                ChevronTocable().padding(Tema.Espacio.l)
+            }
+        }
+        .contentShape(.rect)
+        // Tocar la tarjeta (fuera de sus botones) abre Cobros en ese mes.
+        .onTapGesture {
+            Haptica.ligera()
+            abrirCobros()
+        }
+        // Deslizar a la izquierda: mes siguiente; a la derecha: anterior. No bloquea el desplazamiento vertical.
+        .simultaneousGesture(DragGesture(minimumDistance: 30).onEnded { v in
+            guard abs(v.translation.width) > abs(v.translation.height) * 1.5, abs(v.translation.width) > 60 else { return }
+            ir(v.translation.width < 0 ? mes.siguiente : mes.anterior)
+        })
+        .accessibilityElement(children: .contain)
+        .accessibilityAction(named: Text("Ver en Cobros"), abrirCobros)
+        .accessibilityIdentifier("heroeInicio")
+    }
+
+    private var selectorMes: some View {
+        HStack(spacing: Tema.Espacio.s) {
+            Button { ir(mes.anterior) } label: { Image(systemName: "chevron.left") }
+                .accessibilityLabel("Mes anterior")
+                .accessibilityIdentifier("heroeMesAnterior")
+            Text(mes.nombre)
+                .font(Tema.Fuente.detalle.weight(.semibold))
+                .foregroundStyle(Tema.Color.texto)
+                .contentTransition(reducirMovimiento ? .identity : .numericText())
+                .frame(maxWidth: .infinity)
+                .accessibilityLabel("Mes: \(mes.nombre)")
+                .accessibilityHint("Desliza arriba o abajo para cambiar de mes")
+                .accessibilityAdjustableAction { direccion in
+                    switch direccion {
+                    case .increment: ir(mes.siguiente)
+                    case .decrement: ir(mes.anterior)
+                    @unknown default: break
+                    }
+                }
+            Button { ir(mes.siguiente) } label: { Image(systemName: "chevron.right") }
+                .accessibilityLabel("Mes siguiente")
+                .accessibilityIdentifier("heroeMesSiguiente")
+                .disabled(esActual)
+        }
+        .buttonStyle(.glass)
+        .buttonBorderShape(.circle)
+        .tint(Tema.Color.texto)
+    }
+
+    private func ir(_ nuevo: Mes) {
+        guard nuevo <= .actual, nuevo != mes else { return }
+        Haptica.ligera()
+        if reducirMovimiento { cambiarMes(nuevo) } else { withAnimation(Tema.Movimiento.suave) { cambiarMes(nuevo) } }
     }
 }
 
@@ -48,23 +121,23 @@ struct IndicadoresInicio: View {
                 tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada piso") {
                     TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
                                icono: "chart.pie", tono: d.ocupacion.tono,
-                               detalle: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones")
+                               detalle: String(localized: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones"))
                 }
                 tocable("kpiLibres", .habitacionesLibres, pista: "Abre la lista de habitaciones libres") {
                     TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
                                icono: "door.left.hand.open", tono: .primario,
-                               detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
+                               detalle: String(localized: "\(d.ocupacion.mantenimiento) en mantenimiento"))
                 }
             }
             GridRow {
                 tocable("kpiContratos", .contratos(.activos), pista: "Abre los contratos activos") {
                     TarjetaKPI(titulo: "Contratos activos", valor: "\(d.contratosActivos)", icono: "doc.text",
-                               tono: .primario, detalle: "\(d.inquilinos) inquilinos")
+                               tono: .primario, detalle: String(localized: "\(d.inquilinos) inquilinos"))
                 }
                 tocable("kpiIncidencias", .incidencias(.abiertas), pista: "Abre las incidencias abiertas y en curso") {
                     TarjetaKPI(titulo: "Incidencias abiertas", valor: "\(abiertas)",
                                icono: "wrench.and.screwdriver", tono: abiertas > 0 ? .aviso : .positivo,
-                               detalle: "\(d.incidenciasEnProceso) en curso")
+                               detalle: String(localized: "\(d.incidenciasEnProceso) en curso"))
                 }
             }
         }
@@ -154,6 +227,7 @@ struct VencimientosInicio: View {
                     .contentShape(.rect)
                 }
                 .buttonStyle(.plain)
+                .accessibilityIdentifier("filaVencimiento")
                 if c != contratos.last { Divider().overlay(Tema.Color.borde) }
             }
         }
@@ -167,6 +241,7 @@ struct ActividadInicio: View {
         SeccionTarjeta(titulo: "Actividad reciente") {
             NavigationLink(value: DestinoInicio.actividad) { Text("Ver todo") }
                 .accessibilityLabel("Ver toda la actividad")
+                .accessibilityIdentifier("verActividad")
         } contenido: {
             if actividades.isEmpty {
                 Text("Sin actividad registrada todavía.").foregroundStyle(Tema.Color.textoSecundario)

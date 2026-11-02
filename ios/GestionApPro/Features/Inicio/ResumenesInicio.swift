@@ -61,7 +61,7 @@ enum ResumenesInicio {
         guard let desde = h.libreDesde, let dias = diasLibre(h, hoy: hoy) else {
             return String(localized: "Sin contratos anteriores")
         }
-        let fecha = desde.formatted(.dateTime.day().month(.abbreviated).locale(Formato.locale))
+        let fecha = desde.formatted(.dateTime.day().month(.abbreviated).locale(Formato.localeFechas))
         if h.estado == .mantenimiento {
             return String(localized: "En mantenimiento desde el \(fecha)") + " · " + duracion(dias)
         }

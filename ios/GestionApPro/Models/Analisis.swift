@@ -41,7 +41,8 @@ struct Analisis: Decodable, Sendable {
 
     struct MesAnalisis: Decodable, Identifiable, Hashable, Sendable {
         let mes: String
-        let etiqueta: String
+        /// "oct" / "Oct": con el idioma de la app, a partir de `mes`.
+        var etiqueta: String { Formato.mes(mes, corto: true) ?? mes }
         let ingresos: Decimal
         let gastos: Decimal
         /// nil en los meses que aún no han empezado.

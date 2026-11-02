@@ -1552,6 +1552,45 @@ extension CapturasUITests {
         r.capturar("10-piso-nuevo")
     }
 
+    /// Auditoría de cifras: lo que muestra la app en Inicio, Cobros, dos pisos y un trimestre.
+    @MainActor
+    func testAuditoria() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(2)
+        r.capturar("01-inicio")
+        r.app.buttons["heroeMesAnterior"].tap()
+        r.pausa(2)
+        r.capturar("02-inicio-mes-anterior")
+        r.app.descendants(matching: .any)["heroeInicio"].firstMatch
+            .coordinate(withNormalizedOffset: CGVector(dx: 0.3, dy: 0.15)).tap()
+        r.esperar(r.app.navigationBars["Cobros"])
+        r.pausa(2)
+        r.capturar("03-cobros-mes-anterior")
+        r.pestana("Pisos")
+        for (i, piso) in ["Passeig de Gràcia", "Gran Vía 18"].enumerated() {
+            let tarjeta = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", piso)).firstMatch
+            r.desplazarHasta(tarjeta).tap()
+            r.esperar(r.app.buttons["metrica-bruta"])
+            r.pausa(1)
+            r.capturar("0\(4 + i * 2)-piso-\(i + 1)")
+            r.app.swipeUp()
+            r.capturar("0\(5 + i * 2)-piso-\(i + 1)-metricas")
+            r.atras()
+            r.pausa(1)
+        }
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["Estadísticas"]).tap()
+        r.esperar(r.elemento(contiene: "Resultado neto"))
+        r.app.buttons["Trimestre"].firstMatch.tap()
+        r.pausa(1)
+        r.app.buttons["Periodo anterior"].tap()
+        r.pausa(2)
+        r.capturar("08-estadisticas-t3")
+        r.app.swipeUp()
+        r.capturar("09-estadisticas-t3-comparacion")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {

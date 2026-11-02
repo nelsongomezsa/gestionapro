@@ -27,6 +27,7 @@ struct OcupacionView: View {
                             ForEach(ordenados) { p in
                                 TarjetaTocable(pista: "Abre el detalle del piso", mostrarChevron: false,
                                                accion: { abrir(.piso(p.id)) }) { FilaOcupacionPiso(piso: p) }
+                                    .accessibilityIdentifier("filaOcupacionPiso")
                                 if p.id != ordenados.last?.id { Divider().overlay(Tema.Color.borde) }
                             }
                         }

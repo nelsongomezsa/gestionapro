@@ -54,3 +54,13 @@
 - Análisis de inversión guardados (V11): se guarda la entrada de la calculadora y el resultado se recalcula al
   leer (con los tipos de ITP vigentes). Cada usuario solo ve los suyos, también el admin; máximo 50.
 - Simular desde un piso: la comunidad autónoma no se deduce de la ciudad; la calculadora propone Madrid.
+- Inicio usa una ruta de navegación genérica (NavigationPath): con la ruta tipada `[DestinoInicio]`, los
+  enlaces que empujan otros valores (pantallas del piso, contratos, incidencias) no abrían nada.
+- La tarjeta «Cobrado» de Inicio usa el mismo resumen mensual que Cobros (GET /api/pagos/resumen): esperado =
+  rentas de los contratos vigentes en el mes; pendiente = rentas de los contratos sin ningún pago en el mes. Antes
+  usaba los contratos activos hoy y «esperado − cobrado», que divergían de Cobros (contrato que acaba a mitad de
+  mes, atrasados cobrados este mes). Se puede ir a meses anteriores (no futuros) y al tocarla abre Cobros en ese mes.
+- Porcentajes con redondeo comercial (1,625 → 1,63), como el HALF_UP de la API.
+- Meses y fechas en el idioma de la app (español o inglés) con convenciones de España; la app rehace los nombres
+  de mes a partir del aaaa-mm que manda la API, que los envía en español. Los importes siguen en formato español.
+- Cifras auditadas con SQL directo (api/sql/auditoria/auditoria_numeros.sql) contra la API y la app.

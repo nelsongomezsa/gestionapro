@@ -125,7 +125,7 @@ private struct FilaAnalisis: View {
                         Text(a.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                         Text("\(Formato.euros(a.entrada.precioCompra)) · \(Formato.euros(a.entrada.alquilerMensual)) al mes")
                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
-                        Text(a.fecha, format: .relative(presentation: .named).locale(Formato.locale))
+                        Text(a.fecha, format: .relative(presentation: .named).locale(Formato.localeFechas))
                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     }
                     Spacer(minLength: Tema.Espacio.xs)

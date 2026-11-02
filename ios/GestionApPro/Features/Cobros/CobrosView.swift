@@ -14,6 +14,7 @@ struct CobrosView: View {
     @State private var conciliando = false
     @State private var registrandoAtrasado: CobroAtrasado?
     @AppStorage(Agrupacion.clave("cobros")) private var agrupacion: Agrupacion = .todos
+    @Environment(IrACobros.self) private var irACobros: IrACobros?
 
     var body: some View {
         @Bindable var vm = vm
@@ -126,6 +127,12 @@ struct CobrosView: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await vm.cargar(con: sesion.api) } }
+            // Mes pedido desde Inicio: si aún no se ha cargado nada, lo carga la primera carga.
+            .onChange(of: irACobros?.mes, initial: true) { _, pedido in
+                guard let pedido else { return }
+                irACobros?.mes = nil
+                if vm.resumen.valor == nil { vm.mes = pedido } else { Task { await vm.cambiarMes(pedido, con: sesion.api) } }
+            }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
             .sheet(isPresented: $conciliando) {
@@ -314,7 +321,7 @@ struct ResumenCobros: View {
     }
 
     var body: some View {
-        TarjetaHero(titulo: "Cobrado en \(nombreMes)", valor: Formato.euros(cobrado)) {
+        TarjetaHero(titulo: String(localized: "Cobrado en \(nombreMes)"), valor: Formato.euros(cobrado)) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: progreso, tono: .positivo)
                 Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(esperado)) esperados")

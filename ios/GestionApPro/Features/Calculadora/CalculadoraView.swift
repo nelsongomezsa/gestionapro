@@ -158,7 +158,7 @@ struct CalculadoraView: View {
 
     /// "Análisis del 2 nov 2026"
     static func nombrePorDefecto(_ hoy: Date = .now) -> String {
-        String(localized: "Análisis del \(hoy.formatted(.dateTime.day().month(.abbreviated).year().locale(Formato.locale)))")
+        String(localized: "Análisis del \(hoy.formatted(.dateTime.day().month(.abbreviated).year().locale(Formato.localeFechas)))")
     }
 
     private func ocultarTeclado() {

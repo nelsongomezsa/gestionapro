@@ -52,7 +52,7 @@ struct PagoFormView: View {
                 .filaLista()
             }
             .estiloLista()
-            .environment(\.locale, Formato.locale)
+            .environment(\.locale, Formato.localeFechas)
             .navigationTitle("Registrar pago")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

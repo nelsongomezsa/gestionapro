@@ -122,7 +122,8 @@ struct ResumenCarteraView: View {
     let resumen: ResumenCartera
 
     var body: some View {
-        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual)) {
+        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual),
+                    tonoValor: resumen.cashFlowMensual < 0 ? .negativo : nil) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: resumen.ocupacion, tono: Tono.ocupacion(resumen.ocupacion * 100))
                 Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) habitaciones libres")

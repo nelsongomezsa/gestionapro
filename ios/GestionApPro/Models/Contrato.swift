@@ -86,7 +86,8 @@ struct PagoRequest: Encodable, Sendable {
 /// GET /api/pagos/resumen
 struct ResumenPagos: Decodable, Sendable {
     let mes: String
-    let nombreMes: String
+    /// Con el idioma de la app (la API lo manda en español), a partir de `mes`.
+    var nombreMes: String { Formato.mesEnFrase(mes) ?? mes }
     let esperado: Decimal
     let cobrado: Decimal
     let pendiente: Decimal
@@ -111,7 +112,8 @@ struct CobroAtrasado: Decodable, Identifiable, Hashable, Sendable {
     let piso: PisoBreve
     /// "2026-09"
     let mes: String
-    let nombreMes: String
+    /// Con el idioma de la app (la API lo manda en español), a partir de `mes`.
+    var nombreMes: String { Formato.mesEnFrase(mes) ?? mes }
     let importe: Decimal
     let diasRetraso: Int
     /// false si el contrato ya terminó: la API no deja registrar el pago.
@@ -153,7 +155,7 @@ struct Mes: Hashable, Comparable, Sendable {
     /// "Octubre 2026". (El formato de fecha español daría "octubre de 2026".)
     var nombre: String {
         var calendario = Calendar(identifier: .gregorian)
-        calendario.locale = Formato.locale
+        calendario.locale = Formato.localeFechas
         let mes = calendario.standaloneMonthSymbols[numero - 1]
         return mes.prefix(1).uppercased() + mes.dropFirst() + " \(anio)"
     }

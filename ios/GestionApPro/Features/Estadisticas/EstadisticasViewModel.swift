@@ -23,7 +23,7 @@ struct PeriodoEstadisticas: Equatable, Sendable {
     private static var calendario: Calendar {
         var c = Calendar(identifier: .gregorian)
         c.timeZone = TimeZone(identifier: "Europe/Madrid")!
-        c.locale = Formato.locale
+        c.locale = Formato.localeFechas
         return c
     }
 
@@ -68,7 +68,7 @@ struct PeriodoEstadisticas: Equatable, Sendable {
         case .trimestre: return String(localized: "T\((c.component(.month, from: desde) - 1) / 3 + 1) \(String(anio))")
         case .anio: return String(anio)
         case .personalizado:
-            let f = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.locale)
+            let f = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.localeFechas)
             return "\(desde.formatted(f)) – \(hasta.formatted(f))"
         }
     }
@@ -168,7 +168,7 @@ final class EstadisticasViewModel {
             }))
         }
         secciones.append((String(localized: "Por mes"), a.meses.map { m in
-            (m.etiqueta.capitalized(with: Formato.locale),
+            (m.etiqueta.capitalized(with: Formato.localeFechas),
              "\(Formato.euros(m.ingresos)) − \(Formato.euros(m.gastos))"
                 + (m.ocupacionPct.map { " · \(Formato.porcentaje($0))" } ?? ""))
         }))

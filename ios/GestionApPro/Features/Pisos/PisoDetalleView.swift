@@ -30,7 +30,15 @@ struct PisoDetalleView: View {
 
                 if let m = piso.metricas {
                     TarjetaHero(titulo: "Cash flow previsto al mes", valor: Formato.euros(m.cashFlowMensual),
-                                accesorio: AnyView((m.calificacion as Calificacion?).insignia)) {
+                                accesorio: AnyView((m.calificacion as Calificacion?).insignia),
+                                tonoValor: m.cashFlowMensual < 0 ? .negativo : nil) {
+                        if m.cashFlowMensual < 0 {
+                            Label("Pierde dinero cada mes: la hipoteca y los gastos superan el alquiler.",
+                                  systemImage: "exclamationmark.triangle.fill")
+                                .font(Tema.Fuente.detalle.weight(.semibold))
+                                .foregroundStyle(Tema.Color.negativo)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                         ParDatos {
                             DatoCompacto(titulo: "Ingresos previstos", valor: Formato.euros(piso.ingresosMensuales))
                         } derecha: {
@@ -150,6 +158,7 @@ struct PisoDetalleView: View {
                     ForEach(contratos) { c in
                         NavigationLink(value: DestinoPiso.contrato(c.id)) { FilaContratoCompleto(contrato: c, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("filaContratoPiso")
                         if c != contratos.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
@@ -172,6 +181,7 @@ struct PisoDetalleView: View {
                     ForEach(incidencias) { i in
                         NavigationLink(value: DestinoPiso.incidencia(i.id)) { FilaIncidencia(incidencia: i, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("filaIncidenciaPiso")
                         if i != incidencias.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }

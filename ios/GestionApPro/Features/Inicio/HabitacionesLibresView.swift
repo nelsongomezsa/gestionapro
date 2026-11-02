@@ -129,6 +129,7 @@ struct HabitacionFichaView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityHint("Abre el detalle del piso")
+                    .accessibilityIdentifier("enlacePisoFicha")
                     Divider().overlay(Tema.Color.borde)
                     Button { inventarios = true } label: {
                         FilaMetrica(titulo: "Inventarios", valor: "", icono: "checklist")

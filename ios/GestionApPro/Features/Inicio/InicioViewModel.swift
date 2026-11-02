@@ -13,6 +13,10 @@ final class InicioViewModel {
     var documento: DocumentoPDF?
     var generandoInforme = false
     var error: String?
+    /// Mes de la tarjeta "Cobrado" (se puede ir hacia atrás, nunca más allá de hoy).
+    private(set) var mesHeroe: Mes = .actual
+    /// Cobrado, esperado y pendiente de ese mes: el mismo cálculo que Cobros (GET /api/pagos/resumen).
+    private(set) var resumenHeroe: ResumenPagos?
 
     /// Cuántas actividades se ven en Inicio; el resto, en "Ver todo".
     static let actividadesVisibles = 4
@@ -23,7 +27,9 @@ final class InicioViewModel {
         do {
             async let d = api.enviar(.dashboard)
             async let n = api.enviar(.notificacionesNoLeidas)
+            async let r = try? api.enviar(.resumenPagos(mes: mesHeroe))
             let (dashboard, total) = try await (d, n)
+            if let resumen = await r { resumenHeroe = resumen }
             withAnimation(Tema.Movimiento.suave) { estado = .cargado(dashboard) }
             noLeidas = total.total
             return dashboard
@@ -37,6 +43,13 @@ final class InicioViewModel {
         }
     }
 
+    func cambiarMesHeroe(_ mes: Mes, con api: APIClient) async {
+        guard mes <= .actual, mes != mesHeroe else { return }
+        mesHeroe = mes
+        guard let r = try? await api.enviar(.resumenPagos(mes: mes)), mesHeroe == mes else { return }
+        resumenHeroe = r
+    }
+
     func contarNoLeidas(con api: APIClient) async {
         if let total = try? await api.enviar(.notificacionesNoLeidas) { noLeidas = total.total }
     }
@@ -44,7 +57,7 @@ final class InicioViewModel {
     func informe(con api: APIClient) async {
         generandoInforme = true
         defer { generandoInforme = false }
-        let mes = Mes.actual
+        let mes = mesHeroe
         do {
             let datos = try await api.descargar(Rutas.informeMensual, consulta: [URLQueryItem(name: "mes", value: mes.texto)])
             documento = DocumentoPDF(titulo: "Informe \(mes.nombre)", datos: datos)

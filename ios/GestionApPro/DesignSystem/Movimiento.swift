@@ -80,8 +80,14 @@ private struct ImportePrivado: ViewModifier {
     func body(content: Content) -> some View {
         content
             .blur(radius: ocultar && !visible ? 9 : 0)
-            .contentShape(.rect)
-            .onTapGesture { if ocultar { withAnimation(Tema.Movimiento.suave) { visible.toggle() } } }
+            // El gesto solo existe en modo privado: si no, se quedaba con el toque y la tarjeta que
+            // contiene la cifra (p. ej. "Cobrado" de Inicio, que abre Cobros) no se enteraba.
+            .overlay {
+                if ocultar {
+                    Color.clear.contentShape(.rect)
+                        .onTapGesture { withAnimation(Tema.Movimiento.suave) { visible.toggle() } }
+                }
+            }
             .accessibilityValue(ocultar && !visible ? Text("Oculto. Toca dos veces para verlo.") : Text(""))
             .onChange(of: ocultar) { _, _ in visible = false }
     }

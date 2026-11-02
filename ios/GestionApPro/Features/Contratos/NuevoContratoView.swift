@@ -63,7 +63,7 @@ struct NuevoContratoView: View {
                 }
             }
             .estiloLista()
-            .environment(\.locale, Formato.locale)
+            .environment(\.locale, Formato.localeFechas)
             .overlay { if cargando { ProgressView() } }
             .navigationTitle("Nuevo contrato")
             .navigationBarTitleDisplayMode(.inline)

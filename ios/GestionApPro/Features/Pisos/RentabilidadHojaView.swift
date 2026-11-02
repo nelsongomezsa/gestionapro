@@ -138,12 +138,12 @@ struct GraficoCobrosGastos: View {
                 BarMark(x: .value("Mes", m.etiqueta), y: .value("Importe", dibujado ? m.cobros.double : 0))
                     .foregroundStyle(by: .value("Tipo", "Cobros"))
                     .position(by: .value("Tipo", "Cobros"))
-                    .accessibilityLabel("\(m.etiqueta.capitalized(with: Formato.locale)), cobros")
+                    .accessibilityLabel("\(m.etiqueta.capitalized(with: Formato.localeFechas)), cobros")
                     .accessibilityValue(Formato.euros(m.cobros))
                 BarMark(x: .value("Mes", m.etiqueta), y: .value("Importe", dibujado ? m.gastos.double : 0))
                     .foregroundStyle(by: .value("Tipo", "Gastos"))
                     .position(by: .value("Tipo", "Gastos"))
-                    .accessibilityLabel("\(m.etiqueta.capitalized(with: Formato.locale)), gastos")
+                    .accessibilityLabel("\(m.etiqueta.capitalized(with: Formato.localeFechas)), gastos")
                     .accessibilityValue(Formato.euros(m.gastos))
             }
         }
@@ -163,8 +163,9 @@ struct GraficoCobrosGastos: View {
             AxisMarks { valor in
                 AxisValueLabel {
                     // Una etiqueta de cada dos, acabando en el mes actual: las 12 no caben.
+                    // Hasta 6 meses caben todas; con más, una de cada dos acabando en el último.
                     if let e = valor.as(String.self), let i = meses.firstIndex(where: { $0.etiqueta == e }),
-                       (meses.count - 1 - i) % 2 == 0 {
+                       meses.count <= 6 || (meses.count - 1 - i) % 2 == 0 {
                         Text(e).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     }
                 }

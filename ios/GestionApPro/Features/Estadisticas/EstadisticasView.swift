@@ -126,7 +126,7 @@ private struct FiltrosEstadisticas: View {
                 .tint(Tema.Color.primario)
             }
         }
-        .environment(\.locale, Formato.locale)
+        .environment(\.locale, Formato.localeFechas)
         .tarjeta()
     }
 
@@ -156,7 +156,8 @@ private struct ContenidoAnalisis: View {
                         accesorio: variacionPct(t.neto, a.anterior.neto).map { v in
                             AnyView(InsigniaEstado(texto: String(localized: "\(Formato.porcentaje(abs(v))) vs. año anterior"),
                                                    tono: Tono.signo(v), icono: v >= 0 ? "arrow.up.right" : "arrow.down.right"))
-                        }) {
+                        },
+                        tonoValor: t.neto < 0 ? .negativo : nil) {
                 ParDatos {
                     DatoCompacto(titulo: "Ingresos", valor: Formato.euros(t.ingresos), tono: .positivo)
                 } derecha: {
@@ -373,7 +374,7 @@ private struct GraficoOcupacion: View {
                 LineMark(x: .value("Mes", m.etiqueta), y: .value("Ocupación", dibujado ? m.ocupacionPct ?? 0 : 0))
                     .foregroundStyle(Tema.Color.primario)
                     .symbol(.circle)
-                    .accessibilityLabel(m.etiqueta.capitalized(with: Formato.locale))
+                    .accessibilityLabel(m.etiqueta.capitalized(with: Formato.localeFechas))
                     .accessibilityValue(Formato.porcentaje(m.ocupacionPct))
             }
             RuleMark(y: .value("Referencia", 75))
@@ -437,7 +438,7 @@ private struct SituacionActual: View {
                                 Text("\(m.cantidad)").font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                             }
                         }
-                        .accessibilityLabel(m.etiqueta.capitalized(with: Formato.locale))
+                        .accessibilityLabel(m.etiqueta.capitalized(with: Formato.localeFechas))
                         .accessibilityValue("\(m.cantidad) incidencias")
                 }
                 .chartYAxis(.hidden)

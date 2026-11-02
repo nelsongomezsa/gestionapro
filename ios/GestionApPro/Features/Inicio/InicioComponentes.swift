@@ -24,7 +24,7 @@ struct GraficoIngresos: View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             if let m = elegido {
                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                    Text(m == meses.last ? "Este mes" : m.etiqueta.capitalized(with: Formato.locale))
+                    Text(m == meses.last ? "Este mes" : m.etiqueta.capitalized(with: Formato.localeFechas))
                         .font(Tema.Fuente.nota)
                         .foregroundStyle(Tema.Color.textoSecundario)
                     Text(Formato.euros(m.importe))
@@ -40,7 +40,7 @@ struct GraficoIngresos: View {
                     .foregroundStyle(m == elegido ? Tema.Color.primario : Tema.Color.primario.opacity(0.35))
                     .clipShape(.rect(cornerRadius: Tema.Radio.pequeno / 2))
                     // VoiceOver recorre los meses uno a uno (y ofrece el gráfico sonoro de Swift Charts).
-                    .accessibilityLabel(m.etiqueta.capitalized(with: Formato.locale))
+                    .accessibilityLabel(m.etiqueta.capitalized(with: Formato.localeFechas))
                     .accessibilityValue(Formato.euros(m.importe))
             }
             .chartXSelection(value: $seleccion)
@@ -83,7 +83,7 @@ struct FilaActividad: View {
                     Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                 }
                 if let f = actividad.fecha {
-                    Text(f, format: .relative(presentation: .named).locale(Formato.locale))
+                    Text(f, format: .relative(presentation: .named).locale(Formato.localeFechas))
                         .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 }
             }

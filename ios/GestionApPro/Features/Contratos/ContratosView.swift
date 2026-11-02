@@ -113,8 +113,8 @@ struct FilaContratoCompleto: View {
 }
 
 enum FormatoFecha {
-    static let corta = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.locale)
-    static let larga = Date.FormatStyle.dateTime.day().month(.wide).year().locale(Formato.locale)
+    static let corta = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.localeFechas)
+    static let larga = Date.FormatStyle.dateTime.day().month(.wide).year().locale(Formato.localeFechas)
 
     static func rango(_ inicio: Date, _ fin: Date) -> String {
         "\(inicio.formatted(corta)) – \(fin.formatted(corta))"

@@ -74,6 +74,7 @@ struct PestanasView: View {
 
     /// Pestaña elegida (el «+» no es una pestaña: abre el menú de crear).
     @State private var seleccion: Pestana = .inicio
+    @State private var irACobros = IrACobros()
     @State private var creando = false
     @AppStorage(Preferencias.pestanaInicio) private var pestanaInicio = Pestana.inicio.rawValue
 
@@ -145,6 +146,8 @@ struct PestanasView: View {
         .onChange(of: pendiente.acceso) { _, nuevo in if nuevo != nil { abierto = pendiente.tomar() } }
         .sheet(isPresented: $bienvenida, onDismiss: { bienvenidaVista = true }) { BienvenidaView() }
         .environment(buzon)
+        .environment(irACobros)
+        .onChange(of: irACobros.mes) { _, mes in if mes != nil { seleccion = .cobros } }
         .environment(pantalla)
         .overlay(alignment: .top) {
             if let nueva = buzon.nuevo {
