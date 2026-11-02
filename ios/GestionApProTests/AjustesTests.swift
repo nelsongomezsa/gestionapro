@@ -9,6 +9,9 @@ struct AjustesTests {
         #expect(ExportarDatos.campo("=HYPERLINK(\"x\")") == "\"'=HYPERLINK(\"\"x\"\")\"")
         #expect(ExportarDatos.campo("-12") == "'-12")
         #expect(ExportarDatos.campo("Normal") == "Normal")
+        #expect(ExportarDatos.campo("  =1+1") == "'  =1+1")
+        #expect(ExportarDatos.campo("\t=1") == "'\t=1")
+        #expect(ExportarDatos.campo("\r@x") == "\"'\r@x\"") // con \r además va entre comillas
     }
 
     @Test func csv_cabeceraYFilasConCRLF() {

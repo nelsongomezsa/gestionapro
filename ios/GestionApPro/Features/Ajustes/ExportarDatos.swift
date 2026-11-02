@@ -46,7 +46,9 @@ enum ExportarDatos {
     /// = + - @ se abriría como fórmula en una hoja de cálculo).
     static func campo(_ s: String) -> String {
         var v = s
-        if let primero = v.first, "=+-@".contains(primero) { v = "'" + v }
+        let controlInicial = v.first == "\t" || v.first == "\r"
+        let primeroSignificativo = v.first(where: { ![" ", "\t", "\r", "\n"].contains($0) })
+        if controlInicial || (primeroSignificativo.map { "=+-@".contains($0) } ?? false) { v = "'" + v }
         if v.contains(";") || v.contains("\"") || v.contains("\n") || v.contains("\r") {
             v = "\"" + v.replacingOccurrences(of: "\"", with: "\"\"") + "\""
         }

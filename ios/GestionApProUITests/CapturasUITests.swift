@@ -1316,6 +1316,53 @@ extension CapturasUITests {
         XCTAssertThrowsError(try DatosPrueba.pedir(datos.api, "POST", "/api/auth/login", ["email": email, "password": password]))
     }
 
+    /// Capturas finales (también en inglés con CAPTURAS_IDIOMA=en): Inicio, Cobros al final de la
+    /// lista, Mensajes, lengüeta cerrada y abierta y Ajustes completo. Solo identificadores: sin textos.
+    @MainActor
+    func testFinalCapturas() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        r.pausa(2.5)
+        r.capturar("01-inicio")
+
+        let lengueta = r.app.descendants(matching: .any).matching(identifier: "lenguetaAsistente").firstMatch
+        r.esperar(lengueta)
+        r.capturar("02-lengueta-cerrada")
+        lengueta.tap()
+        r.pausa(2)
+        r.capturar("03-lengueta-abierta")
+        let arriba = r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4))
+        arriba.press(forDuration: 0.1, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.99)))
+        r.pausa(1.5)
+
+        r.pestana("Cobros")
+        r.pausa(2)
+        for _ in 0..<14 { r.app.swipeUp(velocity: .fast) }
+        r.pausa(2)
+        r.capturar("04-cobros-final-de-lista")
+
+        r.pestana("Mensajes")
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        r.pausa(1)
+        r.capturar("05-mensajes")
+
+        r.pestana("Más")
+        r.pausa(1.2)
+        r.capturar("06-mas")
+        XCTAssertFalse(r.app.buttons["botonCrear"].exists, "Sin «+» en Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+        XCTAssertFalse(r.app.buttons["botonCrear"].exists, "Sin «+» en Ajustes")
+        r.pausa(1)
+        r.capturar("06-ajustes-1")
+        r.app.swipeUp()
+        r.pausa(1.2)
+        r.capturar("07-ajustes-2")
+        for _ in 0..<4 { r.app.swipeUp() }
+        r.pausa(1.5)
+        r.capturar("08-ajustes-3-final")
+    }
+
     /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas
     /// principales. Anota cada problema en el log ("AUDITORIA|pantalla|tipo|descripción") sin cortar el recorrido.
     @MainActor

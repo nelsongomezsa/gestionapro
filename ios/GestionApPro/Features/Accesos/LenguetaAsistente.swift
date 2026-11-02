@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Lengüeta del asistente: una línea fina de cristal pegada al borde derecho, en todas las pestañas.
+/// Lengüeta del asistente: una pestaña de cristal con destellos pegada al borde derecho, en todas las pestañas.
 /// Se abre tocándola o tirando de ella hacia la izquierda; arrastrándola en vertical se mueve por el
 /// borde (la posición se guarda). Se puede ocultar en Ajustes.
 struct LenguetaAsistente: View {
@@ -11,21 +11,27 @@ struct LenguetaAsistente: View {
     let abrir: () -> Void
     @State private var desplazamiento: CGFloat = 0
 
-    static let anchoVisible: CGFloat = 7
-    static let altoVisible: CGFloat = 72
+    /// Lo justo para quedarse en el margen lateral de la página (16 pt) sin tapar las tarjetas.
+    static let anchoVisible: CGFloat = 16
+    static let altoVisible: CGFloat = 64
 
     var body: some View {
         GeometryReader { geo in
             if visible {
                 let alto = geo.size.height
                 let y = min(max(alto * posicion + desplazamiento, 90), alto - 90)
-                Capsule()
-                    .fill(.clear)
+                let forma = UnevenRoundedRectangle(topLeadingRadius: 9, bottomLeadingRadius: 9,
+                                                   bottomTrailingRadius: 0, topTrailingRadius: 0)
+                Image(systemName: "sparkles")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(Tema.Color.primario)
                     .frame(width: Self.anchoVisible, height: Self.altoVisible)
-                    .fondoCristal(en: Capsule(), interactivo: false)
-                    .overlay(Capsule().fill(Tema.Color.primario.opacity(0.55)).frame(width: 3, height: 28))
+                    .fondoCristal(en: forma, interactivo: false)
+                    // Borde fino: se distingue del fondo tanto en claro como en oscuro.
+                    .overlay(forma.stroke(Tema.Color.primario.opacity(0.35), lineWidth: 1))
+                    .shadow(color: .black.opacity(0.12), radius: 6, x: -1, y: 2)
                     // Zona táctil mucho más grande que lo que se ve (44 pt de ancho como mínimo).
-                    .frame(width: 30, height: Self.altoVisible + 24, alignment: .trailing)
+                    .frame(width: 44, height: Self.altoVisible + 24, alignment: .trailing)
                     .contentShape(.rect)
                     .onTapGesture { abrir() }
                     .gesture(
@@ -46,7 +52,8 @@ struct LenguetaAsistente: View {
                                 desplazamiento = 0
                             }
                     )
-                    .position(x: geo.size.width - 15, y: y)
+                    .position(x: geo.size.width - 22, y: y)
+                    // La pastilla se pega al borde: el centro de la zona táctil queda a 22 pt.
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel("Asistente")
                     .accessibilityAddTraits(.isButton)

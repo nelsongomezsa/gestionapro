@@ -47,15 +47,19 @@ public class CuentaService {
         limites.comprobarUsuario(actor.id());
         Usuario u = usuarios.findById(actor.id()).orElseThrow(() -> ApiException.noEncontrado("Usuario"));
         if (!encoder.matches(req.password(), u.getPasswordHash())) {
-            limites.falloUsuario(actor.id());
             throw ApiException.badRequest("PASSWORD_INCORRECTA", "La contraseña no es correcta");
         }
         limites.aciertoUsuario(actor.id());
-        if (u.getRol() == Rol.ADMIN && usuarios.contarAdminsActivos() <= 1) {
+        if (u.getRol() == Rol.ADMIN && usuarios.bloquearAdminsActivos().size() <= 1) {
             throw ApiException.conflicto("ULTIMO_ADMIN", "Eres el único administrador: nombra otro antes de eliminar tu cuenta");
         }
 
-        inquilinos.findByUsuarioId(u.getId()).ifPresent(i -> i.setUsuario(null));
+        inquilinos.findByUsuarioId(u.getId()).ifPresent(i -> {
+            i.setUsuario(null);
+            i.setTelefono(null);
+            i.setEmail(null);
+            // Nombre, apellidos y DNI se conservan: forman parte del contrato que el propietario debe conservar por ley.
+        });
         dispositivos.deleteAll(dispositivos.findByIdUsuario(u.getId()));
 
         u.setNombre("Usuario eliminado");

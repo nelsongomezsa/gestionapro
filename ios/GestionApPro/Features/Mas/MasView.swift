@@ -93,7 +93,7 @@ struct MasView: View {
     private func enlace(_ titulo: String, icono: String, color: Color, a seccion: SeccionMas) -> some View {
         NavigationLink(value: seccion) {
             Label {
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
             } icon: {
                 IconoSeccion(icono: icono, relleno: color)
             }

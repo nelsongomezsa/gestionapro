@@ -120,7 +120,9 @@ struct PestanasView: View {
             if pantalla.sinBarra == 0 {
                 BarraPestanas(items: items, seleccion: $seleccion,
                               repetir: { reinicios[$0, default: 0] += 1 },
-                              crear: { creando = true })
+                              crear: { creando = true },
+                              mostrarCrear: seleccion != .mas && pantalla.sinCrear == 0
+                                  && abierto == nil && !creando && chat == nil && !bienvenida)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }

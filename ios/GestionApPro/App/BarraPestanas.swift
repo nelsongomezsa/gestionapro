@@ -19,6 +19,8 @@ struct BarraPestanas: View {
     @Binding var seleccion: Pestana
     let repetir: (Pestana) -> Void
     let crear: () -> Void
+    /// Sin «+» en Más, Ajustes, el Asistente o con hojas abiertas.
+    var mostrarCrear = true
     @Namespace private var marca
     @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
 
@@ -32,6 +34,7 @@ struct BarraPestanas: View {
                 .frame(height: Self.alto)
                 .fondoCristal(en: .capsule, interactivo: false)
 
+                if mostrarCrear {
                 Button(action: crear) {
                     Image(systemName: "plus")
                         .font(.title2.weight(.semibold))
@@ -44,7 +47,10 @@ struct BarraPestanas: View {
                 .accessibilityLabel("Crear")
                 .accessibilityHint("Cobro, incidencia, gasto o mensaje")
                 .accessibilityIdentifier("botonCrear")
+                .transition(.scale.combined(with: .opacity))
+                }
             }
+            .animation(Tema.Movimiento.suave, value: mostrarCrear)
         }
         .padding(.horizontal, Tema.Espacio.m)
         .padding(.bottom, 2)

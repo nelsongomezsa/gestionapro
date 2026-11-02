@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Límite de intentos para login, registro y recuperación de contraseña.
- * Por IP cuenta todas las peticiones; por email, solo los fallos (un acierto lo pone a cero).
+ * Por IP y por email cuenta todos los intentos reservados antes de procesarlos; un acierto borra la ventana del email.
  * Ventana fija en memoria: con varias instancias de la API cada una lleva su cuenta.
  */
 @Component
@@ -44,22 +44,17 @@ public class LimiteIntentos {
         this.reloj = reloj;
     }
 
-    /** Lanza 429 si la IP o el email han agotado sus intentos; si no, cuenta la petición de la IP. */
+    /** Reserva atómicamente un intento para la IP y el email antes de procesar la petición. */
     public void comprobar(String ip, String email) {
         Instant ahora = reloj.instant();
         if (ventanas.size() > PURGAR_DESDE) ventanas.values().removeIf(v -> caducada(v, ahora));
-        exigir(claveIp(ip), maxPorIp, ahora);
-        if (email != null) exigir(claveEmail(email), maxFallosPorEmail, ahora);
-        sumar(claveIp(ip), ahora);
+        reservar(claveIp(ip), maxPorIp, ahora);
+        if (email != null) reservar(claveEmail(email), maxFallosPorEmail, ahora);
     }
 
-    /** Acciones de un usuario ya identificado (cambiar contraseña, eliminar cuenta): solo cuentan los fallos. */
+    /** Reserva un intento de una acción protegida de un usuario ya identificado. */
     public void comprobarUsuario(Integer idUsuario) {
-        exigir(claveUsuario(idUsuario), maxFallosPorEmail, reloj.instant());
-    }
-
-    public void falloUsuario(Integer idUsuario) {
-        sumar(claveUsuario(idUsuario), reloj.instant());
+        reservar(claveUsuario(idUsuario), maxFallosPorEmail, reloj.instant());
     }
 
     public void aciertoUsuario(Integer idUsuario) {
@@ -70,24 +65,19 @@ public class LimiteIntentos {
         return "usuario:" + id;
     }
 
-    public void fallo(String email) {
-        if (email != null) sumar(claveEmail(email), reloj.instant());
-    }
-
     public void acierto(String email) {
         if (email != null) ventanas.remove(claveEmail(email));
     }
 
-    private void exigir(String clave, int maximo, Instant ahora) {
-        Ventana v = ventanas.get(clave);
-        if (v == null || caducada(v, ahora) || v.cuenta() < maximo) return;
-        long segundos = Math.max(1, Duration.between(ahora, v.inicio().plus(duracion)).toSeconds());
-        throw ApiException.demasiadosIntentos(segundos);
-    }
-
-    private void sumar(String clave, Instant ahora) {
-        ventanas.compute(clave, (k, v) -> v == null || caducada(v, ahora)
-                ? new Ventana(ahora, 1) : new Ventana(v.inicio(), v.cuenta() + 1));
+    private void reservar(String clave, int maximo, Instant ahora) {
+        ventanas.compute(clave, (k, v) -> {
+            if (v != null && !caducada(v, ahora) && v.cuenta() >= maximo) {
+                long segundos = Math.max(1, Duration.between(ahora, v.inicio().plus(duracion)).toSeconds());
+                throw ApiException.demasiadosIntentos(segundos);
+            }
+            return v == null || caducada(v, ahora)
+                    ? new Ventana(ahora, 1) : new Ventana(v.inicio(), v.cuenta() + 1);
+        });
     }
 
     private boolean caducada(Ventana v, Instant ahora) {

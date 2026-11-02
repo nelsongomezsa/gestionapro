@@ -61,7 +61,11 @@ class EliminarCuentaIntegrationTest extends IntegrationTest {
         assertThat(u.isActivo()).isFalse();
         assertThat(u.getFechaBaja()).isNotNull();
         // La ficha del inquilino y su contrato y pagos siguen (los gestiona el propietario y la ley obliga a guardarlos).
-        assertThat(inquilinos.findById(lucia.getId()).orElseThrow().getUsuario()).isNull();
+        var ficha = inquilinos.findById(lucia.getId()).orElseThrow();
+        assertThat(ficha.getUsuario()).isNull();
+        assertThat(ficha.getTelefono()).isNull();
+        assertThat(ficha.getEmail()).isNull();
+        assertThat(ficha.getDni()).isEqualTo("11111111A");
         assertThat(contratos.findById(c.getId())).isPresent();
         assertThat(pagos.findAll()).isNotEmpty();
         // El token deja de valer y no se puede volver a entrar.

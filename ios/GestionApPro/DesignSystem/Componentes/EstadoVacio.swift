@@ -10,12 +10,12 @@ struct EstadoVacio: View {
 
     var body: some View {
         ContentUnavailableView {
-            Label(titulo, systemImage: icono)
+            Label(LocalizedStringKey(titulo), systemImage: icono)
         } description: {
             if let mensaje { Text(LocalizedStringKey(mensaje)) }
         } actions: {
             if let accionTitulo, let accion {
-                Button(accionTitulo, action: accion)
+                Button(LocalizedStringKey(accionTitulo), action: accion)
                     .buttonStyle(.borderedProminent)
                     .tint(Tema.Color.primarioRelleno)
             }

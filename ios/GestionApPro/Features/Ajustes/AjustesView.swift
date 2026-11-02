@@ -143,6 +143,7 @@ struct AjustesView: View {
         .estiloLista()
         .navigationTitle("Ajustes")
         .accessibilityIdentifier("pantallaAjustes")
+        .sinBotonCrear()
         .sheet(item: $hoja) { h in
             NavigationStack {
                 switch h {

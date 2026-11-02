@@ -45,6 +45,7 @@ struct AsistenteView: View {
         }
         .background(Tema.Color.fondo)
         .navigationTitle("Asistente")
+        .sinBotonCrear()
         .navigationBarTitleDisplayMode(.inline)
         .hojaCompartir($compartir)
         .alertaError($error)

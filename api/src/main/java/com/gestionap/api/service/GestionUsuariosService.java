@@ -46,7 +46,6 @@ public class GestionUsuariosService {
         limites.comprobarUsuario(actor.id());
         Usuario u = usuarios.findById(actor.id()).orElseThrow(() -> ApiException.noEncontrado("Usuario"));
         if (!encoder.matches(req.actual(), u.getPasswordHash())) {
-            limites.falloUsuario(actor.id());
             throw ApiException.badRequest("PASSWORD_ACTUAL_INCORRECTA", "La contraseña actual no es correcta");
         }
         limites.aciertoUsuario(actor.id());

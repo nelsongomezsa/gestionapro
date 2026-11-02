@@ -1,7 +1,141 @@
 {
   "sourceLanguage": "es",
   "strings": {
+    "": {},
+    "%@": {},
+    "%@ %@: %@ → %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ %2$@: %3$@ → %4$@"
+          }
+        }
+      }
+    },
+    "%@ (%@)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "%@ de %@ alquiladas": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ de %2$@ alquiladas"
+          }
+        }
+      }
+    },
+    "%@ de %@ consultas hoy · respuestas generadas por IA, revísalas": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ de %2$@ consultas hoy · respuestas generadas por IA, revísalas"
+          }
+        }
+      }
+    },
+    "%@ de %@ esperados": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ de %2$@ esperados"
+          }
+        }
+      }
+    },
+    "%@ de %@ habitaciones alquiladas": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ de %2$@ habitaciones alquiladas"
+          }
+        }
+      }
+    },
+    "%@ de ocupación · %@ habitaciones libres": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ de ocupación · %2$@ habitaciones libres"
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@ · Hab. %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · Hab. %2$@"
+          }
+        }
+      }
+    },
+    "%@ · Hab. %@ · renta %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · Hab. %2$@ · renta %3$@"
+          }
+        }
+      }
+    },
+    "%@, %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@ sin leer": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@, %2$@ sin leer"
+          }
+        }
+      }
+    },
+    "%@/255": {},
+    "%@: %@ a %@, IBAN %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$@ a %3$@, IBAN %4$@"
+          }
+        }
+      }
+    },
     "Abre el asistente sobre lo que tienes en pantalla": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -18,6 +152,7 @@
       }
     },
     "Abrir": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -34,6 +169,7 @@
       }
     },
     "Abrir en Mapas": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -49,7 +185,9 @@
         }
       }
     },
+    "Acciones": {},
     "Aceptar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -66,6 +204,7 @@
       }
     },
     "Acerca de": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -82,6 +221,7 @@
       }
     },
     "Acerca de GestionAp": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -98,6 +238,7 @@
       }
     },
     "Actividad reciente": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -113,7 +254,9 @@
         }
       }
     },
+    "Actualización de renta": {},
     "Administración": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -130,6 +273,7 @@
       }
     },
     "Ajustes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -145,23 +289,24 @@
         }
       }
     },
-    "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar», el contenido no se ve al cambiar de app.": {
+    "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When you open the app or return to it, %@ or the iPhone passcode is required. With “Hide”, content is not visible when switching apps."
+            "value": "When you open the app or return to it, %@ or the iPhone passcode is required. With “Hide in the app switcher”, content isn’t visible when switching apps; with “Hide amounts”, key figures show when you tap them."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar», el contenido no se ve al cambiar de app."
+            "value": "Al abrir la app y al volver a ella se pide %@ o el código del iPhone. Con «Ocultar en el selector», el contenido no se ve al cambiar de app; con «Ocultar importes», las cifras principales se ven al tocarlas."
           }
         }
       }
     },
     "Alertas": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -177,7 +322,11 @@
         }
       }
     },
+    "Alquilada hace %@ días": {},
+    "Analizando el extracto…": {},
+    "Aparece como arrendador en los contratos en PDF.": {},
     "Apariencia": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -210,6 +359,7 @@
       }
     },
     "Asistente": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -226,6 +376,7 @@
       }
     },
     "Asistente desactivado": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -242,6 +393,7 @@
       }
     },
     "Automático": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -257,7 +409,9 @@
         }
       }
     },
+    "Automático (día %@)": {},
     "Automático (día %lld)": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -274,6 +428,7 @@
       }
     },
     "Aún no hay mensajes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -290,6 +445,7 @@
       }
     },
     "Bloquear con %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -306,6 +462,7 @@
       }
     },
     "Buscar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -322,6 +479,7 @@
       }
     },
     "Caché vaciada": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -338,6 +496,7 @@
       }
     },
     "Calculadora de rentabilidad": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -354,6 +513,7 @@
       }
     },
     "Calendario": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -370,6 +530,7 @@
       }
     },
     "Cambiar contraseña": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -386,6 +547,7 @@
       }
     },
     "Cancelar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -402,6 +564,7 @@
       }
     },
     "Cargando": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -434,6 +597,7 @@
       }
     },
     "Cerrar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -450,6 +614,7 @@
       }
     },
     "Cerrar sesión": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -466,6 +631,7 @@
       }
     },
     "Claro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -481,6 +647,7 @@
         }
       }
     },
+    "Clasificando…": {},
     "Cobrado este mes": {
       "localizations": {
         "en": {
@@ -498,6 +665,7 @@
       }
     },
     "Cobro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -514,6 +682,7 @@
       }
     },
     "Cobro, incidencia, gasto o mensaje": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -530,6 +699,7 @@
       }
     },
     "Cobros": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -546,6 +716,7 @@
       }
     },
     "Cobros pendientes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -562,6 +733,7 @@
       }
     },
     "Como el iPhone": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -578,6 +750,7 @@
       }
     },
     "Compartir o guardar (%lld archivos)": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -593,7 +766,10 @@
         }
       }
     },
+    "Comunicada el %@": {},
+    "Con contrato, el inquilino también lo ve en la app.": {},
     "Conciliar con el banco": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -609,7 +785,9 @@
         }
       }
     },
+    "Confianza alta: el importe coincide con la renta y el concepto nombra al inquilino. Revisa las de confianza media o baja antes de marcarlas.": {},
     "Confirma con tu contraseña": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -626,6 +804,7 @@
       }
     },
     "Contactar con soporte": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -641,7 +820,9 @@
         }
       }
     },
+    "Contacto": {},
     "Contraseña": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -658,6 +839,7 @@
       }
     },
     "Contraseña olvidada": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -690,6 +872,7 @@
       }
     },
     "Contratos activos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -706,6 +889,7 @@
       }
     },
     "Contratos por vencer": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -721,7 +905,24 @@
         }
       }
     },
+    "Contratos vigentes en el mes sin ningún pago registrado.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leases active this month with no payment recorded."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contratos vigentes en el mes sin ningún pago registrado."
+          }
+        }
+      }
+    },
     "Copiar dirección": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -737,7 +938,9 @@
         }
       }
     },
+    "Coste": {},
     "Crear": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -754,6 +957,7 @@
       }
     },
     "Cuenta": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -769,7 +973,10 @@
         }
       }
     },
+    "Cuenta para los cobros": {},
+    "Código de invitación": {},
     "Datos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -785,7 +992,14 @@
         }
       }
     },
+    "Daños, recibos pendientes…": {},
+    "Depósito": {},
+    "Desliza a la derecha para avanzar el estado y a la izquierda para borrar.": {},
+    "Desliza para editar, borrar o cambiar el estado.": {},
+    "Desliza para quitar uno. Las fotos se añaden después, desde el inventario.": {},
+    "Día %@": {},
     "Día %lld": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -802,6 +1016,7 @@
       }
     },
     "Día del recordatorio de cobro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -817,6 +1032,10 @@
         }
       }
     },
+    "ES00 0000 0000 0000 0000 0000": {},
+    "Ejercicio %@": {},
+    "El QR de pago necesita un contrato activo.": {},
+    "El email es el que usas para iniciar sesión.": {},
     "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp.": {
       "localizations": {
         "en": {
@@ -833,7 +1052,15 @@
         }
       }
     },
+    "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo.": {},
+    "El índice elegido supera el IRAV: el máximo es el IRAV (LAU, art. 18.1).": {},
+    "Elementos (%@)": {},
+    "Elige un contrato": {},
+    "Elige un inquilino": {},
+    "Elige un piso": {},
+    "Elige una habitación": {},
     "Eliminar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -850,6 +1077,7 @@
       }
     },
     "Eliminar cuenta": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -882,6 +1110,7 @@
       }
     },
     "Email": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -913,7 +1142,9 @@
         }
       }
     },
+    "En muchas comunidades autónomas la fianza se deposita en un organismo público. Comprueba el plazo y el organismo de la tuya.": {},
     "Entrar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -929,7 +1160,10 @@
         }
       }
     },
+    "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino.": {},
+    "Escanéalo desde la app del banco para pagar por transferencia SEPA.": {},
     "Escribe el primero.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -946,6 +1180,7 @@
       }
     },
     "Escribir a mi propietario": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -962,6 +1197,7 @@
       }
     },
     "Estadísticas": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -978,6 +1214,7 @@
       }
     },
     "Exportar mis datos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -993,7 +1230,13 @@
         }
       }
     },
+    "Fianza": {},
+    "Fianza de %@.": {},
+    "Firma": {},
+    "Firma con el dedo dentro del recuadro.": {},
+    "Funciona con el formato genérico y los extractos habituales de Santander, BBVA, CaixaBank, Sabadell e ING.": {},
     "Gasto": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1026,6 +1269,7 @@
       }
     },
     "Generar archivos CSV": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1041,7 +1285,10 @@
         }
       }
     },
+    "GestionAp PRO": {},
+    "GestionAp PRO está bloqueada": {},
     "Gestión": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1057,7 +1304,9 @@
         }
       }
     },
+    "Gestión de alquiler de habitaciones": {},
     "Guardar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1073,7 +1322,28 @@
         }
       }
     },
+    "Hab. %@ · %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Hab. %1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "Hab. %@%@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Hab. %1$@%2$@"
+          }
+        }
+      }
+    },
     "Habitaciones libres": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1089,7 +1359,19 @@
         }
       }
     },
+    "Habitación %@": {},
+    "Habitación %@ · %@, %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Habitación %1$@ · %2$@, %3$@"
+          }
+        }
+      }
+    },
     "Herramientas": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1105,7 +1387,9 @@
         }
       }
     },
+    "Hipoteca": {},
     "Hola, %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1121,7 +1405,10 @@
         }
       }
     },
+    "IBAN para el QR de pago de tus inquilinos.": {},
+    "Identificación": {},
     "Idioma": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1137,7 +1424,9 @@
         }
       }
     },
+    "Importes mensuales previstos. El cash flow es lo que queda tras la cuota y los gastos.": {},
     "Incidencia": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1154,6 +1443,7 @@
       }
     },
     "Incidencias": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1170,6 +1460,7 @@
       }
     },
     "Incidencias abiertas": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1186,6 +1477,7 @@
       }
     },
     "Informe del mes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1202,6 +1494,7 @@
       }
     },
     "Ingresos cobrados": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1217,7 +1510,9 @@
         }
       }
     },
+    "Ingresos sin contrato (%@)": {},
     "Inicio": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1234,6 +1529,7 @@
       }
     },
     "Inquilino, dirección o habitación": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1250,6 +1546,7 @@
       }
     },
     "Inquilinos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1265,6 +1562,7 @@
         }
       }
     },
+    "K7M2-QX9P-4TBW": {},
     "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit).": {
       "localizations": {
         "en": {
@@ -1281,7 +1579,11 @@
         }
       }
     },
+    "La cuota se calcula con amortización francesa, como en el escritorio.": {},
+    "La fecha de fin pasa a ser hoy y la habitación queda disponible.": {},
+    "La próxima vez que inicies sesión usa la nueva contraseña.": {},
     "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1297,7 +1599,9 @@
         }
       }
     },
+    "Laura Martínez · Hab. 4 · Calle Mayor 15": {},
     "Lengüeta del asistente": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1313,7 +1617,9 @@
         }
       }
     },
+    "Leyendo la factura…": {},
     "Licencias": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1330,6 +1636,7 @@
       }
     },
     "Licencias de terceros": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1346,6 +1653,7 @@
       }
     },
     "Llamar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1377,7 +1685,10 @@
         }
       }
     },
+    "Los gastos de incidencias resueltas con coste se añaden solos.": {},
+    "Los inquilinos crean su cuenta con el código de invitación de su ficha.": {},
     "Los mensajes van ligados a un contrato.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1394,6 +1705,7 @@
       }
     },
     "Mantén pulsado": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1410,6 +1722,7 @@
       }
     },
     "Mensaje": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1426,6 +1739,7 @@
       }
     },
     "Mensaje nuevo": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1442,6 +1756,7 @@
       }
     },
     "Mensajes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1458,6 +1773,7 @@
       }
     },
     "Mensajes nuevos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1474,6 +1790,7 @@
       }
     },
     "Mi alquiler": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1490,6 +1807,7 @@
       }
     },
     "Mi propietario": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1505,7 +1823,9 @@
         }
       }
     },
+    "Mis pagos": {},
     "Más": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1521,6 +1841,10 @@
         }
       }
     },
+    "Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas.": {},
+    "Mínimo 10 caracteres. Pásasela a la persona para que la cambie desde su perfil.": {},
+    "No puede superar el máximo.": {},
+    "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar.": {},
     "No se puede deshacer.": {
       "localizations": {
         "en": {
@@ -1538,6 +1862,7 @@
       }
     },
     "Notificaciones": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1554,6 +1879,7 @@
       }
     },
     "Notificaciones, %lld sin leer": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1585,7 +1911,9 @@
         }
       }
     },
+    "Obligatorio si no se devuelve entera.": {},
     "Ocultar en el selector de apps": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1602,6 +1930,7 @@
       }
     },
     "Ocultar importes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1634,6 +1963,7 @@
       }
     },
     "Ocupación": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1649,7 +1979,12 @@
         }
       }
     },
+    "Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha.": {},
+    "Organismo de tu comunidad autónoma": {},
+    "Orientativo": {},
+    "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza.": {},
     "Oscuro": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1666,6 +2001,7 @@
       }
     },
     "Otro pago…": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1682,6 +2018,7 @@
       }
     },
     "Pago de la renta": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1698,6 +2035,7 @@
       }
     },
     "Pagos registrados": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1713,7 +2051,27 @@
         }
       }
     },
+    "Pagos registrados (%@)": {},
+    "Pagos registrados (%lld)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recorded payments (%lld)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pagos registrados (%lld)"
+          }
+        }
+      }
+    },
+    "Para la amortización del inmueble (3 % de la construcción, sin el suelo).": {},
     "Pendiente de cobrar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1725,6 +2083,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pendiente de cobrar"
+          }
+        }
+      }
+    },
+    "Pendientes de cobro (%@)": {},
+    "Pendientes de cobro (%lld)": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pending (%lld)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pendientes de cobro (%lld)"
           }
         }
       }
@@ -1745,7 +2121,9 @@
         }
       }
     },
+    "Pensando…": {},
     "Perfil": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1762,6 +2140,7 @@
       }
     },
     "Personalizado": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1778,6 +2157,7 @@
       }
     },
     "Pestaña al abrir": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1794,6 +2174,7 @@
       }
     },
     "Pisos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1826,6 +2207,7 @@
       }
     },
     "Política de privacidad": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1841,7 +2223,9 @@
         }
       }
     },
+    "Por %@": {},
     "Preguntas sobre %@": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1873,7 +2257,10 @@
         }
       }
     },
+    "Pregúntame por tu cartera. Si me pides registrar un pago o crear una incidencia, te lo preparo y tú lo confirmas.": {},
+    "Propuestas (%@)": {},
     "Próximos vencimientos": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1905,7 +2292,10 @@
         }
       }
     },
+    "Qué pasa": {},
+    "Recibo del IBI": {},
     "Recordatorios en este iPhone": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1922,6 +2312,7 @@
       }
     },
     "Registrar": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1938,6 +2329,7 @@
       }
     },
     "Registrar pago": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1953,7 +2345,25 @@
         }
       }
     },
+    "Reintentar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reintentar"
+          }
+        }
+      }
+    },
+    "Rentabilidad bruta": {},
     "Restablecer": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1970,6 +2380,7 @@
       }
     },
     "Restablecer los ajustes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -1986,6 +2397,7 @@
       }
     },
     "Se borran tu nombre, email, DNI e IBAN y no podrás volver a entrar. Los contratos, pagos y recibos se conservan porque la ley obliga a guardarlos.": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2001,6 +2413,8 @@
         }
       }
     },
+    "Se retienen %@": {},
+    "Se usa en el QR de pago SEPA que generas para tus inquilinos. Se comprueban los dígitos de control.": {},
     "Seguridad": {
       "localizations": {
         "en": {
@@ -2018,6 +2432,7 @@
       }
     },
     "Servidor": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2033,6 +2448,9 @@
         }
       }
     },
+    "Sin actividad registrada todavía.": {},
+    "Sin contrato": {},
+    "Sin contrato activo": {},
     "Sin contratos activos": {
       "localizations": {
         "en": {
@@ -2045,6 +2463,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sin contratos activos"
+          }
+        }
+      }
+    },
+    "Sin datos financieros": {},
+    "Sin incidencias abiertas": {},
+    "Sin leer (%@)": {},
+    "Sin pagos ni fines de contrato este día": {},
+    "Sin pagos registrados": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No payments recorded"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin pagos registrados"
           }
         }
       }
@@ -2066,6 +2504,7 @@
       }
     },
     "Sistema": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2097,7 +2536,11 @@
         }
       }
     },
+    "Solo se pueden borrar habitaciones sin contratos ni incidencias.": {},
+    "Solo se pueden borrar inquilinos sin contratos ni incidencias.": {},
+    "Subiendo…": {},
     "Tamaño del texto": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2113,7 +2556,9 @@
         }
       }
     },
+    "Te lo da tu propietario. Caduca a los pocos días; si no funciona, pídele uno nuevo.": {},
     "Tema": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2130,6 +2575,7 @@
       }
     },
     "Texto": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2146,6 +2592,7 @@
       }
     },
     "Texto en negrita": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2161,7 +2608,12 @@
         }
       }
     },
+    "Toca actualizar el %@": {},
+    "Todas": {},
+    "Todas (%@)": {},
+    "Todas las ciudades": {},
     "Todo a mano": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2178,6 +2630,7 @@
       }
     },
     "Todo cobrado este mes": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2193,7 +2646,11 @@
         }
       }
     },
+    "Todo el piso": {},
+    "Todos los inquilinos": {},
+    "Una foto ayuda a entender el problema y a presupuestar la reparación.": {},
     "Usar el tamaño del iPhone": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2210,6 +2667,7 @@
       }
     },
     "Usuarios": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2226,6 +2684,7 @@
       }
     },
     "Vaciar la caché": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2242,6 +2701,7 @@
       }
     },
     "Valorar la app": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2274,6 +2734,7 @@
       }
     },
     "Versión": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2290,6 +2751,7 @@
       }
     },
     "Vibración": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2305,7 +2767,9 @@
         }
       }
     },
+    "Viene de una incidencia: su importe se cambia en la incidencia.": {},
     "Vista previa": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2338,6 +2802,7 @@
       }
     },
     "WhatsApp": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2353,7 +2818,10 @@
         }
       }
     },
+    "al mes": {},
+    "de %@ habitaciones": {},
     "este contrato": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2370,6 +2838,7 @@
       }
     },
     "este inquilino": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2386,6 +2855,7 @@
       }
     },
     "este piso": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2401,7 +2871,9 @@
         }
       }
     },
+    "ocupación": {},
     "¿Cerrar sesión?": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2418,6 +2890,7 @@
       }
     },
     "¿De qué piso?": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2434,6 +2907,7 @@
       }
     },
     "¿Eliminar tu cuenta para siempre?": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2450,6 +2924,7 @@
       }
     },
     "¿Restablecer los ajustes de la app?": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {

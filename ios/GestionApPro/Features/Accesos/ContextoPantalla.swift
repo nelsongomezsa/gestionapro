@@ -33,6 +33,22 @@ final class PantallaActual {
     /// Pantallas abiertas que llevan su propia barra abajo (el chat): mientras haya alguna, se oculta
     /// la barra de pestañas, como en Mensajes.
     var sinBarra = 0
+    /// Pantallas donde no tiene sentido el botón «+» (Ajustes, Asistente).
+    var sinCrear = 0
+}
+
+private struct OcultarBotonCrear: ViewModifier {
+    @Environment(PantallaActual.self) private var pantalla: PantallaActual?
+    func body(content: Content) -> some View {
+        content
+            .onAppear { pantalla?.sinCrear += 1 }
+            .onDisappear { pantalla.map { $0.sinCrear = max(0, $0.sinCrear - 1) } }
+    }
+}
+
+extension View {
+    /// Oculta el botón «+» de la barra mientras esta pantalla está abierta.
+    func sinBotonCrear() -> some View { modifier(OcultarBotonCrear()) }
 }
 
 private struct OcultarBarraPestanas: ViewModifier {

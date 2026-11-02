@@ -4,6 +4,7 @@ import com.gestionap.api.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.List;
 
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.Lock;
@@ -15,9 +16,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     boolean existsByEmail(String email);
 
-    @org.springframework.data.jpa.repository.Query(
-            "select count(u) from Usuario u where u.rol = com.gestionap.api.domain.Rol.ADMIN and u.activo = true and u.fechaBaja is null")
-    long contarAdminsActivos();
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select u from Usuario u where u.rol = com.gestionap.api.domain.Rol.ADMIN and u.activo = true and u.fechaBaja is null")
+    List<Usuario> bloquearAdminsActivos();
 
     /** Bloquea la fila del usuario hasta el final de la transacción (generar avisos de uno en uno). */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
