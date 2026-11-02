@@ -9,6 +9,9 @@ public final class UsuarioDtos {
 
     private UsuarioDtos() {}
 
+    /** Eliminar la propia cuenta: se pide la contraseña actual. */
+    public record EliminarCuentaRequest(@NotBlank @Size(max = 72) String password) {}
+
     public record CambioPasswordRequest(
             @NotBlank String actual,
             @NotBlank @Size(min = 10, max = 72, message = "debe tener entre 10 y 72 caracteres") String nueva) {}

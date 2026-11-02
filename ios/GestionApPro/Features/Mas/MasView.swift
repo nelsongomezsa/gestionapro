@@ -4,7 +4,7 @@ import SwiftUI
 /// (`navigationDestination(for:)`): mezclarla con enlaces de vista dentro de la misma pila
 /// hacía que algunos enlaces de las pantallas abiertas desde aquí no navegaran.
 enum SeccionMas: Hashable {
-    case perfil, asistente, inquilinos, contratos, mensajes, calendario, estadisticas, calculadora, usuarios
+    case perfil, asistente, inquilinos, contratos, incidencias, mensajes, calendario, estadisticas, calculadora, usuarios, ajustes
 }
 
 /// Pestaña "Más": el resto de secciones del escritorio.
@@ -42,7 +42,8 @@ struct MasView: View {
                 Section("Gestión") {
                     enlace("Inquilinos", icono: "person.2", color: Tema.Color.iconoAzul, a: .inquilinos)
                     enlace("Contratos", icono: "doc.text", color: Tema.Color.iconoAzul, a: .contratos)
-                    enlace("Mensajes", icono: "bubble.left.and.bubble.right", color: Tema.Color.iconoAzul, a: .mensajes)
+                    enlace("Incidencias", icono: "wrench.and.screwdriver", color: Tema.Color.iconoAzul, a: .incidencias)
+                        .accessibilityIdentifier("enlaceIncidencias")
                     enlace("Calendario", icono: "calendar", color: Tema.Color.iconoAzul, a: .calendario)
                     enlace("Estadísticas", icono: "chart.xyaxis.line", color: Tema.Color.iconoAzul, a: .estadisticas)
                 }
@@ -50,6 +51,12 @@ struct MasView: View {
 
                 Section("Herramientas") {
                     enlace("Calculadora de rentabilidad", icono: "function", color: Tema.Color.iconoMarino, a: .calculadora)
+                }
+                .filaLista()
+
+                Section {
+                    enlace("Ajustes", icono: "gearshape", color: Tema.Color.iconoMarino, a: .ajustes)
+                        .accessibilityIdentifier("enlaceAjustes")
                 }
                 .filaLista()
 
@@ -73,6 +80,8 @@ struct MasView: View {
         case .inquilinos: InquilinosView()
         case .contratos: ContratosView()
         case .mensajes: ConversacionesView()
+        case .incidencias: IncidenciasView(enPila: false)
+        case .ajustes: AjustesView(usuario: usuario)
         case .asistente: AsistenteView()
         case .calendario: CalendarioView()
         case .estadisticas: EstadisticasView()
@@ -84,7 +93,7 @@ struct MasView: View {
     private func enlace(_ titulo: String, icono: String, color: Color, a seccion: SeccionMas) -> some View {
         NavigationLink(value: seccion) {
             Label {
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
             } icon: {
                 IconoSeccion(icono: icono, relleno: color)
             }

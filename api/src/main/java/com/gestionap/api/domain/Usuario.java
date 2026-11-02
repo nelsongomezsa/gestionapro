@@ -45,4 +45,8 @@ public class Usuario {
     /** V9: contraseña antigua (SHA-256). Hasta cambiarla, la API solo deja ver el perfil y cambiarla. */
     @Column(name = "debe_cambiar_password", nullable = false)
     private boolean debeCambiarPassword;
+
+    /** V10: cuenta eliminada por su titular (datos personales anonimizados). */
+    @Column(name = "fecha_baja")
+    private java.time.LocalDateTime fechaBaja;
 }

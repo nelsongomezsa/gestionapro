@@ -16,7 +16,7 @@ struct MapaDireccion: View {
         Group {
             if let lugar {
                 Map(position: $posicion) {
-                    Marker(titulo, systemImage: "building.2.fill", coordinate: lugar.placemark.coordinate)
+                    Marker(titulo, systemImage: "building.2.fill", coordinate: lugar.location.coordinate)
                         .tint(Tema.Color.primario)
                 }
                 .mapControls { MapCompass(); MapScaleView() }
@@ -50,7 +50,7 @@ struct MapaDireccion: View {
             if let primero = respuesta.mapItems.first {
                 primero.name = titulo
                 lugar = primero
-                posicion = .region(MKCoordinateRegion(center: primero.placemark.coordinate,
+                posicion = .region(MKCoordinateRegion(center: primero.location.coordinate,
                                                       latitudinalMeters: 600, longitudinalMeters: 600))
             } else {
                 noEncontrada = true

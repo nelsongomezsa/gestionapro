@@ -21,15 +21,11 @@ enum Formato {
         return f
     }()
 
-    static func formateador(_ estilo: NumberFormatter.Style, decimales: Int? = nil, minimoDecimales: Int? = nil,
-                            forzarRespaldoIOS17: Bool = false) -> NumberFormatter {
+    static func formateador(_ estilo: NumberFormatter.Style, decimales: Int? = nil, minimoDecimales: Int? = nil) -> NumberFormatter {
         let f = NumberFormatter()
-        if #available(iOS 18.0, *), !forzarRespaldoIOS17 {
-            f.locale = locale
-            f.minimumGroupingDigits = 1
-        } else {
-            f.locale = Locale(identifier: "de_DE")
-        }
+        f.locale = locale
+        // El español no agrupa los miles de 4 cifras por defecto ("2500 €"); la app usa "2.500 €".
+        f.minimumGroupingDigits = 1
         f.numberStyle = estilo
         if estilo == .currency { f.currencyCode = "EUR" }
         if let decimales { f.maximumFractionDigits = decimales }

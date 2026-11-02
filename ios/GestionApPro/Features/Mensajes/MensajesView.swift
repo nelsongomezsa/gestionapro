@@ -28,7 +28,7 @@ struct ConversacionesView: View {
                 }
                 Section {
                     ForEach(lista) { c in
-                        NavigationLink(value: c.idIncidencia.map(HiloMensajes.incidencia) ?? .contrato(c.idContrato)) {
+                        NavigationLink(value: c) {
                             FilaConversacion(conversacion: c)
                         }
                         .accessibilityIdentifier("filaConversacion")
@@ -39,7 +39,10 @@ struct ConversacionesView: View {
             .estiloLista()
         }
         .navigationTitle("Mensajes")
-        .navigationDestination(for: HiloMensajes.self) { ChatView(hilo: $0) }
+        .navigationDestination(for: HiloMensajes.self) { ChatView(hilo: $0, titulo: esInquilino ? String(localized: "Mi propietario") : nil) }
+        .navigationDestination(for: Conversacion.self) { c in
+            ChatView(hilo: c.idIncidencia.map(HiloMensajes.incidencia) ?? .contrato(c.idContrato), titulo: c.con)
+        }
         .refreshable { await cargar() }
         .task { await cargar() }
     }
@@ -95,10 +98,14 @@ struct FilaConversacion: View {
 struct ChatView: View {
     @Environment(SesionStore.self) private var sesion
     let hilo: HiloMensajes
+    /// Con quién se habla (inquilino o propietario); sin él, "Mensajes".
+    var titulo: String? = nil
 
     @State private var mensajes: [MensajeChat] = []
     @State private var cargado = false
     @State private var texto = ""
+    /// Solo cuenta los enviados (no la carga inicial) para el toque háptico.
+    @State private var enviados = 0
     @State private var enviando = false
     @State private var error: String?
     @FocusState private var escribiendo: Bool
@@ -147,7 +154,9 @@ struct ChatView: View {
             .padding(.vertical, Tema.Espacio.xs)
             .background(.bar)
         }
-        .navigationTitle("Mensajes")
+        .navigationTitle(titulo ?? String(localized: "Mensajes"))
+        .sinBarraDePestanas()
+        .sensoryFeedback(.impact(weight: .light), trigger: enviados)
         .navigationBarTitleDisplayMode(.inline)
         .alertaError($error)
         .task {
@@ -177,6 +186,7 @@ struct ChatView: View {
         do {
             mensajes.append(try await sesion.api.enviar(.enviarMensaje(hilo, texto: limpio)))
             texto = ""
+            enviados += 1
         } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription

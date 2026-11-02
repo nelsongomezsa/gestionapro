@@ -8,6 +8,10 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -41,12 +45,11 @@ class LimiteIntentosTest {
     }
 
     @Test
-    void porEmail_soloCuentanLosFallos_yUnAciertoLosBorra() {
-        limites.fallo("Ana@X.com");
+    void porEmail_cuentaIntentos_yUnAciertoLosBorra() {
+        limites.comprobar("1.1.1.1", "Ana@X.com");
         limites.acierto("ana@x.com");
-        limites.fallo("ana@x.com");
-        assertThatCode(() -> limites.comprobar("1.1.1.1", "ana@x.com")).doesNotThrowAnyException();
-        limites.fallo("ana@x.com");
+        limites.comprobar("2.2.2.2", "ana@x.com");
+        limites.comprobar("3.3.3.3", "ana@x.com");
 
         // Desde otra IP también se bloquea: el límite es del email.
         assertThat(catchThrowableOfType(ApiException.class, () -> limites.comprobar("9.9.9.9", " ANA@x.com "))
@@ -55,10 +58,35 @@ class LimiteIntentosTest {
 
     @Test
     void alCaducarLaVentana_sePuedeVolverAIntentar() {
-        limites.fallo("ana@x.com");
-        limites.fallo("ana@x.com");
+        limites.comprobar("1.1.1.1", "ana@x.com");
+        limites.comprobar("1.1.1.1", "ana@x.com");
         reloj.ahora = reloj.ahora.plus(Duration.ofMinutes(15));
 
         assertThatCode(() -> limites.comprobar("1.1.1.1", "ana@x.com")).doesNotThrowAnyException();
+    }
+
+    @Test
+    void usuario_concurrencia_reservaExactamenteElMaximo() throws Exception {
+        LimiteIntentos concurrentes = new LimiteIntentos(Duration.ofMinutes(15), 100, 5, reloj);
+        ExecutorService pool = Executors.newFixedThreadPool(50);
+        CountDownLatch inicio = new CountDownLatch(1);
+        AtomicInteger pasan = new AtomicInteger();
+        AtomicInteger rechazados = new AtomicInteger();
+        for (int i = 0; i < 50; i++) pool.submit(() -> {
+            try {
+                inicio.await();
+                concurrentes.comprobarUsuario(1);
+                pasan.incrementAndGet();
+            } catch (ApiException e) {
+                rechazados.incrementAndGet();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        inicio.countDown();
+        pool.shutdown();
+        org.awaitility.Awaitility.await().until(pool::isTerminated);
+        assertThat(pasan.get()).isEqualTo(5);
+        assertThat(rechazados.get()).isEqualTo(45);
     }
 }

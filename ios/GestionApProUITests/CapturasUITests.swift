@@ -125,21 +125,16 @@ struct Recorrido {
         try FileManager.default.createDirectory(at: carpeta, withIntermediateDirectories: true)
 
         let app = XCUIApplication()
-        app.launchArguments = ["-reiniciarSesion"]
+        app.launchArguments = argumentos()
         // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
         app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
 
         let r = Recorrido(app: app, carpeta: carpeta)
-        let campoEmail = app.textFields["Email"]
+        let campoEmail = app.textFields["campoEmail"]
         r.esperar(campoEmail)
         if capturarLogin { r.capturar("01-login") }
-        campoEmail.tap()
-        campoEmail.typeText(email)
-        let campoPassword = app.secureTextFields["Contraseña"]
-        campoPassword.tap()
-        campoPassword.typeText(password)
-        app.buttons["Iniciar sesión"].tap()
+        r.entrar(email: email, password: password)
         return r
     }
 
@@ -151,8 +146,15 @@ struct Recorrido {
     @discardableResult
     func desplazarHasta(_ elemento: XCUIElement) -> XCUIElement {
         var intentos = 0
-        while !(elemento.exists && elemento.isHittable) && intentos < 8 {
-            app.swipeUp()
+        // También se sigue si el elemento queda bajo la barra de pestañas (abajo del todo): ahí el toque
+        // lo recibiría la barra.
+        func bajoLaBarra() -> Bool { elemento.exists && elemento.frame.maxY > app.frame.maxY - 100 }
+        while (!(elemento.exists && elemento.isHittable) || bajoLaBarra()) && intentos < 8 {
+            if elemento.exists && elemento.isHittable {
+                app.swipeUp(velocity: .slow)
+            } else {
+                app.swipeUp()
+            }
             intentos += 1
         }
         // Si se ha deslizado, esperar a que pare la inercia: un toque sobre una lista en
@@ -179,19 +181,32 @@ struct Recorrido {
     /// Cierra la app y entra con otra cuenta.
     func relanzar(email: String, password: String) -> Recorrido {
         app.terminate()
-        app.launchArguments = ["-reiniciarSesion"]
+        app.launchArguments = Self.argumentos()
         // La app trabaja con fechas de Madrid: así lo que se ve y lo que se guarda no depende de la hora del Mac.
         app.launchEnvironment["TZ"] = "Europe/Madrid"
         app.launch()
-        let campoEmail = app.textFields["Email"]
-        esperar(campoEmail)
+        esperar(app.textFields["campoEmail"])
+        entrar(email: email, password: password)
+        return self
+    }
+
+    func entrar(email: String, password: String) {
+        let campoEmail = app.textFields["campoEmail"]
         campoEmail.tap()
         campoEmail.typeText(email)
-        let campoPassword = app.secureTextFields["Contraseña"]
+        let campoPassword = app.secureTextFields["campoPassword"]
         campoPassword.tap()
         campoPassword.typeText(password)
-        app.buttons["Iniciar sesión"].tap()
-        return self
+        app.buttons["botonEntrar"].tap()
+    }
+
+    /// CAPTURAS_IDIOMA=en abre la app en inglés.
+    static func argumentos() -> [String] {
+        var a = ["-reiniciarSesion"]
+        if let idioma = ProcessInfo.processInfo.environment["CAPTURAS_IDIOMA"], !idioma.isEmpty {
+            a += ["-AppleLanguages", "(\(idioma))", "-AppleLocale", idioma == "en" ? "en_US" : "es_ES"]
+        }
+        return a
     }
 
     /// Primera notificación tocable: los avisos del mismo tipo van agrupados y hay que desplegar el grupo.
@@ -212,7 +227,26 @@ struct Recorrido {
     }
 
     func pestana(_ nombre: String) {
-        app.tabBars.buttons[nombre].tap()
+        let boton = app.buttons["pestana:\(nombre)"].firstMatch
+        boton.tap()
+        // Más guarda su pila (Incidencias, Contratos...): un segundo toque la devuelve a su raíz, como en iOS.
+        if nombre == "Más" { pausa(0.5); boton.tap() }
+    }
+
+    /// Propietario: Incidencias está en Más (pulsar Más vuelve a su raíz).
+    func incidencias() {
+        pestana("Más")
+        pestana("Más")
+        desplazarHasta(app.buttons["enlaceIncidencias"]).tap()
+        esperar(app.navigationBars["Incidencias"])
+    }
+
+    /// Botón «+» de la barra de pestañas y una opción de su menú.
+    func crear(_ opcion: String) {
+        app.buttons["botonCrear"].tap()
+        let boton = app.buttons["crear-\(opcion)"]
+        esperar(boton)
+        boton.tap()
     }
 
     func atras() {
@@ -380,7 +414,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Incidencias
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.capturar("01-incidencias")
         r.app.buttons["filaIncidencia"].firstMatch.swipeRight()
@@ -393,7 +427,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "Comunicada el"))
         r.capturar("03-incidencia-detalle")
         r.atras()
-        r.app.buttons["Nueva incidencia"].tap()
+        r.app.navigationBars.buttons["Nueva incidencia"].tap()
         r.esperar(r.app.navigationBars["Nueva incidencia"])
         r.capturar("04-incidencia-nueva")
         r.app.buttons["Cancelar"].tap()
@@ -502,6 +536,8 @@ extension CapturasUITests {
         r.capturar("08-perfil")
         r.desplazarHasta(r.elemento(contiene: "Incidencias abiertas"))
         r.capturar("09-perfil-estadisticas")
+        r.app.swipeDown(); r.app.swipeDown()
+        r.pausa(1)
         r.desplazarHasta(r.app.buttons["botonEditarPerfil"]).tap()
         r.esperar(r.app.navigationBars["Editar perfil"])
         r.capturar("10-editar-perfil")
@@ -518,7 +554,7 @@ extension CapturasUITests {
 
         // Registro del inquilino con su código
         r.app.terminate()
-        r.app.launchArguments = ["-reiniciarSesion"]
+        r.app.launchArguments = Recorrido.argumentos()
         r.app.launch()
         r.esperar(r.app.buttons["botonTengoCodigo"])
         r.app.buttons["botonTengoCodigo"].tap()
@@ -685,7 +721,7 @@ extension CapturasUITests {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.pausa(1)
         r.capturar("01-incidencias")
@@ -697,7 +733,7 @@ extension CapturasUITests {
         r.pausa(1.5)
         r.capturar("03-incidencia-coste")
         r.atras()
-        r.app.buttons["Nueva incidencia"].tap()
+        r.app.navigationBars.buttons["Nueva incidencia"].tap()
         r.esperar(r.app.navigationBars["Nueva incidencia"])
         r.pausa(1)
         r.capturar("04-incidencia-nueva")
@@ -750,7 +786,9 @@ extension CapturasUITests {
         r.app.buttons["Cancelar"].tap()
         r.atras()
 
-        r.app.buttons["enlacePerfil"].tap()
+        // Tras volver de Usuarios la lista aún se recoloca: se espera antes de tocar Perfil.
+        r.pausa(1)
+        r.app.buttons["enlacePerfil"].firstMatch.tap()
         r.esperar(r.app.navigationBars["Perfil"])
         r.pausa(1)
         r.capturar("06-perfil")
@@ -789,7 +827,7 @@ extension CapturasUITests {
         ri.capturar("04-perfil-inquilino")
 
         ri.app.terminate()
-        ri.app.launchArguments = ["-reiniciarSesion"]
+        ri.app.launchArguments = Recorrido.argumentos()
         ri.app.launch()
         ri.app.buttons["botonTengoCodigo"].tap()
         ri.esperar(ri.app.navigationBars["Crear mi cuenta"])
@@ -819,7 +857,7 @@ extension CapturasUITests {
 
         r.pestana("Cobros")
         r.pausa(2.5)
-        r.pestana("Incidencias")
+        r.incidencias()
         r.pausa(2.5)
 
         r.pestana("Más")
@@ -843,7 +881,8 @@ extension CapturasUITests {
         // Un pago propio de este mes (al empezar el mes no hay ninguno): se registra desde la app y se borra al final.
         let datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
         let antes = try datos.idsPagosDelMes()
-        defer { if let ahora = try? datos.idsPagosDelMes() { datos.borrarPagos(ahora.subtracting(antes)) } }
+        // Se ejecuta aunque el test falle a mitad (un `defer` no llega si XCTest corta el test).
+        addTeardownBlock { if let ahora = try? datos.idsPagosDelMes() { datos.borrarPagos(ahora.subtracting(antes)) } }
         r.pestana("Cobros")
         r.desplazarHasta(r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Registrar pago de")).firstMatch).tap()
         r.esperar(r.app.navigationBars["Registrar pago"])
@@ -1012,7 +1051,7 @@ extension CapturasUITests {
         r.pausa(1)
         r.capturar("05-resumen-fiscal-notas")
 
-        r.pestana("Incidencias")
+        r.incidencias()
         r.esperar(r.app.buttons["filaIncidencia"].firstMatch)
         r.app.buttons["filaIncidencia"].firstMatch.tap()
         r.desplazarHasta(r.app.buttons["botonAnadirFotos"])
@@ -1055,7 +1094,8 @@ extension CapturasUITests {
         let idInquilino = try DatosPrueba.idInquilino(api: datos.api, email: try XCTUnwrap(env["CAPTURAS_INQUILINO_EMAIL"]),
                                                       password: try XCTUnwrap(env["CAPTURAS_INQUILINO_PASSWORD"]))
         _ = try datos.contratoSinFirmar(idInquilino: idInquilino)
-        defer { datos.limpiar() }
+        let creados = datos
+        addTeardownBlock { creados.limpiar() }
 
         r.pestana("Más")
         r.app.buttons["Contratos"].tap()
@@ -1100,6 +1140,264 @@ extension CapturasUITests {
             ri.capturar("07-chat-inquilino")
         }
     }
+    /// Navegación final: «+» a la derecha de las pestañas, Mensajes como pestaña y Cobros hasta el final.
+    @MainActor
+    func testIngenieroAccesos() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(1)
+        r.capturar("01-inicio")
+
+        r.pestana("Pisos")
+        r.app.buttons["botonCrear"].tap()
+        r.esperar(r.app.buttons["crear-pago"])
+        r.pausa(1)
+        r.capturar("02-menu-crear")
+        r.app.buttons["crear-pago"].tap()
+        r.esperar(r.app.buttons["cobroPendiente"].firstMatch)
+        r.capturar("03-cobro-pendientes")
+        r.app.buttons["cobroPendiente"].firstMatch.tap()
+        r.esperar(r.app.buttons["Guardar"])
+        r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
+        r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
+
+        r.crear("gasto")
+        r.esperar(r.app.navigationBars["¿De qué piso?"])
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+
+        r.crear("mensajeNuevo")
+        r.esperar(r.app.buttons["contratoMensajeNuevo"].firstMatch)
+        r.app.buttons["contratoMensajeNuevo"].firstMatch.tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "campoMensaje").firstMatch)
+        r.capturar("04-mensaje-nuevo-chat")
+        r.atras()
+        r.app.buttons["Cancelar"].firstMatch.tap()
+        r.pausa(1)
+
+        r.pestana("Mensajes")
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        r.capturar("05-mensajes")
+        r.app.buttons["filaConversacion"].firstMatch.tap()
+        r.pausa(1.5)
+        r.capturar("06-chat-con-nombre")
+        r.atras()
+        r.pausa(1)
+
+        r.pestana("Cobros")
+        r.esperar(r.texto(empiezaPor: "Pendientes de cobro"))
+        for _ in 0..<12 { r.app.swipeUp(velocity: .fast) }
+        r.pausa(1.5)
+        r.capturar("07-cobros-final-lista")
+
+        r.incidencias()
+        r.pausa(1)
+        r.capturar("08-incidencias-desde-mas")
+    }
+
+    /// Lengüeta del asistente: se ve en el borde, abre el panel (desactivado sin clave) con el contexto
+    /// de la pantalla, se cierra deslizando y VoiceOver la anuncia como botón «Asistente».
+    @MainActor
+    func testFinalLengueta() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        let lengueta = r.app.otherElements["lenguetaAsistente"].exists ? r.app.otherElements["lenguetaAsistente"] : r.app.buttons["lenguetaAsistente"]
+        r.esperar(lengueta)
+        XCTAssertEqual(lengueta.label, "Asistente")
+        r.pausa(1)
+        r.capturar("01-lengueta-cerrada")
+        lengueta.tap()
+        r.esperar(r.app.navigationBars["Asistente"])
+        r.pausa(1.5)
+        r.capturar("02-lengueta-abierta")
+        // Se cierra arrastrando la hoja hacia abajo desde su borde superior.
+        let arriba = r.app.navigationBars["Asistente"].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.2))
+        arriba.press(forDuration: 0.1, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.98)))
+        r.pausa(1.5)
+        XCTAssertFalse(r.app.navigationBars["Asistente"].exists, "El panel se cierra deslizando")
+
+        r.pestana("Pisos")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.staticTexts["Rentabilidad bruta"].firstMatch)
+        lengueta.tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "contextoAsistente").firstMatch)
+        r.pausa(1)
+        r.capturar("03-lengueta-con-contexto-piso")
+    }
+
+    /// Ajustes completo (desde Más y desde Perfil): apariencia con efecto inmediato, texto, notificaciones,
+    /// datos, cuenta y acerca de.
+    @MainActor
+    func testFinalAjustes() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+        r.pausa(1)
+        r.capturar("01-ajustes-arriba")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-ajustes-medio")
+        for _ in 0..<4 { r.app.swipeUp() }
+        r.pausa(1.5)
+        r.capturar("03-ajustes-abajo")
+        r.app.swipeDown(); r.app.swipeDown()
+        r.pausa(1)
+
+        r.app.buttons["enlaceTexto"].tap()
+        r.esperar(r.app.switches["interruptorTamanoSistema"])
+        let tamanoSistema = r.app.switches["interruptorTamanoSistema"]
+        func pulsarInterruptor(_ e: XCUIElement) {
+            let interior = e.switches.firstMatch
+            if interior.exists { interior.tap() } else { e.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap() }
+        }
+        pulsarInterruptor(tamanoSistema)
+        r.pausa(1)
+        r.capturar("04a-texto-tras-pulsar")
+        r.esperar(r.app.sliders["deslizadorTexto"])
+        r.app.sliders["deslizadorTexto"].adjust(toNormalizedSliderPosition: 0.75)
+        r.pausa(1)
+        r.capturar("04-texto")
+        pulsarInterruptor(tamanoSistema)
+        r.atras()
+
+        r.app.buttons["enlaceNotificaciones"].tap()
+        r.pausa(1)
+        r.capturar("05-notificaciones")
+        r.atras()
+
+        r.desplazarHasta(r.app.buttons["enlaceAcercaDe"]).tap()
+        r.pausa(1)
+        r.capturar("06-acerca-de")
+        r.app.buttons["enlaceLicencias"].tap()
+        r.pausa(1)
+        r.capturar("07-licencias")
+        r.atras(); r.atras()
+
+        // Desde Perfil también se llega.
+        r.pestana("Más")
+        r.app.buttons["enlacePerfil"].firstMatch.tap()
+        r.desplazarHasta(r.app.buttons["enlaceAjustesPerfil"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+    }
+
+    /// Eliminar cuenta con una cuenta de prueba creada por la API (base de pruebas): doble confirmación
+    /// y contraseña; al terminar vuelve al login y esa cuenta ya no entra.
+    @MainActor
+    func testFinalEliminarCuenta() throws {
+        let datos = try XCTUnwrap(DatosPrueba(), "Este recorrido crea datos: lanza capturas.sh con la URL de la API de pruebas y CAPTURAS_DB")
+        let email = "baja.uitest.\(Int(Date().timeIntervalSince1970))@example.com"
+        let password = "Prueba-Baja-\(UUID().uuidString.prefix(8))"
+        _ = try DatosPrueba.pedir(datos.api, "POST", "/api/usuarios",
+                                  ["nombre": "Cuenta de prueba", "email": email, "password": password, "rol": "PROPIETARIO"], token: datos.token)
+
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        _ = r.relanzar(email: email, password: password)
+        r.esperar(r.app.buttons["pestana:Más"])
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.desplazarHasta(r.app.buttons["ajustesEliminarCuenta"]).tap()
+        let campo = r.app.secureTextFields["campoPasswordEliminar"]
+        r.esperar(campo)
+        campo.tap()
+        campo.typeText(password)
+        r.capturar("01-eliminar-cuenta")
+        r.app.buttons["botonEliminarCuenta"].tap()
+        r.esperar(r.app.alerts.firstMatch)
+        r.capturar("02-confirmacion")
+        r.app.alerts.firstMatch.buttons["Eliminar"].tap()
+        r.esperar(r.app.textFields["campoEmail"], timeout: 20)
+        r.capturar("03-vuelve-al-login")
+        // La cuenta ya no entra.
+        XCTAssertThrowsError(try DatosPrueba.pedir(datos.api, "POST", "/api/auth/login", ["email": email, "password": password]))
+    }
+
+    /// Capturas finales (también en inglés con CAPTURAS_IDIOMA=en): Inicio, Cobros al final de la
+    /// lista, Mensajes, lengüeta cerrada y abierta y Ajustes completo. Solo identificadores: sin textos.
+    @MainActor
+    func testFinalCapturas() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        r.pausa(2.5)
+        r.capturar("01-inicio")
+
+        let lengueta = r.app.descendants(matching: .any).matching(identifier: "lenguetaAsistente").firstMatch
+        r.esperar(lengueta)
+        r.capturar("02-lengueta-cerrada")
+        lengueta.tap()
+        r.pausa(2)
+        r.capturar("03-lengueta-abierta")
+        let arriba = r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4))
+        arriba.press(forDuration: 0.1, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.99)))
+        r.pausa(1.5)
+
+        r.pestana("Cobros")
+        r.pausa(2)
+        for _ in 0..<14 { r.app.swipeUp(velocity: .fast) }
+        r.pausa(2)
+        r.capturar("04-cobros-final-de-lista")
+
+        r.pestana("Mensajes")
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        r.pausa(1)
+        r.capturar("05-mensajes")
+
+        r.pestana("Más")
+        r.pausa(1.2)
+        r.capturar("06-mas")
+        XCTAssertFalse(r.app.buttons["botonCrear"].exists, "Sin «+» en Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+        XCTAssertFalse(r.app.buttons["botonCrear"].exists, "Sin «+» en Ajustes")
+        r.pausa(1)
+        r.capturar("06-ajustes-1")
+        r.app.swipeUp()
+        r.pausa(1.2)
+        r.capturar("07-ajustes-2")
+        for _ in 0..<4 { r.app.swipeUp() }
+        r.pausa(1.5)
+        r.capturar("08-ajustes-3-final")
+    }
+
+    /// Auditoría automática de accesibilidad (la misma de Accessibility Inspector) en las pantallas
+    /// principales. Anota cada problema en el log ("AUDITORIA|pantalla|tipo|descripción") sin cortar el recorrido.
+    @MainActor
+    func testIngenieroAccesibilidad() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        func auditar(_ pantalla: String) {
+            r.pausa(1.5)
+            try? r.app.performAccessibilityAudit(for: [.sufficientElementDescription, .hitRegion, .contrast, .elementDetection, .textClipped]) { issue in
+                let elemento = issue.element.map { "\($0.elementType.rawValue):\($0.label)" } ?? "-"
+                print("AUDITORIA|\(pantalla)|\(issue.auditType.rawValue)|\(issue.compactDescription)|\(elemento)")
+                return true
+            }
+        }
+        auditar("Inicio")
+        r.pestana("Pisos"); auditar("Pisos")
+        r.pestana("Cobros"); auditar("Cobros")
+        r.pestana("Más"); auditar("Mas")
+        r.pestana("Mensajes")
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        auditar("Mensajes")
+    }
+
+    /// Tiempo de arranque en frío (métrica de XCTest, 3 iteraciones).
+    @MainActor
+    func testIngenieroArranque() throws {
+        let opciones = XCTMeasureOptions()
+        opciones.iterationCount = 3
+        measure(metrics: [XCTApplicationLaunchMetric()], options: opciones) {
+            let app = XCUIApplication()
+            app.launchEnvironment["TZ"] = "Europe/Madrid"
+            app.launch()
+        }
+    }
+
     @MainActor
     func testFase7() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)

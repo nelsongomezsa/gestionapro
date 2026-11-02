@@ -17,7 +17,7 @@ struct BotonPrincipal: View {
                     ProgressView().tint(Tema.Color.sobrePrimario)
                 } else {
                     if let icono { Image(systemName: icono) }
-                    Text(titulo)
+                    Text(LocalizedStringKey(titulo))
                 }
             }
             .font(.headline)

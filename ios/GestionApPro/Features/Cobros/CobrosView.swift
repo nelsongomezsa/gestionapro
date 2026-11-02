@@ -3,6 +3,7 @@ import SwiftUI
 /// Pestaña Cobros (Pagos del escritorio): resumen del mes, pendientes y pagos registrados.
 struct CobrosView: View {
     @Environment(SesionStore.self) private var sesion
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
     @State private var vm = CobrosViewModel()
     @State private var nuevoPago: PagoPrellenado?
     @State private var paraBorrar: Pago?
@@ -33,27 +34,41 @@ struct CobrosView: View {
                                 .foregroundStyle(Tema.Color.positivo)
                         }
                         ForEach(pendientes) { p in
-                            HStack(alignment: .top, spacing: Tema.Espacio.s) {
-                                AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
-                                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                                    Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                                    Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
-                                        .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                            // Con texto grande, importe y botón bajan bajo el nombre (en línea se partían).
+                            let disposicion = tamanoTexto.isAccessibilitySize
+                                ? AnyLayout(VStackLayout(alignment: .leading, spacing: Tema.Espacio.xs))
+                                : AnyLayout(HStackLayout(alignment: .top, spacing: Tema.Espacio.s))
+                            disposicion {
+                                HStack(alignment: .top, spacing: Tema.Espacio.s) {
+                                    AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
+                                    VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+                                        Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                                        Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
+                                            .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                                    }
                                 }
-                                Spacer(minLength: Tema.Espacio.xs)
-                                VStack(alignment: .trailing, spacing: Tema.Espacio.xs) {
+                                if !tamanoTexto.isAccessibilitySize { Spacer(minLength: Tema.Espacio.xs) }
+                                VStack(alignment: tamanoTexto.isAccessibilitySize ? .leading : .trailing, spacing: Tema.Espacio.xs) {
                                     Text(Formato.euros(p.importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.texto)
+                                        .fixedSize()
                                     Button("Registrar") {
                                         nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
                                     }
                                     .buttonStyle(.borderedProminent)
                                     // Relleno fijo: con el acento claro del modo oscuro el texto blanco no llegaba a 4,5:1.
                                     .tint(Tema.Color.primarioRelleno)
-                                    .controlSize(.small)
+                                    .controlSize(.regular)
+                                    .fixedSize()
                                     .accessibilityLabel("Registrar pago de \(p.inquilino.nombre)")
                                 }
                             }
                             .padding(.vertical, Tema.Espacio.xxs)
+                            .contextMenu {
+                                Button("Registrar pago", systemImage: "eurosign.circle") {
+                                    nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                                }
+                                AccionesContacto(telefono: p.inquilino.telefono, email: p.inquilino.email)
+                            }
                         }
                     } header: {
                         Text("Pendientes de cobro (\(pendientesVisibles(r).count))")
@@ -110,6 +125,7 @@ struct CobrosView: View {
                     }
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await vm.cargar(con: sesion.api) } }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
             .sheet(isPresented: $conciliando) {
@@ -209,8 +225,10 @@ struct SelectorMes: View {
                 .accessibilityLabel("Mes siguiente")
                 .disabled(maximo.map { mes >= $0 } ?? false)
         }
-        .buttonStyle(.bordered)
+        // Controles sobre el contenido: cristal, y tamaño grande para llegar a 44 pt de área táctil.
+        .buttonStyle(.glass)
         .buttonBorderShape(.circle)
+        .controlSize(.large)
         .tint(Tema.Color.primario)
     }
 }

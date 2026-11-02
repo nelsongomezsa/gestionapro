@@ -54,7 +54,7 @@ class IncidenciaIntegrationTest extends IntegrationTest {
         mvc.perform(get("/api/incidencias").header("Authorization", t))
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].descripcion").value("Grifo que gotea"))
-                .andExpect(jsonPath("$[0].inquilino.nombre").value("Ana García 11111111A"));
+                .andExpect(jsonPath("$[0].inquilino.nombre").value("Ana García 1A"));
         mvc.perform(get("/api/incidencias").param("estado", "resuelta").header("Authorization", t))
                 .andExpect(jsonPath("$.length()").value(0));
         mvc.perform(get("/api/incidencias/" + deBea.getId()).header("Authorization", t))

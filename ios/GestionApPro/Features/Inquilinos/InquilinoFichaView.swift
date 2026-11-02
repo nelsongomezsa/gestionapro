@@ -69,6 +69,7 @@ struct InquilinoFichaView: View {
             .estiloLista()
             // El nombre ya va grande en la cabecera.
             .navigationTitle("Inquilino")
+            .contextoAsistente(.inquilino(id))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .primaryAction) { Button("Editar") { editando = true } } }
             .sheet(isPresented: $editando) {

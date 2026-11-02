@@ -1,5 +1,9 @@
 package com.gestionap.api.web;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+
+import com.gestionap.api.service.CuentaService;
+
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.GestionUsuariosService;
 import com.gestionap.api.service.UsuarioService;
@@ -20,10 +24,20 @@ public class MeController {
 
     private final UsuarioService usuarios;
     private final GestionUsuariosService gestion;
+    private final CuentaService cuenta;
 
-    public MeController(UsuarioService usuarios, GestionUsuariosService gestion) {
+    public MeController(UsuarioService usuarios, GestionUsuariosService gestion, CuentaService cuenta) {
         this.usuarios = usuarios;
         this.gestion = gestion;
+        this.cuenta = cuenta;
+    }
+
+    @Operation(summary = "Elimina la cuenta propia (pide la contraseña): anonimiza los datos personales y conserva contratos y pagos")
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminarCuenta(@Valid @RequestBody UsuarioDtos.EliminarCuentaRequest req,
+                               @AuthenticationPrincipal UsuarioAutenticado actor) {
+        cuenta.eliminar(req, actor);
     }
 
     @Operation(summary = "Datos del usuario autenticado")

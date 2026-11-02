@@ -17,7 +17,7 @@ struct FilaMetrica: View {
                     .accessibilityHidden(true)
             }
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                Text(titulo)
+                Text(LocalizedStringKey(titulo))
                 if let nota {
                     Text(nota)
                         .font(Tema.Fuente.nota)

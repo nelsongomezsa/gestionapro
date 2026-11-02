@@ -9,7 +9,8 @@ CREATE TABLE Usuarios (
     password_hash VARCHAR(64)  NOT NULL,
     rol           VARCHAR(20)  NOT NULL DEFAULT 'usuario',
     activo        TINYINT(1)   NOT NULL DEFAULT 1,
-    debe_cambiar_password TINYINT(1) NOT NULL DEFAULT 0
+    debe_cambiar_password TINYINT(1) NOT NULL DEFAULT 0,
+    fecha_baja    DATETIME NULL
 );
 
 CREATE TABLE Ciudades (

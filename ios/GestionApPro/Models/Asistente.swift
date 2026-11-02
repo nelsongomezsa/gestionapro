@@ -45,8 +45,15 @@ struct PreguntaAsistente: Encodable, Sendable {
         let texto: String
     }
 
+    /// Pantalla abierta al preguntar (piso o contrato). Opcional.
+    struct Contexto: Encodable, Equatable, Sendable {
+        let tipo: String
+        let id: Int
+    }
+
     let mensaje: String
     let historial: [Turno]
+    var contexto: Contexto? = nil
 }
 
 /// POST /api/asistente/clasificar-incidencia

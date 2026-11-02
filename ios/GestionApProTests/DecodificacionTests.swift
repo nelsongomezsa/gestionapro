@@ -152,21 +152,3 @@ struct CampoNumericoTests {
     }
 }
 
-@Suite("Formato en iOS 17")
-struct FormatoRespaldoTests {
-    /// iOS 17 no tiene minimumGroupingDigits: se usa de_DE para los números. Debe dar
-    /// exactamente lo mismo que el formato español corregido de iOS 18+.
-    @Test(arguments: [2_500.0, -436.22, 200_000.0, 0.0, 1_234_567.891])
-    func monedaIgualQueEnIOS18(_ valor: Double) {
-        let normal = Formato.formateador(.currency).string(from: NSNumber(value: valor))
-        let respaldo = Formato.formateador(.currency, forzarRespaldoIOS17: true).string(from: NSNumber(value: valor))
-        #expect(normal.map(sinEspaciosDuros) == respaldo.map(sinEspaciosDuros))
-    }
-
-    @Test func porcentajeYLecturaIgualesQueEnIOS18() {
-        let p = Formato.formateador(.percent, decimales: 2, minimoDecimales: 2, forzarRespaldoIOS17: true)
-        #expect(p.string(from: 0.076712).map(sinEspaciosDuros) == "7,67 %")
-        let d = Formato.formateador(.decimal, decimales: 2, forzarRespaldoIOS17: true)
-        #expect(d.number(from: "2.500,5")?.doubleValue == 2_500.5)
-    }
-}

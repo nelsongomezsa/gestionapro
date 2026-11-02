@@ -50,7 +50,7 @@ class HabitacionIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].numero").value(1))
                 .andExpect(jsonPath("$[0].piso.direccion").value("Calle de Ana 1"))
-                .andExpect(jsonPath("$[0].inquilinoActual.nombre").value("Ana García 11111111A"))
+                .andExpect(jsonPath("$[0].inquilinoActual.nombre").value("Ana García 1A"))
                 .andExpect(jsonPath("$[0].diasAlquilada").isNumber())
                 .andExpect(jsonPath("$[1].inquilinoActual").doesNotExist());
     }

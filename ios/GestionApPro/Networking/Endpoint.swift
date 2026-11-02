@@ -506,6 +506,11 @@ extension Endpoint where Respuesta == SinContenido {
     static func cambiarPassword(_ req: CambioPasswordRequest) -> Self {
         Endpoint(metodo: "PUT", ruta: "/api/me/password", cuerpo: json(req))
     }
+
+    /// Elimina la propia cuenta (la API anonimiza los datos y conserva contratos y pagos).
+    static func eliminarCuenta(password: String) -> Self {
+        Endpoint(metodo: "DELETE", ruta: "/api/me", cuerpo: json(["password": password]))
+    }
 }
 
 extension Endpoint where Respuesta == [Actividad] {

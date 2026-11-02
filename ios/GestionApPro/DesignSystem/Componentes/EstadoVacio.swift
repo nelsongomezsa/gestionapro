@@ -10,12 +10,12 @@ struct EstadoVacio: View {
 
     var body: some View {
         ContentUnavailableView {
-            Label(titulo, systemImage: icono)
+            Label(LocalizedStringKey(titulo), systemImage: icono)
         } description: {
-            if let mensaje { Text(mensaje) }
+            if let mensaje { Text(LocalizedStringKey(mensaje)) }
         } actions: {
             if let accionTitulo, let accion {
-                Button(accionTitulo, action: accion)
+                Button(LocalizedStringKey(accionTitulo), action: accion)
                     .buttonStyle(.borderedProminent)
                     .tint(Tema.Color.primarioRelleno)
             }
@@ -51,10 +51,7 @@ struct VistaCarga<Valor, Contenido: View>: View {
     var body: some View {
         switch estado {
         case .cargando:
-            ProgressView()
-                .controlSize(.large)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .accessibilityLabel("Cargando")
+            EsqueletoCarga()
         case let .error(mensaje):
             ScrollView { EstadoVacio.error(mensaje, reintentar: reintentar) }
         case let .cargado(valor):

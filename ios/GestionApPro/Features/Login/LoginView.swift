@@ -37,6 +37,7 @@ struct LoginView: View {
 
                 VStack(spacing: 0) {
                     TextField("Email", text: $vm.email)
+                        .accessibilityIdentifier("campoEmail")
                         .textContentType(.username)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
@@ -47,6 +48,7 @@ struct LoginView: View {
                         .padding(Tema.Espacio.m)
                     Divider().padding(.leading, Tema.Espacio.m)
                     SecureField("Contraseña", text: $vm.password)
+                        .accessibilityIdentifier("campoPassword")
                         .textContentType(.password)
                         .focused($campo, equals: .password)
                         .submitLabel(.go)
@@ -67,6 +69,7 @@ struct LoginView: View {
                     Task { await vm.entrar(con: sesion) }
                 }
                 .disabled(!vm.puedeEnviar)
+                .accessibilityIdentifier("botonEntrar")
 
                 Button("Soy inquilino y tengo un código") { registrando = true }
                     .font(Tema.Fuente.detalle)

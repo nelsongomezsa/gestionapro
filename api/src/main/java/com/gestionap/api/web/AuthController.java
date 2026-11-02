@@ -45,7 +45,7 @@ public class AuthController {
         return limitado(http, req.email(), () -> auth.registrarInquilino(req));
     }
 
-    /** 429 con Retry-After si la IP o el email han agotado sus intentos; los fallos cuentan para el email. */
+    /** 429 con Retry-After si la IP o el email han agotado sus intentos. */
     private TokenResponse limitado(HttpServletRequest http, String email, Supplier<AuthService.Sesion> accion) {
         limites.comprobar(http.getRemoteAddr(), email);
         try {
@@ -53,7 +53,6 @@ public class AuthController {
             limites.acierto(email);
             return respuesta(s);
         } catch (ApiException e) {
-            limites.fallo(email);
             throw e;
         }
     }

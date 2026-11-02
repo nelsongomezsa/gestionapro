@@ -45,8 +45,9 @@ struct NotificacionesView: View {
                                                               mes: Notificacion.mensuales.contains(g.tipo) ? g.avisos[0].fecha : nil))
                                         .font(Tema.Fuente.subtitulo)
                                 }
+                                // Solo en la cabecera: en el grupo entero pisaba el de cada aviso (VoiceOver y tests).
+                                .accessibilityIdentifier("grupoNotificaciones")
                             }
-                            .accessibilityIdentifier("grupoNotificaciones")
                         }
                     }
                 }

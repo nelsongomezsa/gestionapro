@@ -173,6 +173,7 @@ struct PisoDetalleView: View {
         .background(Tema.Color.fondo)
         .navigationTitle("Piso")
         .navigationBarTitleDisplayMode(.inline)
+        .contextoAsistente(.piso(piso.id))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button { Task { await exportar() } } label: {
