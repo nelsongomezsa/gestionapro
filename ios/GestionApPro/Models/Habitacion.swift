@@ -11,6 +11,9 @@ struct Habitacion: Decodable, Identifiable, Hashable, Sendable {
     let inquilinoActual: InquilinoActual?
     let idContratoActivo: Int?
     let diasAlquilada: Int?
+    /// Libre (o en mantenimiento) desde esta fecha: el día siguiente al fin de su último contrato.
+    /// nil si está alquilada o nunca tuvo contrato.
+    var libreDesde: Date? = nil
 
     struct InquilinoActual: Decodable, Hashable, Sendable {
         let id: Int

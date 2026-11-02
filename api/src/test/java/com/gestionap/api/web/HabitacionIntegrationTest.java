@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,20 @@ class HabitacionIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$[0].inquilinoActual.nombre").value("Ana García 1A"))
                 .andExpect(jsonPath("$[0].diasAlquilada").isNumber())
                 .andExpect(jsonPath("$[1].inquilinoActual").doesNotExist());
+    }
+
+    @Test
+    void libreDesde_esElDiaSiguienteAlFinDelUltimoContrato() throws Exception {
+        LocalDate hoy = LocalDate.now();
+        Inquilino viejo = datos.inquilino("22222222B", null);
+        datos.contrato(h2, viejo, "400.00", hoy.minusYears(2), hoy.minusYears(1));
+        datos.contrato(h2, viejo, "420.00", hoy.minusMonths(11), hoy.minusDays(10));
+        mvc.perform(get("/api/habitaciones").header("Authorization", token("ana@test.com")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].libreDesde").doesNotExist())
+                .andExpect(jsonPath("$[1].libreDesde").value(hoy.minusDays(9).toString()));
+        mvc.perform(get("/api/habitaciones").header("Authorization", token("bea@test.com")))
+                .andExpect(jsonPath("$[0].libreDesde").doesNotExist());
     }
 
     @Test

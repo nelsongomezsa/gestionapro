@@ -14,6 +14,9 @@ struct PisoDetalleView: View {
     @State private var documento: DocumentoPDF?
     @State private var generandoPDF = false
     @State private var error: String?
+    /// Métrica de rentabilidad abierta en su hoja (con zoom desde la tarjeta).
+    @State private var metricaAbierta: MetricaRentabilidad?
+    @Namespace private var zoom
 
     init(piso: Piso) {
         _piso = State(initialValue: piso)
@@ -37,20 +40,29 @@ struct PisoDetalleView: View {
                             .accessibilityIdentifier("editarDatosFinancieros")
                     }
 
+                    // Cada métrica abre una hoja con su cálculo, 12 meses de cobros y gastos y el ranking.
                     Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
                         GridRow {
-                            TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
-                                       icono: "percent", tono: (m.calificacion as Calificacion?).tono, detalle: "Alquiler / inversión")
-                            TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
-                                       icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
-                                       detalle: "Antes de financiación")
+                            metricaTocable(.bruta) {
+                                TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
+                                           icono: "percent", tono: (m.calificacion as Calificacion?).tono, detalle: "Alquiler / inversión")
+                            }
+                            metricaTocable(.neta) {
+                                TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
+                                           icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
+                                           detalle: "Antes de financiación")
+                            }
                         }
                         GridRow {
-                            TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
-                                       icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
-                                       detalle: "Sobre el capital propio")
-                            TarjetaKPI(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
-                                       icono: "hourglass", tono: .primario, detalle: "Años para recuperarla")
+                            metricaTocable(.cashOnCash) {
+                                TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
+                                           icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
+                                           detalle: "Sobre el capital propio")
+                            }
+                            metricaTocable(.per) {
+                                TarjetaKPI(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
+                                           icono: "hourglass", tono: .primario, detalle: "Años para recuperarla")
+                            }
                         }
                     }
                 } else {
@@ -187,8 +199,19 @@ struct PisoDetalleView: View {
         .sheet(isPresented: $editando) {
             DatosFinancierosFormView(piso: piso) { piso = $0 }
         }
+        .sheet(item: $metricaAbierta) { metrica in
+            RentabilidadHojaView(piso: piso, metrica: metrica, ingresos: ingresos)
+                .destinoZoom(metrica, en: zoom)
+        }
         .visorPDF($documento)
         .alertaError($error)
+    }
+
+    private func metricaTocable(_ metrica: MetricaRentabilidad, @ViewBuilder tarjeta: () -> some View) -> some View {
+        TarjetaTocable(pista: "Abre cómo se calcula, su evolución y la comparación con tus otros pisos",
+                       accion: { metricaAbierta = metrica }, contenido: tarjeta)
+            .matchedTransitionSource(id: metrica, in: zoom)
+            .accessibilityIdentifier("metrica-\(metrica.rawValue)")
     }
 
     private var cabecera: some View {

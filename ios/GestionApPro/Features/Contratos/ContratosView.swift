@@ -2,10 +2,15 @@ import SwiftUI
 
 struct ContratosView: View {
     @Environment(SesionStore.self) private var sesion
-    @State private var vm = ContratosViewModel()
+    @State private var vm: ContratosViewModel
     @State private var creando = false
     @State private var paraFinalizar: Contrato?
     @State private var documento: DocumentoPDF?
+
+    /// `filtro`: el que viene puesto (desde Inicio, "Activos" o "Por vencer"); se puede cambiar.
+    init(filtro: FiltroContratos = .activos) {
+        _vm = State(initialValue: ContratosViewModel(filtro: filtro))
+    }
 
     var body: some View {
         @Bindable var vm = vm

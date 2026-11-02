@@ -5,9 +5,13 @@ import Observation
 @Observable
 final class ContratosViewModel {
     private(set) var estado: EstadoCarga<[Contrato]> = .cargando
-    var filtro: FiltroContratos = .activos
+    var filtro: FiltroContratos
     var busqueda = ""
     var error: String?
+
+    init(filtro: FiltroContratos = .activos) {
+        self.filtro = filtro
+    }
 
     var visibles: [Contrato] {
         let t = busqueda.trimmingCharacters(in: .whitespaces)

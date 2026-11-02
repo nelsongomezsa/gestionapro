@@ -2,7 +2,14 @@ import SwiftUI
 
 struct CalculadoraView: View {
     @Environment(SesionStore.self) private var sesion
-    @State private var vm = CalculadoraViewModel()
+    @State private var vm: CalculadoraViewModel
+
+    /// `entrada`: datos de partida (los de un piso, para simular); sin ella, un caso de ejemplo.
+    init(entrada: RentabilidadRequest? = nil) {
+        let vm = CalculadoraViewModel()
+        if let entrada { vm.entrada = entrada }
+        _vm = State(initialValue: vm)
+    }
 
     var body: some View {
         @Bindable var vm = vm

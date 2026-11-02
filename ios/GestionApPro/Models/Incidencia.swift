@@ -137,3 +137,31 @@ struct DatosFinancierosRequest: Encodable, Sendable {
         notas = d.notas
     }
 }
+
+/// Filtro de la lista de incidencias. "Abiertas" junta pendientes y en curso (la tarjeta de Inicio).
+enum FiltroIncidencias: Hashable, CaseIterable, Sendable {
+    case abiertas, pendientes, enProceso, resueltas, todas
+
+    var nombre: String {
+        switch self {
+        case .abiertas: "Abiertas"
+        case .pendientes: "Pendientes"
+        case .enProceso: "En proceso"
+        case .resueltas: "Resueltas"
+        case .todas: "Todas"
+        }
+    }
+
+    func incluye(_ estado: EstadoIncidencia) -> Bool {
+        switch self {
+        case .abiertas: estado != .resuelta
+        case .pendientes: estado == .pendiente
+        case .enProceso: estado == .enProceso
+        case .resueltas: estado == .resuelta
+        case .todas: true
+        }
+    }
+
+    /// Con un solo estado la insignia sería la misma en todas las filas.
+    var variosEstados: Bool { self == .abiertas || self == .todas }
+}

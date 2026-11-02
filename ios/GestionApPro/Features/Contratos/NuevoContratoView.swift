@@ -6,6 +6,8 @@ struct NuevoContratoView: View {
     @Environment(SesionStore.self) private var sesion
     @Environment(\.dismiss) private var cerrar
     var inquilinoInicial: Int? = nil
+    /// Habitación ya elegida (desde la ficha de una habitación libre).
+    var habitacionInicial: Habitacion? = nil
     let alGuardar: (Contrato) -> Void
 
     @State private var pisos: [Piso] = []
@@ -89,6 +91,7 @@ struct NuevoContratoView: View {
             pisos = try await p
             inquilinos = try await i
             idInquilino = inquilinoInicial
+            idPiso = habitacionInicial?.piso.id
         } catch {
             self.error = error.localizedDescription
         }
@@ -100,6 +103,9 @@ struct NuevoContratoView: View {
         guard let idPiso else { return }
         do {
             habitaciones = try await sesion.api.enviar(.habitaciones(piso: idPiso, estado: .disponible))
+            if let h = habitacionInicial, h.piso.id == idPiso, habitaciones.contains(where: { $0.id == h.id }) {
+                idHabitacion = h.id
+            }
         } catch {
             self.error = error.localizedDescription
         }

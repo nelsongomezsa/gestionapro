@@ -1408,6 +1408,74 @@ extension CapturasUITests {
         r.pausa(2)
         r.capturar("01-asistente")
     }
+
+    /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
+    @MainActor
+    func testTarjetas() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.capturar("01-inicio")
+
+        r.app.buttons["kpiOcupacion"].tap()
+        r.esperar(r.app.navigationBars["Ocupación"])
+        r.pausa(1)
+        r.capturar("02-ocupacion")
+        r.app.swipeUp()
+        r.capturar("03-ocupacion-abajo")
+        r.atras()
+
+        r.app.buttons["kpiLibres"].tap()
+        r.esperar(r.app.navigationBars["Habitaciones libres"])
+        r.pausa(1)
+        r.capturar("04-libres")
+        r.app.switches.firstMatch.switches.firstMatch.tap()
+        r.pausa(1)
+        r.capturar("05-libres-mantenimiento")
+        r.app.buttons["filaHabitacionLibre"].firstMatch.tap()
+        r.esperar(r.app.buttons["Inventarios"])
+        r.pausa(1)
+        r.capturar("06-ficha-habitacion")
+        r.atras()
+        r.atras()
+
+        r.app.buttons["kpiContratos"].tap()
+        r.esperar(r.app.navigationBars["Contratos"])
+        r.pausa(1)
+        r.capturar("07-contratos-activos")
+        r.atras()
+
+        r.app.buttons["kpiIncidencias"].tap()
+        r.esperar(r.app.navigationBars["Incidencias"])
+        r.pausa(1)
+        r.capturar("08-incidencias-abiertas")
+        r.atras()
+
+        let alerta = r.app.buttons["alerta-CONTRATOS_POR_VENCER"]
+        if r.desplazarHasta(alerta).exists {
+            alerta.tap()
+            r.esperar(r.app.navigationBars["Contratos"])
+            r.pausa(1)
+            r.capturar("09-alerta-por-vencer")
+            r.atras()
+        }
+
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.buttons["metrica-bruta"])
+        r.capturar("10-piso-metricas")
+        r.app.buttons["metrica-bruta"].tap()
+        r.esperar(r.app.staticTexts["Cómo se calcula"])
+        r.pausa(2)
+        r.capturar("11-hoja-bruta")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("12-hoja-bruta-abajo")
+        r.desplazarHasta(r.app.buttons["simularCalculadora"]).tap()
+        r.esperar(r.app.navigationBars["Calculadora"])
+        r.pausa(2)
+        r.capturar("13-calculadora-piso")
+    }
 }
 
 @MainActor

@@ -11,6 +11,8 @@ enum Haptica {
     static func exito() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.success) } }
     static func error() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.error) } }
     static func impacto() { if activa { UIImpactFeedbackGenerator(style: .medium).impactOccurred() } }
+    /// Toque ligero al abrir algo desde una tarjeta o un resumen.
+    static func ligera() { if activa { UIImpactFeedbackGenerator(style: .light).impactOccurred() } }
     static func suave() { if activa { UIImpactFeedbackGenerator(style: .soft).impactOccurred() } }
 }
 

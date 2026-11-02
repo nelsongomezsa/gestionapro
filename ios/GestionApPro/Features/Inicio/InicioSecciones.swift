@@ -34,53 +34,89 @@ struct HeroeInicio: View {
 }
 
 /// Cuatro indicadores en rejilla (no perezosa, para que las dos tarjetas de cada fila midan lo mismo).
+/// Cada uno abre su pantalla: ocupación por piso, habitaciones libres, contratos activos e incidencias abiertas.
 struct IndicadoresInicio: View {
     let dashboard: Dashboard
+    let zoom: Namespace.ID
+    let abrir: (DestinoInicio) -> Void
 
     var body: some View {
         let d = dashboard
         let abiertas = d.incidenciasPendientes + d.incidenciasEnProceso
         Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
             GridRow {
-                TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
-                           icono: "chart.pie", tono: d.ocupacion.tono,
-                           detalle: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones")
-                TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
-                           icono: "door.left.hand.open", tono: .primario,
-                           detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
+                tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada piso") {
+                    TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
+                               icono: "chart.pie", tono: d.ocupacion.tono,
+                               detalle: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones")
+                }
+                tocable("kpiLibres", .habitacionesLibres, pista: "Abre la lista de habitaciones libres") {
+                    TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
+                               icono: "door.left.hand.open", tono: .primario,
+                               detalle: "\(d.ocupacion.mantenimiento) en mantenimiento")
+                }
             }
             GridRow {
-                TarjetaKPI(titulo: "Contratos activos", valor: "\(d.contratosActivos)", icono: "doc.text",
-                           tono: .primario, detalle: "\(d.inquilinos) inquilinos")
-                TarjetaKPI(titulo: "Incidencias abiertas", valor: "\(abiertas)",
-                           icono: "wrench.and.screwdriver", tono: abiertas > 0 ? .aviso : .positivo,
-                           detalle: "\(d.incidenciasEnProceso) en curso")
+                tocable("kpiContratos", .contratos(.activos), pista: "Abre los contratos activos") {
+                    TarjetaKPI(titulo: "Contratos activos", valor: "\(d.contratosActivos)", icono: "doc.text",
+                               tono: .primario, detalle: "\(d.inquilinos) inquilinos")
+                }
+                tocable("kpiIncidencias", .incidencias(.abiertas), pista: "Abre las incidencias abiertas y en curso") {
+                    TarjetaKPI(titulo: "Incidencias abiertas", valor: "\(abiertas)",
+                               icono: "wrench.and.screwdriver", tono: abiertas > 0 ? .aviso : .positivo,
+                               detalle: "\(d.incidenciasEnProceso) en curso")
+                }
             }
         }
     }
+
+    private func tocable(_ id: String, _ destino: DestinoInicio, pista: String, @ViewBuilder tarjeta: () -> some View) -> some View {
+        TarjetaTocable(pista: pista, accion: { abrir(destino) }, contenido: tarjeta)
+            .matchedTransitionSource(id: destino, in: zoom)
+            .accessibilityIdentifier(id)
+    }
 }
 
+/// Alertas del panel. Cada una abre su lista ya filtrada ("5 contratos vencen…" → esos contratos).
 struct AlertasInicio: View {
     let alertas: [Alerta]
+    let zoom: Namespace.ID
+    let abrir: (DestinoInicio) -> Void
 
     var body: some View {
         if !alertas.isEmpty {
             SeccionTarjeta(titulo: "Alertas") {
                 ForEach(alertas, id: \.self) { a in
-                    HStack(alignment: .top, spacing: Tema.Espacio.s) {
-                        IconoEtiqueta(icono: a.icono, tono: a.tonoVisual)
-                        VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                            Text(a.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                            if !a.mensaje.isEmpty {
-                                Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
-                            }
+                    if let destino = ResumenesInicio.destino(de: a) {
+                        TarjetaTocable(pista: "Abre la lista filtrada", mostrarChevron: false, accion: { abrir(destino) }) {
+                            fila(a, chevron: true)
                         }
+                        .matchedTransitionSource(id: destino, in: zoom)
+                        .accessibilityIdentifier("alerta-\(a.tipo)")
+                    } else {
+                        fila(a, chevron: false)
                     }
-                    .accessibilityElement(children: .combine)
                     if a != alertas.last { Divider().overlay(Tema.Color.borde) }
                 }
             }
         }
+    }
+
+    private func fila(_ a: Alerta, chevron: Bool) -> some View {
+        HStack(alignment: .center, spacing: Tema.Espacio.s) {
+            IconoEtiqueta(icono: a.icono, tono: a.tonoVisual)
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+                Text(a.titulo).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                    .fixedSize(horizontal: false, vertical: true)
+                if !a.mensaje.isEmpty {
+                    Text(a.mensaje).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                }
+            }
+            Spacer(minLength: Tema.Espacio.xs)
+            if chevron { ChevronTocable() }
+        }
+        .contentShape(.rect)
+        .accessibilityElement(children: .combine)
     }
 }
 
