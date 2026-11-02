@@ -550,3 +550,14 @@ extension Endpoint where Respuesta == ResultadosBusqueda {
         Endpoint(metodo: "GET", ruta: "/api/buscar", consulta: [URLQueryItem(name: "q", value: texto)])
     }
 }
+
+extension Endpoint where Respuesta == Analisis {
+    /// Estadísticas de un periodo; sin piso ni habitación, de toda la cartera.
+    static func analisis(desde: Date, hasta: Date, piso: Int? = nil, habitacion: Int? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/estadisticas/analisis",
+                 consulta: [URLQueryItem(name: "desde", value: FechaAPI.texto(desde)),
+                            URLQueryItem(name: "hasta", value: FechaAPI.texto(hasta)),
+                            URLQueryItem(name: "piso", value: piso.map(String.init)),
+                            URLQueryItem(name: "habitacion", value: habitacion.map(String.init))])
+    }
+}

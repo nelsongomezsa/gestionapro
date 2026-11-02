@@ -1451,6 +1451,47 @@ extension CapturasUITests {
         r.capturar("08-incidencias-por-piso")
     }
 
+    /// Fase 3 de inicio-tarjetas: estadísticas con filtros y exportación a PDF.
+    @MainActor
+    func testFase3() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["Estadísticas"]).tap()
+        r.esperar(r.elemento(contiene: "Resultado neto"))
+        r.pausa(2)
+        r.capturar("01-estadisticas-anio")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-comparacion-y-meses")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("03-pisos-y-ranking")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("04-ocupacion-historica")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("05-morosidad")
+        for _ in 0..<6 { r.app.swipeDown() }
+
+        r.app.buttons["Trimestre"].firstMatch.tap()
+        r.pausa(2)
+        r.capturar("06-trimestre")
+        r.app.buttons["ambitoEstadisticas"].tap()
+        r.pausa(1)
+        r.capturar("07-elegir-ambito")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Calle Mayor")).firstMatch.tap()
+        r.pausa(2)
+        r.capturar("08-un-piso")
+        r.app.buttons["Personalizado"].firstMatch.tap()
+        r.pausa(2)
+        r.capturar("09-personalizado")
+        r.app.buttons["exportarEstadisticas"].tap()
+        r.pausa(3)
+        r.capturar("10-pdf")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {

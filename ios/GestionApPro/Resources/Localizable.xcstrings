@@ -23,6 +23,16 @@
         }
       }
     },
+    "%@ a tiempo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ on time"
+          }
+        }
+      }
+    },
     "%@ al mes × 12" : {
       "localizations" : {
         "en" : {
@@ -93,12 +103,42 @@
         }
       }
     },
+    "%@ meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ months"
+          }
+        }
+      }
+    },
+    "%@ puntos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ points"
+          }
+        }
+      }
+    },
     "%@ un %@ frente a lo cobrado hasta el día %lld del mes anterior" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@ compared with collections up to day %3$lld of last month"
+          }
+        }
+      }
+    },
+    "%@ vs. año anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ vs. previous year"
           }
         }
       }
@@ -203,6 +243,16 @@
         }
       }
     },
+    "%@, ingresos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, income"
+          }
+        }
+      }
+    },
     "%@. %@" : {
       "localizations" : {
         "en" : {
@@ -230,6 +280,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld altas · %lld bajas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld new · %2$lld ended"
           }
         }
       }
@@ -280,6 +340,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld of %2$lld let"
+          }
+        }
+      }
+    },
+    "%lld de %lld meses sin pagar · %lld fuera de plazo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld months unpaid · %3$lld late"
           }
         }
       }
@@ -480,6 +550,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1 pending"
+          }
+        }
+      }
+    },
+    "75 %" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "75%"
           }
         }
       }
@@ -824,6 +904,16 @@
       }
     },
     "Analizando el extracto…" : {},
+    "Analizar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyse"
+          }
+        }
+      }
+    },
     "Aparece como arrendador en los contratos en PDF." : {},
     "Apariencia" : {
       "extractionState" : "stale",
@@ -943,6 +1033,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add a property to see its occupancy."
+          }
+        }
+      }
+    },
+    "Año" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Year"
+          }
+        }
+      }
+    },
+    "Año anterior: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous year: %@"
           }
         }
       }
@@ -1389,6 +1499,16 @@
         }
       }
     },
+    "Comparación con el año anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compared with the previous year"
+          }
+        }
+      }
+    },
     "Compartir o guardar (%lld archivos)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1609,6 +1729,16 @@
         }
       }
     },
+    "Contratos finalizados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended leases"
+          }
+        }
+      }
+    },
     "Contratos por vencer" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1735,6 +1865,16 @@
     },
     "Daños, recibos pendientes…" : {},
     "Depósito" : {},
+    "Desde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From"
+          }
+        }
+      }
+    },
     "Desliza a la derecha para avanzar el estado y a la izquierda para borrar." : {},
     "Desliza para editar, borrar o cambiar el estado." : {},
     "Desliza para quitar uno. Las fotos se añaden después, desde el inventario." : {},
@@ -1744,6 +1884,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Expanded"
+          }
+        }
+      }
+    },
+    "Duración media" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average length"
           }
         }
       }
@@ -1779,6 +1929,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Día del recordatorio de cobro"
+          }
+        }
+      }
+    },
+    "Días medios vacía" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average days vacant"
           }
         }
       }
@@ -2313,6 +2473,16 @@
         }
       }
     },
+    "Habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rooms"
+          }
+        }
+      }
+    },
     "Habitaciones libres" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2326,6 +2496,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Habitaciones libres"
+          }
+        }
+      }
+    },
+    "Habitaciones por estado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rooms by status"
+          }
+        }
+      }
+    },
+    "Habitaciones: %@ de ocupación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rooms: %@ occupancy"
           }
         }
       }
@@ -2367,6 +2557,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Room %1$lld, %2$@. %3$@ per month. %4$@"
+          }
+        }
+      }
+    },
+    "Hasta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To"
           }
         }
       }
@@ -2421,6 +2621,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Idioma"
+          }
+        }
+      }
+    },
+    "Impagado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unpaid"
           }
         }
       }
@@ -2497,6 +2707,26 @@
         }
       }
     },
+    "Incidencias comunicadas · 6 meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported issues · 6 months"
+          }
+        }
+      }
+    },
+    "Incidencias por mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issues by month"
+          }
+        }
+      }
+    },
     "Incluir en mantenimiento" : {
       "localizations" : {
         "en" : {
@@ -2551,7 +2781,27 @@
         }
       }
     },
+    "Ingresos frente a gastos por piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income vs expenses by property"
+          }
+        }
+      }
+    },
     "Ingresos sin contrato (%@)" : {},
+    "Ingresos y gastos por mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income and expenses by month"
+          }
+        }
+      }
+    },
     "Inicio" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3055,6 +3305,26 @@
       }
     },
     "Mis pagos" : {},
+    "Morosidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrears"
+          }
+        }
+      }
+    },
+    "Morosidad por inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrears by tenant"
+          }
+        }
+      }
+    },
     "Más" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3105,6 +3375,16 @@
       }
     },
     "No puede superar el máximo." : {},
+    "No se pudieron cargar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load"
+          }
+        }
+      }
+    },
     "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar." : {},
     "No se puede comparar: faltan datos en este piso o en los demás." : {
       "localizations" : {
@@ -3306,6 +3586,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ocupación"
+          }
+        }
+      }
+    },
+    "Ocupación %@ · %@ días vacía" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Occupancy %1$@ · %2$@ days vacant"
+          }
+        }
+      }
+    },
+    "Ocupación histórica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Occupancy history"
+          }
+        }
+      }
+    },
+    "Ocupación por mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Occupancy by month"
           }
         }
       }
@@ -3520,6 +3830,36 @@
         }
       }
     },
+    "Periodo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period"
+          }
+        }
+      }
+    },
+    "Periodo anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous period"
+          }
+        }
+      }
+    },
+    "Periodo siguiente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next period"
+          }
+        }
+      }
+    },
     "Personalizado" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3635,6 +3975,26 @@
       }
     },
     "Por %@" : {},
+    "Por habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per room"
+          }
+        }
+      }
+    },
+    "Por mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By month"
+          }
+        }
+      }
+    },
     "Por piso" : {
       "localizations" : {
         "en" : {
@@ -3707,6 +4067,16 @@
         }
       }
     },
+    "Puesto %lld: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rank %1$lld: %2$@"
+          }
+        }
+      }
+    },
     "Qué avisar" : {
       "localizations" : {
         "en" : {
@@ -3724,6 +4094,16 @@
       }
     },
     "Qué pasa" : {},
+    "Ranking de pisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property ranking"
+          }
+        }
+      }
+    },
     "Recibo" : {
       "localizations" : {
         "en" : {
@@ -3748,6 +4128,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recordatorios en este iPhone"
+          }
+        }
+      }
+    },
+    "Referencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reference"
+          }
+        }
+      }
+    },
+    "Referencia de ocupación saludable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Healthy occupancy reference"
           }
         }
       }
@@ -3883,6 +4283,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resolved"
+          }
+        }
+      }
+    },
+    "Resultado neto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Net result"
+          }
+        }
+      }
+    },
+    "Resumen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summary"
+          }
+        }
+      }
+    },
+    "Rotación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turnover"
           }
         }
       }
@@ -4040,6 +4470,16 @@
     },
     "Sin incidencias abiertas" : {},
     "Sin leer (%@)" : {},
+    "Sin meses vencidos en este periodo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No months due in this period."
+          }
+        }
+      }
+    },
     "Sin pagos ni fines de contrato este día" : {},
     "Sin pagos registrados" : {
       "localizations" : {
@@ -4110,6 +4550,16 @@
         }
       }
     },
+    "Situación actual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current status"
+          }
+        }
+      }
+    },
     "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual." : {
       "localizations" : {
         "en" : {
@@ -4139,6 +4589,16 @@
     "Solo se pueden borrar habitaciones sin contratos ni incidencias." : {},
     "Solo se pueden borrar inquilinos sin contratos ni incidencias." : {},
     "Subiendo…" : {},
+    "T%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Q%1$lld %2$@"
+          }
+        }
+      }
+    },
     "Tamaño del texto" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4259,6 +4719,16 @@
         }
       }
     },
+    "Toda la cartera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whole portfolio"
+          }
+        }
+      }
+    },
     "Todas" : {},
     "Todas (%@)" : {},
     "Todas las ciudades" : {},
@@ -4338,6 +4808,16 @@
       }
     },
     "Todos los inquilinos" : {},
+    "Trimestre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quarter"
+          }
+        }
+      }
+    },
     "Una foto ayuda a entender el problema y a presupuestar la reparación." : {},
     "Usa la app" : {
       "localizations" : {
@@ -4579,7 +5059,27 @@
       }
     },
     "al mes" : {},
+    "año anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "previous year"
+          }
+        }
+      }
+    },
     "de %@ habitaciones" : {},
+    "de %lld habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "of %lld rooms"
+          }
+        }
+      }
+    },
     "este contrato" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4642,6 +5142,16 @@
       }
     },
     "ocupación" : {},
+    "puntualidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "on time"
+          }
+        }
+      }
+    },
     "¿Borrar a %@?" : {
       "localizations" : {
         "en" : {

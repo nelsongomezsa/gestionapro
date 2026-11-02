@@ -1,8 +1,10 @@
 package com.gestionap.api.web;
 
 import com.gestionap.api.security.UsuarioAutenticado;
+import com.gestionap.api.service.AnalisisService;
 import com.gestionap.api.service.InformeMensualPdf;
 import com.gestionap.api.service.PanelService;
+import com.gestionap.api.web.dto.AnalisisDtos;
 import com.gestionap.api.web.dto.PanelDtos.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -28,10 +31,12 @@ public class PanelController {
 
     private final PanelService panel;
     private final InformeMensualPdf informe;
+    private final AnalisisService analisis;
 
-    public PanelController(PanelService panel, InformeMensualPdf informe) {
+    public PanelController(PanelService panel, InformeMensualPdf informe, AnalisisService analisis) {
         this.panel = panel;
         this.informe = informe;
+        this.analisis = analisis;
     }
 
     @Operation(summary = "Inicio: ocupación, cobrado del mes con tendencia, cash flow, gráfico de 6 meses, alertas, vencimientos y actividad")
@@ -44,6 +49,17 @@ public class PanelController {
     @GetMapping("/api/estadisticas")
     public EstadisticasResponse estadisticas(@AuthenticationPrincipal UsuarioAutenticado actor) {
         return panel.estadisticas(actor);
+    }
+
+    @Operation(summary = "Estadísticas de un periodo (cartera, piso o habitación) con comparación con el año anterior")
+    @GetMapping("/api/estadisticas/analisis")
+    public AnalisisDtos.AnalisisResponse analisis(
+            @Parameter(example = "2026-01-01") @RequestParam LocalDate desde,
+            @Parameter(example = "2026-12-31") @RequestParam LocalDate hasta,
+            @RequestParam(required = false) Integer piso,
+            @RequestParam(required = false) Integer habitacion,
+            @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return analisis.analizar(desde, hasta, piso, habitacion, actor);
     }
 
     @Operation(summary = "Calendario del mes: estado de cada día (pagado, esperado, vencido), pagos y fines de contrato")

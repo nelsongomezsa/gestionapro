@@ -74,6 +74,11 @@ enum Formato {
         anios(valor.map { NSDecimalNumber(decimal: $0).doubleValue })
     }
 
+    /// "12,5": una cifra decimal (días medios, meses).
+    static func numero(_ valor: Double) -> String {
+        valor.formatted(.number.precision(.fractionLength(0...1)).locale(locale))
+    }
+
     static func numero(_ valor: Int) -> String {
         numeroEditable.string(from: NSNumber(value: valor)) ?? "\(valor)"
     }

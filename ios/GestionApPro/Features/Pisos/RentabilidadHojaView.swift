@@ -127,7 +127,7 @@ struct RentabilidadHojaView: View {
 }
 
 /// Barras agrupadas de cobros y gastos por mes. Se dibujan al aparecer (sin animación con Reducir movimiento).
-private struct GraficoCobrosGastos: View {
+struct GraficoCobrosGastos: View {
     let meses: [CobrosGastosMes]
     @State private var dibujado = false
     @Environment(\.accessibilityReduceMotion) private var reducirMovimiento

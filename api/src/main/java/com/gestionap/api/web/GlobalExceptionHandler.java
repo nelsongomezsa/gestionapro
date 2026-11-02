@@ -12,6 +12,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -50,6 +51,11 @@ public class GlobalExceptionHandler {
     ResponseEntity<ErrorResponse> tipoParametro(MethodArgumentTypeMismatchException e, HttpServletRequest req) {
         return responder(HttpStatus.BAD_REQUEST, "PARAMETRO_INVALIDO",
                 "Valor no válido para '" + e.getName() + "'", req);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    ResponseEntity<ErrorResponse> faltaParametro(MissingServletRequestParameterException e, HttpServletRequest req) {
+        return responder(HttpStatus.BAD_REQUEST, "PARAMETRO_REQUERIDO", "Falta el parámetro " + e.getParameterName(), req);
     }
 
     @ExceptionHandler({AccessDeniedException.class, AuthorizationDeniedException.class})
