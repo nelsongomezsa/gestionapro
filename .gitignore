@@ -17,9 +17,3 @@ out/
 
 # Capturas de trabajo (se generan con ios/scripts/capturas.sh; en el repo solo docs/capturas/destacadas)
 docs/capturas-local/
-
-# Configuración local de herramientas: no se versiona
-.claude/
-CLAUDE.md
-.codex/
-AGENTS.md
