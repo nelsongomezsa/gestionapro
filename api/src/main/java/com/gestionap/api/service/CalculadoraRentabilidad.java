@@ -2,6 +2,9 @@ package com.gestionap.api.service;
 
 import com.gestionap.api.config.ItpProperties;
 import com.gestionap.api.web.ApiException;
+import com.gestionap.api.web.dto.RentabilidadRequest;
+import com.gestionap.api.web.dto.RentabilidadResponse;
+import java.math.RoundingMode;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -67,6 +70,31 @@ public class CalculadoraRentabilidad {
 
     public CalculadoraRentabilidad(ItpProperties itp) {
         this.itp = itp;
+    }
+
+    /** Petición de la API → respuesta redondeada a 2 decimales (los opcionales omitidos cuentan como 0). */
+    public RentabilidadResponse responder(RentabilidadRequest req) {
+        var r = calcular(new CalculadoraRentabilidad.Entrada(
+                req.comunidad(), req.precioCompra(), nz(req.gastosNotariaRegistro()), nz(req.gastosHipoteca()),
+                nz(req.reforma()), nz(req.comisionCompra()), nz(req.mobiliario()),
+                nz(req.ibiMensual()), nz(req.segurosMensual()), nz(req.comunidadMensual()),
+                nz(req.mantenimientoMensual()), nz(req.vacioMensual()), req.alquilerMensual(),
+                nz(req.revalorizacionAnualPct()), nz(req.porcentajeFinanciado()),
+                req.plazoAnos() != null ? req.plazoAnos() : 0, nz(req.tipoInteresPct())));
+        return new RentabilidadResponse(
+                r2(r.itpPct()), r2(r.itpImporte()), r2(r.totalCompra()), r2(r.gastosMensuales()),
+                r2(r.gastosAnuales()), r2(r.alquilerAnual()), r2(r.hipoteca()), r2(r.capitalAportado()),
+                r2(r.cuotaMensual()), r2(r.interesesMensualesPromedio()), r2(r.amortizacionMensualPromedio()),
+                r2(r.rentabilidadBrutaPct()), r2(r.rentabilidadNetaPct()), r2(r.cashFlowMensual()),
+                r2(r.cashFlowAnual()), r2(r.aniosRecuperacion()), r2(r.plusvalia5Anios()), r2(r.plusvalia10Anios()));
+    }
+
+    private static double nz(Double v) {
+        return v != null ? v : 0;
+    }
+
+    private static BigDecimal r2(Double v) {
+        return v == null ? null : BigDecimal.valueOf(v).setScale(2, RoundingMode.HALF_UP);
     }
 
     public Resultado calcular(Entrada e) {

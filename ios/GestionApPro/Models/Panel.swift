@@ -5,12 +5,16 @@ struct ImporteMes: Decodable, Hashable, Sendable {
     /// "oct": siempre en español, lo genera la API.
     let etiqueta: String
     let importe: Decimal
+
+    enum CodingKeys: String, CodingKey { case mes, etiqueta, importe }
 }
 
 struct ConteoMes: Decodable, Hashable, Sendable {
     let mes: String
     let etiqueta: String
     let cantidad: Int
+
+    enum CodingKeys: String, CodingKey { case mes, etiqueta, cantidad }
 }
 
 struct Ocupacion: Decodable, Hashable, Sendable {
@@ -37,6 +41,7 @@ struct Alerta: Decodable, Hashable, Sendable {
 
     var icono: String {
         switch tipo {
+        case "COBROS_ATRASADOS": "exclamationmark.triangle.fill"
         case "CONTRATOS_POR_VENCER": "calendar.badge.exclamationmark"
         case "INCIDENCIAS_PENDIENTES": "wrench.and.screwdriver"
         default: "chart.pie"
@@ -53,7 +58,7 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
     /// Texto legible de los códigos de acción del escritorio y de la API.
     var titulo: String {
         guard let accion else { return "Actividad" }
-        return Self.titulos[accion] ?? accion.replacingOccurrences(of: "_", with: " ").capitalized(with: Formato.locale)
+        return Self.titulos[accion] ?? accion.replacingOccurrences(of: "_", with: " ").capitalized(with: Formato.localeFechas)
     }
 
     var icono: String {
@@ -124,7 +129,8 @@ struct Estadisticas: Decodable, Sendable {
 
 struct Calendario: Decodable, Sendable {
     let mes: String
-    let nombreMes: String
+    /// Con el idioma de la app (la API lo manda en español), a partir de `mes`.
+    var nombreMes: String { Formato.mesEnFrase(mes) ?? mes }
     let esperado: Decimal
     let cobrado: Decimal
     let pendiente: Decimal
@@ -215,3 +221,22 @@ struct Notificacion: Decodable, Identifiable, Hashable, Sendable {
 
 struct TotalNoLeidas: Decodable, Sendable { let total: Int }
 struct TotalMarcadas: Decodable, Sendable { let marcadas: Int }
+
+// La API manda los nombres de mes en español: se rehacen con el idioma de la app a partir del aaaa-mm.
+extension ImporteMes {
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let mes = try c.decode(String.self, forKey: .mes)
+        self.init(mes: mes, etiqueta: try Formato.mes(mes, corto: true) ?? c.decode(String.self, forKey: .etiqueta),
+                  importe: try c.decode(Decimal.self, forKey: .importe))
+    }
+}
+
+extension ConteoMes {
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let mes = try c.decode(String.self, forKey: .mes)
+        self.init(mes: mes, etiqueta: try Formato.mes(mes, corto: true) ?? c.decode(String.self, forKey: .etiqueta),
+                  cantidad: try c.decode(Int.self, forKey: .cantidad))
+    }
+}

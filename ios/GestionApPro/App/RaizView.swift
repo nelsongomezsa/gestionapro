@@ -74,6 +74,8 @@ struct PestanasView: View {
 
     /// Pestaña elegida (el «+» no es una pestaña: abre el menú de crear).
     @State private var seleccion: Pestana = .inicio
+    @State private var irACobros = IrACobros()
+    @State private var irAPiso = IrAPiso()
     @State private var creando = false
     @AppStorage(Preferencias.pestanaInicio) private var pestanaInicio = Pestana.inicio.rawValue
 
@@ -134,7 +136,7 @@ struct PestanasView: View {
             else if usuario.rol.gestionaPisos, BienvenidaView.debeMostrarse(vista: bienvenidaVista) { bienvenida = true }
         }
         .sheet(isPresented: $creando) {
-            MenuCrear(opciones: usuario.rol.gestionaPisos ? [.pago, .incidencia, .gasto, .mensajeNuevo] : [.incidencia, .mensajeNuevo]) { o in
+            MenuCrear(opciones: usuario.rol.gestionaPisos ? [.pago, .incidencia, .gasto, .mensajeNuevo, .piso, .analisis] : [.incidencia, .mensajeNuevo]) { o in
                 creando = false
                 // Tras cerrar el menú, se abre la acción elegida.
                 Task { try? await Task.sleep(for: .milliseconds(350)); abierto = o }
@@ -145,6 +147,10 @@ struct PestanasView: View {
         .onChange(of: pendiente.acceso) { _, nuevo in if nuevo != nil { abierto = pendiente.tomar() } }
         .sheet(isPresented: $bienvenida, onDismiss: { bienvenidaVista = true }) { BienvenidaView() }
         .environment(buzon)
+        .environment(irACobros)
+        .environment(irAPiso)
+        .onChange(of: irACobros.mes) { _, mes in if mes != nil { seleccion = .cobros } }
+        .onChange(of: irAPiso.piso) { _, piso in if piso != nil { seleccion = .pisos } }
         .environment(pantalla)
         .overlay(alignment: .top) {
             if let nueva = buzon.nuevo {
@@ -213,6 +219,14 @@ struct PestanasView: View {
                     ConversacionesView()
                         .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
                 }
+            }
+        case .piso:
+            NuevoPisoView { piso in irAPiso.piso = piso }
+        case .analisis:
+            // Un piso que aún no es tuyo: la calculadora en blanco, con guardar y comparar.
+            NavigationStack {
+                CalculadoraView(entrada: CalculadoraViewModel.vacio)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { abierto = nil } } }
             }
         case .asistente:
             NavigationStack {

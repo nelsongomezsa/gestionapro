@@ -47,6 +47,14 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
             """)
     List<Contrato> activosDeHabitaciones(Collection<Integer> idsHabitacion, LocalDate hoy);
 
+    /** Fin del último contrato ya terminado de cada habitación: [idHabitacion, fechaFin]. */
+    @Query("""
+            select c.habitacion.id, max(c.fechaFin) from Contrato c
+            where c.habitacion.id in :idsHabitacion and c.fechaFin < :hoy
+            group by c.habitacion.id
+            """)
+    List<Object[]> finUltimoContrato(Collection<Integer> idsHabitacion, LocalDate hoy);
+
     /** Contratos activos hoy de un conjunto de inquilinos, con habitación y piso. */
     @Query("""
             select c from Contrato c
@@ -91,6 +99,15 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
     boolean existsByHabitacionId(Integer idHabitacion);
 
     boolean existsByInquilinoId(Integer idInquilino);
+
+    /** ¿Algún contrato (de cualquier fecha) en las habitaciones de este piso? */
+    boolean existsByHabitacionPisoId(Integer idPiso);
+
+    @Query("""
+            select count(c) from Contrato c
+            where c.habitacion.piso.id = :idPiso and c.fechaInicio <= :hoy and c.fechaFin >= :hoy
+            """)
+    long contarActivosDePiso(Integer idPiso, LocalDate hoy);
 
     @Query("""
             select count(c) > 0 from Contrato c

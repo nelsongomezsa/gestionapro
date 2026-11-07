@@ -12,6 +12,13 @@ enum DestinoInicio: Hashable {
     case incidencia(Int)
     case mensajes(Int)
     case mensajesIncidencia(Int)
+    // Resúmenes tocables de Inicio.
+    case ocupacion
+    case habitacionesLibres
+    case fichaHabitacion(Habitacion)
+    case contratos(FiltroContratos)
+    case incidencias(FiltroIncidencias)
+    case atrasados
 }
 
 /// Inicio (Dashboard del escritorio): lo cobrado del mes como cifra principal, indicadores,
@@ -19,9 +26,14 @@ enum DestinoInicio: Hashable {
 /// búsqueda global y campana de notificaciones.
 struct InicioView: View {
     @Environment(SesionStore.self) private var sesion
+    @Environment(IrACobros.self) private var irACobros: IrACobros?
     @State private var vm = InicioViewModel()
     /// Ruta explícita: las notificaciones abren su pantalla añadiéndola aquí.
-    @State private var ruta: [DestinoInicio] = []
+    /// NavigationPath (no `[DestinoInicio]`): las pantallas abiertas desde aquí empujan sus propios
+    /// valores (DestinoPiso, Contrato, Int…) y una ruta tipada los ignoraba sin abrir nada.
+    @State private var ruta = NavigationPath()
+    /// Tarjeta o alerta → su pantalla, con zoom.
+    @Namespace private var zoom
 
     var body: some View {
         @Bindable var vm = vm
@@ -29,16 +41,18 @@ struct InicioView: View {
             VistaCarga(estado: vm.estado, reintentar: { Task { await cargar() } }) { d in
                 ScrollView {
                     VStack(alignment: .leading, spacing: Tema.Espacio.l) {
-                        HeroeInicio(dashboard: d, generandoInforme: vm.generandoInforme) {
-                            Task { await vm.informe(con: sesion.api) }
-                        }
+                        HeroeInicio(dashboard: d, resumen: vm.resumenHeroe, mes: vm.mesHeroe,
+                                    generandoInforme: vm.generandoInforme,
+                                    cambiarMes: { m in Task { await vm.cambiarMesHeroe(m, con: sesion.api) } },
+                                    abrirCobros: { irACobros?.mes = vm.mesHeroe },
+                                    informe: { Task { await vm.informe(con: sesion.api) } })
                         .aparicion(0)
-                        IndicadoresInicio(dashboard: d).aparicion(1)
+                        IndicadoresInicio(dashboard: d, zoom: zoom, abrir: abrir).aparicion(1)
                         SeccionTarjeta(titulo: "Ingresos cobrados") {
                             GraficoIngresos(meses: d.ingresosUltimos6Meses).frame(height: 220)
                         }
                         .aparicion(2)
-                        AlertasInicio(alertas: InicioViewModel.alertas(d)).aparicion(3)
+                        AlertasInicio(alertas: InicioViewModel.alertas(d), zoom: zoom, abrir: abrir).aparicion(3)
                         VencimientosInicio(contratos: d.proximosVencimientos).aparicion(4)
                         ActividadInicio(actividades: Array(d.actividadReciente.prefix(InicioViewModel.actividadesVisibles)))
                             .aparicion(5)
@@ -80,14 +94,27 @@ struct InicioView: View {
                 case let .mensajesIncidencia(id): ChatView(hilo: .incidencia(id))
                 case let .habitacion(id): HabitacionDestinoView(id: id)
                 case let .incidencia(id): IncidenciaDestinoView(id: id)
+                case .ocupacion: OcupacionView(abrir: abrir).destinoZoom(destino, en: zoom)
+                case .habitacionesLibres: HabitacionesLibresView(abrir: abrir).destinoZoom(destino, en: zoom)
+                case let .fichaHabitacion(h):
+                    HabitacionFichaView(habitacion: h) { c in ruta.append(DestinoInicio.contrato(c.id)) }
+                case let .contratos(filtro): ContratosView(filtro: filtro).destinoZoom(destino, en: zoom)
+                case .atrasados: AtrasadosView().destinoZoom(destino, en: zoom)
+                case let .incidencias(filtro): IncidenciasView(enPila: false, filtro: filtro).destinoZoom(destino, en: zoom)
                 }
             }
+            // Pantallas que se abren desde el detalle de un piso (habitaciones, gastos, contratos...).
+            .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await cargar() } }
             .refreshable { await cargar() }
             .task { await cargar() }
             .visorPDF($vm.documento)
             .alertaError($vm.error)
         }
+    }
+
+    private func abrir(_ destino: DestinoInicio) {
+        ruta.append(destino)
     }
 
     /// Carga y, si llegó el panel, actualiza el widget, los avisos locales y el registro del dispositivo.

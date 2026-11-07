@@ -70,7 +70,7 @@ struct FilaConversacion: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(conversacion.con).font(Tema.Fuente.subtitulo)
                     Spacer(minLength: Tema.Espacio.xs)
-                    Text(conversacion.fecha, format: .relative(presentation: .named).locale(Formato.locale))
+                    Text(conversacion.fecha, format: .relative(presentation: .named).locale(Formato.localeFechas))
                         .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 }
                 Text(conversacion.asunto).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
@@ -208,7 +208,7 @@ struct Burbuja: View {
                     .padding(.vertical, Tema.Espacio.xs)
                     .background(mensaje.mio ? Tema.Color.primarioRelleno : Tema.Color.superficie,
                                 in: .rect(cornerRadius: Tema.Radio.grande))
-                Text(mensaje.fecha.formatted(.dateTime.day().month(.abbreviated).hour().minute().locale(Formato.locale))
+                Text(mensaje.fecha.formatted(.dateTime.day().month(.abbreviated).hour().minute().locale(Formato.localeFechas))
                      + (mensaje.mio && mensaje.leido ? " · Leído" : ""))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }

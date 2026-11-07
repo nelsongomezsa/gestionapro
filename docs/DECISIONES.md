@@ -40,3 +40,34 @@
   trabajo van a docs/capturas-local/, ignorada por git. No se ha reescrito el historial: las capturas antiguas
   siguen en commits anteriores.
 
+- Cobros atrasados: un mes anterior al actual sin ningún pago de un contrato vigente (el mismo criterio que el
+  resumen mensual), hasta 12 meses atrás (máximo 24). El retraso se cuenta desde el día 5, fin del plazo habitual.
+  Como los cobros se cuentan por la fecha del pago, Registrar propone el último día del mes adeudado (editable).
+  Los contratos ya terminados salen, pero sin Registrar (la API solo acepta pagos de contratos activos).
+  En Cobros se ven los 3 más antiguos y un enlace a la lista completa.
+- Agrupar por piso: un único componente (selector «Por piso / Todos» que se recuerda por pantalla y bloques
+  plegables con su resumen); por defecto «Todos», como estaba.
+- Estadísticas del periodo: la ocupación se calcula con los días cubiertos por contratos sobre las habitaciones
+  actuales (no hay historial de altas de habitaciones ni de mantenimiento) y sin contar días futuros; los meses
+  que aún no han empezado no tienen ocupación. Morosidad: meses vencidos sin pago y pagos tras el día 5.
+  El ranking de pisos va por resultado neto (ingresos − gastos reales del periodo). El PDF se genera en la app.
+- Análisis de inversión guardados (V11): se guarda la entrada de la calculadora y el resultado se recalcula al
+  leer (con los tipos de ITP vigentes). Cada usuario solo ve los suyos, también el admin; máximo 50.
+- Simular desde un piso: la comunidad autónoma no se deduce de la ciudad; la calculadora propone Madrid.
+- Inicio usa una ruta de navegación genérica (NavigationPath): con la ruta tipada `[DestinoInicio]`, los
+  enlaces que empujan otros valores (pantallas del piso, contratos, incidencias) no abrían nada.
+- La tarjeta «Cobrado» de Inicio usa el mismo resumen mensual que Cobros (GET /api/pagos/resumen): esperado =
+  rentas de los contratos vigentes en el mes; pendiente = rentas de los contratos sin ningún pago en el mes. Antes
+  usaba los contratos activos hoy y «esperado − cobrado», que divergían de Cobros (contrato que acaba a mitad de
+  mes, atrasados cobrados este mes). Se puede ir a meses anteriores (no futuros) y al tocarla abre Cobros en ese mes.
+- Porcentajes con redondeo comercial (1,625 → 1,63), como el HALF_UP de la API.
+- Meses y fechas en el idioma de la app (español o inglés) con convenciones de España; la app rehace los nombres
+  de mes a partir del aaaa-mm que manda la API, que los envía en español. Los importes siguen en formato español.
+- Cifras auditadas con SQL directo (api/sql/auditoria/auditoria_numeros.sql) contra la API y la app.
+- Alta de piso: el piso y sus habitaciones se crean en una sola petición (o todo o nada). Ciudades: tabla común;
+  al dar de alta una que ya existe con otras mayúsculas o tildes, se devuelve la existente.
+- Borrar piso: no se permite con contratos activos (se pide finalizarlos), con contratos o incidencias anteriores
+  (historial que se conserva) ni con gastos (justificantes fiscales; en la base se borrarían en cascada). Si no hay
+  nada de eso, se borran sus habitaciones y el piso. Doble confirmación en la app.
+- Sin editar pagos ni contratos (ni en escritorio ni en API): un pago con recibo numerado se borra y se vuelve a
+  registrar; un contrato se finaliza y se crea otro. Queda anotado como posible mejora (prórroga de contrato).

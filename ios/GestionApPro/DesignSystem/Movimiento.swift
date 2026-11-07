@@ -11,6 +11,8 @@ enum Haptica {
     static func exito() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.success) } }
     static func error() { if activa { UINotificationFeedbackGenerator().notificationOccurred(.error) } }
     static func impacto() { if activa { UIImpactFeedbackGenerator(style: .medium).impactOccurred() } }
+    /// Toque ligero al abrir algo desde una tarjeta o un resumen.
+    static func ligera() { if activa { UIImpactFeedbackGenerator(style: .light).impactOccurred() } }
     static func suave() { if activa { UIImpactFeedbackGenerator(style: .soft).impactOccurred() } }
 }
 
@@ -78,8 +80,14 @@ private struct ImportePrivado: ViewModifier {
     func body(content: Content) -> some View {
         content
             .blur(radius: ocultar && !visible ? 9 : 0)
-            .contentShape(.rect)
-            .onTapGesture { if ocultar { withAnimation(Tema.Movimiento.suave) { visible.toggle() } } }
+            // El gesto solo existe en modo privado: si no, se quedaba con el toque y la tarjeta que
+            // contiene la cifra (p. ej. "Cobrado" de Inicio, que abre Cobros) no se enteraba.
+            .overlay {
+                if ocultar {
+                    Color.clear.contentShape(.rect)
+                        .onTapGesture { withAnimation(Tema.Movimiento.suave) { visible.toggle() } }
+                }
+            }
             .accessibilityValue(ocultar && !visible ? Text("Oculto. Toca dos veces para verlo.") : Text(""))
             .onChange(of: ocultar) { _, _ in visible = false }
     }

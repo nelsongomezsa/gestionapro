@@ -134,19 +134,23 @@ public class HabitacionService {
         return h;
     }
 
-    /** Inquilino actual y días alquilada, como las columnas del escritorio, en una consulta. */
+    /** Inquilino actual, días alquilada y desde cuándo está libre, en dos consultas. */
     private List<HabitacionResponse> aRespuestas(List<Habitacion> lista) {
         if (lista.isEmpty()) return List.of();
         LocalDate hoy = LocalDate.now();
-        Map<Integer, Contrato> activos = contratos.activosDeHabitaciones(lista.stream().map(Habitacion::getId).toList(), hoy)
+        List<Integer> ids = lista.stream().map(Habitacion::getId).toList();
+        Map<Integer, Contrato> activos = contratos.activosDeHabitaciones(ids, hoy)
                 .stream().collect(Collectors.toMap(c -> c.getHabitacion().getId(), Function.identity(), (a, b) -> a));
+        Map<Integer, LocalDate> finUltimo = contratos.finUltimoContrato(ids, hoy).stream()
+                .collect(Collectors.toMap(f -> (Integer) f[0], f -> (LocalDate) f[1]));
         return lista.stream().map(h -> {
             Contrato c = activos.get(h.getId());
             return new HabitacionResponse(
                     h.getId(), h.getNumero(), h.getPrecio(), h.getEstado(), PisoBreve.de(h.getPiso()),
                     c == null ? null : new HabitacionResponse.InquilinoActual(c.getInquilino().getId(), c.getInquilino().getNombreCompleto()),
                     c == null ? null : c.getId(),
-                    c == null ? null : ChronoUnit.DAYS.between(c.getFechaInicio(), hoy));
+                    c == null ? null : ChronoUnit.DAYS.between(c.getFechaInicio(), hoy),
+                    c != null || !finUltimo.containsKey(h.getId()) ? null : finUltimo.get(h.getId()).plusDays(1));
         }).toList();
     }
 }

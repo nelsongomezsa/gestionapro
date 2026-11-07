@@ -2,7 +2,22 @@ import SwiftUI
 
 struct CalculadoraView: View {
     @Environment(SesionStore.self) private var sesion
-    @State private var vm = CalculadoraViewModel()
+    @State private var vm: CalculadoraViewModel
+    @State private var pidiendoNombre = false
+    @State private var comoNuevo = false
+    @State private var nombre = ""
+    @State private var viendoGuardados = false
+
+    /// `entrada`: datos de partida (los de un piso, para simular); sin ella, un caso de ejemplo.
+    /// `idPiso` y `nombre`: piso de origen y nombre propuesto al guardar. `guardado`: análisis que se abre.
+    init(entrada: RentabilidadRequest? = nil, idPiso: Int? = nil, nombre: String = "", guardado: AnalisisGuardado? = nil) {
+        let vm = CalculadoraViewModel()
+        if let entrada { vm.entrada = entrada }
+        vm.idPiso = idPiso
+        vm.nombreSugerido = nombre
+        if let guardado { vm.abrir(guardado) }
+        _vm = State(initialValue: vm)
+    }
 
     var body: some View {
         @Bindable var vm = vm
@@ -80,9 +95,26 @@ struct CalculadoraView: View {
             .filaLista()
         }
         .estiloLista()
-        .navigationTitle("Calculadora")
+        .navigationTitle(vm.guardado?.nombre ?? String(localized: "Calculadora"))
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
+                if vm.guardado != nil {
+                    Menu("Guardar", systemImage: "square.and.arrow.down") {
+                        Button("Guardar cambios", systemImage: "checkmark") { pedirNombre(comoNuevo: false) }
+                        Button("Guardar como nuevo", systemImage: "plus.square.on.square") { pedirNombre(comoNuevo: true) }
+                    }
+                    .accessibilityIdentifier("guardarAnalisis")
+                } else {
+                    Button("Guardar", systemImage: "square.and.arrow.down") { pedirNombre(comoNuevo: true) }
+                        .accessibilityIdentifier("guardarAnalisis")
+                }
+            }
+            ToolbarItem(placement: .secondaryAction) {
+                Button("Análisis guardados", systemImage: "square.stack.3d.up") { viendoGuardados = true }
+                    .accessibilityIdentifier("analisisGuardados")
+            }
+            ToolbarItem(placement: .secondaryAction) {
                 Button("Limpiar", systemImage: "eraser") { vm.limpiar() }
             }
             ToolbarItemGroup(placement: .keyboard) {
@@ -95,8 +127,38 @@ struct CalculadoraView: View {
                 ResultadoRentabilidadView(resultado: r, comunidad: vm.entrada.comunidad)
             }
         }
+        .navigationDestination(isPresented: $viendoGuardados) {
+            AnalisisGuardadosView { a in vm.abrir(a) }
+        }
+        .alert(comoNuevo ? "Guardar análisis" : "Guardar cambios", isPresented: $pidiendoNombre) {
+            TextField("Nombre", text: $nombre)
+                .accessibilityIdentifier("nombreAnalisis")
+            Button("Cancelar", role: .cancel) {}
+            Button("Guardar") { Task { await vm.guardar(nombre: nombre, comoNuevo: comoNuevo, con: sesion.api) } }
+                .disabled(nombre.trimmingCharacters(in: .whitespaces).isEmpty)
+        } message: {
+            Text("Ponle un nombre para encontrarlo y compararlo con otros.")
+        }
+        .alert("Análisis guardado", isPresented: Binding(get: { vm.avisoGuardado != nil }, set: { if !$0 { vm.avisoGuardado = nil } })) {
+            Button("Aceptar", role: .cancel) {}
+            Button("Ver guardados") { viendoGuardados = true }
+        } message: {
+            Text(vm.avisoGuardado ?? "")
+        }
         .task { await vm.cargarComunidades(con: sesion.api) }
         .task(id: vm.entrada) { await vm.recalcularConPausa(con: sesion.api) }
+    }
+
+    private func pedirNombre(comoNuevo: Bool) {
+        self.comoNuevo = comoNuevo
+        nombre = comoNuevo && vm.guardado != nil ? String(localized: "\(vm.nombreSugerido) (copia)")
+                                                 : (vm.nombreSugerido.isEmpty ? CalculadoraView.nombrePorDefecto() : vm.nombreSugerido)
+        pidiendoNombre = true
+    }
+
+    /// "Análisis del 2 nov 2026"
+    static func nombrePorDefecto(_ hoy: Date = .now) -> String {
+        String(localized: "Análisis del \(hoy.formatted(.dateTime.day().month(.abbreviated).year().locale(Formato.localeFechas)))")
     }
 
     private func ocultarTeclado() {

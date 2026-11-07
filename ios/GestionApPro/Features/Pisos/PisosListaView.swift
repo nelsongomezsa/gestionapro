@@ -5,9 +5,12 @@ struct PisosListaView: View {
     @Namespace private var zoom
     @Environment(SesionStore.self) private var sesion
     @State private var vm = PisosViewModel()
+    @State private var ruta = NavigationPath()
+    @State private var creando = false
+    @Environment(IrAPiso.self) private var irAPiso: IrAPiso?
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $ruta) {
             VistaCarga(estado: vm.estado, reintentar: recargar) { _ in
                 contenido
             }
@@ -17,19 +20,42 @@ struct PisosListaView: View {
             .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Nuevo piso", systemImage: "plus") { creando = true }
+                        .accessibilityIdentifier("nuevoPiso")
+                }
                 menuFiltros
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink(value: DestinoListaPisos.mapa) { Label("Mapa", systemImage: "map") }
                         .disabled(vm.estado.valor?.isEmpty ?? true)
                 }
             }
-            .navigationDestination(for: DestinoListaPisos.self) { _ in MapaPisosView(pisos: vm.estado.valor ?? []) }
+            .navigationDestination(for: DestinoListaPisos.self) { destino in
+                switch destino {
+                case .mapa: MapaPisosView(pisos: vm.estado.valor ?? [])
+                case .calculadora: CalculadoraView()
+                }
+            }
             .refreshable { await vm.cargar(con: sesion.api) }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in recargar() }
+            .sheet(isPresented: $creando) { NuevoPisoView { abrir($0) } }
+            // Piso creado desde el «+» general: se abre aquí.
+            .onChange(of: irAPiso?.piso, initial: true) { _, nuevo in
+                guard let nuevo else { return }
+                irAPiso?.piso = nil
+                abrir(nuevo)
+            }
             .task { await vm.cargar(con: sesion.api) }
         }
     }
 
     private func recargar() { Task { await vm.cargar(con: sesion.api) } }
+
+    /// Abre el piso recién creado (la lista ya se recarga con .datosCambiados).
+    private func abrir(_ piso: Piso) {
+        ruta = NavigationPath()
+        ruta.append(piso)
+    }
 
     @ViewBuilder
     private var contenido: some View {
@@ -38,6 +64,12 @@ struct PisosListaView: View {
             LazyVStack(spacing: Tema.Espacio.s) {
                 ResumenCarteraView(resumen: vm.resumen)
                     .padding(.bottom, Tema.Espacio.xs)
+
+                // La calculadora sin pestaña propia: aquí, en el «+» y en cada piso (Simular).
+                NavigationLink(value: DestinoListaPisos.calculadora) { TarjetaAnalizarInversion() }
+                    .buttonStyle(EstiloPulsable())
+                    .accessibilityHint("Abre la calculadora de rentabilidad")
+                    .accessibilityIdentifier("analizarInversion")
 
                 if pisos.isEmpty {
                     if vm.estado.valor?.isEmpty == true {
@@ -111,7 +143,8 @@ struct ResumenCarteraView: View {
     let resumen: ResumenCartera
 
     var body: some View {
-        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual)) {
+        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual),
+                    tonoValor: resumen.cashFlowMensual < 0 ? .negativo : nil) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: resumen.ocupacion, tono: Tono.ocupacion(resumen.ocupacion * 100))
                 Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) habitaciones libres")
@@ -127,4 +160,25 @@ extension Piso: Hashable {
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
-enum DestinoListaPisos: Hashable { case mapa }
+enum DestinoListaPisos: Hashable { case mapa, calculadora }
+
+/// Acceso a la calculadora desde Pisos: estudiar un piso antes de comprarlo.
+private struct TarjetaAnalizarInversion: View {
+    var body: some View {
+        HStack(spacing: Tema.Espacio.s) {
+            IconoEtiqueta(icono: "function", tono: .primario)
+            VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+                Text("Analizar una inversión").font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                Text("Rentabilidad, hipoteca y cash flow de un piso antes de comprarlo; guarda y compara.")
+                    .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading)
+            }
+            Spacer(minLength: Tema.Espacio.xs)
+            ChevronTocable()
+        }
+        .tarjeta()
+        .contentShape(.rect)
+        .accessibilityElement(children: .combine)
+    }
+}

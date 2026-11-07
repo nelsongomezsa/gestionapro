@@ -59,7 +59,7 @@ struct InquilinoFichaView: View {
                         Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario)
                     } else {
                         ForEach(i.pagos) { p in
-                            FilaMetrica(titulo: p.fechaPago.formatted(.dateTime.day().month(.wide).year().locale(Formato.locale)),
+                            FilaMetrica(titulo: p.fechaPago.formatted(.dateTime.day().month(.wide).year().locale(Formato.localeFechas)),
                                         valor: Formato.euros(p.cantidad), nota: p.metodoPago.nombre)
                         }
                     }
@@ -182,7 +182,7 @@ struct FilaContrato: View {
     }
 
     private var rango: String {
-        let f = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.locale)
+        let f = Date.FormatStyle.dateTime.day().month(.abbreviated).year().locale(Formato.localeFechas)
         return "\(contrato.fechaInicio.formatted(f)) – \(contrato.fechaFin.formatted(f))"
     }
 }

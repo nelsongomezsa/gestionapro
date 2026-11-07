@@ -3,6 +3,7 @@ package com.gestionap.api.service;
 import com.gestionap.api.domain.DatosPiso;
 import com.gestionap.api.domain.EstadoHabitacion;
 import com.gestionap.api.domain.Gasto;
+import com.gestionap.api.domain.Habitacion;
 import com.gestionap.api.domain.Piso;
 import com.gestionap.api.repository.*;
 import com.gestionap.api.security.UsuarioAutenticado;
@@ -34,10 +35,14 @@ public class PisoService {
     private final UsuarioRepository usuarios;
     private final ActividadService actividad;
     private final GastoService gastoService;
+    private final IncidenciaRepository incidencias;
+    private final GastoRepository gastos;
 
     public PisoService(PisoRepository pisos, CiudadRepository ciudades, HabitacionRepository habitaciones,
                        ContratoRepository contratos, UsuarioRepository usuarios, ActividadService actividad,
-                       GastoService gastoService) {
+                       GastoService gastoService, IncidenciaRepository incidencias, GastoRepository gastos) {
+        this.incidencias = incidencias;
+        this.gastos = gastos;
         this.pisos = pisos;
         this.ciudades = ciudades;
         this.habitaciones = habitaciones;
@@ -62,11 +67,33 @@ public class PisoService {
 
     @Transactional
     public PisoResponse crear(PisoRequest req, UsuarioAutenticado actor) {
+        var iniciales = req.habitaciones();
+        if (iniciales != null) {
+            if (iniciales.size() != req.numeroHabitaciones()) {
+                throw ApiException.badRequest("HABITACIONES_INVALIDAS",
+                        "Envía tantas habitaciones como indica numeroHabitaciones (" + req.numeroHabitaciones() + ")");
+            }
+            if (iniciales.stream().map(PisoRequest.HabitacionInicial::numero).distinct().count() != iniciales.size()) {
+                throw ApiException.badRequest("HABITACIONES_INVALIDAS", "Cada habitación debe tener un número distinto");
+            }
+        }
         Piso p = new Piso();
         p.setPropietario(usuarios.getReferenceById(actor.id()));
         aplicar(p, req);
         pisos.save(p);
-        actividad.registrar(actor.id(), "CREAR_PISO", p.getDireccion());
+        // Las habitaciones, en la misma transacción: o se crea todo o nada.
+        if (iniciales != null) {
+            for (var hi : iniciales) {
+                Habitacion h = new Habitacion();
+                h.setPiso(p);
+                h.setNumero(hi.numero());
+                h.setPrecio(hi.precio());
+                h.setEstado(EstadoHabitacion.disponible);
+                habitaciones.save(h);
+            }
+        }
+        actividad.registrar(actor.id(), "CREAR_PISO", p.getDireccion()
+                + (iniciales != null ? " · " + iniciales.size() + " habitaciones" : ""));
         return aRespuestas(List.of(p)).getFirst();
     }
 
@@ -81,10 +108,21 @@ public class PisoService {
     @Transactional
     public void borrar(Integer id, UsuarioAutenticado actor) {
         Piso p = cargarPropio(id, actor);
-        if (habitaciones.existsByPisoId(id)) {
-            throw ApiException.conflicto("PISO_CON_HABITACIONES",
-                    "No se puede borrar un piso con habitaciones; bórralas antes");
+        long activos = contratos.contarActivosDePiso(id, LocalDate.now());
+        if (activos > 0) {
+            throw ApiException.conflicto("PISO_CON_CONTRATOS_ACTIVOS", (activos == 1 ? "Tiene 1 contrato activo" : "Tiene " + activos
+                    + " contratos activos") + ": finalízalos antes de borrar el piso");
         }
+        // El historial (contratos, pagos, incidencias) y los gastos se conservan: son justificantes.
+        if (contratos.existsByHabitacionPisoId(id) || incidencias.existsByHabitacionPisoId(id)) {
+            throw ApiException.conflicto("PISO_CON_HISTORIAL",
+                    "Tiene contratos o incidencias anteriores, que hay que conservar; no se puede borrar");
+        }
+        if (gastos.existsByPisoId(id)) {
+            throw ApiException.conflicto("PISO_CON_GASTOS",
+                    "Tiene gastos registrados (justificantes fiscales); bórralos antes si de verdad sobran");
+        }
+        habitaciones.deleteAll(habitaciones.findByPisoId(id));
         pisos.delete(p);
         actividad.registrar(actor.id(), "BORRAR_PISO", p.getDireccion());
     }

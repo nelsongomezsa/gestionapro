@@ -98,6 +98,7 @@ struct MasView: View {
                 IconoSeccion(icono: icono, relleno: color)
             }
         }
+        .accessibilityIdentifier("mas-\(seccion)")
     }
 }
 

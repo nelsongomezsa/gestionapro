@@ -27,6 +27,50 @@ final class CalculadoraViewModel {
     var mostrarDesglose = false
     /// Cambia al pulsar "Limpiar", para que los campos de texto se rehagan.
     private(set) var version = 0
+    /// Análisis guardado que se está editando (Guardar lo actualiza) y piso de origen de los datos.
+    private(set) var guardado: AnalisisGuardado?
+    var idPiso: Int?
+    /// Nombre propuesto al guardar (la dirección del piso, si viene de uno).
+    var nombreSugerido = ""
+    private(set) var guardando = false
+    /// Aviso breve tras guardar ("Guardado").
+    var avisoGuardado: String?
+
+    func abrir(_ a: AnalisisGuardado) {
+        guardado = a
+        entrada = a.entrada
+        idPiso = a.idPiso
+        nombreSugerido = a.nombre
+        resultado = a.resultado
+        version += 1
+    }
+
+    /// Guarda con nombre: actualiza el análisis abierto o crea uno nuevo.
+    @discardableResult
+    func guardar(nombre: String, comoNuevo: Bool, con api: APIClient) async -> Bool {
+        let limpio = nombre.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !limpio.isEmpty else { return false }
+        guardando = true
+        defer { guardando = false }
+        let req = AnalisisGuardadoRequest(nombre: String(limpio.prefix(80)), idPiso: idPiso, entrada: entrada)
+        do {
+            if let g = guardado, !comoNuevo {
+                guardado = try await api.enviar(.actualizarAnalisis(id: g.id, req))
+            } else {
+                guardado = try await api.enviar(.guardarAnalisis(req))
+            }
+            nombreSugerido = limpio
+            Haptica.exito()
+            avisoGuardado = String(localized: "Guardado como «\(limpio)»")
+            return true
+        } catch .noAutorizado {
+            return false
+        } catch {
+            Haptica.error()
+            self.error = error.localizedDescription
+            return false
+        }
+    }
 
     var tipoItpSeleccionado: Double? {
         comunidades.first { $0.nombre == entrada.comunidad }?.tipoPct

@@ -69,9 +69,12 @@ public class InventarioService {
     @Transactional(readOnly = true)
     public List<InventarioResponse> listar(Integer idHabitacion, UsuarioAutenticado actor) {
         Habitacion h = habitaciones.findConPisoById(idHabitacion).orElseThrow(() -> ApiException.noEncontrado("Habitación"));
-        return inventarios.findByHabitacionIdOrderByFechaDescIdDesc(idHabitacion).stream()
+        List<InventarioResponse> lista = inventarios.findByHabitacionIdOrderByFechaDescIdDesc(idHabitacion).stream()
                 .filter(i -> puedeVer(i, h, actor))
                 .map(InventarioResponse::de).toList();
+        // Una habitación ajena responde como si no existiera (sin confirmar que el id existe).
+        if (lista.isEmpty() && !acceso.puedeVerPiso(h.getPiso(), actor)) throw ApiException.noEncontrado("Habitación");
+        return lista;
     }
 
     @Transactional(readOnly = true)

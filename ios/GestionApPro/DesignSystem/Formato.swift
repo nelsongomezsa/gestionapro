@@ -10,6 +10,34 @@ import Foundation
 enum Formato {
     static let locale = Locale(identifier: "es_ES")
 
+    /// Fechas y nombres de mes en el idioma en que se ve la app (español o inglés), con las
+    /// convenciones de España: "noviembre 2026" o "November 2026". Importes y cifras siguen con `locale`.
+    static let localeFechas: Locale = {
+        let idioma = Bundle.main.preferredLocalizations.first ?? "es"
+        return Locale(identifier: idioma.hasPrefix("en") ? "en_ES" : "es_ES")
+    }()
+
+    /// Para mitad de frase ("Cobrado en noviembre 2026" / "Collected in November 2026").
+    static func mesEnFrase(_ aaaamm: String, en locale: Locale = localeFechas) -> String? {
+        guard let m = mes(aaaamm, en: locale) else { return nil }
+        return locale.language.languageCode?.identifier == "en" ? m : m.prefix(1).lowercased() + m.dropFirst()
+    }
+
+    /// "2026-10" → "Octubre 2026" (o "October 2026"); con `corto`, "oct" (u "Oct").
+    /// La API manda los meses en español: la app los formatea con su idioma a partir del aaaa-mm.
+    static func mes(_ aaaamm: String, corto: Bool = false, en locale: Locale = localeFechas) -> String? {
+        let partes = aaaamm.split(separator: "-").compactMap { Int($0) }
+        guard partes.count >= 2, (1...12).contains(partes[1]) else { return nil }
+        var c = Calendar(identifier: .gregorian)
+        c.locale = locale
+        if corto {
+            let s = c.shortStandaloneMonthSymbols[partes[1] - 1].replacingOccurrences(of: ".", with: "")
+            return locale.language.languageCode?.identifier == "en" ? s : s.lowercased()
+        }
+        let s = c.standaloneMonthSymbols[partes[1] - 1]
+        return s.prefix(1).uppercased() + s.dropFirst() + " \(partes[0])"
+    }
+
     private static let moneda = formateador(.currency)
     private static let monedaSinDecimales = formateador(.currency, decimales: 0)
     private static let porcentajeFmt = formateador(.percent, decimales: 2, minimoDecimales: 2)
@@ -30,6 +58,8 @@ enum Formato {
         if estilo == .currency { f.currencyCode = "EUR" }
         if let decimales { f.maximumFractionDigits = decimales }
         if let minimoDecimales { f.minimumFractionDigits = minimoDecimales }
+        // Redondeo comercial (1,625 → 1,63), como el HALF_UP de la API; por defecto sería el bancario.
+        f.roundingMode = .halfUp
         return f
     }
 
@@ -57,8 +87,9 @@ enum Formato {
 
     /// La API manda los porcentajes como 7.67 (no 0.0767).
     static func porcentaje(_ valor: Double?) -> String {
-        guard let valor else { return "—" }
-        return porcentajeFmt.string(from: NSNumber(value: valor / 100)) ?? "—"
+        guard let valor, valor.isFinite else { return "—" }
+        // En Decimal: 1.625 / 100 en Double ya no es exacto y redondearía hacia abajo.
+        return porcentajeFmt.string(from: NSDecimalNumber(decimal: Decimal(valor) / 100)) ?? "—"
     }
 
     static func porcentaje(_ valor: Decimal?) -> String {
@@ -72,6 +103,11 @@ enum Formato {
 
     static func anios(_ valor: Decimal?) -> String {
         anios(valor.map { NSDecimalNumber(decimal: $0).doubleValue })
+    }
+
+    /// "12,5": una cifra decimal (días medios, meses).
+    static func numero(_ valor: Double) -> String {
+        valor.formatted(.number.precision(.fractionLength(0...1)).locale(locale))
     }
 
     static func numero(_ valor: Int) -> String {

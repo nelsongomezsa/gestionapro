@@ -6,6 +6,10 @@ struct PagoFormView: View {
     @Environment(\.dismiss) private var cerrar
     var idContrato: Int?
     var importe: Decimal?
+    /// Fecha propuesta (un cobro atrasado se registra en el mes que salda).
+    var fechaInicial: Date? = nil
+    /// Explica la fecha propuesta ("Para saldar septiembre…").
+    var notaFecha: String? = nil
     let alGuardar: (Pago) -> Void
 
     @State private var contratos: [Contrato] = []
@@ -28,7 +32,7 @@ struct PagoFormView: View {
                         }
                     }
                 }
-                Section("Pago") {
+                Section {
                     CampoNumerico("Importe", valor: $cantidad, sufijo: "€")
                     Picker("Método", selection: $metodo) {
                         ForEach(MetodoPago.allCases) { Text($0.nombre).tag($0) }
@@ -36,6 +40,10 @@ struct PagoFormView: View {
                     DatePicker("Fecha", selection: $fecha, in: ...Date.now, displayedComponents: .date)
                         // La API guarda la fecha de Madrid: se muestra la misma para que no cambie al guardar.
                         .environment(\.timeZone, TimeZone(identifier: "Europe/Madrid")!)
+                } header: {
+                    Text("Pago")
+                } footer: {
+                    if let notaFecha { Text(notaFecha) }
                 }
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
@@ -44,7 +52,7 @@ struct PagoFormView: View {
                 .filaLista()
             }
             .estiloLista()
-            .environment(\.locale, Formato.locale)
+            .environment(\.locale, Formato.localeFechas)
             .navigationTitle("Registrar pago")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -68,6 +76,7 @@ struct PagoFormView: View {
                 .sorted { $0.inquilino.nombre.localizedStandardCompare($1.inquilino.nombre) == .orderedAscending }
             seleccion = idContrato
             if let importe { cantidad = importe.double }
+            if let fechaInicial { fecha = min(fechaInicial, .now) }
         } catch {
             self.error = error.localizedDescription
         }

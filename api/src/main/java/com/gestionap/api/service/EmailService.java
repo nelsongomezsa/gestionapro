@@ -35,7 +35,7 @@ public class EmailService {
 
     public boolean enviar(String destinatario, String asunto, String cuerpo) {
         if (!estaConfigurado()) {
-            log.info("Email sin configurar: no se envía '{}' a {}", asunto, destinatario);
+            log.info("Email sin configurar: no se envía '{}' a {}", asunto, enmascarar(destinatario));
             return false;
         }
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -47,8 +47,15 @@ public class EmailService {
             mailSender.getObject().send(msg);
             return true;
         } catch (MailException e) {
-            log.warn("No se pudo enviar el email '{}' a {}: {}", asunto, destinatario, e.getMessage());
+            log.warn("No se pudo enviar el email '{}' a {}: {}", asunto, enmascarar(destinatario), e.getMessage());
             return false;
         }
+    }
+
+    /** "ana.garcia@example.com" → "a***@example.com": en los logs no van datos personales. */
+    static String enmascarar(String email) {
+        if (email == null) return null;
+        int arroba = email.indexOf('@');
+        return arroba <= 0 ? "***" : email.charAt(0) + "***" + email.substring(arroba);
     }
 }

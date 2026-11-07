@@ -1,4 +1,5 @@
 import Foundation
+import Security
 import Testing
 @testable import GestionApPro
 
@@ -58,5 +59,12 @@ struct ProductoTests {
         #expect(BienvenidaView.debeMostrarse(vista: false, argumentos: []))
         #expect(!BienvenidaView.debeMostrarse(vista: true, argumentos: []))
         #expect(!BienvenidaView.debeMostrarse(vista: false, argumentos: ["-reiniciarSesion"]))
+    }
+}
+
+struct SeguridadAppTests {
+    /// El token de sesión solo se puede leer con el móvil desbloqueado y no sale del dispositivo.
+    @Test func token_soloConElMovilDesbloqueado() {
+        #expect(KeychainTokenStore.accesibilidad as String == kSecAttrAccessibleWhenUnlockedThisDeviceOnly as String)
     }
 }

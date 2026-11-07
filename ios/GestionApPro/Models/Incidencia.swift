@@ -93,6 +93,13 @@ struct PisoRequest: Encodable, Sendable {
     let numeroHabitaciones: Int
     let idCiudad: Int
     let datosFinancieros: DatosFinancierosRequest?
+    /// Solo al crear: habitaciones que se dan de alta con el piso (la API las ignora en un PUT).
+    var habitaciones: [HabitacionInicial]? = nil
+
+    struct HabitacionInicial: Encodable, Equatable, Sendable {
+        let numero: Int
+        let precio: Decimal
+    }
 }
 
 struct DatosFinancierosRequest: Encodable, Sendable {
@@ -136,4 +143,32 @@ struct DatosFinancierosRequest: Encodable, Sendable {
         valorMercadoActual = d.valorMercadoActual ?? 0
         notas = d.notas
     }
+}
+
+/// Filtro de la lista de incidencias. "Abiertas" junta pendientes y en curso (la tarjeta de Inicio).
+enum FiltroIncidencias: Hashable, CaseIterable, Sendable {
+    case abiertas, pendientes, enProceso, resueltas, todas
+
+    var nombre: String {
+        switch self {
+        case .abiertas: String(localized: "Abiertas")
+        case .pendientes: String(localized: "Pendientes")
+        case .enProceso: String(localized: "En proceso")
+        case .resueltas: String(localized: "Resueltas")
+        case .todas: String(localized: "Todas")
+        }
+    }
+
+    func incluye(_ estado: EstadoIncidencia) -> Bool {
+        switch self {
+        case .abiertas: estado != .resuelta
+        case .pendientes: estado == .pendiente
+        case .enProceso: estado == .enProceso
+        case .resueltas: estado == .resuelta
+        case .todas: true
+        }
+    }
+
+    /// Con un solo estado la insignia sería la misma en todas las filas.
+    var variosEstados: Bool { self == .abiertas || self == .todas }
 }

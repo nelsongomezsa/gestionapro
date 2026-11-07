@@ -3,6 +3,7 @@ import SwiftUI
 
 struct PisoDetalleView: View {
     @Environment(SesionStore.self) private var sesion
+    @Environment(\.dismiss) private var cerrarDetalle
     @State private var piso: Piso
     @State private var ingresos: [ImporteMes] = []
     /// nil mientras carga; así una respuesta vacía o un fallo no se quedan "cargando" para siempre.
@@ -14,6 +15,16 @@ struct PisoDetalleView: View {
     @State private var documento: DocumentoPDF?
     @State private var generandoPDF = false
     @State private var error: String?
+    /// Métrica de rentabilidad abierta en su hoja (con zoom desde la tarjeta).
+    @State private var metricaAbierta: MetricaRentabilidad?
+    @State private var simulando = false
+    @State private var editandoPiso = false
+    /// Borrar: primera confirmación, segunda ("no se puede deshacer") y motivo si no se puede.
+    @State private var confirmarBorrado = false
+    @State private var confirmarBorradoFinal = false
+    @State private var motivoNoBorrable: String?
+    @State private var borrando = false
+    @Namespace private var zoom
 
     init(piso: Piso) {
         _piso = State(initialValue: piso)
@@ -26,7 +37,15 @@ struct PisoDetalleView: View {
 
                 if let m = piso.metricas {
                     TarjetaHero(titulo: "Cash flow previsto al mes", valor: Formato.euros(m.cashFlowMensual),
-                                accesorio: AnyView((m.calificacion as Calificacion?).insignia)) {
+                                accesorio: AnyView((m.calificacion as Calificacion?).insignia),
+                                tonoValor: m.cashFlowMensual < 0 ? .negativo : nil) {
+                        if m.cashFlowMensual < 0 {
+                            Label("Pierde dinero cada mes: la hipoteca y los gastos superan el alquiler.",
+                                  systemImage: "exclamationmark.triangle.fill")
+                                .font(Tema.Fuente.detalle.weight(.semibold))
+                                .foregroundStyle(Tema.Color.negativo)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                         ParDatos {
                             DatoCompacto(titulo: "Ingresos previstos", valor: Formato.euros(piso.ingresosMensuales))
                         } derecha: {
@@ -37,20 +56,29 @@ struct PisoDetalleView: View {
                             .accessibilityIdentifier("editarDatosFinancieros")
                     }
 
+                    // Cada métrica abre una hoja con su cálculo, 12 meses de cobros y gastos y el ranking.
                     Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
                         GridRow {
-                            TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
-                                       icono: "percent", tono: (m.calificacion as Calificacion?).tono, detalle: "Alquiler / inversión")
-                            TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
-                                       icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
-                                       detalle: "Antes de financiación")
+                            metricaTocable(.bruta) {
+                                TarjetaKPI(titulo: "Rentabilidad bruta", valor: Formato.porcentaje(m.rentabilidadBrutaPct),
+                                           icono: "percent", tono: (m.calificacion as Calificacion?).tono, detalle: "Alquiler / inversión")
+                            }
+                            metricaTocable(.neta) {
+                                TarjetaKPI(titulo: "Rentabilidad neta", valor: Formato.porcentaje(m.rentabilidadNetaPct),
+                                           icono: "chart.line.uptrend.xyaxis", tono: Tono.signo(m.rentabilidadNetaPct),
+                                           detalle: "Antes de financiación")
+                            }
                         }
                         GridRow {
-                            TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
-                                       icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
-                                       detalle: "Sobre el capital propio")
-                            TarjetaKPI(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
-                                       icono: "hourglass", tono: .primario, detalle: "Años para recuperarla")
+                            metricaTocable(.cashOnCash) {
+                                TarjetaKPI(titulo: "Cash-on-cash", valor: Formato.porcentaje(m.cashOnCashPct),
+                                           icono: "banknote", tono: Tono.signo(m.cashOnCashPct),
+                                           detalle: "Sobre el capital propio")
+                            }
+                            metricaTocable(.per) {
+                                TarjetaKPI(titulo: "PER inmobiliario", valor: Formato.anios(m.perAnios),
+                                           icono: "hourglass", tono: .primario, detalle: "Años para recuperarla")
+                            }
                         }
                     }
                 } else {
@@ -137,6 +165,7 @@ struct PisoDetalleView: View {
                     ForEach(contratos) { c in
                         NavigationLink(value: DestinoPiso.contrato(c.id)) { FilaContratoCompleto(contrato: c, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("filaContratoPiso")
                         if c != contratos.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
@@ -159,6 +188,7 @@ struct PisoDetalleView: View {
                     ForEach(incidencias) { i in
                         NavigationLink(value: DestinoPiso.incidencia(i.id)) { FilaIncidencia(incidencia: i, mostrarPiso: false).contentShape(.rect) }
                             .buttonStyle(.plain)
+                            .accessibilityIdentifier("filaIncidenciaPiso")
                         if i != incidencias.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
@@ -176,6 +206,22 @@ struct PisoDetalleView: View {
         .contextoAsistente(.piso(piso.id))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Button("Editar piso", systemImage: "pencil") { editandoPiso = true }
+                        .accessibilityIdentifier("editarPiso")
+                    Button("Borrar piso", systemImage: "trash", role: .destructive) { pedirBorrado() }
+                        .accessibilityIdentifier("borrarPiso")
+                } label: {
+                    Label("Más acciones", systemImage: "ellipsis")
+                }
+                .accessibilityIdentifier("accionesPiso")
+            }
+            ToolbarItem(placement: .primaryAction) {
+                Button("Simular") { simulando = true }
+                    .accessibilityHint("Abre la calculadora con los datos reales de este piso")
+                    .accessibilityIdentifier("simularPiso")
+            }
+            ToolbarItem(placement: .primaryAction) {
                 Button { Task { await exportar() } } label: {
                     if generandoPDF { ProgressView() } else { Label("Exportar PDF", systemImage: "doc.richtext") }
                 }
@@ -187,8 +233,48 @@ struct PisoDetalleView: View {
         .sheet(isPresented: $editando) {
             DatosFinancierosFormView(piso: piso) { piso = $0 }
         }
+        .sheet(isPresented: $editandoPiso) {
+            EditarPisoView(piso: piso) { piso = $0 }
+        }
+        .confirmationDialog("¿Borrar «\(piso.direccion)»?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
+            Button("Borrar piso", role: .destructive) {
+                // Segunda confirmación, tras cerrar la primera.
+                Task { try? await Task.sleep(for: .milliseconds(350)); confirmarBorradoFinal = true }
+            }
+        } message: {
+            Text(piso.ocupacion.total == 1 ? "Se borrará también su habitación."
+                                           : "Se borrarán también sus \(piso.ocupacion.total) habitaciones.")
+        }
+        .alert("¿Seguro que quieres borrarlo?", isPresented: $confirmarBorradoFinal) {
+            Button("Cancelar", role: .cancel) {}
+            Button("Borrar definitivamente", role: .destructive) { Task { await borrar() } }
+        } message: {
+            Text("No se puede deshacer.")
+        }
+        .alert("No se puede borrar", isPresented: Binding(get: { motivoNoBorrable != nil }, set: { if !$0 { motivoNoBorrable = nil } })) {
+            Button("Aceptar", role: .cancel) {}
+        } message: {
+            Text(motivoNoBorrable ?? "")
+        }
+        .sheet(isPresented: $simulando) {
+            NavigationStack {
+                CalculadoraView(entrada: .desde(piso), idPiso: piso.id, nombre: piso.direccion)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { simulando = false } } }
+            }
+        }
+        .sheet(item: $metricaAbierta) { metrica in
+            RentabilidadHojaView(piso: piso, metrica: metrica, ingresos: ingresos)
+                .destinoZoom(metrica, en: zoom)
+        }
         .visorPDF($documento)
         .alertaError($error)
+    }
+
+    private func metricaTocable(_ metrica: MetricaRentabilidad, @ViewBuilder tarjeta: () -> some View) -> some View {
+        TarjetaTocable(pista: "Abre cómo se calcula, su evolución y la comparación con tus otros pisos",
+                       accion: { metricaAbierta = metrica }, contenido: tarjeta)
+            .matchedTransitionSource(id: metrica, in: zoom)
+            .accessibilityIdentifier("metrica-\(metrica.rawValue)")
     }
 
     private var cabecera: some View {
@@ -203,6 +289,34 @@ struct PisoDetalleView: View {
                 .foregroundStyle(Tema.Color.textoSecundario)
         }
         .padding(.top, Tema.Espacio.xs)
+    }
+
+    /// Con contratos activos ni se pregunta: se explica por qué no se puede.
+    private func pedirBorrado() {
+        if !contratos.isEmpty {
+            motivoNoBorrable = contratos.count == 1
+                ? String(localized: "Tiene 1 contrato activo. Finalízalo antes de borrar el piso: los contratos y sus pagos se conservan.")
+                : String(localized: "Tiene \(contratos.count) contratos activos. Finalízalos antes de borrar el piso: los contratos y sus pagos se conservan.")
+            Haptica.error()
+            return
+        }
+        confirmarBorrado = true
+    }
+
+    /// La API comprueba lo mismo y además el historial y los gastos; si no deja, se muestra su motivo.
+    private func borrar() async {
+        borrando = true
+        defer { borrando = false }
+        do {
+            _ = try await sesion.api.enviar(.borrarPiso(id: piso.id))
+            Haptica.exito()
+            NotificationCenter.default.post(name: .datosCambiados, object: nil)
+            cerrarDetalle()
+        } catch .noAutorizado {
+        } catch {
+            Haptica.error()
+            motivoNoBorrable = error.localizedDescription
+        }
     }
 
     private func cargarExtras() async {
@@ -277,38 +391,7 @@ struct DatosFinancierosFormView: View {
         NavigationStack {
             Form {
                 Group {
-                Section("Compra") {
-                    campo("Precio de compra", \.precioCompra)
-                    campo("ITP pagado", \.itpPagado)
-                    campo("Notaría", \.gastosNotaria)
-                    campo("Registro", \.gastosRegistro)
-                    campo("Reforma", \.costeReforma)
-                    campo("Mobiliario", \.costeMobiliario)
-                    campo("Otros gastos", \.otrosGastosCompra)
-                }
-                Section {
-                    Toggle("Tiene hipoteca", isOn: $d.tieneHipoteca)
-                    if d.tieneHipoteca {
-                        campo("Importe", \.importeHipoteca)
-                        campo("Tipo de interés", \.tipoInteres, sufijo: "%")
-                        Stepper(value: $d.plazoAnos, in: 0...50) { LabeledContent("Plazo", value: "\(d.plazoAnos) años") }
-                    }
-                } header: {
-                    Text("Hipoteca")
-                } footer: {
-                    Text("La cuota se calcula con amortización francesa, como en el escritorio.")
-                }
-                Section("Gastos") {
-                    campo("IBI anual", \.gastoIbiAnual)
-                    campo("Comunidad (al mes)", \.gastoComunidadMensual)
-                    campo("Seguro anual", \.gastoSeguroAnual)
-                    campo("Mantenimiento anual", \.gastoMantenimientoAnual)
-                }
-                Section("Valor") { campo("Valor de mercado actual", \.valorMercadoActual) }
-                Section("Notas") {
-                    TextField("Notas", text: Binding(get: { d.notas ?? "" }, set: { d.notas = $0.isEmpty ? nil : $0 }), axis: .vertical)
-                        .lineLimit(3...8)
-                }
+                SeccionesDatosFinancieros(d: $d)
                 if let error {
                     Section { Label(error, systemImage: "exclamationmark.triangle.fill").foregroundStyle(Tema.Color.negativo) }
                 }
@@ -328,12 +411,6 @@ struct DatosFinancierosFormView: View {
         }
     }
 
-    private func campo(_ titulo: String, _ ruta: WritableKeyPath<DatosFinancierosRequest, Decimal>, sufijo: String = "€") -> some View {
-        CampoNumerico(titulo, valor: Binding(get: { d[keyPath: ruta].double },
-                                             set: { d[keyPath: ruta] = Decimal(string: String(format: "%.2f", $0)) ?? 0 }),
-                      sufijo: sufijo)
-    }
-
     private func guardar() async {
         guardando = true
         defer { guardando = false }
@@ -341,10 +418,61 @@ struct DatosFinancierosFormView: View {
                               idCiudad: piso.ciudad.id, datosFinancieros: d)
         do {
             alGuardar(try await sesion.api.enviar(.actualizarPiso(id: piso.id, req)))
+            Haptica.exito()
             cerrar()
         } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription
         }
+    }
+}
+
+/// Campos de los datos financieros de un piso (compra, hipoteca, gastos, valor y notas), dentro de un Form.
+/// Los usan el formulario de datos financieros y el alta de piso.
+struct SeccionesDatosFinancieros: View {
+    @Binding var d: DatosFinancierosRequest
+
+    var body: some View {
+        Group {
+            Section("Compra") {
+                campo("Precio de compra", \.precioCompra)
+                campo("ITP pagado", \.itpPagado)
+                campo("Notaría", \.gastosNotaria)
+                campo("Registro", \.gastosRegistro)
+                campo("Reforma", \.costeReforma)
+                campo("Mobiliario", \.costeMobiliario)
+                campo("Otros gastos", \.otrosGastosCompra)
+            }
+            Section {
+                Toggle("Tiene hipoteca", isOn: $d.tieneHipoteca)
+                if d.tieneHipoteca {
+                    campo("Importe", \.importeHipoteca)
+                    campo("Tipo de interés", \.tipoInteres, sufijo: "%")
+                    Stepper(value: $d.plazoAnos, in: 0...50) { LabeledContent("Plazo", value: "\(d.plazoAnos) años") }
+                }
+            } header: {
+                Text("Hipoteca")
+            } footer: {
+                Text("La cuota se calcula con amortización francesa, como en el escritorio.")
+            }
+            Section("Gastos") {
+                campo("IBI anual", \.gastoIbiAnual)
+                campo("Comunidad (al mes)", \.gastoComunidadMensual)
+                campo("Seguro anual", \.gastoSeguroAnual)
+                campo("Mantenimiento anual", \.gastoMantenimientoAnual)
+            }
+            Section("Valor") { campo("Valor de mercado actual", \.valorMercadoActual) }
+            Section("Notas") {
+                TextField("Notas", text: Binding(get: { d.notas ?? "" }, set: { d.notas = $0.isEmpty ? nil : $0 }), axis: .vertical)
+                    .lineLimit(3...8)
+            }
+        }
+        .filaLista()
+    }
+
+    private func campo(_ titulo: String, _ ruta: WritableKeyPath<DatosFinancierosRequest, Decimal>, sufijo: String = "€") -> some View {
+        CampoNumerico(titulo, valor: Binding(get: { d[keyPath: ruta].double },
+                                             set: { d[keyPath: ruta] = Decimal(string: String(format: "%.2f", $0)) ?? 0 }),
+                      sufijo: sufijo)
     }
 }

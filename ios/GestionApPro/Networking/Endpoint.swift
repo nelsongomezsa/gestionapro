@@ -372,6 +372,13 @@ extension Endpoint where Respuesta == ResumenPagos {
     }
 }
 
+extension Endpoint where Respuesta == [CobroAtrasado] {
+    /// Meses anteriores al actual (12 por defecto, máximo 24) sin ningún pago.
+    static func cobrosAtrasados(meses: Int = 12) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos/atrasados", consulta: [URLQueryItem(name: "meses", value: String(meses))])
+    }
+}
+
 extension Endpoint where Respuesta == Pago {
     static func registrarPago(_ req: PagoRequest) -> Self {
         Endpoint(metodo: "POST", ruta: "/api/pagos", cuerpo: json(req))
@@ -541,5 +548,62 @@ extension Endpoint where Respuesta == UsuarioAdmin {
 extension Endpoint where Respuesta == ResultadosBusqueda {
     static func buscar(_ texto: String) -> Self {
         Endpoint(metodo: "GET", ruta: "/api/buscar", consulta: [URLQueryItem(name: "q", value: texto)])
+    }
+}
+
+extension Endpoint where Respuesta == Analisis {
+    /// Estadísticas de un periodo; sin piso ni habitación, de toda la cartera.
+    static func analisis(desde: Date, hasta: Date, piso: Int? = nil, habitacion: Int? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/estadisticas/analisis",
+                 consulta: [URLQueryItem(name: "desde", value: FechaAPI.texto(desde)),
+                            URLQueryItem(name: "hasta", value: FechaAPI.texto(hasta)),
+                            URLQueryItem(name: "piso", value: piso.map(String.init)),
+                            URLQueryItem(name: "habitacion", value: habitacion.map(String.init))])
+    }
+}
+
+// MARK: Análisis de inversión guardados
+
+extension Endpoint where Respuesta == [AnalisisGuardado] {
+    static let analisisGuardados = Endpoint(metodo: "GET", ruta: "/api/analisis-inversion")
+}
+
+extension Endpoint where Respuesta == AnalisisGuardado {
+    static func guardarAnalisis(_ req: AnalisisGuardadoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/analisis-inversion", cuerpo: json(req))
+    }
+
+    static func actualizarAnalisis(id: Int, _ req: AnalisisGuardadoRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/analisis-inversion/\(id)", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarAnalisis(id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/analisis-inversion/\(id)") }
+}
+
+// MARK: Alta, edición y borrado de pisos; ciudades
+
+extension Endpoint where Respuesta == Piso {
+    static func crearPiso(_ req: PisoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/pisos", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarPiso(id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/pisos/\(id)") }
+}
+
+extension Endpoint where Respuesta == [Piso.Ciudad] {
+    static let ciudades = Endpoint(metodo: "GET", ruta: "/api/ciudades")
+}
+
+/// POST /api/ciudades
+struct CiudadRequest: Encodable, Sendable { let nombre: String }
+
+extension Endpoint where Respuesta == Piso.Ciudad {
+    /// Da de alta la ciudad o devuelve la que ya existe con ese nombre.
+    static func crearCiudad(_ nombre: String) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/ciudades", cuerpo: json(CiudadRequest(nombre: nombre)))
     }
 }

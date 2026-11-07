@@ -172,7 +172,7 @@ struct FilaNotificacion: View {
                 if let d = notificacion.descripcion {
                     Text(d).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                 }
-                Text(notificacion.fecha, format: .relative(presentation: .named).locale(Formato.locale))
+                Text(notificacion.fecha, format: .relative(presentation: .named).locale(Formato.localeFechas))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }
         }

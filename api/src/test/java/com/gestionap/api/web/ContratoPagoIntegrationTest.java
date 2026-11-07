@@ -223,4 +223,32 @@ class ContratoPagoIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.pendientes[0].idContrato").value(venceProntoPedro.getId()))
                 .andExpect(jsonPath("$.nombreMes").isString());
     }
+
+    @Test
+    void atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados() throws Exception {
+        YearMonth actual = YearMonth.from(hoy);
+        datos.pago(activoLucia, "450.00", actual.minusMonths(2).atDay(10));
+        // 3 meses: Lucía debe M-3 y M-1 (M-2 pagado); Pedro, los tres del contrato que vence pronto.
+        mvc.perform(get("/api/pagos/atrasados").param("meses", "3").header("Authorization", token("ana@test.com")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5))
+                .andExpect(jsonPath("$[0].mes").value(actual.minusMonths(3).toString()))
+                .andExpect(jsonPath("$[0].diasRetraso").isNumber())
+                .andExpect(jsonPath("$[?(@.inquilino.id == %d)].mes", lucia.getId()).value(
+                        org.hamcrest.Matchers.containsInAnyOrder(actual.minusMonths(3).toString(), actual.minusMonths(1).toString())));
+        // 12 meses: entra el contrato finalizado de Pedro, marcado como no activo.
+        mvc.perform(get("/api/pagos/atrasados").header("Authorization", token("ana@test.com")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.idContrato == %d)].contratoActivo", finalizadoPedro.getId()).value(false));
+        mvc.perform(get("/api/pagos/atrasados").header("Authorization", token("bea@test.com")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(0));
+        mvc.perform(get("/api/pagos/atrasados").param("meses", "0").header("Authorization", token("ana@test.com")))
+                .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/pagos/atrasados").param("meses", "25").header("Authorization", token("ana@test.com")))
+                .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/pagos/atrasados")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/dashboard").header("Authorization", token("ana@test.com")))
+                .andExpect(jsonPath("$.alertas[0].tipo").value("COBROS_ATRASADOS"))
+                .andExpect(jsonPath("$.alertas[0].tono").value("negativo"));
+    }
 }

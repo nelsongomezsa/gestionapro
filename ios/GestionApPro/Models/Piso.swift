@@ -14,7 +14,7 @@ struct Piso: Decodable, Identifiable, Equatable, Sendable {
     let datosFinancieros: DatosFinancieros?
     let metricas: Metricas?
 
-    struct Ciudad: Decodable, Equatable, Sendable {
+    struct Ciudad: Decodable, Hashable, Identifiable, Sendable {
         let id: Int
         let nombre: String
     }

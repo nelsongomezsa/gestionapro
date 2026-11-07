@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PisoIntegrationTest extends IntegrationTest {
 
     @Autowired PisoRepository pisos;
+    @Autowired com.gestionap.api.repository.HabitacionRepository habitacionesRepo;
 
     Ciudad madrid;
     Usuario ana;
@@ -198,18 +199,110 @@ class PisoIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    void borrar_pisoSinHabitaciones_204_yConHabitaciones_409() throws Exception {
+    void borrar_sinHistorial_borraTambienSusHabitaciones() throws Exception {
         String t = token("ana@test.com");
         var otro = datos.piso("Calle Con Habitaciones", madrid, ana);
         datos.habitacion(otro, 1, EstadoHabitacion.disponible);
-
+        datos.habitacion(otro, 2, EstadoHabitacion.disponible);
         mvc.perform(delete("/api/pisos/" + otro.getId()).header("Authorization", t))
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.codigo").value("PISO_CON_HABITACIONES"));
-        mvc.perform(delete("/api/pisos/" + pisoAna.getId()).header("Authorization", t))
                 .andExpect(status().isNoContent());
-        mvc.perform(get("/api/pisos/" + pisoAna.getId()).header("Authorization", t))
-                .andExpect(status().isNotFound());
+        mvc.perform(get("/api/pisos/" + otro.getId()).header("Authorization", t)).andExpect(status().isNotFound());
+        org.assertj.core.api.Assertions.assertThat(habitacionesRepo.findByPisoId(otro.getId())).isEmpty();
+    }
+
+    @Test
+    void borrar_conContratoActivo_conHistorial_oConGastos_409ExplicandoPorque() throws Exception {
+        String t = token("ana@test.com");
+        var activo = datos.piso("Con contrato activo", madrid, ana);
+        datos.contratoActivo(datos.habitacion(activo, 1, EstadoHabitacion.alquilada), datos.inquilinoDe(ana, "11111111A"), "400.00");
+        mvc.perform(delete("/api/pisos/" + activo.getId()).header("Authorization", t))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("PISO_CON_CONTRATOS_ACTIVOS"))
+                .andExpect(jsonPath("$.mensaje").value(org.hamcrest.Matchers.containsString("1 contrato activo")));
+
+        var pasado = datos.piso("Con contrato pasado", madrid, ana);
+        datos.contrato(datos.habitacion(pasado, 1, EstadoHabitacion.disponible), datos.inquilinoDe(ana, "22222222B"), "400.00",
+                java.time.LocalDate.now().minusYears(2), java.time.LocalDate.now().minusYears(1));
+        mvc.perform(delete("/api/pisos/" + pasado.getId()).header("Authorization", t))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("PISO_CON_HISTORIAL"));
+
+        var conGastos = datos.piso("Con gastos", madrid, ana);
+        mvc.perform(post("/api/gastos").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("idPiso", conGastos.getId(), "categoria", "IBI", "concepto", "IBI",
+                                "importe", "300.00", "fecha", java.time.LocalDate.now().toString()))))
+                .andExpect(status().isCreated());
+        mvc.perform(delete("/api/pisos/" + conGastos.getId()).header("Authorization", t))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.codigo").value("PISO_CON_GASTOS"));
+
+        // De otro propietario: 404; inquilino: 403.
+        mvc.perform(delete("/api/pisos/" + pisoBea.getId()).header("Authorization", t)).andExpect(status().isNotFound());
+        datos.usuario("inq@test.com", Rol.INQUILINO);
+        mvc.perform(delete("/api/pisos/" + pisoAna.getId()).header("Authorization", token("inq@test.com")))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void crear_conSusHabitaciones_enUnaSolaOperacion() throws Exception {
+        String t = token("ana@test.com");
+        var req = pisoBasico("Calle Nueva 5, 1º");
+        req.put("numeroHabitaciones", 2);
+        req.put("habitaciones", java.util.List.of(Map.of("numero", 1, "precio", "450.00"), Map.of("numero", 2, "precio", "500.00")));
+        String cuerpo = mvc.perform(post("/api/pisos").header("Authorization", t).contentType(MediaType.APPLICATION_JSON).content(json(req)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.ocupacion.total").value(2))
+                .andExpect(jsonPath("$.ocupacion.disponibles").value(2))
+                .andReturn().getResponse().getContentAsString();
+        int id = leer(cuerpo).get("id").asInt();
+        mvc.perform(get("/api/habitaciones").param("piso", String.valueOf(id)).header("Authorization", t))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[1].precio").value(500.00));
+        // Aparece en Inicio (ocupación de la cartera).
+        mvc.perform(get("/api/dashboard").header("Authorization", t))
+                .andExpect(jsonPath("$.ocupacion.habitaciones").value(2));
+    }
+
+    @Test
+    void crear_habitacionesInvalidas_400_ySinCrearNada() throws Exception {
+        String t = token("ana@test.com");
+        long antes = pisos.count();
+        var distintas = pisoBasico("Calle Mal 1");
+        distintas.put("numeroHabitaciones", 2);
+        distintas.put("habitaciones", java.util.List.of(Map.of("numero", 1, "precio", "450.00")));
+        var repetidas = pisoBasico("Calle Mal 2");
+        repetidas.put("numeroHabitaciones", 2);
+        repetidas.put("habitaciones", java.util.List.of(Map.of("numero", 1, "precio", "450.00"), Map.of("numero", 1, "precio", "300.00")));
+        var sinPrecio = pisoBasico("Calle Mal 3");
+        sinPrecio.put("numeroHabitaciones", 1);
+        sinPrecio.put("habitaciones", java.util.List.of(Map.of("numero", 1, "precio", "0")));
+        for (var r : java.util.List.of(distintas, repetidas, sinPrecio)) {
+            mvc.perform(post("/api/pisos").header("Authorization", t).contentType(MediaType.APPLICATION_JSON).content(json(r)))
+                    .andExpect(status().isBadRequest());
+        }
+        org.assertj.core.api.Assertions.assertThat(pisos.count()).isEqualTo(antes);
+        datos.usuario("inq@test.com", Rol.INQUILINO);
+        mvc.perform(post("/api/pisos").header("Authorization", token("inq@test.com")).contentType(MediaType.APPLICATION_JSON)
+                .content(json(pisoBasico("Calle Inquilino")))).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void ciudades_listarYDarDeAlta_sinDuplicar() throws Exception {
+        String t = token("ana@test.com");
+        mvc.perform(get("/api/ciudades").header("Authorization", t))
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].nombre").value("Madrid"));
+        mvc.perform(post("/api/ciudades").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("nombre", "  málaga "))))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.nombre").value("Málaga"));
+        mvc.perform(post("/api/ciudades").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("nombre", "MALAGA"))))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.nombre").value("Málaga"));
+        mvc.perform(post("/api/ciudades").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                .content(json(Map.of("nombre", "<script>")))).andExpect(status().isBadRequest());
+        mvc.perform(post("/api/ciudades").header("Authorization", t).contentType(MediaType.APPLICATION_JSON)
+                .content(json(Map.of("nombre", "x")))).andExpect(status().isBadRequest());
+        datos.usuario("inq@test.com", Rol.INQUILINO);
+        mvc.perform(get("/api/ciudades").header("Authorization", token("inq@test.com"))).andExpect(status().isForbidden());
     }
 
     private Map<String, Object> pisoBasico(String direccion) {

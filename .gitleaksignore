@@ -1,0 +1,2 @@
+# Falsos positivos revisados: token de dispositivo inventado en un test (no es un secreto).
+bbe909cf06aed777f28e78211c06b68d340869e9:api/src/test/java/com/gestionap/api/web/DispositivosPushTest.java:generic-api-key:24

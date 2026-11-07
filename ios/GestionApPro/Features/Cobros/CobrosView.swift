@@ -12,6 +12,9 @@ struct CobrosView: View {
     @State private var faltanDatos: Pago?
     @State private var datosCobro = false
     @State private var conciliando = false
+    @State private var registrandoAtrasado: CobroAtrasado?
+    @AppStorage(Agrupacion.clave("cobros")) private var agrupacion: Agrupacion = .todos
+    @Environment(IrACobros.self) private var irACobros: IrACobros?
 
     var body: some View {
         @Bindable var vm = vm
@@ -27,83 +30,81 @@ struct CobrosView: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
 
-                    Section {
-                        let pendientes = pendientesVisibles(r)
-                        if pendientes.isEmpty {
-                            Label("Todos los contratos del mes tienen algún pago", systemImage: "checkmark.seal.fill")
-                                .foregroundStyle(Tema.Color.positivo)
-                        }
-                        ForEach(pendientes) { p in
-                            // Con texto grande, importe y botón bajan bajo el nombre (en línea se partían).
-                            let disposicion = tamanoTexto.isAccessibilitySize
-                                ? AnyLayout(VStackLayout(alignment: .leading, spacing: Tema.Espacio.xs))
-                                : AnyLayout(HStackLayout(alignment: .top, spacing: Tema.Espacio.s))
-                            disposicion {
-                                HStack(alignment: .top, spacing: Tema.Espacio.s) {
-                                    AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
-                                    VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
-                                        Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                                        Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
-                                            .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
-                                    }
-                                }
-                                if !tamanoTexto.isAccessibilitySize { Spacer(minLength: Tema.Espacio.xs) }
-                                VStack(alignment: tamanoTexto.isAccessibilitySize ? .leading : .trailing, spacing: Tema.Espacio.xs) {
-                                    Text(Formato.euros(p.importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.texto)
-                                        .fixedSize()
-                                    Button("Registrar") {
-                                        nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    // Relleno fijo: con el acento claro del modo oscuro el texto blanco no llegaba a 4,5:1.
-                                    .tint(Tema.Color.primarioRelleno)
-                                    .controlSize(.regular)
-                                    .fixedSize()
-                                    .accessibilityLabel("Registrar pago de \(p.inquilino.nombre)")
-                                }
+                    // Lo más urgente arriba: meses anteriores sin cobrar (solo al ver el mes actual).
+                    if vm.mes == .actual, !vm.atrasadosVisibles.isEmpty {
+                        Section {
+                            // Los más antiguos; la lista completa, aparte (puede haber decenas).
+                            ForEach(vm.atrasadosVisibles.prefix(CobrosViewModel.atrasadosEnCobros)) { a in
+                                FilaAtrasado(atrasado: a) { registrandoAtrasado = a }
                             }
-                            .padding(.vertical, Tema.Espacio.xxs)
-                            .contextMenu {
-                                Button("Registrar pago", systemImage: "eurosign.circle") {
-                                    nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                            if vm.atrasadosVisibles.count > CobrosViewModel.atrasadosEnCobros {
+                                NavigationLink { AtrasadosView() } label: {
+                                    Label("Ver los \(vm.atrasadosVisibles.count) atrasados", systemImage: "list.bullet")
+                                        .foregroundStyle(Tema.Color.primario)
                                 }
-                                AccionesContacto(telefono: p.inquilino.telefono, email: p.inquilino.email)
+                                .accessibilityIdentifier("verAtrasados")
                             }
+                        } header: {
+                            HStack {
+                                Label("Atrasados (\(vm.atrasadosVisibles.count))", systemImage: "exclamationmark.triangle.fill")
+                                    .foregroundStyle(Tema.Color.negativo)
+                                Spacer()
+                                Text(Formato.euros(vm.atrasadosVisibles.reduce(Decimal(0)) { $0 + $1.importe })).monospacedDigit()
+                            }
+                        } footer: {
+                            Text("Meses anteriores sin ningún pago. El retraso se cuenta desde el día 5.")
                         }
-                    } header: {
-                        Text("Pendientes de cobro (\(pendientesVisibles(r).count))")
-                    } footer: {
-                        Text("Contratos vigentes en el mes sin ningún pago registrado.")
+                        .filaLista()
                     }
-                    .filaLista()
 
-                    Section {
-                        if vm.pagosVisibles.isEmpty {
-                            Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario)
+                    SelectorAgrupacion(agrupacion: $agrupacion)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+
+                    if agrupacion == .porPiso {
+                        let elementos = pendientesVisibles(r).map(ElementoCobro.pendiente) + vm.pagosVisibles.map(ElementoCobro.pago)
+                        if elementos.isEmpty {
+                            Text("Sin cobros este mes").foregroundStyle(Tema.Color.textoSecundario).filaLista()
                         }
-                        ForEach(vm.pagosVisibles) { p in
-                            // Tocar un pago abre su recibo; el menú permite enviarlo por email.
-                            Button { pedirRecibo(p) } label: { FilaPago(pago: p) }
-                                .buttonStyle(.plain)
-                                .accessibilityHint("Abre el recibo en PDF")
-                                .accessibilityIdentifier("filaPago")
-                                .swipeActions { Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = p } }
-                                .contextMenu {
-                                    Button("Ver recibo", systemImage: "doc.text") { pedirRecibo(p) }
-                                    Button("Enviar recibo por email", systemImage: "envelope") { Task { await enviarRecibo(p) } }
-                                }
-                        }
-                    } header: {
-                        HStack {
-                            Text("Pagos registrados (\(vm.pagosVisibles.count))")
-                            Spacer()
-                            // El total del mes ya está arriba; aquí solo cuando se filtra.
-                            if vm.filtroInquilino != nil || !vm.busqueda.isEmpty {
-                                Text(Formato.euros(vm.totalVisible)).monospacedDigit()
+                        SeccionesPorPiso(grupos: AgrupadorPiso.agrupar(elementos) { $0.piso }, pantalla: "cobros",
+                                         resumen: { ResumenPorPiso.cobros($0.elementos) }) { e in
+                            switch e {
+                            case let .pendiente(p): filaPendiente(p, mostrarPiso: false)
+                            case let .pago(p): filaPago(p)
                             }
                         }
+                    } else {
+                        Section {
+                            let pendientes = pendientesVisibles(r)
+                            if pendientes.isEmpty {
+                                Label("Todos los contratos del mes tienen algún pago", systemImage: "checkmark.seal.fill")
+                                    .foregroundStyle(Tema.Color.positivo)
+                            }
+                            ForEach(pendientes) { filaPendiente($0) }
+                        } header: {
+                            Text("Pendientes de cobro (\(pendientesVisibles(r).count))")
+                        } footer: {
+                            Text("Contratos vigentes en el mes sin ningún pago registrado.")
+                        }
+                        .filaLista()
+
+                        Section {
+                            if vm.pagosVisibles.isEmpty {
+                                Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario)
+                            }
+                            ForEach(vm.pagosVisibles) { filaPago($0) }
+                        } header: {
+                            HStack {
+                                Text("Pagos registrados (\(vm.pagosVisibles.count))")
+                                Spacer()
+                                // El total del mes ya está arriba; aquí solo cuando se filtra.
+                                if vm.filtroInquilino != nil || !vm.busqueda.isEmpty {
+                                    Text(Formato.euros(vm.totalVisible)).monospacedDigit()
+                                }
+                            }
+                        }
+                        .filaLista()
                     }
-                    .filaLista()
                 }
                 .estiloLista()
             }
@@ -126,6 +127,12 @@ struct CobrosView: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await vm.cargar(con: sesion.api) } }
+            // Mes pedido desde Inicio: si aún no se ha cargado nada, lo carga la primera carga.
+            .onChange(of: irACobros?.mes, initial: true) { _, pedido in
+                guard let pedido else { return }
+                irACobros?.mes = nil
+                if vm.resumen.valor == nil { vm.mes = pedido } else { Task { await vm.cambiarMes(pedido, con: sesion.api) } }
+            }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
             .sheet(isPresented: $conciliando) {
@@ -139,6 +146,7 @@ struct CobrosView: View {
                                 titleVisibility: .visible) {
                 Button("Borrar", role: .destructive) { if let p = paraBorrar { Task { await vm.borrar(p, con: sesion.api) } } }
             }
+            .hojaRegistrarAtrasado($registrandoAtrasado) { Task { await vm.cargar(con: sesion.api) } }
             .alertaError($vm.error)
             .visorPDF($documento)
             .alert("Faltan tus datos fiscales", isPresented: Binding(get: { faltanDatos != nil }, set: { if !$0 { faltanDatos = nil } })) {
@@ -157,6 +165,59 @@ struct CobrosView: View {
                 Text(aviso ?? "")
             }
         }
+    }
+
+    @ViewBuilder
+    private func filaPendiente(_ p: ResumenPagos.Pendiente, mostrarPiso: Bool = true) -> some View {
+        // Con texto grande, importe y botón bajan bajo el nombre (en línea se partían).
+        let disposicion = tamanoTexto.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Tema.Espacio.xs))
+            : AnyLayout(HStackLayout(alignment: .top, spacing: Tema.Espacio.s))
+        disposicion {
+            HStack(alignment: .top, spacing: Tema.Espacio.s) {
+                AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
+                VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
+                    Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
+                    Text(mostrarPiso ? "Hab. \(p.numeroHabitacion) · \(p.piso.direccion)" : "Habitación \(p.numeroHabitacion)")
+                        .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                }
+            }
+            if !tamanoTexto.isAccessibilitySize { Spacer(minLength: Tema.Espacio.xs) }
+            VStack(alignment: tamanoTexto.isAccessibilitySize ? .leading : .trailing, spacing: Tema.Espacio.xs) {
+                Text(Formato.euros(p.importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.texto)
+                    .fixedSize()
+                Button("Registrar") {
+                    nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+                }
+                .buttonStyle(.borderedProminent)
+                // Relleno fijo: con el acento claro del modo oscuro el texto blanco no llegaba a 4,5:1.
+                .tint(Tema.Color.primarioRelleno)
+                .controlSize(.regular)
+                .fixedSize()
+                .accessibilityLabel("Registrar pago de \(p.inquilino.nombre)")
+            }
+        }
+        .padding(.vertical, Tema.Espacio.xxs)
+        .contextMenu {
+            Button("Registrar pago", systemImage: "eurosign.circle") {
+                nuevoPago = PagoPrellenado(idContrato: p.idContrato, importe: p.importe)
+            }
+            AccionesContacto(telefono: p.inquilino.telefono, email: p.inquilino.email)
+        }
+    }
+
+    @ViewBuilder
+    private func filaPago(_ p: Pago) -> some View {
+        // Tocar un pago abre su recibo; el menú permite enviarlo por email.
+        Button { pedirRecibo(p) } label: { FilaPago(pago: p) }
+            .buttonStyle(.plain)
+            .accessibilityHint("Abre el recibo en PDF")
+            .accessibilityIdentifier("filaPago")
+            .swipeActions { Button("Borrar", systemImage: "trash", role: .destructive) { paraBorrar = p } }
+            .contextMenu {
+                Button("Ver recibo", systemImage: "doc.text") { pedirRecibo(p) }
+                Button("Enviar recibo por email", systemImage: "envelope") { Task { await enviarRecibo(p) } }
+            }
     }
 
     /// El recibo lleva el nombre y el DNI del arrendador: si faltan, se avisa antes de generarlo.
@@ -260,7 +321,7 @@ struct ResumenCobros: View {
     }
 
     var body: some View {
-        TarjetaHero(titulo: "Cobrado en \(nombreMes)", valor: Formato.euros(cobrado)) {
+        TarjetaHero(titulo: String(localized: "Cobrado en \(nombreMes)"), valor: Formato.euros(cobrado)) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: progreso, tono: .positivo)
                 Text("\(Formato.porcentaje(progreso * 100)) de \(Formato.euros(esperado)) esperados")

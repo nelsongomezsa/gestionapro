@@ -7,7 +7,10 @@ struct TarjetaHero<Contenido: View>: View {
     let titulo: String
     let valor: String
     var accesorio: AnyView? = nil
+    /// Color de la cifra (p. ej. rojo si es un cash flow negativo); por defecto, el del texto.
+    var tonoValor: Tono? = nil
     @ViewBuilder var contenido: Contenido
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
 
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.m) {
@@ -22,12 +25,11 @@ struct TarjetaHero<Contenido: View>: View {
                 Text(valor)
                     .importePrivado()
                     .font(Tema.Fuente.cifraHeroe)
-                    .foregroundStyle(Tema.Color.texto)
+                    .foregroundStyle(tonoValor?.color ?? Tema.Color.texto)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
-                    .contentTransition(.numericText())
-                    .animation(Tema.Movimiento.suave, value: valor)
-                    .contentTransition(.numericText())
+                    .contentTransition(reducirMovimiento ? .identity : .numericText())
+                    .animation(reducirMovimiento ? nil : Tema.Movimiento.suave, value: valor)
             }
             .accessibilityElement(children: .combine)
             contenido

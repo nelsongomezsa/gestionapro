@@ -103,7 +103,7 @@ private struct CeldaDia: View {
     }
 
     private var etiquetaAccesible: String {
-        var partes = [dia.fecha.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formato.locale))]
+        var partes = [dia.fecha.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formato.localeFechas))]
         switch dia.estado {
         case .pagado: partes.append("\(dia.pagos.count) pagos")
         case .vencido: partes.append("cobro vencido sin pagar")
@@ -181,7 +181,7 @@ struct DetalleDiaView: View {
                 }
             }
             .estiloLista()
-            .navigationTitle(Formato.primeraMayuscula(dia.fecha.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formato.locale))))
+            .navigationTitle(Formato.primeraMayuscula(dia.fecha.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formato.localeFechas))))
             .navigationBarTitleDisplayMode(.inline)
         }
     }

@@ -61,7 +61,7 @@ struct InvitacionView: View {
 
     private var mensaje: String {
         "Te invito a GestionAp. Descarga la app y regístrate con este código: \(invitacion.codigo) "
-            + "(caduca el \(invitacion.expira.formatted(.dateTime.day().month(.wide).locale(Formato.locale))))."
+            + "(caduca el \(invitacion.expira.formatted(.dateTime.day().month(.wide).locale(Formato.localeFechas))))."
     }
 
     var body: some View {
