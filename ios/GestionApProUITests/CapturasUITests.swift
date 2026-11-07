@@ -1705,6 +1705,88 @@ extension CapturasUITests {
     }
 
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
+    /// Escaparate del repositorio (docs/capturas/destacadas/): las pantallas principales de la v2.2.
+    @MainActor
+    func testEscaparate() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "lenguetaAsistente").firstMatch)
+        r.pausa(2.5)
+        r.capturar("01-inicio")
+
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.pausa(1.5)
+        r.capturar("02-pisos")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.buttons["metrica-bruta"])
+        r.pausa(2)
+        r.capturar("03-piso")
+
+        r.pestana("Cobros")
+        r.esperar(r.elemento(contiene: "Atrasados"))
+        r.pausa(1)
+        r.desplazarHasta(r.app.buttons["Por piso"].firstMatch).tap()
+        r.pausa(1)
+        r.app.swipeUp(velocity: .slow)
+        r.pausa(1.5)
+        r.capturar("04-cobros")
+
+        r.pestana("Más")
+        r.app.buttons["Estadísticas"].tap()
+        r.esperar(r.app.navigationBars["Estadísticas"])
+        r.app.buttons["Mes"].firstMatch.tap()
+        r.pausa(2.5)
+        r.capturar("05-estadisticas")
+        r.atras()
+
+        r.app.buttons["Calculadora de rentabilidad"].tap()
+        r.esperar(r.app.buttons["guardarAnalisis"])
+        r.pausa(1)
+        // "Análisis guardados" está en el menú de acciones secundarias de la barra.
+        if !r.app.buttons["analisisGuardados"].exists {
+            r.app.navigationBars.buttons["OverflowBarButtonItem"].tap()
+        }
+        let guardados = r.app.buttons.matching(NSPredicate(format: "identifier == %@ OR label == %@",
+                                                           "analisisGuardados", "Análisis guardados")).firstMatch
+        r.esperar(guardados)
+        guardados.tap()
+        r.esperar(r.app.navigationBars["Análisis guardados"])
+        let casillas = r.app.buttons.matching(identifier: "elegirAnalisis")
+        for i in 0..<min(3, casillas.count) { casillas.element(boundBy: i).tap() }
+        r.app.buttons["comparar"].tap()
+        r.esperar(r.app.navigationBars["Comparar análisis"])
+        r.pausa(2)
+        r.capturar("06-calculadora")
+        r.atras()
+        r.pausa(1)
+        r.atras()
+        r.pausa(1)
+        r.app.buttons["Cerrar"].firstMatch.tapSiExiste()
+        r.pausa(1)
+
+        r.pestana("Mensajes")
+        r.esperar(r.app.buttons["filaConversacion"].firstMatch)
+        r.pausa(1.5)
+        r.capturar("07-mensajes")
+
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["enlaceAjustes"]).tap()
+        r.esperar(r.app.descendants(matching: .any).matching(identifier: "selectorApariencia").firstMatch)
+        r.pausa(1.5)
+        r.capturar("08-ajustes")
+
+        let env = ProcessInfo.processInfo.environment
+        guard let email = env["CAPTURAS_INQUILINO_EMAIL"], !email.isEmpty,
+              let password = env["CAPTURAS_INQUILINO_PASSWORD"] else {
+            throw XCTSkip("Faltan CAPTURAS_INQUILINO_EMAIL o CAPTURAS_INQUILINO_PASSWORD")
+        }
+        let ri = r.relanzar(email: email, password: password)
+        ri.esperar(ri.app.navigationBars["Mi alquiler"])
+        ri.pausa(2)
+        ri.capturar("09-mi-alquiler")
+    }
+
     @MainActor
     func testTarjetas() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)

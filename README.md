@@ -1,6 +1,6 @@
 # GestionAp PRO · App iPhone + API
 
-<p align="center"><img src="docs/capturas/destacadas/claro/02-inicio.png" width="260" alt="Pantalla de inicio de GestionAp PRO en iPhone"></p>
+<p align="center"><img src="docs/capturas/destacadas/claro/01-inicio.png" width="260" alt="Pantalla de inicio de GestionAp PRO en iPhone"></p>
 
 **App nativa para iPhone en SwiftUI para gestionar el alquiler de habitaciones, con su propia API REST en Spring Boot que comparte la base de datos con la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
 
@@ -14,10 +14,10 @@
 > **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing room rentals in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
 
 <p>
-<img src="docs/capturas/destacadas/oscuro/02-inicio.png" width="180" alt="Inicio en modo oscuro">
-<img src="docs/capturas/destacadas/claro/04-piso.png" width="180" alt="Detalle de piso">
-<img src="docs/capturas/destacadas/oscuro/08-renta.png" width="180" alt="Actualización de renta con el IRAV">
-<img src="docs/capturas/destacadas/claro/14-mi-alquiler.png" width="180" alt="Vista del inquilino">
+<img src="docs/capturas/destacadas/oscuro/01-inicio.png" width="180" alt="Inicio en modo oscuro">
+<img src="docs/capturas/destacadas/claro/03-piso.png" width="180" alt="Detalle de piso con su rentabilidad">
+<img src="docs/capturas/destacadas/oscuro/06-calculadora.png" width="180" alt="Análisis de inversión comparados">
+<img src="docs/capturas/destacadas/claro/09-mi-alquiler.png" width="180" alt="Vista del inquilino">
 </p>
 
 [Más capturas en claro y oscuro](docs/capturas/README.md) · [Vídeo del recorrido (70 s)](docs/video/recorrido.mp4) · [Caso de estudio](docs/CASO_DE_ESTUDIO.md)
