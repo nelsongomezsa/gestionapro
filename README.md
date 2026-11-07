@@ -1,6 +1,8 @@
-# GestionAp PRO · API + iOS
+# GestionAp PRO · App iPhone + API
 
-**Gestión de alquiler de habitaciones desde el iPhone: una API REST en Spring Boot y una app nativa en SwiftUI que comparten la base de datos con la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
+<p align="center"><img src="docs/capturas/destacadas/claro/02-inicio.png" width="260" alt="Pantalla de inicio de GestionAp PRO en iPhone"></p>
+
+**App nativa para iPhone en SwiftUI para gestionar el alquiler de habitaciones, con su propia API REST en Spring Boot que comparte la base de datos con la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
 
 [![CI](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml/badge.svg)](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
