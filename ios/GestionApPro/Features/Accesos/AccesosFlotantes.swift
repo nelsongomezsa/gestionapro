@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Lo que se crea desde el botón «+» (y desde Siri), más el panel del asistente.
 enum AccesoRapido: String, Identifiable {
-    case pago, incidencia, gasto, mensajeNuevo, mensajes, asistente, analisis
+    case pago, incidencia, gasto, mensajeNuevo, mensajes, asistente, piso, analisis
     var id: String { rawValue }
 
     var titulo: LocalizedStringKey {
@@ -13,6 +13,7 @@ enum AccesoRapido: String, Identifiable {
         case .mensajeNuevo: "Mensaje nuevo"
         case .mensajes: "Mensajes"
         case .asistente: "Asistente"
+        case .piso: "Nuevo piso"
         case .analisis: "Analizar un piso nuevo"
         }
     }
@@ -25,6 +26,7 @@ enum AccesoRapido: String, Identifiable {
         case .mensajeNuevo: "square.and.pencil"
         case .mensajes: "bubble.left.and.bubble.right"
         case .asistente: "sparkles"
+        case .piso: "building.2"
         case .analisis: "function"
         }
     }

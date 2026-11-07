@@ -23,6 +23,8 @@ public interface HabitacionRepository extends JpaRepository<Habitacion, Integer>
 
     boolean existsByPisoId(Integer idPiso);
 
+    List<Habitacion> findByPisoId(Integer idPiso);
+
     /**
      * Habitaciones visibles: las de los pisos del propietario (o todas si idPropietario
      * es null, para el admin), filtradas opcionalmente por piso y estado.

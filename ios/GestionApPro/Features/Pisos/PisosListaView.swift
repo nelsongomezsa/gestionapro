@@ -5,9 +5,12 @@ struct PisosListaView: View {
     @Namespace private var zoom
     @Environment(SesionStore.self) private var sesion
     @State private var vm = PisosViewModel()
+    @State private var ruta = NavigationPath()
+    @State private var creando = false
+    @Environment(IrAPiso.self) private var irAPiso: IrAPiso?
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $ruta) {
             VistaCarga(estado: vm.estado, reintentar: recargar) { _ in
                 contenido
             }
@@ -17,6 +20,10 @@ struct PisosListaView: View {
             .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Nuevo piso", systemImage: "plus") { creando = true }
+                        .accessibilityIdentifier("nuevoPiso")
+                }
                 menuFiltros
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink(value: DestinoListaPisos.mapa) { Label("Mapa", systemImage: "map") }
@@ -30,11 +37,25 @@ struct PisosListaView: View {
                 }
             }
             .refreshable { await vm.cargar(con: sesion.api) }
+            .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in recargar() }
+            .sheet(isPresented: $creando) { NuevoPisoView { abrir($0) } }
+            // Piso creado desde el «+» general: se abre aquí.
+            .onChange(of: irAPiso?.piso, initial: true) { _, nuevo in
+                guard let nuevo else { return }
+                irAPiso?.piso = nil
+                abrir(nuevo)
+            }
             .task { await vm.cargar(con: sesion.api) }
         }
     }
 
     private func recargar() { Task { await vm.cargar(con: sesion.api) } }
+
+    /// Abre el piso recién creado (la lista ya se recarga con .datosCambiados).
+    private func abrir(_ piso: Piso) {
+        ruta = NavigationPath()
+        ruta.append(piso)
+    }
 
     @ViewBuilder
     private var contenido: some View {

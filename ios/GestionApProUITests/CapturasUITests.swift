@@ -1591,6 +1591,119 @@ extension CapturasUITests {
         r.capturar("09-estadisticas-t3-comparacion")
     }
 
+    /// Crear un piso de principio a fin y comprobar que aparece en Pisos, Inicio y Estadísticas;
+    /// editarlo, no poder borrar uno con contratos activos y borrar el creado (doble confirmación).
+    /// Solo contra la API de pruebas: crea y borra un piso.
+    @MainActor
+    func testCrear() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        let direccion = "Calle Prueba \(Int(Date().timeIntervalSince1970) % 100000), 2º"
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        // Un piso con contratos activos no se deja borrar (se explica por qué).
+        r.pestana("Pisos")
+        r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.buttons["accionesPiso"])
+        r.app.buttons["accionesPiso"].tap()
+        r.app.buttons["borrarPiso"].tap()
+        r.esperar(r.app.alerts["No se puede borrar"])
+        r.capturar("14-no-se-puede-borrar")
+        r.app.alerts.firstMatch.buttons.firstMatch.tap()
+        r.atras()
+        r.esperar(r.app.buttons["nuevoPiso"])
+        r.app.buttons["nuevoPiso"].tap()
+        r.esperar(r.app.buttons["pisoSiguiente"])
+        r.pausa(1)
+        r.capturar("01-paso1")
+        r.app.buttons["pisoSiguiente"].tap()
+        r.esperar(r.elemento(contiene: "Escribe la dirección"))
+        r.capturar("02-paso1-errores")
+
+        let campo = r.app.textFields["campoDireccion"]
+        campo.tap()
+        campo.typeText(direccion)
+        r.app.buttons["campoCiudad"].tap()
+        r.esperar(r.app.buttons["Madrid"])
+        r.app.buttons["Madrid"].tap()
+        r.pausa(1)
+        r.capturar("03-paso1-relleno")
+        r.app.buttons["pisoSiguiente"].tap()
+        r.esperar(r.app.buttons["aplicarPrecio"])
+        r.capturar("04-paso2")
+        let precio = r.app.textFields.matching(NSPredicate(format: "placeholderValue == %@", "0")).firstMatch
+        precio.tap()
+        precio.typeText("450")
+        r.app.buttons["aplicarPrecio"].tap()
+        r.pausa(1)
+        r.capturar("05-paso2-precios")
+        r.app.buttons["pisoSiguiente"].tap()
+        r.esperar(r.app.switches["conDatosFinancieros"])
+        r.capturar("06-paso3")
+        r.app.switches["conDatosFinancieros"].switches.firstMatch.tap()
+        r.pausa(1)
+        r.capturar("07-paso3-datos-financieros")
+        r.app.switches["conDatosFinancieros"].switches.firstMatch.tap()
+        r.app.buttons["crearPiso"].tap()
+
+        // Se abre el piso creado.
+        r.esperar(r.app.navigationBars["Piso"])
+        r.esperar(r.app.staticTexts[direccion])
+        r.pausa(1)
+        r.capturar("08-piso-creado")
+        r.app.buttons["accionesPiso"].tap()
+        r.esperar(r.app.buttons["editarPiso"])
+        r.app.buttons["editarPiso"].tap()
+        r.esperar(r.app.buttons["guardarPiso"])
+        r.capturar("09-editar-piso")
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+        r.atras()
+
+        // En Pisos (con el buscador: la lista solo dibuja lo que está a la vista).
+        let buscador = r.app.searchFields.firstMatch
+        buscador.tap()
+        buscador.typeText(direccion)
+        r.esperar(r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", direccion)).firstMatch)
+        r.capturar("10-en-pisos")
+        // En Inicio: sus 3 habitaciones libres.
+        r.pestana("Inicio")
+        r.app.buttons["kpiLibres"].tap()
+        r.esperar(r.app.navigationBars["Habitaciones libres"])
+        r.esperar(r.elemento(contiene: direccion))
+        r.capturar("11-en-habitaciones-libres")
+        r.atras()
+        // En Estadísticas: como ámbito y en el ranking.
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["Estadísticas"]).tap()
+        r.esperar(r.elemento(contiene: "Resultado neto"))
+        r.app.buttons["ambitoEstadisticas"].tap()
+        let opcion = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", direccion)).firstMatch
+        r.esperar(opcion)
+        r.capturar("12-en-estadisticas")
+        opcion.tap()
+        r.pausa(2)
+        r.capturar("13-estadisticas-del-piso")
+
+        // Borrar el creado, con doble confirmación (el buscador sigue filtrando por su dirección).
+        r.pestana("Pisos")
+        let tarjeta = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", direccion)).firstMatch
+        r.desplazarHasta(tarjeta).tap()
+        r.esperar(r.app.buttons["accionesPiso"])
+        r.app.buttons["accionesPiso"].tap()
+        r.app.buttons["borrarPiso"].tap()
+        r.esperar(r.app.buttons["Borrar piso"].firstMatch)
+        r.capturar("15-borrar-confirmacion")
+        r.app.buttons["Borrar piso"].firstMatch.tap()
+        r.esperar(r.app.alerts["¿Seguro que quieres borrarlo?"])
+        r.capturar("16-borrar-segunda-confirmacion")
+        r.app.alerts.firstMatch.buttons["Borrar definitivamente"].tap()
+        // Vuelve a la lista, que sigue filtrada por su dirección: ya no está.
+        r.esperar(r.elemento(contiene: "Sin resultados"))
+        r.pausa(1)
+        XCTAssertFalse(r.elemento(contiene: direccion).exists, "El piso borrado sigue en la lista")
+        r.capturar("17-borrado")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {

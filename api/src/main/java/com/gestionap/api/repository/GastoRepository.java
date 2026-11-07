@@ -34,4 +34,6 @@ public interface GastoRepository extends JpaRepository<Gasto, Integer> {
     List<Object[]> sumarPorPisoYCategoria(Collection<Integer> idsPiso, LocalDate desde, LocalDate hasta);
 
     Optional<Gasto> findByIdIncidencia(Integer idIncidencia);
+
+    boolean existsByPisoId(Integer idPiso);
 }

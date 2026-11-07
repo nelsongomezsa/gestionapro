@@ -64,3 +64,10 @@
 - Meses y fechas en el idioma de la app (español o inglés) con convenciones de España; la app rehace los nombres
   de mes a partir del aaaa-mm que manda la API, que los envía en español. Los importes siguen en formato español.
 - Cifras auditadas con SQL directo (api/sql/auditoria/auditoria_numeros.sql) contra la API y la app.
+- Alta de piso: el piso y sus habitaciones se crean en una sola petición (o todo o nada). Ciudades: tabla común;
+  al dar de alta una que ya existe con otras mayúsculas o tildes, se devuelve la existente.
+- Borrar piso: no se permite con contratos activos (se pide finalizarlos), con contratos o incidencias anteriores
+  (historial que se conserva) ni con gastos (justificantes fiscales; en la base se borrarían en cascada). Si no hay
+  nada de eso, se borran sus habitaciones y el piso. Doble confirmación en la app.
+- Sin editar pagos ni contratos (ni en escritorio ni en API): un pago con recibo numerado se borra y se vuelve a
+  registrar; un contrato se finaliza y se crea otro. Queda anotado como posible mejora (prórroga de contrato).

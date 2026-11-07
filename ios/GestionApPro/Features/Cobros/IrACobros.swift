@@ -7,3 +7,10 @@ import Observation
 final class IrACobros {
     var mes: Mes?
 }
+
+/// Abrir un piso en la pestaña Pisos (el creado desde el «+» general).
+@MainActor
+@Observable
+final class IrAPiso {
+    var piso: Piso?
+}

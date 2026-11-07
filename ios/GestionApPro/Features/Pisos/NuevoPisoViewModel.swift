@@ -1,0 +1,173 @@
+import Foundation
+import Observation
+
+/// Alta de un piso en tres pasos: datos básicos, habitaciones con precio y datos financieros (opcional).
+/// Toda la validación está aquí (sin vista) para mostrarla en directo y probarla.
+@MainActor
+@Observable
+final class NuevoPisoViewModel {
+    enum Paso: Int, CaseIterable, Sendable {
+        case basicos, habitaciones, financieros
+
+        var titulo: String {
+            switch self {
+            case .basicos: String(localized: "Datos básicos")
+            case .habitaciones: String(localized: "Habitaciones")
+            case .financieros: String(localized: "Datos financieros")
+            }
+        }
+    }
+
+    struct HabitacionBorrador: Identifiable, Equatable, Sendable {
+        let id = UUID()
+        var numero: Int
+        var precio: Double
+    }
+
+    static let maxHabitaciones = 50
+    static let maxPrecio = 99_999.99
+
+    var paso: Paso = .basicos
+    var direccion = ""
+    private(set) var ciudades: [Piso.Ciudad] = []
+    /// Ciudad elegida; nil con "Otra ciudad" (se da de alta con `nuevaCiudad`).
+    var idCiudad: Int?
+    var otraCiudad = false
+    var nuevaCiudad = ""
+    private(set) var numeroHabitaciones = 3
+    private(set) var habitaciones: [HabitacionBorrador] = []
+    var conDatosFinancieros = false
+    var datos = DatosFinancierosRequest()
+    private(set) var guardando = false
+    var error: String?
+
+    init() { ajustarHabitaciones() }
+
+    // MARK: Habitaciones
+
+    /// Cambia el número de habitaciones: añade al final (con el precio de la última) o quita las últimas,
+    /// sin tocar las que ya se han editado.
+    func cambiarNumero(_ n: Int) {
+        numeroHabitaciones = min(max(n, 1), Self.maxHabitaciones)
+        ajustarHabitaciones()
+    }
+
+    private func ajustarHabitaciones() {
+        while habitaciones.count < numeroHabitaciones {
+            let siguiente = (habitaciones.map(\.numero).max() ?? 0) + 1
+            habitaciones.append(HabitacionBorrador(numero: siguiente, precio: habitaciones.last?.precio ?? 0))
+        }
+        if habitaciones.count > numeroHabitaciones { habitaciones.removeLast(habitaciones.count - numeroHabitaciones) }
+    }
+
+    func cambiarPrecio(_ id: UUID, _ precio: Double) {
+        guard let i = habitaciones.firstIndex(where: { $0.id == id }) else { return }
+        habitaciones[i].precio = precio
+    }
+
+    func cambiarNumeroHabitacion(_ id: UUID, _ numero: Int) {
+        guard let i = habitaciones.firstIndex(where: { $0.id == id }) else { return }
+        habitaciones[i].numero = numero
+    }
+
+    /// "Mismo precio para todas".
+    func aplicarATodas(_ precio: Double) {
+        for i in habitaciones.indices { habitaciones[i].precio = precio }
+    }
+
+    // MARK: Validación en directo
+
+    var errorDireccion: String? {
+        let t = direccion.trimmingCharacters(in: .whitespacesAndNewlines)
+        if t.isEmpty { return String(localized: "Escribe la dirección") }
+        if t.count > 150 { return String(localized: "Máximo 150 caracteres") }
+        return nil
+    }
+
+    var errorCiudad: String? {
+        if otraCiudad {
+            let t = nuevaCiudad.trimmingCharacters(in: .whitespaces)
+            if t.count < 2 { return String(localized: "Escribe el nombre de la ciudad") }
+            if t.count > 100 { return String(localized: "Máximo 100 caracteres") }
+            if t.range(of: #"^\p{L}[\p{L} .'-]*$"#, options: .regularExpression) == nil {
+                return String(localized: "Solo letras, espacios y guiones")
+            }
+            return nil
+        }
+        return idCiudad == nil ? String(localized: "Elige la ciudad") : nil
+    }
+
+    func errorPrecio(_ h: HabitacionBorrador) -> String? {
+        if h.precio <= 0 { return String(localized: "Pon un precio mayor que 0") }
+        if h.precio > Self.maxPrecio { return String(localized: "Precio demasiado alto") }
+        return nil
+    }
+
+    func errorNumero(_ h: HabitacionBorrador) -> String? {
+        if !(1...999).contains(h.numero) { return String(localized: "Número entre 1 y 999") }
+        if habitaciones.filter({ $0.numero == h.numero }).count > 1 { return String(localized: "Número repetido") }
+        return nil
+    }
+
+    var habitacionesValidas: Bool {
+        habitaciones.allSatisfy { errorPrecio($0) == nil && errorNumero($0) == nil }
+    }
+
+    func puedeAvanzar(desde paso: Paso) -> Bool {
+        switch paso {
+        case .basicos: errorDireccion == nil && errorCiudad == nil
+        case .habitaciones: habitacionesValidas
+        case .financieros: true
+        }
+    }
+
+    var puedeGuardar: Bool { Paso.allCases.allSatisfy { puedeAvanzar(desde: $0) } }
+
+    // MARK: Datos
+
+    func cargarCiudades(con api: APIClient) async {
+        guard ciudades.isEmpty else { return }
+        do {
+            ciudades = try await api.enviar(.ciudades)
+            if idCiudad == nil, ciudades.isEmpty { otraCiudad = true }
+        } catch .noAutorizado {
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    /// La petición que se envía (sin la ciudad nueva, que se da de alta antes).
+    func peticion(idCiudad: Int) -> PisoRequest {
+        PisoRequest(direccion: direccion.trimmingCharacters(in: .whitespacesAndNewlines),
+                    numeroHabitaciones: numeroHabitaciones, idCiudad: idCiudad,
+                    datosFinancieros: conDatosFinancieros ? datos : nil,
+                    habitaciones: habitaciones.map {
+                        PisoRequest.HabitacionInicial(numero: $0.numero,
+                                                      precio: Decimal(string: String(format: "%.2f", $0.precio)) ?? 0)
+                    })
+    }
+
+    /// Da de alta la ciudad si es nueva y crea el piso con sus habitaciones. Devuelve el piso creado.
+    func guardar(con api: APIClient) async -> Piso? {
+        guard puedeGuardar else { return nil }
+        guardando = true
+        defer { guardando = false }
+        do {
+            var ciudad = idCiudad
+            if otraCiudad {
+                ciudad = try await api.enviar(.crearCiudad(nuevaCiudad.trimmingCharacters(in: .whitespaces))).id
+            }
+            guard let ciudad else { return nil }
+            let piso = try await api.enviar(.crearPiso(peticion(idCiudad: ciudad)))
+            Haptica.exito()
+            NotificationCenter.default.post(name: .datosCambiados, object: nil)
+            return piso
+        } catch .noAutorizado {
+            return nil
+        } catch {
+            Haptica.error()
+            self.error = error.localizedDescription
+            return nil
+        }
+    }
+}

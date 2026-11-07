@@ -100,6 +100,15 @@ public interface ContratoRepository extends JpaRepository<Contrato, Integer> {
 
     boolean existsByInquilinoId(Integer idInquilino);
 
+    /** ¿Algún contrato (de cualquier fecha) en las habitaciones de este piso? */
+    boolean existsByHabitacionPisoId(Integer idPiso);
+
+    @Query("""
+            select count(c) from Contrato c
+            where c.habitacion.piso.id = :idPiso and c.fechaInicio <= :hoy and c.fechaFin >= :hoy
+            """)
+    long contarActivosDePiso(Integer idPiso, LocalDate hoy);
+
     @Query("""
             select count(c) > 0 from Contrato c
             where c.habitacion.id = :idHabitacion and c.fechaInicio <= :hoy and c.fechaFin >= :hoy

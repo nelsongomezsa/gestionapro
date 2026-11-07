@@ -437,6 +437,7 @@
       }
     },
     "%lld de %lld habitaciones" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -480,6 +481,7 @@
       }
     },
     "%lld en curso" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1217,6 +1219,16 @@
         }
       }
     },
+    "Aplicar a todas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply to all"
+          }
+        }
+      }
+    },
     "Asistente" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1258,6 +1270,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Overdue (%lld)"
+          }
+        }
+      }
+    },
+    "Atrás" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
           }
         }
       }
@@ -1314,6 +1336,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add to comparison"
+          }
+        }
+      }
+    },
+    "Añadir datos financieros ahora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add financial details now"
           }
         }
       }
@@ -1391,6 +1423,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Borrar definitivamente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete permanently"
+          }
+        }
+      }
+    },
+    "Borrar piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete property"
           }
         }
       }
@@ -1481,6 +1533,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Calendario"
+          }
+        }
+      }
+    },
+    "Calle, número y piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Street, number and floor"
           }
         }
       }
@@ -1619,6 +1681,7 @@
       }
     },
     "Cash flow previsto al mes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1629,6 +1692,7 @@
       }
     },
     "Cash flow previsto de la cartera" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1746,6 +1810,7 @@
       }
     },
     "Cobrado en %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2239,6 +2304,16 @@
         }
       }
     },
+    "Crear piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create property"
+          }
+        }
+      }
+    },
     "Cuenta" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2297,6 +2372,16 @@
         }
       }
     },
+    "Datos básicos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic details"
+          }
+        }
+      }
+    },
     "Datos financieros" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2323,6 +2408,7 @@
     },
     "Desliza a la derecha para avanzar el estado y a la izquierda para borrar." : {},
     "Desliza arriba o abajo para cambiar de mes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2340,6 +2426,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Expanded"
+          }
+        }
+      }
+    },
+    "Dirección" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address"
           }
         }
       }
@@ -2413,6 +2509,16 @@
         }
       }
     },
+    "Editar piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit property"
+          }
+        }
+      }
+    },
     "Ejercicio %@" : {},
     "El QR de pago necesita un contrato activo." : {},
     "El email es el que usas para iniciar sesión." : {},
@@ -2446,9 +2552,29 @@
     "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo." : {},
     "El índice elegido supera el IRAV: el máximo es el IRAV (LAU, art. 18.1)." : {},
     "Elementos (%@)" : {},
+    "Elige la ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the city"
+          }
+        }
+      }
+    },
     "Elige un contrato" : {},
     "Elige un inquilino" : {},
     "Elige un piso" : {},
+    "Elige una" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose one"
+          }
+        }
+      }
+    },
     "Elige una habitación" : {},
     "Eliminar" : {
       "extractionState" : "stale",
@@ -2533,6 +2659,16 @@
         }
       }
     },
+    "En el siguiente paso se crean solas, con su precio." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the next step they're created for you, with their price."
+          }
+        }
+      }
+    },
     "En la calculadora, pulsa Guardar para conservar una simulación y compararla después." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2605,6 +2741,16 @@
         }
       }
     },
+    "Error: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: %@"
+          }
+        }
+      }
+    },
     "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino." : {},
     "Es el único piso con este dato" : {
       "extractionState" : "stale",
@@ -2618,6 +2764,16 @@
       }
     },
     "Escanéalo desde la app del banco para pagar por transferencia SEPA." : {},
+    "Escribe el nombre de la ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the city name"
+          }
+        }
+      }
+    },
     "Escribe el primero." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2631,6 +2787,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escribe el primero."
+          }
+        }
+      }
+    },
+    "Escribe la dirección" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the address"
           }
         }
       }
@@ -3005,6 +3171,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save as new"
+          }
+        }
+      }
+    },
+    "Hab." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room"
           }
         }
       }
@@ -3555,6 +3731,16 @@
       }
     },
     "La próxima vez que inicies sesión usa la nueva contraseña." : {},
+    "Las habitaciones se añaden o quitan desde «Gestionar habitaciones»." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rooms are added or removed from “Manage rooms”."
+          }
+        }
+      }
+    },
     "Las notificaciones están desactivadas para GestionAp. Ábrelas en Ajustes del iPhone." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3905,6 +4091,7 @@
       }
     },
     "Mes: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4008,6 +4195,36 @@
         }
       }
     },
+    "Más acciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More actions"
+          }
+        }
+      }
+    },
+    "Máximo 100 caracteres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum 100 characters"
+          }
+        }
+      }
+    },
+    "Máximo 150 caracteres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum 150 characters"
+          }
+        }
+      }
+    },
     "Método" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4067,6 +4284,16 @@
         }
       }
     },
+    "No se puede borrar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't be deleted"
+          }
+        }
+      }
+    },
     "No se puede comparar: faltan datos en este piso o en los demás." : {
       "localizations" : {
         "en" : {
@@ -4100,6 +4327,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Name"
+          }
+        }
+      }
+    },
+    "Nombre de la ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City name"
           }
         }
       }
@@ -4205,6 +4442,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New tenant"
+          }
+        }
+      }
+    },
+    "Nuevo piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New property"
+          }
+        }
+      }
+    },
+    "Nº" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No."
+          }
+        }
+      }
+    },
+    "Número de la habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room number"
+          }
+        }
+      }
+    },
+    "Número entre 1 y 999" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number between 1 and 999"
+          }
+        }
+      }
+    },
+    "Número repetido" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplicate number"
           }
         }
       }
@@ -4374,6 +4661,16 @@
         }
       }
     },
+    "Otra ciudad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other city"
+          }
+        }
+      }
+    },
     "Otro pago…" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4475,6 +4772,26 @@
       }
     },
     "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {},
+    "Paso %lld de %lld · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %1$lld of %2$lld · %3$@"
+          }
+        }
+      }
+    },
+    "Paso %lld de %lld: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %1$lld of %2$lld: %3$@"
+          }
+        }
+      }
+    },
     "Pendiente de cobrar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4623,6 +4940,7 @@
       }
     },
     "Pierde dinero cada mes: la hipoteca y los gastos superan el alquiler." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4725,6 +5043,16 @@
         }
       }
     },
+    "Pon un precio mayor que 0" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a price above 0"
+          }
+        }
+      }
+    },
     "Ponle un nombre para encontrarlo y compararlo con otros." : {
       "localizations" : {
         "en" : {
@@ -4780,6 +5108,16 @@
         }
       }
     },
+    "Precio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price"
+          }
+        }
+      }
+    },
     "Precio de compra" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4787,6 +5125,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Purchase price"
+          }
+        }
+      }
+    },
+    "Precio demasiado alto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price too high"
+          }
+        }
+      }
+    },
+    "Precio mensual de cada habitación. Puedes cambiar cualquiera abajo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly price of each room. You can change any of them below."
+          }
+        }
+      }
+    },
+    "Precio para todas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price for all"
           }
         }
       }
@@ -5058,6 +5426,16 @@
         }
       }
     },
+    "Rentas al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly rent"
+          }
+        }
+      }
+    },
     "Responder" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5164,6 +5542,36 @@
         }
       }
     },
+    "Se borrará también su habitación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Its room will also be deleted."
+          }
+        }
+      }
+    },
+    "Se borrarán también sus %lld habitaciones." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Its %lld rooms will also be deleted."
+          }
+        }
+      }
+    },
+    "Se crean disponibles; después podrás editarlas, alquilarlas o pasarlas a mantenimiento." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They're created as available; later you can edit them, let them or put them under maintenance."
+          }
+        }
+      }
+    },
     "Se retienen %@" : {},
     "Se usa en el QR de pago SEPA que generas para tus inquilinos. Se comprueban los dígitos de control." : {},
     "Seguridad" : {
@@ -5217,6 +5625,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Servidor"
+          }
+        }
+      }
+    },
+    "Siguiente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
           }
         }
       }
@@ -5447,8 +5865,28 @@
         }
       }
     },
+    "Solo letras, espacios y guiones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only letters, spaces and hyphens"
+          }
+        }
+      }
+    },
     "Solo se pueden borrar habitaciones sin contratos ni incidencias." : {},
     "Solo se pueden borrar inquilinos sin contratos ni incidencias." : {},
+    "Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el piso." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They're optional: they're used to calculate yield and cash flow. You can complete them later from the property."
+          }
+        }
+      }
+    },
     "Subiendo…" : {},
     "T%lld %@" : {
       "extractionState" : "stale",
@@ -5526,6 +5964,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Texto en negrita"
+          }
+        }
+      }
+    },
+    "Tiene %lld contratos activos. Finalízalos antes de borrar el piso: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has %lld active leases. End them before deleting the property: leases and their payments are kept."
+          }
+        }
+      }
+    },
+    "Tiene 1 contrato activo. Finalízalo antes de borrar el piso: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has 1 active lease. End it before deleting the property: leases and their payments are kept."
           }
         }
       }
@@ -6197,6 +6655,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Restablecer los ajustes de la app?"
+          }
+        }
+      }
+    },
+    "¿Seguro que quieres borrarlo?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete it?"
           }
         }
       }

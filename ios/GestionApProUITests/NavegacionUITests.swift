@@ -37,9 +37,11 @@ final class NavegacionUITests: XCTestCase {
     @MainActor
     private func subirHasta(_ r: Recorrido, _ elemento: XCUIElement) {
         var n = 0
-        while !(elemento.exists && elemento.isHittable) && n < 10 {
-            r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.35))
-                .press(forDuration: 0.05, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.65)))
+        // Visible y por debajo de la barra superior (bajo la barra de cristal el toque no llega).
+        func aLaVista() -> Bool { elemento.exists && elemento.isHittable && elemento.frame.minY > r.app.frame.height * 0.15 }
+        while !aLaVista() && n < 10 {
+            r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4))
+                .press(forDuration: 0.05, thenDragTo: r.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.6)))
             n += 1
         }
         r.pausa(0.8)
@@ -84,12 +86,15 @@ final class NavegacionUITests: XCTestCase {
         detallePiso(r)
         esperarBarra(r, "Piso")
 
+        let titulos = ["bruta": "Rentabilidad bruta", "neta": "Rentabilidad neta", "cashOnCash": "Cash-on-cash", "per": "PER inmobiliario"]
         for metrica in ["bruta", "neta", "cashOnCash", "per"] {
-            r.desplazarHasta(r.app.buttons["metrica-\(metrica)"]).tap()
-            r.esperar(r.app.staticTexts["Cómo se calcula"])
+            subirHasta(r, r.app.buttons["metrica-\(metrica)"])
+            r.app.buttons["metrica-\(metrica)"].tap()
+            // La barra de la hoja (no "Cómo se calcula", que también está en el detalle del piso).
+            esperarBarra(r, titulos[metrica]!)
             if metrica == "bruta" {
                 // La hoja se presenta con zoom: se espera a que el botón exista antes de desplazarse.
-                _ = r.app.buttons["simularCalculadora"].waitForExistence(timeout: 10)
+                if !r.app.buttons["simularCalculadora"].waitForExistence(timeout: 10) { r.capturar("fallo-simular") }
                 r.desplazarHasta(r.app.buttons["simularCalculadora"]).tap()
                 r.esperar(r.app.buttons["guardarAnalisis"])
                 volver(r)

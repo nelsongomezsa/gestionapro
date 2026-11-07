@@ -14,6 +14,8 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Integer>
 
     boolean existsByHabitacionId(Integer idHabitacion);
 
+    boolean existsByHabitacionPisoId(Integer idPiso);
+
     boolean existsByInquilinoId(Integer idInquilino);
 
     /** Incidencias visibles (propietario/inquilino opcionales; null = sin filtro), con habitación, piso e inquilino. */

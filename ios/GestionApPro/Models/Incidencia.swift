@@ -93,6 +93,13 @@ struct PisoRequest: Encodable, Sendable {
     let numeroHabitaciones: Int
     let idCiudad: Int
     let datosFinancieros: DatosFinancierosRequest?
+    /// Solo al crear: habitaciones que se dan de alta con el piso (la API las ignora en un PUT).
+    var habitaciones: [HabitacionInicial]? = nil
+
+    struct HabitacionInicial: Encodable, Equatable, Sendable {
+        let numero: Int
+        let precio: Decimal
+    }
 }
 
 struct DatosFinancierosRequest: Encodable, Sendable {

@@ -581,3 +581,29 @@ extension Endpoint where Respuesta == AnalisisGuardado {
 extension Endpoint where Respuesta == SinContenido {
     static func borrarAnalisis(id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/analisis-inversion/\(id)") }
 }
+
+// MARK: Alta, edición y borrado de pisos; ciudades
+
+extension Endpoint where Respuesta == Piso {
+    static func crearPiso(_ req: PisoRequest) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/pisos", cuerpo: json(req))
+    }
+}
+
+extension Endpoint where Respuesta == SinContenido {
+    static func borrarPiso(id: Int) -> Self { Endpoint(metodo: "DELETE", ruta: "/api/pisos/\(id)") }
+}
+
+extension Endpoint where Respuesta == [Piso.Ciudad] {
+    static let ciudades = Endpoint(metodo: "GET", ruta: "/api/ciudades")
+}
+
+/// POST /api/ciudades
+struct CiudadRequest: Encodable, Sendable { let nombre: String }
+
+extension Endpoint where Respuesta == Piso.Ciudad {
+    /// Da de alta la ciudad o devuelve la que ya existe con ese nombre.
+    static func crearCiudad(_ nombre: String) -> Self {
+        Endpoint(metodo: "POST", ruta: "/api/ciudades", cuerpo: json(CiudadRequest(nombre: nombre)))
+    }
+}
