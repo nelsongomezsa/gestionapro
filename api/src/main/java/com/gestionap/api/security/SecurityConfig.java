@@ -34,6 +34,14 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(errores).accessDeniedHandler(errores))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                // La API solo sirve JSON, PDF e imágenes: nada debe ejecutar scripts ni cargarse en un marco,
+                // aunque un PDF subido lleve HTML dentro. (Swagger, solo en dev, queda fuera de /api.)
+                .headers(h -> h
+                        .referrerPolicy(r -> r.policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))
+                        .addHeaderWriter(new org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter(
+                                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/**"),
+                                new org.springframework.security.web.header.writers.StaticHeadersWriter("Content-Security-Policy",
+                                        "default-src 'none'; frame-ancestors 'none'; sandbox"))))
                 .build();
     }
 

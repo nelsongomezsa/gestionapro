@@ -42,16 +42,19 @@ struct VistaWidget: View {
             case .accessoryRectangular:
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Cobrado en \(r.mes)").font(.caption2)
-                    Text(euros(r.cobrado)).font(.headline).monospacedDigit()
-                    Gauge(value: r.progreso) { EmptyView() }.gaugeStyle(.accessoryLinear)
+                    // Con el móvil bloqueado, iOS oculta lo marcado como sensible (pantalla bloqueada y StandBy).
+                    Text(euros(r.cobrado)).font(.headline).monospacedDigit().privacySensitive()
+                    Gauge(value: r.progreso) { EmptyView() }.gaugeStyle(.accessoryLinear).privacySensitive()
                 }
             default:
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Cobrado en \(r.mes)").font(.caption).foregroundStyle(.white.opacity(0.75))
                     Text(euros(r.cobrado)).font(.title2.bold()).monospacedDigit().foregroundStyle(.white)
                         .minimumScaleFactor(0.7).lineLimit(1)
-                    ProgressView(value: r.progreso).tint(verde)
+                        .privacySensitive()
+                    ProgressView(value: r.progreso).tint(verde).privacySensitive()
                     Text("de \(euros(r.esperado)) esperados").font(.caption2).foregroundStyle(.white.opacity(0.75))
+                        .privacySensitive()
                     if familia == .systemMedium {
                         HStack(spacing: 16) {
                             Label("\(r.pendientes) sin pagar", systemImage: "eurosign.circle").foregroundStyle(ambar)

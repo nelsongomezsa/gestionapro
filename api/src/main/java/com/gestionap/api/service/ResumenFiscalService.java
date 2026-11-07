@@ -208,10 +208,17 @@ public class ResumenFiscalService {
     }
 
     private static void fila(StringBuilder s, String concepto, BigDecimal importe) {
-        // Un texto que empieza por = + - @ lo ejecutaría la hoja de cálculo como fórmula.
-        String seguro = concepto.matches("^[=+\\-@].*") ? "'" + concepto : concepto;
-        s.append('"').append(seguro.replace("\"", "\"\"")).append("\";").append(importe.setScale(2, RoundingMode.HALF_UP)
+        s.append(celdaCsv(concepto)).append(';').append(importe.setScale(2, RoundingMode.HALF_UP)
                 .toPlainString().replace('.', ',')).append('\n');
+    }
+
+    /**
+     * Celda de texto segura: entre comillas y, si empieza por = + - @ tabulador o retorno, con un
+     * apóstrofo delante para que la hoja de cálculo no la ejecute como fórmula (inyección en CSV).
+     */
+    static String celdaCsv(String texto) {
+        String seguro = texto.matches("(?s)^[=+\\-@\t\r].*") ? "'" + texto : texto;
+        return '"' + seguro.replace("\"", "\"\"") + '"';
     }
 
     private static List<Linea> porCategoria(List<GastoResponse> lista, Set<Categoria> categorias) {

@@ -11,6 +11,10 @@ protocol TokenStore: Sendable {
 /// JWT en el Keychain (nunca en UserDefaults). Solo accesible en este dispositivo,
 /// tras el primer desbloqueo, y no se incluye en copias de seguridad.
 struct KeychainTokenStore: TokenStore {
+    /// Solo con el móvil desbloqueado y sin salir del dispositivo (ni copias ni migración a otro iPhone).
+    /// La app no lee el token en segundo plano: no hace falta "tras el primer desbloqueo".
+    static var accesibilidad: CFString { kSecAttrAccessibleWhenUnlockedThisDeviceOnly }
+
     var servicio = "com.gestionap.GestionApPro"
     var cuenta = "jwt"
 
@@ -34,7 +38,7 @@ struct KeychainTokenStore: TokenStore {
         borrar()
         var q = consulta
         q[kSecValueData as String] = Data(token.utf8)
-        q[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        q[kSecAttrAccessible as String] = Self.accesibilidad
         let estado = SecItemAdd(q as CFDictionary, nil)
         guard estado == errSecSuccess else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(estado))
