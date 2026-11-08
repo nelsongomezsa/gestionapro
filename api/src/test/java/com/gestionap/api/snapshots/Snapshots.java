@@ -72,8 +72,8 @@ public class Snapshots implements BeforeEachCallback, AfterAllCallback {
         } else {
             cuerpo = "<binario>";
         }
-        String linea = req.getMethod() + " " + JsonCanonico.ruta(req.getRequestURI())
-                + (req.getQueryString() != null ? "?" + req.getQueryString() : "");
+        String linea = req.getMethod() + " " + JsonCanonico.ruta(req.getRequestURI()
+                + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
         respuestas.computeIfAbsent(clase, k -> new TreeMap<>())
                 .computeIfAbsent(test, k -> new ArrayList<>())
                 .add(linea + "\n" + res.getStatus() + " " + tipo + "\n" + cuerpo);

@@ -32,7 +32,7 @@ POST /api/gastos
 }
 
 ### creaListaYCalculaTotales #3
-GET /api/gastos?piso=100
+GET /api/gastos?piso={n}
 200 application/json
 {
   "lista": [
@@ -247,7 +247,7 @@ POST /api/gastos
 }
 
 ### respetaPropiedadYRolDeInquilino #4
-GET /api/gastos?piso=98
+GET /api/gastos?piso={n}
 404 application/json
 {
   "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
@@ -300,7 +300,7 @@ POST /api/auth/login
 }
 
 ### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #2
-GET /api/gastos?piso=102
+GET /api/gastos?piso={n}
 200 application/json
 {
   "lista": [
@@ -325,7 +325,7 @@ GET /api/gastos?piso=102
 }
 
 ### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #3
-GET /api/gastos?piso=102
+GET /api/gastos?piso={n}
 200 application/json
 {
   "lista": [

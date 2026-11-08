@@ -304,7 +304,7 @@ POST /api/contratos/{n}/firmas/ARRENDATARIO
   ],
   "completo": false,
   "cambiadoTrasFirmar": false,
-  "huellaActual": "2b7fb693745abe401b961df647eb68858094580ea679672972315a2921e99ef0"
+  "huellaActual": "<sha256>"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #5
@@ -352,7 +352,7 @@ POST /api/contratos/{n}/firmas/ARRENDADOR
   ],
   "completo": true,
   "cambiadoTrasFirmar": false,
-  "huellaActual": "2b7fb693745abe401b961df647eb68858094580ea679672972315a2921e99ef0"
+  "huellaActual": "<sha256>"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #8
@@ -383,7 +383,7 @@ GET /api/contratos/{n}/firmas
   ],
   "completo": false,
   "cambiadoTrasFirmar": true,
-  "huellaActual": "899791554d483dd5f93d4eaee780298c453cf9d8c93069b93c2ec6f27ab1f5d6"
+  "huellaActual": "<sha256>"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #10
@@ -409,7 +409,7 @@ POST /api/contratos/{n}/firmas/ARRENDATARIO
   ],
   "completo": false,
   "cambiadoTrasFirmar": true,
-  "huellaActual": "899791554d483dd5f93d4eaee780298c453cf9d8c93069b93c2ec6f27ab1f5d6"
+  "huellaActual": "<sha256>"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #11

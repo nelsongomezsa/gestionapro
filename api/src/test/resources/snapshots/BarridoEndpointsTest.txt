@@ -2277,7 +2277,7 @@ GET /api/contratos/{n}/firmas
   "firmas": [],
   "completo": false,
   "cambiadoTrasFirmar": false,
-  "huellaActual": "6a826ddcd628f42ba60b141ca8d1724523031f8621c3c174b4fec1795d58717e"
+  "huellaActual": "<sha256>"
 }
 
 ### lecturas_conDatos_cadaRol #15
@@ -3326,7 +3326,7 @@ GET /api/pisos/{n}/pdf
 <pdf>
 
 ### lecturas_conDatos_cadaRol #51
-GET /api/pisos/{n}/resumen-fiscal?anio=2026
+GET /api/pisos/{n}/resumen-fiscal?anio={n}
 200 application/json
 {
   "anio": 2026,
@@ -3350,7 +3350,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
 }
 
 ### lecturas_conDatos_cadaRol #52
-GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
+GET /api/pisos/{n}/resumen-fiscal/csv?anio={n}
 200 text/csv;charset=UTF-8
 ﻿Concepto;Importe
 "Ingresos íntegros (1 pagos)";450,00
@@ -4347,7 +4347,7 @@ GET /api/pisos/{n}/pdf
 }
 
 ### lecturas_conDatos_cadaRol #104
-GET /api/pisos/{n}/resumen-fiscal?anio=2026
+GET /api/pisos/{n}/resumen-fiscal?anio={n}
 404 application/json
 {
   "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
@@ -4358,7 +4358,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
 }
 
 ### lecturas_conDatos_cadaRol #105
-GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
+GET /api/pisos/{n}/resumen-fiscal/csv?anio={n}
 404 application/json
 {
   "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
@@ -4839,7 +4839,7 @@ GET /api/contratos/{n}/firmas
   "firmas": [],
   "completo": false,
   "cambiadoTrasFirmar": false,
-  "huellaActual": "6a826ddcd628f42ba60b141ca8d1724523031f8621c3c174b4fec1795d58717e"
+  "huellaActual": "<sha256>"
 }
 
 ### lecturas_conDatos_cadaRol #121
@@ -5889,7 +5889,7 @@ GET /api/pisos/{n}/pdf
 <pdf>
 
 ### lecturas_conDatos_cadaRol #157
-GET /api/pisos/{n}/resumen-fiscal?anio=2026
+GET /api/pisos/{n}/resumen-fiscal?anio={n}
 200 application/json
 {
   "anio": 2026,
@@ -5913,7 +5913,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
 }
 
 ### lecturas_conDatos_cadaRol #158
-GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
+GET /api/pisos/{n}/resumen-fiscal/csv?anio={n}
 200 text/csv;charset=UTF-8
 ﻿Concepto;Importe
 "Ingresos íntegros (1 pagos)";450,00
@@ -6144,7 +6144,7 @@ GET /api/contratos/{n}/firmas
   "firmas": [],
   "completo": false,
   "cambiadoTrasFirmar": false,
-  "huellaActual": "6a826ddcd628f42ba60b141ca8d1724523031f8621c3c174b4fec1795d58717e"
+  "huellaActual": "<sha256>"
 }
 
 ### lecturas_conDatos_cadaRol #174
@@ -6744,7 +6744,7 @@ GET /api/pisos/{n}/pdf
 }
 
 ### lecturas_conDatos_cadaRol #210
-GET /api/pisos/{n}/resumen-fiscal?anio=2026
+GET /api/pisos/{n}/resumen-fiscal?anio={n}
 403 application/json
 {
   "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
@@ -6755,7 +6755,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
 }
 
 ### lecturas_conDatos_cadaRol #211
-GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
+GET /api/pisos/{n}/resumen-fiscal/csv?anio={n}
 403 application/json
 {
   "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",

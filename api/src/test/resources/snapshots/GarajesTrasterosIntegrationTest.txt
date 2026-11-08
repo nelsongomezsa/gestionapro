@@ -554,7 +554,7 @@ GET /api/pagos?tipo=garajes
 ]
 
 ### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #7
-GET /api/pagos/atrasados?tipo=garajes&meses=2
+GET /api/pagos/atrasados?tipo=garajes&meses={n}
 200 application/json
 [
   {
@@ -1272,7 +1272,7 @@ POST /api/auth/login
 }
 
 ### sinTipo_esUnaViviendaConHabitaciones_comoSiempre #4
-GET /api/habitaciones?piso=51
+GET /api/habitaciones?piso={n}
 200 application/json
 [
   {

@@ -27,6 +27,8 @@ public final class JsonCanonico {
             "^(\\d{4}-\\d{2}-\\d{2})T(\\d{2}:\\d{2}(?::\\d{2})?)(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$");
     private static final Pattern CODIGO = Pattern.compile("^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$");
     private static final Pattern FECHA_HORA_ES = Pattern.compile("^(\\d{1,2}/\\d{1,2}/\\d{4}) \\d{2}:\\d{2}$");
+    private static final Pattern SHA256 = Pattern.compile("^[0-9a-f]{64}$");
+    private static final Pattern ID_EN_TEXTO = Pattern.compile("(\\\\\"(?:id|id[A-Z]\\w*|\\w+Id)\\\\\":)\\d+");
     private static final Pattern CLAVE_ID = Pattern.compile("^id([A-Z].*)?$|.*Id$");
 
     private final String s;
@@ -53,13 +55,13 @@ public final class JsonCanonico {
 
     /** Enmascara los números de una ruta (/api/pisos/123 → /api/pisos/{n}), que dependen del autonumérico. */
     public static String ruta(String uri) {
-        return uri.replaceAll("/\\d+(?=/|$|\\?|\")", "/{n}");
+        return uri.replaceAll("/\\d+(?=/|$|\\?|\")", "/{n}").replaceAll("=\\d+(?=&|$)", "={n}");
     }
 
     private void valor(int nivel, String clave) {
         char c = s.charAt(i);
         switch (c) {
-            case '{' -> objeto(nivel);
+            case '{' -> objeto(nivel, "_links".equals(clave));
             case '[' -> lista(nivel, "errores".equals(clave));
             case '"' -> out.append("path".equals(clave) ? ruta(cadena()) : mascaraTexto(cadena()));
             default -> {
@@ -75,7 +77,8 @@ public final class JsonCanonico {
         }
     }
 
-    private void objeto(int nivel) {
+    /** Los enlaces de /actuator ({@code _links}) se ordenan: Spring no garantiza su orden y no los usa ninguna app. */
+    private void objeto(int nivel, boolean ordenar) {
         i++;
         espacios();
         if (s.charAt(i) == '}') {
@@ -83,19 +86,19 @@ public final class JsonCanonico {
             out.append("{}");
             return;
         }
-        out.append("{\n");
-        boolean primero = true;
+        List<String> campos = new ArrayList<>();
         while (true) {
             espacios();
             String clave = cadena();
             espacios();
             esperar(':');
             espacios();
-            if (!primero) out.append(",\n");
-            primero = false;
+            int marca = out.length();
             sangria(nivel + 1);
             out.append(clave).append(": ");
             valor(nivel + 1, clave.substring(1, clave.length() - 1));
+            campos.add(out.substring(marca));
+            out.setLength(marca);
             espacios();
             if (s.charAt(i) == ',') {
                 i++;
@@ -104,7 +107,8 @@ public final class JsonCanonico {
             esperar('}');
             break;
         }
-        out.append('\n');
+        if (ordenar) Collections.sort(campos);
+        out.append("{\n").append(String.join(",\n", campos)).append('\n');
         sangria(nivel);
         out.append('}');
     }
@@ -155,6 +159,9 @@ public final class JsonCanonico {
     private static String mascaraTexto(String literal) {
         String v = literal.substring(1, literal.length() - 1);
         if (JWT.matcher(v).matches()) return "\"<jwt>\"";
+        // Huellas (SHA-256 de datos que incluyen ids) e ids dentro de JSON incrustado en un texto.
+        if (SHA256.matcher(v).matches()) return "\"<sha256>\"";
+        if (ID_EN_TEXTO.matcher(literal).find()) literal = ID_EN_TEXTO.matcher(literal).replaceAll("$1<id>");
         if (CODIGO.matcher(v).matches()) return "\"<codigo XXXX-XXXX-XXXX>\"";
         Matcher es = FECHA_HORA_ES.matcher(v);
         if (es.matches() && es.group(1).equals(java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/yyyy")))) {

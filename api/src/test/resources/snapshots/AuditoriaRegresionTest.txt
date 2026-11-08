@@ -1,0 +1,1184 @@
+### actuator_soloSaludSinDetalles #1
+GET /actuator/health
+200 application/vnd.spring-boot.actuator.v3+json
+{
+  "status": "UP"
+}
+
+### actuator_soloSaludSinDetalles #2
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### actuator_soloSaludSinDetalles #3
+GET /actuator
+200 application/vnd.spring-boot.actuator.v3+json
+{
+  "_links": {
+    "health": {
+      "href": "http://localhost/actuator/health",
+      "templated": false
+    },
+    "health-path": {
+      "href": "http://localhost/actuator/health/{*path}",
+      "templated": true
+    },
+    "self": {
+      "href": "http://localhost/actuator",
+      "templated": false
+    }
+  }
+}
+
+### actuator_soloSaludSinDetalles #4
+GET /actuator
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator"
+}
+
+### actuator_soloSaludSinDetalles #5
+GET /actuator/env
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/env"
+}
+
+### actuator_soloSaludSinDetalles #6
+GET /actuator/env
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/env",
+  "path": "/actuator/env"
+}
+
+### actuator_soloSaludSinDetalles #7
+GET /actuator/beans
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/beans"
+}
+
+### actuator_soloSaludSinDetalles #8
+GET /actuator/beans
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/beans",
+  "path": "/actuator/beans"
+}
+
+### actuator_soloSaludSinDetalles #9
+GET /actuator/heapdump
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/heapdump"
+}
+
+### actuator_soloSaludSinDetalles #10
+GET /actuator/heapdump
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/heapdump",
+  "path": "/actuator/heapdump"
+}
+
+### actuator_soloSaludSinDetalles #11
+GET /actuator/info
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/info"
+}
+
+### actuator_soloSaludSinDetalles #12
+GET /actuator/info
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/info",
+  "path": "/actuator/info"
+}
+
+### actuator_soloSaludSinDetalles #13
+GET /actuator/configprops
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/configprops"
+}
+
+### actuator_soloSaludSinDetalles #14
+GET /actuator/configprops
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/configprops",
+  "path": "/actuator/configprops"
+}
+
+### actuator_soloSaludSinDetalles #15
+GET /actuator/mappings
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/mappings"
+}
+
+### actuator_soloSaludSinDetalles #16
+GET /actuator/mappings
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/mappings",
+  "path": "/actuator/mappings"
+}
+
+### actuator_soloSaludSinDetalles #17
+GET /actuator/loggers
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/loggers"
+}
+
+### actuator_soloSaludSinDetalles #18
+GET /actuator/loggers
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /actuator/loggers",
+  "path": "/actuator/loggers"
+}
+
+### actuator_soloSaludSinDetalles #19
+GET /actuator/health/liveness
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/health/liveness"
+}
+
+### actuator_soloSaludSinDetalles #20
+GET /actuator/health/liveness
+404 -
+<vacío>
+
+### actuator_soloSaludSinDetalles #21
+GET /actuator/health/db
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/actuator/health/db"
+}
+
+### actuator_soloSaludSinDetalles #22
+GET /actuator/health/db
+404 -
+<vacío>
+
+### asignacionMasiva_rolYPropietario_seIgnoran #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #2
+PATCH /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Bea",
+  "email": "bea@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Bea",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #4
+GET /api/usuarios
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/usuarios"
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #5
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Bea 2",
+  "tipo": "vivienda",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 1,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 0,
+    "alquiladas": 0,
+    "disponibles": 0,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #6
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### asignacionMasiva_rolYPropietario_seIgnoran #7
+GET /api/pisos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "tipo": "vivienda",
+    "ciudad": {
+      "id": "<id>",
+      "nombre": "Madrid"
+    },
+    "numeroHabitaciones": 3,
+    "idPropietario": "<id>",
+    "ocupacion": {
+      "total": 1,
+      "alquiladas": 1,
+      "disponibles": 0,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 450.00
+  }
+]
+
+### cabecerasDeSeguridad_enRespuestasBuenasYDeError #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cabecerasDeSeguridad_enRespuestasBuenasYDeError #2
+GET /api/pisos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "tipo": "vivienda",
+    "ciudad": {
+      "id": "<id>",
+      "nombre": "Madrid"
+    },
+    "numeroHabitaciones": 3,
+    "idPropietario": "<id>",
+    "ocupacion": {
+      "total": 1,
+      "alquiladas": 1,
+      "disponibles": 0,
+      "mantenimiento": 0
+    },
+    "ingresosMensuales": 450.00
+  }
+]
+
+### cabecerasDeSeguridad_enRespuestasBuenasYDeError #3
+GET /api/pisos
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/pisos"
+}
+
+### cabecerasDeSeguridad_enRespuestasBuenasYDeError #4
+GET /api/pisos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/{n}"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #2
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #3
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #4
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #5
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #6
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambioDeContrasena_aLosCincoFallos_429 #7
+PUT /api/me/password
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "DEMASIADOS_INTENTOS",
+  "mensaje": "Demasiados intentos. Prueba de nuevo en 15 minutos",
+  "path": "/api/me/password"
+}
+
+### cors_ningunOrigenPermitido #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cors_ningunOrigenPermitido #2
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### cors_ningunOrigenPermitido #3
+OPTIONS /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### cors_ningunOrigenPermitido #4
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cuentaDesactivada_conTokenVigente_401AlMomento #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cuentaDesactivada_conTokenVigente_401AlMomento #2
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### emailInexistente_yContrasenaMala_mismaRespuesta #1
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### emailInexistente_yContrasenaMala_mismaRespuesta #2
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### errores_sinTrazasNiDetallesInternos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### errores_sinTrazasNiDetallesInternos #2
+POST /api/pisos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "JSON_INVALIDO",
+  "mensaje": "El cuerpo de la petición no es un JSON válido",
+  "path": "/api/pisos"
+}
+
+### errores_sinTrazasNiDetallesInternos #3
+GET /api/pisos/abc
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "Valor no válido para 'id'",
+  "path": "/api/pisos/abc"
+}
+
+### errores_sinTrazasNiDetallesInternos #4
+POST /api/gastos/{n}/factura
+415 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 415,
+  "codigo": "TIPO_NO_SOPORTADO",
+  "mensaje": "Tipo de contenido no admitido en esta ruta",
+  "path": "/api/gastos/{n}/factura"
+}
+
+### errores_sinTrazasNiDetallesInternos #5
+GET /api/no-existe
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /api/no-existe",
+  "path": "/api/no-existe"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #2
+GET /api/pisos
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/pisos"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #3
+GET /api/habitaciones
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/habitaciones"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #4
+GET /api/inquilinos
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/inquilinos"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #5
+GET /api/gastos
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/gastos"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #6
+GET /api/usuarios
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/usuarios"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #7
+GET /api/dashboard
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/dashboard"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #8
+GET /api/analisis-inversion
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/analisis-inversion"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #9
+GET /api/buscar?q=Ana
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/buscar"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #10
+POST /api/usuarios
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/usuarios"
+}
+
+### inquilino_soloLoSuyo_ynadaDeGestion #11
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 1,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1H",
+      "dni": "11111111H"
+    },
+    "fechaInicio": "2026-01-01",
+    "fechaFin": "2027-12-31",
+    "precioMensual": 450.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 418
+  }
+]
+
+### jwtManipulado_siempre401 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### jwtManipulado_siempre401 #2
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #3
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #4
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #5
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #6
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #7
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #8
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #9
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #10
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #11
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### jwtManipulado_siempre401 #12
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### jwtManipulado_siempre401 #13
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #2
+GET /api/pisos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #3
+GET /api/habitaciones/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Habitación no encontrado",
+  "path": "/api/habitaciones/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #4
+GET /api/inquilinos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/inquilinos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #5
+GET /api/contratos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #6
+GET /api/contratos/{n}/pdf
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/pdf"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #7
+GET /api/contratos/{n}/fianza
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #8
+GET /api/contratos/{n}/mensajes
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/mensajes"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #9
+GET /api/incidencias/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #10
+GET /api/pagos/{n}/recibo
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Pago no encontrado",
+  "path": "/api/pagos/{n}/recibo"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #11
+GET /api/inquilinos/{n}/qr-pago
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/inquilinos/{n}/qr-pago"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #12
+GET /api/pisos/{n}/ingresos
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/{n}/ingresos"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #13
+GET /api/habitaciones/{n}/inventarios
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Habitación no encontrado",
+  "path": "/api/habitaciones/{n}/inventarios"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #14
+PUT /api/pisos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #15
+DELETE /api/pisos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #16
+DELETE /api/pagos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Pago no encontrado",
+  "path": "/api/pagos/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #17
+DELETE /api/incidencias/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/{n}"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #18
+POST /api/contratos/{n}/finalizar
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/finalizar"
+}
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #19
+GET /api/pisos
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #20
+GET /api/habitaciones
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #21
+GET /api/inquilinos
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #22
+GET /api/contratos
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #23
+GET /api/incidencias
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #24
+GET /api/pagos?mes=2026-02
+200 application/json
+[]
+
+### otroPropietario_noLeeNiCambiaNiBorraNadaAjeno #25
+GET /api/fianzas
+200 application/json
+{
+  "fianzas": [],
+  "totalPendienteDevolver": 0
+}
+
