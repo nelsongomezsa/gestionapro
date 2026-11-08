@@ -17,7 +17,7 @@ enum ContextoPantalla: Equatable, Sendable {
 
     var descripcion: String {
         switch self {
-        case .piso: String(localized: "este piso")
+        case .piso: String(localized: "este inmueble")
         case .contrato: String(localized: "este contrato")
         case .inquilino: String(localized: "este inquilino")
         }

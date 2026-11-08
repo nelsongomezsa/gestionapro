@@ -172,7 +172,7 @@ struct FilaPropuesta: View {
                         Text(Formato.euros(m.importe)).font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.positivo)
                     }
                     Text(m.concepto).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
-                    Text("\(m.fecha.formatted(FormatoFecha.corta)) · Hab. \(p.numeroHabitacion) · renta \(Formato.euros(p.renta))")
+                    Text("\(m.fecha.formatted(FormatoFecha.corta)) · \(p.etiquetaUnidad) · renta \(Formato.euros(p.renta))")
                         .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     HStack(spacing: Tema.Espacio.xxs) {
                         InsigniaEstado(texto: "Confianza \(p.confianza.lowercased())", tono: tono)

@@ -69,8 +69,9 @@ public class HabitacionService {
         h.setNumero(req.numero());
         h.setPrecio(req.precio());
         h.setEstado(req.estado() != null ? req.estado() : EstadoHabitacion.disponible);
+        Unidades.aplicar(h, piso.getTipo(), req.tipo(), req.metros(), req.planta(), req.vehiculo());
         habitaciones.save(h);
-        actividad.registrar(actor.id(), "CREAR_HABITACION", "Hab. " + h.getNumero() + " · " + piso.getDireccion());
+        actividad.registrar(actor.id(), "CREAR_HABITACION", h.etiqueta() + " · " + piso.getDireccion());
         return aRespuestas(List.of(h)).getFirst();
     }
 
@@ -80,11 +81,13 @@ public class HabitacionService {
         Piso piso = acceso.pisoVisible(req.idPiso(), actor);
         exigirNumeroLibre(piso.getId(), req.numero(), id);
         if (req.estado() != null) exigirCambioDeEstadoPermitido(h, req.estado());
+        // El tipo se conserva si no se indica; debe caber en el inmueble (también al moverla de inmueble).
+        Unidades.aplicar(h, piso.getTipo(), req.tipo() != null ? req.tipo() : h.getTipo(), req.metros(), req.planta(), req.vehiculo());
         h.setPiso(piso);
         h.setNumero(req.numero());
         h.setPrecio(req.precio());
         if (req.estado() != null) h.setEstado(req.estado());
-        actividad.registrar(actor.id(), "EDITAR_HABITACION", "Hab. " + h.getNumero() + " · " + piso.getDireccion());
+        actividad.registrar(actor.id(), "EDITAR_HABITACION", h.etiqueta() + " · " + piso.getDireccion());
         return aRespuestas(List.of(h)).getFirst();
     }
 
@@ -94,7 +97,7 @@ public class HabitacionService {
         exigirCambioDeEstadoPermitido(h, estado);
         h.setEstado(estado);
         actividad.registrar(actor.id(), "CAMBIAR_ESTADO_HABITACION",
-                "Hab. " + h.getNumero() + " · " + h.getPiso().getDireccion() + " → " + estado);
+                h.etiqueta() + " · " + h.getPiso().getDireccion() + " → " + estado);
         return aRespuestas(List.of(h)).getFirst();
     }
 
@@ -103,10 +106,10 @@ public class HabitacionService {
         Habitacion h = cargarVisible(id, actor);
         if (contratos.existsByHabitacionId(id) || incidencias.existsByHabitacionId(id)) {
             throw ApiException.conflicto("HABITACION_CON_HISTORIAL",
-                    "No se puede borrar una habitación con contratos o incidencias registrados");
+                    "No se puede borrar " + h.getTipo().conIndefinido() + " con contratos o incidencias registrados");
         }
         habitaciones.delete(h);
-        actividad.registrar(actor.id(), "BORRAR_HABITACION", "Hab. " + h.getNumero() + " · " + h.getPiso().getDireccion());
+        actividad.registrar(actor.id(), "BORRAR_HABITACION", h.etiqueta() + " · " + h.getPiso().getDireccion());
     }
 
     /**
@@ -117,14 +120,14 @@ public class HabitacionService {
         if (h.getEstado() == EstadoHabitacion.alquilada && nuevo != EstadoHabitacion.alquilada
                 && contratos.habitacionTieneContratoActivo(h.getId(), LocalDate.now())) {
             throw ApiException.conflicto("HABITACION_CON_CONTRATO_ACTIVO",
-                    "La habitación tiene un contrato activo: finalízalo antes de cambiar su estado");
+                    h.getTipo().conArticulo() + " tiene un contrato activo: finalízalo antes de cambiar su estado");
         }
     }
 
     private void exigirNumeroLibre(Integer idPiso, int numero, Integer excluirId) {
         if (habitaciones.existeNumeroEnPiso(idPiso, numero, excluirId)) {
             throw ApiException.conflicto("NUMERO_HABITACION_DUPLICADO",
-                    "Ya existe la habitación " + numero + " en este piso");
+                    "Ya existe una unidad con el número " + numero + " en este inmueble");
         }
     }
 
@@ -146,7 +149,8 @@ public class HabitacionService {
         return lista.stream().map(h -> {
             Contrato c = activos.get(h.getId());
             return new HabitacionResponse(
-                    h.getId(), h.getNumero(), h.getPrecio(), h.getEstado(), PisoBreve.de(h.getPiso()),
+                    h.getId(), h.getNumero(), h.getTipo(), h.getMetros(), h.getPlanta(), h.getVehiculo(),
+                    h.getPrecio(), h.getEstado(), PisoBreve.de(h.getPiso()),
                     c == null ? null : new HabitacionResponse.InquilinoActual(c.getInquilino().getId(), c.getInquilino().getNombreCompleto()),
                     c == null ? null : c.getId(),
                     c == null ? null : ChronoUnit.DAYS.between(c.getFechaInicio(), hoy),

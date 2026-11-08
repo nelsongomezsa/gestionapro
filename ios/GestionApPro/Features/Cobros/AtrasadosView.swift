@@ -61,7 +61,7 @@ struct FilaAtrasado: View {
         disposicion {
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(a.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                Text("Hab. \(a.numeroHabitacion) · \(a.piso.direccion)")
+                Text("\(a.etiquetaUnidad) · \(a.piso.direccion)")
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 Label("\(a.mesTitulo) · \(a.diasRetraso) días de retraso", systemImage: "clock.badge.exclamationmark")
                     .font(Tema.Fuente.nota.weight(.semibold))

@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ public record CobroAtrasadoResponse(
         Integer idContrato,
         ContratoResponse.InquilinoBreve inquilino,
         int numeroHabitacion,
+        TipoUnidad tipoUnidad,
         PisoBreve piso,
         @Schema(example = "2026-09") String mes,
         @Schema(example = "septiembre 2026") String nombreMes,

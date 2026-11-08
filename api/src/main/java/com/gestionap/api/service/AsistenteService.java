@@ -105,11 +105,11 @@ public class AsistenteService {
             case "PISO" -> {
                 var piso = acceso.pisoVisible(c.id(), actor);
                 yield "el piso #" + piso.getId() + " («" + limpiarDato(piso.getDireccion()) + "», «" + limpiarDato(piso.getCiudad().getNombre()) + "»"
-                        + ", " + piso.getNumeroHabitaciones() + " habitaciones)";
+                        + ", " + piso.getTipo().name() + ", " + piso.getNumeroHabitaciones() + " " + piso.getTipo().unidadPorDefecto().plural() + ")";
             }
             case "CONTRATO" -> {
                 var k = contratos.cargarVisible(c.id(), actor);
-                yield "el contrato #" + k.getId() + " de «" + limpiarDato(k.getInquilino().getNombreCompleto()) + "» (habitación "
+                yield "el contrato #" + k.getId() + " de «" + limpiarDato(k.getInquilino().getNombreCompleto()) + "» (" + k.getHabitacion().getTipo().nombre() + " "
                         + k.getHabitacion().getNumero() + " de «" + limpiarDato(k.getHabitacion().getPiso().getDireccion()) + "», renta "
                         + k.getPrecioMensual().toPlainString() + " €, del " + k.getFechaInicio() + " al " + k.getFechaFin() + ")";
             }
@@ -277,7 +277,7 @@ public class AsistenteService {
                 .orElseThrow(() -> ApiException.noEncontrado("Habitación"));
         String descripcion = String.valueOf(a.get("descripcion")).trim();
         if (descripcion.isBlank() || descripcion.length() > 255) return new Resultado("Descripción vacía o demasiado larga", true);
-        acciones.add(new Accion("CREAR_INCIDENCIA", "Crear incidencia en la habitación " + h.getNumero() + " de "
+        acciones.add(new Accion("CREAR_INCIDENCIA", "Crear incidencia en " + h.getTipo().nombre() + " " + h.getNumero() + " de "
                 + h.getPiso().getDireccion() + ": " + descripcion,
                 Map.of("idHabitacion", h.getId(), "descripcion", descripcion)));
         return new Resultado("Propuesta preparada. El usuario tiene que confirmarla en la app.", false);
@@ -286,7 +286,7 @@ public class AsistenteService {
     private Resultado proponerRecordatorio(Map<String, Object> a, UsuarioAutenticado actor, List<Accion> acciones) {
         Contrato c = contratos.cargarVisible(entero(a.get("idContrato")), actor);
         String texto = "Hola, " + c.getInquilino().getNombre() + ". Te recuerdo que la renta de "
-                + Textos.mes(YearMonth.now()) + " (" + Textos.euros(c.getPrecioMensual()) + ") de la habitación "
+                + Textos.mes(YearMonth.now()) + " (" + Textos.euros(c.getPrecioMensual()) + ") de " + c.getHabitacion().getTipo().nombre() + " "
                 + c.getHabitacion().getNumero() + " está pendiente. Si ya la has pagado, ignora este mensaje. Gracias.";
         acciones.add(new Accion("RECORDATORIO", "Recordatorio para " + c.getInquilino().getNombreCompleto(),
                 Map.of("idContrato", c.getId(), "texto", texto)));

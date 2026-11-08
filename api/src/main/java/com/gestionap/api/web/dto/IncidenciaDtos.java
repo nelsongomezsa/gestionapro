@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.EstadoIncidencia;
 import com.gestionap.api.domain.Incidencia;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +17,7 @@ public final class IncidenciaDtos {
                                      BigDecimal costeReparacion, HabitacionBreve habitacion, PisoBreve piso,
                                      InquilinoBreve inquilino, @Schema(description = "Días desde que se comunicó") long dias) {
 
-        public record HabitacionBreve(Integer id, int numero) {}
+        public record HabitacionBreve(Integer id, int numero, TipoUnidad tipo) {}
 
         public record InquilinoBreve(Integer id, String nombre) {}
 
@@ -24,7 +25,7 @@ public final class IncidenciaDtos {
             var h = i.getHabitacion();
             return new IncidenciaResponse(i.getId(), i.getDescripcion(), i.getEstado(), i.getFecha(),
                     i.getCosteReparacion() == null ? BigDecimal.ZERO : i.getCosteReparacion(),
-                    new HabitacionBreve(h.getId(), h.getNumero()), PisoBreve.de(h.getPiso()),
+                    new HabitacionBreve(h.getId(), h.getNumero(), h.getTipo()), PisoBreve.de(h.getPiso()),
                     new InquilinoBreve(i.getInquilino().getId(), i.getInquilino().getNombreCompleto()),
                     java.time.temporal.ChronoUnit.DAYS.between(i.getFecha(), hoy));
         }

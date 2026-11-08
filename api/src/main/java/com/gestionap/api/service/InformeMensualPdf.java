@@ -55,9 +55,12 @@ public class InformeMensualPdf {
     private final PagoService pagoService;
     private final PanelService panel;
     private final ControlAcceso acceso;
+    private final com.gestionap.api.repository.PisoRepository pisos;
 
     public InformeMensualPdf(ContratoRepository contratos, PagoRepository pagos, IncidenciaRepository incidencias,
-                             PagoService pagoService, PanelService panel, ControlAcceso acceso) {
+                             PagoService pagoService, PanelService panel, ControlAcceso acceso,
+                             com.gestionap.api.repository.PisoRepository pisos) {
+        this.pisos = pisos;
         this.contratos = contratos;
         this.pagos = pagos;
         this.incidencias = incidencias;
@@ -73,6 +76,7 @@ public class InformeMensualPdf {
         Integer prop = acceso.filtroPropietario(actor);
         ResumenPagosResponse resumen = pagoService.resumen(mes, actor);
         PanelDtos.Ocupacion ocupacion = panel.ocupacion(prop);
+        String unidades = pisos.hayNoViviendas(prop) ? "Unidades" : "Habitaciones";
         LocalDate inicio = mes.atDay(1);
         LocalDate fin = mes.atEndOfMonth();
         List<Contrato> vigentes = contratos.buscar(prop, null, null).stream()
@@ -100,8 +104,8 @@ public class InformeMensualPdf {
             seccion(doc, "RESUMEN EJECUTIVO", negrita);
             Table t = new Table(UnitValue.createPercentArray(new float[]{3, 2})).useAllAvailableWidth();
             String[][] filas = {
-                    {"Habitaciones totales", String.valueOf(ocupacion.habitaciones())},
-                    {"Habitaciones alquiladas", String.valueOf(ocupacion.alquiladas())},
+                    {unidades + " totales", String.valueOf(ocupacion.habitaciones())},
+                    {unidades + " alquiladas", String.valueOf(ocupacion.alquiladas())},
                     {"Tasa de ocupación", String.format(Textos.ES, "%.1f %%", ocupacion.porcentaje())},
                     {"Contratos activos en el mes", String.valueOf(vigentes.size())},
                     {"Ingresos esperados", euros.format(resumen.esperado())},
@@ -119,10 +123,10 @@ public class InformeMensualPdf {
             if (vigentes.isEmpty()) {
                 vacio(doc, "Sin contratos activos en este mes.", normal);
             } else {
-                Table tc = cabecera(new float[]{2.5f, 1, 2.5f, 1.2f, 1.5f}, negrita, "INQUILINO", "HAB.", "DIRECCIÓN", "€/MES", "FIN CONTRATO");
+                Table tc = cabecera(new float[]{2.5f, 1, 2.5f, 1.2f, 1.5f}, negrita, "INQUILINO", "UNIDAD", "DIRECCIÓN", "€/MES", "FIN CONTRATO");
                 for (Contrato c : vigentes) {
                     tc.addCell(celda(c.getInquilino().getNombreCompleto(), normal, false));
-                    tc.addCell(celda(String.valueOf(c.getHabitacion().getNumero()), normal, false));
+                    tc.addCell(celda(c.getHabitacion().etiqueta(), normal, false));
                     tc.addCell(celda(c.getHabitacion().getPiso().getDireccion(), normal, false));
                     tc.addCell(celda(euros.format(c.getPrecioMensual()), normal, true));
                     tc.addCell(celda(c.getFechaFin().format(FECHA), normal, false));
@@ -153,10 +157,10 @@ public class InformeMensualPdf {
             if (pendientes.isEmpty()) {
                 vacio(doc, "Sin incidencias pendientes.", normal);
             } else {
-                Table ti = cabecera(new float[]{3f, 1f, 2f, 1.5f}, negrita, "DESCRIPCIÓN", "HAB.", "INQUILINO", "FECHA");
+                Table ti = cabecera(new float[]{3f, 1f, 2f, 1.5f}, negrita, "DESCRIPCIÓN", "UNIDAD", "INQUILINO", "FECHA");
                 for (Incidencia i : pendientes) {
                     ti.addCell(celda(i.getDescripcion(), normal, false));
-                    ti.addCell(celda(String.valueOf(i.getHabitacion().getNumero()), normal, false));
+                    ti.addCell(celda(i.getHabitacion().etiqueta(), normal, false));
                     ti.addCell(celda(i.getInquilino().getNombreCompleto(), normal, false));
                     ti.addCell(celda(i.getFecha().format(FECHA), normal, false));
                 }

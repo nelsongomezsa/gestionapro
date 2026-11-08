@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.service.CalculadoraFinancieraPiso.Calificacion;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 public record PisoResponse(
         Integer id,
         String direccion,
+        @Schema(description = "vivienda, garajes o trasteros") TipoInmueble tipo,
         CiudadResponse ciudad,
         int numeroHabitaciones,
         Integer idPropietario,

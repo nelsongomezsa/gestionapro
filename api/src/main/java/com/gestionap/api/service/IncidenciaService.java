@@ -100,7 +100,7 @@ public class IncidenciaService {
         i.setFecha(req.fecha() != null ? req.fecha() : hoy);
         i.setCosteReparacion(actor.rol() == Rol.INQUILINO || req.costeReparacion() == null ? BigDecimal.ZERO : req.costeReparacion());
         incidencias.save(i);
-        actividad.registrar(actor.id(), "CREAR_INCIDENCIA", "Hab. " + h.getNumero() + " · " + i.getDescripcion());
+        actividad.registrar(actor.id(), "CREAR_INCIDENCIA", h.etiqueta() + " · " + i.getDescripcion());
         return IncidenciaResponse.de(i, hoy);
     }
 

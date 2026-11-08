@@ -1,7 +1,8 @@
 import Foundation
 import Observation
 
-/// Alta de un piso en tres pasos: datos básicos, habitaciones con precio y datos financieros (opcional).
+/// Alta de un inmueble en tres pasos: tipo y datos básicos, unidades con precio (habitaciones, plazas o
+/// trasteros, con m² y planta en los dos últimos) y datos financieros (opcional).
 /// Toda la validación está aquí (sin vista) para mostrarla en directo y probarla.
 @MainActor
 @Observable
@@ -9,10 +10,10 @@ final class NuevoPisoViewModel {
     enum Paso: Int, CaseIterable, Sendable {
         case basicos, habitaciones, financieros
 
-        var titulo: String {
+        func titulo(_ tipo: TipoInmueble) -> String {
             switch self {
             case .basicos: String(localized: "Datos básicos")
-            case .habitaciones: String(localized: "Habitaciones")
+            case .habitaciones: tipo.unidad.plural
             case .financieros: String(localized: "Datos financieros")
             }
         }
@@ -24,10 +25,16 @@ final class NuevoPisoViewModel {
         var precio: Double
     }
 
-    static let maxHabitaciones = 50
+    static let maxHabitaciones = TipoInmueble.vivienda.maximoUnidades
     static let maxPrecio = 99_999.99
 
     var paso: Paso = .basicos
+    /// Lo primero que se pregunta: qué se da de alta.
+    private(set) var tipo: TipoInmueble = .vivienda
+    /// Garajes y trasteros: m² y planta de todas las unidades (opcionales) y, en plazas, para qué vehículo.
+    var metros = 0.0
+    var planta = ""
+    var vehiculo: Vehiculo? = .coche
     var direccion = ""
     private(set) var ciudades: [Piso.Ciudad] = []
     /// Ciudad elegida; nil con "Otra ciudad" (se da de alta con `nuevaCiudad`).
@@ -48,8 +55,28 @@ final class NuevoPisoViewModel {
     /// Cambia el número de habitaciones: añade al final (con el precio de la última) o quita las últimas,
     /// sin tocar las que ya se han editado.
     func cambiarNumero(_ n: Int) {
-        numeroHabitaciones = min(max(n, 1), Self.maxHabitaciones)
+        numeroHabitaciones = min(max(n, 1), tipo.maximoUnidades)
         ajustarHabitaciones()
+    }
+
+    /// Cambia el tipo: un garaje o unos trasteros suelen tener más unidades (10 de partida).
+    func cambiarTipo(_ nuevo: TipoInmueble) {
+        guard nuevo != tipo else { return }
+        tipo = nuevo
+        cambiarNumero(nuevo == .vivienda ? min(numeroHabitaciones, nuevo.maximoUnidades) : max(numeroHabitaciones, 10))
+    }
+
+    var errorMetros: String? {
+        metros < 0 || metros > 9_999 ? String(localized: "Superficie entre 0 y 9.999 m²") : nil
+    }
+
+    var errorPlanta: String? {
+        let t = planta.trimmingCharacters(in: .whitespaces)
+        if t.count > 20 { return String(localized: "Máximo 20 caracteres") }
+        if !t.isEmpty, t.range(of: #"^[\p{L}\p{N} .ºª-]*$"#, options: .regularExpression) == nil {
+            return String(localized: "Solo letras, números, espacios y guiones")
+        }
+        return nil
     }
 
     private func ajustarHabitaciones() {
@@ -115,7 +142,7 @@ final class NuevoPisoViewModel {
 
     func puedeAvanzar(desde paso: Paso) -> Bool {
         switch paso {
-        case .basicos: errorDireccion == nil && errorCiudad == nil
+        case .basicos: errorDireccion == nil && errorCiudad == nil && (tipo == .vivienda || (errorMetros == nil && errorPlanta == nil))
         case .habitaciones: habitacionesValidas
         case .financieros: true
         }
@@ -138,13 +165,20 @@ final class NuevoPisoViewModel {
 
     /// La petición que se envía (sin la ciudad nueva, que se da de alta antes).
     func peticion(idCiudad: Int) -> PisoRequest {
-        PisoRequest(direccion: direccion.trimmingCharacters(in: .whitespacesAndNewlines),
+        let otro = tipo != .vivienda
+        let plantaLimpia = planta.trimmingCharacters(in: .whitespaces)
+        return PisoRequest(direccion: direccion.trimmingCharacters(in: .whitespacesAndNewlines),
                     numeroHabitaciones: numeroHabitaciones, idCiudad: idCiudad,
                     datosFinancieros: conDatosFinancieros ? datos : nil,
                     habitaciones: habitaciones.map {
                         PisoRequest.HabitacionInicial(numero: $0.numero,
-                                                      precio: Decimal(string: String(format: "%.2f", $0.precio)) ?? 0)
-                    })
+                                                      precio: Decimal(string: String(format: "%.2f", $0.precio)) ?? 0,
+                                                      tipo: otro ? tipo.unidad : nil,
+                                                      metros: otro && metros > 0 ? Decimal(string: String(format: "%.2f", metros)) : nil,
+                                                      planta: otro && !plantaLimpia.isEmpty ? plantaLimpia : nil,
+                                                      vehiculo: tipo == .garajes ? vehiculo : nil)
+                    },
+                    tipo: tipo)
     }
 
     /// Da de alta la ciudad si es nueva y crea el piso con sus habitaciones. Devuelve el piso creado.

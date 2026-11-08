@@ -34,8 +34,16 @@ public class Contrato {
     @Column(name = "fecha_fin", nullable = false)
     private LocalDate fechaFin;
 
+    /** Lo que paga el inquilino cada mes: con el IVA incluido si aplicaIva. */
     @Column(name = "precio_mensual", nullable = false, precision = 8, scale = 2)
     private BigDecimal precioMensual;
+
+    /** V12: el recibo desglosa base e IVA (garajes y trasteros). */
+    @Column(name = "aplica_iva", nullable = false)
+    private boolean aplicaIva;
+
+    @Column(name = "iva_pct", precision = 5, scale = 2)
+    private BigDecimal ivaPct;
 
     /** Misma regla que el escritorio (ContratoDAO.listarActivos). */
     public boolean estaActivoEn(LocalDate dia) {

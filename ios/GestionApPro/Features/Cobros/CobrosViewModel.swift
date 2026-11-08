@@ -10,6 +10,10 @@ final class CobrosViewModel {
     /// Meses anteriores sin pago (no dependen del mes elegido).
     private(set) var atrasados: [CobroAtrasado] = []
     var filtroInquilino: Int?
+    /// Filtro por tipo de inmueble (nil: todos). Lo aplica la API: el resumen del mes cambia con él.
+    var tipo: TipoInmueble?
+    /// Tipos de la cartera: el filtro solo se muestra si hay más de uno.
+    private(set) var tiposPresentes: [TipoInmueble] = []
     var busqueda = ""
     var error: String?
 
@@ -19,7 +23,7 @@ final class CobrosViewModel {
         return pagos.filter { p in
             (filtroInquilino == nil || p.inquilino.id == filtroInquilino)
                 && (t.isEmpty || p.inquilino.nombre.localizedStandardContains(t) || p.piso.direccion.localizedStandardContains(t)
-                    || String(p.numeroHabitacion) == t)
+                    || String(p.numeroHabitacion) == t || p.etiquetaUnidad.localizedStandardContains(t))
         }
     }
 
@@ -43,14 +47,19 @@ final class CobrosViewModel {
     func cargar(con api: APIClient) async {
         if resumen.valor == nil { resumen = .cargando }
         do {
-            async let r = api.enviar(.resumenPagos(mes: mes))
-            async let p = api.enviar(.pagos(mes: mes))
-            async let a = try? api.enviar(.cobrosAtrasados())
+            async let r = api.enviar(.resumenPagos(mes: mes, tipo: tipo))
+            async let p = api.enviar(.pagos(mes: mes, tipo: tipo))
+            async let a = try? api.enviar(.cobrosAtrasados(tipo: tipo))
+            async let pisos = try? api.enviar(.pisos)
             let (nuevoResumen, nuevosPagos) = try await (r, p)
             resumen = .cargado(nuevoResumen)
             pagos = nuevosPagos
             // Un fallo aquí no debe tapar el resumen del mes: se muestra lo que haya.
             if let lista = await a { atrasados = lista }
+            if let lista = await pisos {
+                let presentes = Set(lista.map(\.tipoInmueble))
+                tiposPresentes = TipoInmueble.allCases.filter(presentes.contains)
+            }
             if let f = filtroInquilino, !inquilinosDelMes.contains(where: { $0.id == f }) { filtroInquilino = nil }
         } catch let e as APIError {
             if case .noAutorizado = e { return }

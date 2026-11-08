@@ -24,4 +24,7 @@ public record RentabilidadRequest(
         @Schema(description = "% del precio de compra financiado con hipoteca")
         @PositiveOrZero @DecimalMax("100") Double porcentajeFinanciado,
         @Min(0) @Max(50) Integer plazoAnos,
-        @PositiveOrZero @DecimalMax("100") Double tipoInteresPct) {}
+        @PositiveOrZero @DecimalMax("100") Double tipoInteresPct,
+        @Schema(description = "Opcional: qué se compra (vivienda, garajes = una plaza, trasteros = un trastero). "
+                + "No cambia el cálculo; se guarda con el análisis")
+        com.gestionap.api.domain.TipoInmueble tipoInmueble) {}

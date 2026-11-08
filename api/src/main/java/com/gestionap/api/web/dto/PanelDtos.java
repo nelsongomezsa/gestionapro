@@ -23,7 +23,9 @@ public final class PanelDtos {
     public record Ocupacion(long habitaciones, long alquiladas, long disponibles, long mantenimiento,
                             @Schema(description = "Porcentaje, p. ej. 66.67") double porcentaje,
                             @Schema(description = "Mismos umbrales que el escritorio: ≥ 75 % saludable, ≥ 40 % media")
-                            String salud) {}
+                            String salud,
+                            @Schema(description = "V12: hay garajes o trasteros (la app dice entonces \"unidades\")")
+                            boolean conOtrosTipos) {}
 
     public record Alerta(@Schema(example = "CONTRATOS_POR_VENCER") String tipo, String titulo, String mensaje,
                          @Schema(example = "aviso") String tono) {}

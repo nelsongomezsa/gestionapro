@@ -123,7 +123,7 @@ struct FilaGasto: View {
 
     private var detalle: String {
         var partes = [gasto.categoria.nombre, gasto.fecha.formatted(FormatoFecha.corta)]
-        if let h = gasto.numeroHabitacion { partes.append("Hab. \(h)") }
+        if let h = gasto.numeroHabitacion { partes.append((gasto.tipoUnidad ?? .habitacion).etiqueta(h)) }
         if gasto.tieneFactura { partes.append("con factura") }
         if !gasto.deducible { partes.append("no deducible") }
         return partes.joined(separator: " · ")
@@ -176,9 +176,9 @@ struct GastoFormView: View {
             }
             .filaLista()
             Section {
-                Picker("Habitación", selection: $idHabitacion) {
-                    Text("Todo el piso").tag(Int?.none)
-                    ForEach(habitaciones) { h in Text("Habitación \(h.numero)").tag(Int?.some(h.id)) }
+                Picker(String(localized: "Unidad"), selection: $idHabitacion) {
+                    Text("Todo el inmueble").tag(Int?.none)
+                    ForEach(habitaciones) { h in Text("\(h.titulo)").tag(Int?.some(h.id)) }
                 }
                 Toggle("Deducible en el IRPF", isOn: $deducible)
             } footer: {

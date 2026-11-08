@@ -1,5 +1,6 @@
 package com.gestionap.api.web;
 
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.AnalisisService;
 import com.gestionap.api.service.InformeMensualPdf;
@@ -58,8 +59,10 @@ public class PanelController {
             @Parameter(example = "2026-12-31") @RequestParam LocalDate hasta,
             @RequestParam(required = false) Integer piso,
             @RequestParam(required = false) Integer habitacion,
+            @Parameter(description = "Opcional, solo en la cartera: vivienda, garajes o trasteros")
+            @RequestParam(required = false) TipoInmueble tipo,
             @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return analisis.analizar(desde, hasta, piso, habitacion, actor);
+        return analisis.analizar(desde, hasta, piso, habitacion, tipo, actor);
     }
 
     @Operation(summary = "Calendario del mes: estado de cada día (pagado, esperado, vencido), pagos y fines de contrato")

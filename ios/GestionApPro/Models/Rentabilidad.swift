@@ -19,6 +19,8 @@ struct RentabilidadRequest: Codable, Equatable, Hashable, Sendable {
     var porcentajeFinanciado: Double
     var plazoAnos: Int
     var tipoInteresPct: Double
+    /// V12: qué se compra (vivienda, una plaza o un trastero). No cambia el cálculo; se guarda con el análisis.
+    var tipoInmueble: TipoInmueble? = nil
 }
 
 extension RentabilidadRequest {
@@ -33,7 +35,8 @@ extension RentabilidadRequest {
                   comunidadMensual: try n(.comunidadMensual), mantenimientoMensual: try n(.mantenimientoMensual),
                   vacioMensual: try n(.vacioMensual), alquilerMensual: try n(.alquilerMensual),
                   revalorizacionAnualPct: try n(.revalorizacionAnualPct), porcentajeFinanciado: try n(.porcentajeFinanciado),
-                  plazoAnos: try c.decodeIfPresent(Int.self, forKey: .plazoAnos) ?? 0, tipoInteresPct: try n(.tipoInteresPct))
+                  plazoAnos: try c.decodeIfPresent(Int.self, forKey: .plazoAnos) ?? 0, tipoInteresPct: try n(.tipoInteresPct),
+                  tipoInmueble: try c.decodeIfPresent(TipoInmueble.self, forKey: .tipoInmueble))
     }
 }
 

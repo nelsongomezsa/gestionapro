@@ -1,5 +1,6 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.Gasto;
 import com.gestionap.api.domain.Habitacion;
@@ -59,13 +60,20 @@ public class AnalisisService {
     @Transactional(readOnly = true)
     public AnalisisResponse analizar(LocalDate desde, LocalDate hasta, Integer idPiso, Integer idHabitacion,
                                      UsuarioAutenticado actor) {
+        return analizar(desde, hasta, idPiso, idHabitacion, null, actor);
+    }
+
+    /** {@code tipo} filtra la cartera por tipo de inmueble; con un piso o habitación concretos no se usa. */
+    @Transactional(readOnly = true)
+    public AnalisisResponse analizar(LocalDate desde, LocalDate hasta, Integer idPiso, Integer idHabitacion,
+                                     TipoInmueble tipo, UsuarioAutenticado actor) {
         if (desde == null || hasta == null) throw ApiException.badRequest("PERIODO_INVALIDO", "Indica desde y hasta");
         if (hasta.isBefore(desde)) throw ApiException.badRequest("PERIODO_INVALIDO", "hasta no puede ser anterior a desde");
         if (ChronoUnit.DAYS.between(desde, hasta) > DIAS_MAX) {
             throw ApiException.badRequest("PERIODO_INVALIDO", "El periodo no puede superar 5 años");
         }
         if (desde.getYear() < 2000) throw ApiException.badRequest("PERIODO_INVALIDO", "desde debe ser posterior a 2000");
-        Ambito ambito = ambito(idPiso, idHabitacion, actor);
+        Ambito ambito = ambito(idPiso, idHabitacion, tipo, actor);
         LocalDate hoy = LocalDate.now();
         Integer prop = acceso.filtroPropietario(actor);
 
@@ -102,7 +110,7 @@ public class AnalisisService {
                 morosidad(ambito.contratos(), actual.pagos, desde, hasta, hoy));
     }
 
-    private Ambito ambito(Integer idPiso, Integer idHabitacion, UsuarioAutenticado actor) {
+    private Ambito ambito(Integer idPiso, Integer idHabitacion, TipoInmueble tipo, UsuarioAutenticado actor) {
         Integer prop = acceso.filtroPropietario(actor);
         if (idHabitacion != null) {
             Habitacion h = habitaciones.findConPisoById(idHabitacion)
@@ -120,6 +128,12 @@ public class AnalisisService {
             acceso.pisoVisible(idPiso, actor);
             return new Ambito("PISO", habitaciones.buscar(prop, idPiso, null), contratos.buscar(prop, null, idPiso),
                     g -> g.getPiso().getId().equals(idPiso));
+        }
+        if (tipo != null) {
+            return new Ambito("CARTERA",
+                    habitaciones.buscar(prop, null, null).stream().filter(h -> h.getPiso().getTipo() == tipo).toList(),
+                    contratos.buscar(prop, null, null).stream().filter(c -> c.getHabitacion().getPiso().getTipo() == tipo).toList(),
+                    g -> g.getPiso().getTipo() == tipo);
         }
         return new Ambito("CARTERA", habitaciones.buscar(prop, null, null), contratos.buscar(prop, null, null), g -> true);
     }

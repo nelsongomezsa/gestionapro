@@ -21,7 +21,7 @@ struct LoginView: View {
                         .accessibilityHidden(true)
                     Text("GestionAp PRO")
                         .font(Tema.Fuente.tituloMarca)
-                    Text("Gestión de alquiler de habitaciones")
+                    Text("Alquiler de habitaciones, garajes y trasteros")
                         .foregroundStyle(Tema.Color.textoSecundario)
                         .multilineTextAlignment(.center)
                 }

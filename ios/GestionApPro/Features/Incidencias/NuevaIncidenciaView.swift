@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Nueva incidencia. El propietario elige piso y habitación; un inquilino solo la describe
-/// (la API usa la habitación de su contrato activo).
+/// Nueva incidencia. El propietario elige inmueble y unidad; un inquilino solo la describe
+/// (la API usa la unidad de su contrato activo). Propone incidencias típicas según el tipo
+/// (puerta automática o iluminación en un garaje, humedades en un trastero...).
 struct NuevaIncidenciaView: View {
     @Environment(SesionStore.self) private var sesion
     @Environment(\.dismiss) private var cerrar
@@ -17,6 +18,14 @@ struct NuevaIncidenciaView: View {
     @State private var error: String?
     @State private var clasificacion: ClasificacionIncidencia?
     @State private var clasificando = false
+    /// Del inquilino: el tipo de lo que tiene alquilado (para las incidencias típicas).
+    @State private var unidadInquilino: TipoUnidad = .habitacion
+
+    private var unidad: TipoUnidad {
+        gestiona ? (habitaciones.first { $0.id == idHabitacion }?.unidad
+                    ?? pisos.first { $0.id == idPiso }?.tipoInmueble.unidad ?? .habitacion)
+                 : unidadInquilino
+    }
 
     private var gestiona: Bool { sesion.usuario?.rol.gestionaPisos == true }
 
@@ -25,14 +34,14 @@ struct NuevaIncidenciaView: View {
             Form {
                 if gestiona {
                     Section("Dónde") {
-                        Picker("Piso", selection: $idPiso) {
-                            Text("Elige un piso").tag(Int?.none)
+                        Picker("Inmueble", selection: $idPiso) {
+                            Text("Elige un inmueble").tag(Int?.none)
                             ForEach(pisos) { Text($0.direccion).tag(Int?.some($0.id)) }
                         }
-                        Picker("Habitación", selection: $idHabitacion) {
-                            Text("Elige una habitación").tag(Int?.none)
+                        Picker(unidad.nombre, selection: $idHabitacion) {
+                            Text(unidad.elige).tag(Int?.none)
                             ForEach(habitaciones) { h in
-                                Text("Hab. \(h.numero)\(h.inquilinoActual.map { " · \($0.nombre)" } ?? "")").tag(Int?.some(h.id))
+                                Text("\(h.etiqueta)\(h.inquilinoActual.map { " · \($0.nombre)" } ?? "")").tag(Int?.some(h.id))
                             }
                         }
                         .disabled(idPiso == nil)
@@ -41,6 +50,19 @@ struct NuevaIncidenciaView: View {
                 }
                 Section {
                     TextField("Describe el problema", text: $descripcion, axis: .vertical).lineLimit(3...6)
+                    if descripcion.isEmpty {
+                        // Incidencias típicas del tipo de unidad: un toque rellena la descripción.
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: Tema.Espacio.xs) {
+                                ForEach(unidad.incidenciasTipicas, id: \.self) { t in
+                                    Button(t) { descripcion = t }
+                                        .buttonStyle(.bordered)
+                                        .font(Tema.Fuente.nota)
+                                }
+                            }
+                        }
+                        .accessibilityIdentifier("incidenciasTipicas")
+                    }
                     if gestiona && descripcion.count >= 10 {
                         if clasificando {
                             HStack { ProgressView(); Text("Clasificando…") }
@@ -82,7 +104,13 @@ struct NuevaIncidenciaView: View {
                     }
                 }
             }
-            .task { if gestiona { pisos = (try? await sesion.api.enviar(.pisos)) ?? [] } }
+            .task {
+                if gestiona {
+                    pisos = (try? await sesion.api.enviar(.pisos)) ?? []
+                } else if let c = ((try? await sesion.api.enviar(.contratos(filtro: .activos))) ?? []).first {
+                    unidadInquilino = c.habitacion.unidad
+                }
+            }
             .onChange(of: idPiso) {
                 idHabitacion = nil
                 Task { habitaciones = idPiso == nil ? [] : ((try? await sesion.api.enviar(.habitaciones(piso: idPiso))) ?? []) }

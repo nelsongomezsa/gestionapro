@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.ElementoInventario;
 import com.gestionap.api.domain.Inventario;
 import jakarta.validation.Valid;
@@ -37,6 +38,7 @@ public final class InventarioDtos {
             Integer id,
             Integer idHabitacion,
             int numeroHabitacion,
+            TipoUnidad tipoUnidad,
             PisoBreve piso,
             Integer idContrato,
             String inquilino,
@@ -48,7 +50,7 @@ public final class InventarioDtos {
         public static InventarioResponse de(Inventario i) {
             var h = i.getHabitacion();
             var c = i.getContrato();
-            return new InventarioResponse(i.getId(), h.getId(), h.getNumero(), PisoBreve.de(h.getPiso()),
+            return new InventarioResponse(i.getId(), h.getId(), h.getNumero(), h.getTipo(), PisoBreve.de(h.getPiso()),
                     c != null ? c.getId() : null, c != null ? c.getInquilino().getNombreCompleto() : null,
                     i.getTipo(), i.getFecha(), i.getObservaciones(), i.getElementos().stream().map(Elemento::de).toList());
         }

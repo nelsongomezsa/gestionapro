@@ -52,6 +52,7 @@ struct Gasto: Decodable, Identifiable, Hashable, Sendable {
     let direccionPiso: String
     let idHabitacion: Int?
     let numeroHabitacion: Int?
+    var tipoUnidad: TipoUnidad? = nil
     /// Viene de una incidencia resuelta con coste (su importe se cambia en la incidencia).
     let idIncidencia: Int?
     let categoria: CategoriaGasto

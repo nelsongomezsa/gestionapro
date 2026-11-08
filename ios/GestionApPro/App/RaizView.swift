@@ -85,7 +85,7 @@ struct PestanasView: View {
     private var items: [ItemPestana] {
         if usuario.rol.gestionaPisos {
             [ItemPestana(pestana: .inicio, titulo: "Inicio", nombre: "Inicio", icono: "house"),
-             ItemPestana(pestana: .pisos, titulo: "Pisos", nombre: "Pisos", icono: "building.2"),
+             ItemPestana(pestana: .pisos, titulo: "Inmuebles", nombre: "Inmuebles", icono: "building.2"),
              ItemPestana(pestana: .cobros, titulo: "Cobros", nombre: "Cobros", icono: "eurosign.circle"),
              ItemPestana(pestana: .mensajes, titulo: "Mensajes", nombre: "Mensajes", icono: "bubble.left.and.bubble.right", globo: buzon.sinLeer),
              ItemPestana(pestana: .mas, titulo: "Más", nombre: "Más", icono: "ellipsis.circle")]

@@ -34,6 +34,22 @@ struct CalculadoraView: View {
             }
             .filaLista()
 
+            Section {
+                Picker("Qué compras", selection: Binding(get: { vm.entrada.tipoInmueble ?? .vivienda },
+                                                         set: { vm.entrada.tipoInmueble = $0 == .vivienda ? nil : $0 })) {
+                    ForEach(TipoInmueble.allCases) { Text($0.nombreCompra).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .accessibilityIdentifier("tipoCompra")
+            } header: {
+                Text("Qué compras")
+            } footer: {
+                if (vm.entrada.tipoInmueble ?? .vivienda) != .vivienda {
+                    Text("El cálculo es el mismo: pon el precio, los gastos y el alquiler de la plaza o el trastero. La calculadora usa el tipo general de ITP de cada comunidad.")
+                }
+            }
+            .filaLista()
+
             Section("Impuesto de transmisiones") {
                 Picker("Comunidad autónoma", selection: $vm.entrada.comunidad) {
                     if vm.comunidades.isEmpty {

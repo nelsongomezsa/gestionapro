@@ -23,7 +23,7 @@ struct MiAlquilerView: View {
                                         accesorio: AnyView(InsigniaEstado(texto: c.activo ? c.vencimiento.estadoCorto : "Finalizado",
                                                                           tono: c.activo ? c.vencimiento.tono : .neutro))) {
                                 VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
-                                    Text("Habitación \(c.habitacion.numero)").font(Tema.Fuente.subtitulo)
+                                    Text("\(c.habitacion.titulo)").font(Tema.Fuente.subtitulo)
                                     Text("\(c.piso.direccion), \(c.piso.ciudad)")
                                         .font(Tema.Fuente.detalle)
                                         .foregroundStyle(Tema.Color.textoSecundario)
@@ -50,9 +50,9 @@ struct MiAlquilerView: View {
                                 Label("Ver contrato (PDF)", systemImage: "doc.text.magnifyingglass")
                             }
                             NavigationLink {
-                                InventariosView(idHabitacion: c.habitacion.id, titulo: "Inventarios")
+                                InventariosView(idHabitacion: c.habitacion.id, titulo: String(localized: "Inventarios"), unidad: c.habitacion.unidad)
                             } label: {
-                                Label("Inventarios de la habitación", systemImage: "checklist")
+                                Label(c.habitacion.unidad.inventarios, systemImage: "checklist")
                             }
                         }
                         .filaLista()

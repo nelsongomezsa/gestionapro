@@ -14,7 +14,7 @@ struct BuscarView: View {
     var body: some View {
         List {
             if let r = resultados, consulta.count >= 2 {
-                grupo("Pisos", icono: "building.2", r.pisos) { DestinoInicio.piso($0) }
+                grupo("Inmuebles", icono: "building.2", r.pisos) { DestinoInicio.piso($0) }
                 grupo("Inquilinos", icono: "person", r.inquilinos) { DestinoInicio.inquilino($0) }
                 grupo("Contratos", icono: "doc.text", r.contratos) { DestinoInicio.contrato($0) }
                 grupo("Incidencias", icono: "wrench.and.screwdriver", r.incidencias) { DestinoInicio.incidencia($0) }
@@ -32,7 +32,7 @@ struct BuscarView: View {
             }
         }
         .navigationTitle("Buscar")
-        .searchable(text: $texto, placement: .navigationBarDrawer(displayMode: .always), prompt: "Pisos, inquilinos, contratos…")
+        .searchable(text: $texto, placement: .navigationBarDrawer(displayMode: .always), prompt: "Inmuebles, inquilinos, contratos…")
         .autocorrectionDisabled()
         .task(id: consulta) { await buscar() }
     }

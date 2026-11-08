@@ -118,13 +118,14 @@ struct IndicadoresInicio: View {
         let abiertas = d.incidenciasPendientes + d.incidenciasEnProceso
         Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
             GridRow {
-                tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada piso") {
+                tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada inmueble") {
                     TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
                                icono: "chart.pie", tono: d.ocupacion.tono,
-                               detalle: String(localized: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) habitaciones"))
+                               detalle: String(localized: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) \(d.ocupacion.plural)"))
                 }
-                tocable("kpiLibres", .habitacionesLibres, pista: "Abre la lista de habitaciones libres") {
-                    TarjetaKPI(titulo: "Habitaciones libres", valor: "\(d.ocupacion.disponibles)",
+                tocable("kpiLibres", .habitacionesLibres, pista: d.ocupacion.conOtrosTipos == true
+                        ? String(localized: "Abre la lista de unidades libres") : String(localized: "Abre la lista de habitaciones libres")) {
+                    TarjetaKPI(titulo: d.ocupacion.conOtrosTipos == true ? String(localized: "Unidades libres") : String(localized: "Habitaciones libres"), valor: "\(d.ocupacion.disponibles)",
                                icono: "door.left.hand.open", tono: .primario,
                                detalle: String(localized: "\(d.ocupacion.mantenimiento) en mantenimiento"))
                 }
@@ -214,7 +215,7 @@ struct VencimientosInicio: View {
                             Text(c.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
                                 .lineLimit(2)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
+                            Text("\(c.habitacion.etiqueta) · \(c.piso.direccion)")
                                 .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                         }
                         Spacer(minLength: Tema.Espacio.xs)

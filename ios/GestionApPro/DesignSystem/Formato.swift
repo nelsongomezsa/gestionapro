@@ -98,7 +98,8 @@ enum Formato {
 
     static func anios(_ valor: Double?) -> String {
         guard let valor else { return "—" }
-        return valor.formatted(.number.precision(.fractionLength(1)).locale(locale)) + " años"
+        let numero = valor.formatted(.number.precision(.fractionLength(1)).locale(locale))
+        return String(localized: "\(numero) años")
     }
 
     static func anios(_ valor: Decimal?) -> String {

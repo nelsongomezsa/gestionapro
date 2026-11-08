@@ -1,6 +1,7 @@
 package com.gestionap.api.service;
 
 import com.gestionap.api.domain.DatosPiso;
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.domain.EstadoHabitacion;
 import com.gestionap.api.domain.Gasto;
 import com.gestionap.api.domain.Habitacion;
@@ -60,6 +61,12 @@ public class PisoService {
         return aRespuestas(lista);
     }
 
+    /** Si hay garajes o trasteros en la cartera (los textos dicen entonces "unidades"). */
+    @Transactional(readOnly = true)
+    public boolean hayNoViviendas(Integer idPropietario) {
+        return pisos.hayNoViviendas(idPropietario);
+    }
+
     @Transactional(readOnly = true)
     public PisoResponse obtener(Integer id, UsuarioAutenticado actor) {
         return aRespuestas(List.of(cargarPropio(id, actor))).getFirst();
@@ -68,17 +75,24 @@ public class PisoService {
     @Transactional
     public PisoResponse crear(PisoRequest req, UsuarioAutenticado actor) {
         var iniciales = req.habitaciones();
+        TipoInmueble tipo = req.tipo() != null ? req.tipo() : TipoInmueble.vivienda;
+        if (tipo == TipoInmueble.vivienda && req.numeroHabitaciones() > PisoRequest.MAX_HABITACIONES_VIVIENDA) {
+            throw ApiException.badRequest("HABITACIONES_INVALIDAS",
+                    "Una vivienda admite como máximo " + PisoRequest.MAX_HABITACIONES_VIVIENDA + " habitaciones");
+        }
         if (iniciales != null) {
             if (iniciales.size() != req.numeroHabitaciones()) {
                 throw ApiException.badRequest("HABITACIONES_INVALIDAS",
                         "Envía tantas habitaciones como indica numeroHabitaciones (" + req.numeroHabitaciones() + ")");
             }
             if (iniciales.stream().map(PisoRequest.HabitacionInicial::numero).distinct().count() != iniciales.size()) {
-                throw ApiException.badRequest("HABITACIONES_INVALIDAS", "Cada habitación debe tener un número distinto");
+                throw ApiException.badRequest("HABITACIONES_INVALIDAS", "Cada " + tipo.unidadPorDefecto().nombre()
+                        + " debe tener un número distinto");
             }
         }
         Piso p = new Piso();
         p.setPropietario(usuarios.getReferenceById(actor.id()));
+        p.setTipo(tipo);
         aplicar(p, req);
         pisos.save(p);
         // Las habitaciones, en la misma transacción: o se crea todo o nada.
@@ -89,17 +103,31 @@ public class PisoService {
                 h.setNumero(hi.numero());
                 h.setPrecio(hi.precio());
                 h.setEstado(EstadoHabitacion.disponible);
+                Unidades.aplicar(h, tipo, hi.tipo(), hi.metros(), hi.planta(), hi.vehiculo());
                 habitaciones.save(h);
             }
         }
         actividad.registrar(actor.id(), "CREAR_PISO", p.getDireccion()
-                + (iniciales != null ? " · " + iniciales.size() + " habitaciones" : ""));
+                + (iniciales != null ? " · " + iniciales.size() + " " + tipo.unidadPorDefecto().plural() : ""));
         return aRespuestas(List.of(p)).getFirst();
     }
 
     @Transactional
     public PisoResponse actualizar(Integer id, PisoRequest req, UsuarioAutenticado actor) {
         Piso p = cargarPropio(id, actor);
+        if (req.tipo() != null && req.tipo() != p.getTipo()) {
+            // Solo si todas sus unidades caben en el tipo nuevo (p. ej., garajes → trasteros con solo trasteros).
+            boolean compatibles = habitaciones.findByPisoId(id).stream().allMatch(h -> req.tipo().admite(h.getTipo()));
+            if (!compatibles) {
+                throw ApiException.conflicto("TIPO_INCOMPATIBLE",
+                        "No se puede cambiar el tipo: tiene unidades que no caben en un inmueble de tipo " + req.tipo().name());
+            }
+            p.setTipo(req.tipo());
+        }
+        if (p.getTipo() == TipoInmueble.vivienda && req.numeroHabitaciones() > PisoRequest.MAX_HABITACIONES_VIVIENDA) {
+            throw ApiException.badRequest("HABITACIONES_INVALIDAS",
+                    "Una vivienda admite como máximo " + PisoRequest.MAX_HABITACIONES_VIVIENDA + " habitaciones");
+        }
         aplicar(p, req);
         actividad.registrar(actor.id(), "EDITAR_PISO", p.getDireccion());
         return aRespuestas(List.of(p)).getFirst();
@@ -196,7 +224,7 @@ public class PisoService {
             BigDecimal ingresosMes = ingresos.getOrDefault(p.getId(), BigDecimal.ZERO);
             DatosPiso d = p.getDatosFinancieros();
             return new PisoResponse(
-                    p.getId(), p.getDireccion(),
+                    p.getId(), p.getDireccion(), p.getTipo(),
                     new CiudadResponse(p.getCiudad().getId(), p.getCiudad().getNombre()),
                     p.getNumeroHabitaciones(),
                     p.getPropietario().getId(),

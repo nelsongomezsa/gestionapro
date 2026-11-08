@@ -6,6 +6,7 @@ struct Fianza: Decodable, Identifiable, Hashable, Sendable {
     let idContrato: Int
     let inquilino: String
     let numeroHabitacion: Int
+    var tipoUnidad: TipoUnidad? = nil
     let piso: PisoBreve
     let importe: Decimal
     let fechaCobro: Date?

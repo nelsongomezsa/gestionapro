@@ -108,7 +108,7 @@ public class MensajeService {
             String con = soyInquilino ? c.getHabitacion().getPiso().getPropietario().getNombre() : c.getInquilino().getNombreCompleto();
             String asunto = ultimo.getIdIncidencia() != null
                     ? "Incidencia: " + incidencias.findById(ultimo.getIdIncidencia()).map(Incidencia::getDescripcion).orElse("")
-                    : "Habitación " + c.getHabitacion().getNumero() + " · " + c.getHabitacion().getPiso().getDireccion();
+                    : c.getHabitacion().getTipo().titulo() + " " + c.getHabitacion().getNumero() + " · " + c.getHabitacion().getPiso().getDireccion();
             long sinLeer = hilo.stream().filter(m -> !m.isLeido() && !esDe(m, actor)).count();
             lista.add(new Conversacion(c.getId(), ultimo.getIdIncidencia(), con, recortar(asunto, 80), recortar(ultimo.getTexto(), 120),
                     Textos.conZona(ultimo.getFecha()), esDe(ultimo, actor), sinLeer));

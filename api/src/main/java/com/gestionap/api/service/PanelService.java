@@ -89,7 +89,8 @@ public class PanelService {
                 pendientesInc.size() - incPendientes, cobrado, anterior, anteriorMismoDia, diaComparado,
                 Textos.mesCorto(mesAnterior), variacion(cobrado, anteriorMismoDia),
                 activos.stream().map(Contrato::getPrecioMensual).reduce(BigDecimal.ZERO, BigDecimal::add),
-                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes, pagoService.atrasados(12, actor)), proximos,
+                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes, pagoService.atrasados(12, actor),
+                        ocupacion.conOtrosTipos()), proximos,
                 actividadReciente(actor, ACTIVIDAD_RECIENTE));
     }
 
@@ -184,14 +185,16 @@ public class PanelService {
     }
 
     Ocupacion ocupacion(Integer prop) {
-        Map<EstadoHabitacion, Long> porEstado = habitaciones.buscar(prop, null, null).stream()
+        List<Habitacion> todas = habitaciones.buscar(prop, null, null);
+        boolean conOtrosTipos = todas.stream().anyMatch(h -> h.getTipo() != TipoUnidad.habitacion);
+        Map<EstadoHabitacion, Long> porEstado = todas.stream()
                 .collect(Collectors.groupingBy(Habitacion::getEstado, () -> new EnumMap<>(EstadoHabitacion.class), Collectors.counting()));
         long alquiladas = porEstado.getOrDefault(EstadoHabitacion.alquilada, 0L);
         long total = porEstado.values().stream().mapToLong(Long::longValue).sum();
         double pct = total == 0 ? 0 : BigDecimal.valueOf(alquiladas * 100.0 / total).setScale(2, RoundingMode.HALF_UP).doubleValue();
         String salud = pct >= 75 ? "Sistema saludable" : pct >= 40 ? "Ocupación media" : "Baja ocupación";
         return new Ocupacion(total, alquiladas, porEstado.getOrDefault(EstadoHabitacion.disponible, 0L),
-                porEstado.getOrDefault(EstadoHabitacion.mantenimiento, 0L), pct, salud);
+                porEstado.getOrDefault(EstadoHabitacion.mantenimiento, 0L), pct, salud, conOtrosTipos);
     }
 
     List<ImporteMes> ingresosPorMes(Integer prop, YearMonth desde, YearMonth hasta) {
@@ -203,7 +206,7 @@ public class PanelService {
     }
 
     private static List<Alerta> alertas(Ocupacion ocupacion, List<ContratoResponse> proximos, long incidenciasPendientes,
-                                        List<CobroAtrasadoResponse> atrasados) {
+                                        List<CobroAtrasadoResponse> atrasados, boolean unidades) {
         List<Alerta> alertas = new ArrayList<>();
         if (!atrasados.isEmpty()) {
             // Lo primero: dinero que se debe de meses ya cerrados.
@@ -227,7 +230,7 @@ public class PanelService {
         }
         if (ocupacion.habitaciones() > 0 && ocupacion.porcentaje() < 75) {
             alertas.add(new Alerta("OCUPACION", ocupacion.salud(),
-                    ocupacion.disponibles() + " habitaciones libres y " + ocupacion.mantenimiento() + " en mantenimiento",
+                    ocupacion.disponibles() + (unidades ? " unidades libres y " : " habitaciones libres y ") + ocupacion.mantenimiento() + " en mantenimiento",
                     ocupacion.porcentaje() < 40 ? "negativo" : "aviso"));
         }
         return alertas;

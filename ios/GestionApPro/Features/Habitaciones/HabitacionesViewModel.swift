@@ -66,7 +66,7 @@ final class HabitacionesViewModel {
 
     func pdf() -> DocumentoPDF {
         let columnas: [GeneradorPDF.Columna] = [
-            .init(titulo: "Hab.", peso: 0.6), .init(titulo: "Precio", peso: 1.1, alineacion: .right),
+            .init(titulo: String(localized: "Nº"), peso: 0.6), .init(titulo: "Precio", peso: 1.1, alineacion: .right),
             .init(titulo: "Estado", peso: 1.2), .init(titulo: "Inquilino actual", peso: 2.4),
             .init(titulo: "Días", peso: 0.7, alineacion: .right),
         ]
@@ -74,8 +74,8 @@ final class HabitacionesViewModel {
             ["\(h.numero)", Formato.euros(h.precio), h.estado.nombre, h.inquilinoActual?.nombre ?? "—",
              h.diasAlquilada.map { "\($0)" } ?? "—"]
         }
-        let datos = GeneradorPDF.tabla(titulo: "Habitaciones", subtitulo: "\(piso.direccion) · \(piso.ciudad)",
+        let datos = GeneradorPDF.tabla(titulo: piso.tipoInmueble.unidad.plural, subtitulo: "\(piso.direccion) · \(piso.ciudad)",
                                        columnas: columnas, filas: filas)
-        return DocumentoPDF(titulo: "Habitaciones \(piso.direccion)", datos: datos)
+        return DocumentoPDF(titulo: "\(piso.tipoInmueble.unidad.plural) \(piso.direccion)", datos: datos)
     }
 }

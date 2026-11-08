@@ -48,6 +48,7 @@ struct Inventario: Decodable, Identifiable, Hashable, Sendable {
     let id: Int
     let idHabitacion: Int
     let numeroHabitacion: Int
+    var tipoUnidad: TipoUnidad? = nil
     let piso: PisoBreve
     let idContrato: Int?
     let inquilino: String?

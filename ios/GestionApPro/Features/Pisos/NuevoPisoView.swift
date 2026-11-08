@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// Nuevo piso en tres pasos: datos básicos, habitaciones con precio (se crean solas según el número)
-/// y datos financieros (opcional, se pueden completar después). Al terminar se abre el piso creado.
+/// Nuevo inmueble en tres pasos: tipo (vivienda, garaje o trasteros) y datos básicos, unidades con
+/// precio (se crean solas según el número) y datos financieros (opcional, se pueden completar después).
+/// Al terminar se abre el inmueble creado.
 struct NuevoPisoView: View {
     @Environment(SesionStore.self) private var sesion
     @Environment(\.dismiss) private var cerrar
@@ -21,7 +22,7 @@ struct NuevoPisoView: View {
         NavigationStack {
             Form {
                 Section {
-                    IndicadorPasos(paso: vm.paso)
+                    IndicadorPasos(paso: vm.paso, tipo: vm.tipo)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                 }
@@ -37,7 +38,7 @@ struct NuevoPisoView: View {
             }
             .estiloLista()
             .environment(\.locale, Formato.localeFechas)
-            .navigationTitle("Nuevo piso")
+            .navigationTitle("Nuevo inmueble")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -52,7 +53,7 @@ struct NuevoPisoView: View {
                     if vm.guardando {
                         ProgressView()
                     } else if vm.paso == .financieros {
-                        Button("Crear piso") { Task { await crear() } }
+                        Button("Crear") { Task { await crear() } }
                             .disabled(!vm.puedeGuardar)
                             .accessibilityIdentifier("crearPiso")
                     } else {
@@ -71,6 +72,28 @@ struct NuevoPisoView: View {
     @ViewBuilder private var pasoBasicos: some View {
         @Bindable var vm = vm
         let mostrar = intentado.contains(.basicos)
+        Section {
+            Picker("Tipo de inmueble", selection: Binding(get: { vm.tipo }, set: { vm.cambiarTipo($0) })) {
+                ForEach(TipoInmueble.allCases) { t in
+                    Label {
+                        VStack(alignment: .leading) {
+                            Text(t.nombre)
+                            Text(t.descripcion).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                        }
+                    } icon: {
+                        Image(systemName: t.icono)
+                    }
+                    .tag(t)
+                }
+            }
+            .pickerStyle(.inline)
+            .labelsHidden()
+            .accessibilityIdentifier("tipoInmueble")
+        } header: {
+            Text("Qué das de alta")
+        }
+        .filaLista()
+
         Section {
             TextField("Calle, número y piso", text: $vm.direccion, axis: .vertical)
                 .textContentType(.fullStreetAddress)
@@ -110,13 +133,28 @@ struct NuevoPisoView: View {
 
         Section {
             Stepper(value: Binding(get: { vm.numeroHabitaciones }, set: { vm.cambiarNumero($0) }),
-                    in: 1...NuevoPisoViewModel.maxHabitaciones) {
-                LabeledContent("Habitaciones", value: "\(vm.numeroHabitaciones)")
+                    in: 1...vm.tipo.maximoUnidades, step: 1) {
+                LabeledContent(vm.tipo.unidad.plural, value: "\(vm.numeroHabitaciones)")
                     .monospacedDigit()
             }
             .accessibilityIdentifier("numeroHabitaciones")
+            if vm.tipo != .vivienda {
+                CampoNumerico("Superficie", valor: $vm.metros, sufijo: "m²")
+                    .accessibilityIdentifier("metrosUnidades")
+                TextField("Planta (p. ej. -1)", text: $vm.planta)
+                if vm.tipo == .garajes {
+                    Picker("Para", selection: $vm.vehiculo) {
+                        Text("Sin indicar").tag(Vehiculo?.none)
+                        ForEach(Vehiculo.allCases) { Text($0.nombre).tag(Vehiculo?.some($0)) }
+                    }
+                }
+            }
         } footer: {
-            Text("En el siguiente paso se crean solas, con su precio.")
+            VStack(alignment: .leading) {
+                if let e = vm.errorMetros ?? vm.errorPlanta { ErrorCampo(texto: e) }
+                Text(vm.tipo == .vivienda ? String(localized: "En el siguiente paso se crean solas, con su precio.")
+                                          : String(localized: "En el siguiente paso se crean solas, con su precio. La superficie y la planta son opcionales y se pueden cambiar en cada una."))
+            }
         }
         .filaLista()
     }
@@ -124,28 +162,30 @@ struct NuevoPisoView: View {
     @ViewBuilder private var pasoHabitaciones: some View {
         let mostrar = intentado.contains(.habitaciones)
         Section {
-            CampoNumerico("Precio para todas", valor: $precioComun, sufijo: "€")
-            Button("Aplicar a todas", systemImage: "square.stack.3d.down.right") {
+            CampoNumerico(vm.tipo == .trasteros ? String(localized: "Precio para todos") : String(localized: "Precio para todas"),
+                          valor: $precioComun, sufijo: "€")
+            Button(vm.tipo == .trasteros ? String(localized: "Aplicar a todos") : String(localized: "Aplicar a todas"),
+                   systemImage: "square.stack.3d.down.right") {
                 vm.aplicarATodas(precioComun)
                 Haptica.ligera()
             }
             .disabled(precioComun <= 0)
             .accessibilityIdentifier("aplicarPrecio")
         } footer: {
-            Text("Precio mensual de cada habitación. Puedes cambiar cualquiera abajo.")
+            Text(vm.tipo.unidad.precioDeCada)
         }
         .filaLista()
 
         Section {
             ForEach(vm.habitaciones) { h in
-                FilaHabitacionNueva(habitacion: h,
+                FilaHabitacionNueva(habitacion: h, unidad: vm.tipo.unidad,
                                     errorNumero: vm.errorNumero(h),
                                     errorPrecio: mostrar || h.precio != 0 ? vm.errorPrecio(h) : nil,
                                     cambiarNumero: { vm.cambiarNumeroHabitacion(h.id, $0) },
                                     cambiarPrecio: { vm.cambiarPrecio(h.id, $0) })
             }
         } header: {
-            Text("\(vm.habitaciones.count) habitaciones")
+            Text(vm.tipo.unidad.cantidad(vm.habitaciones.count))
         } footer: {
             Text("Se crean disponibles; después podrás editarlas, alquilarlas o pasarlas a mantenimiento.")
         }
@@ -159,7 +199,7 @@ struct NuevoPisoView: View {
                 .tint(Tema.Color.primario)
                 .accessibilityIdentifier("conDatosFinancieros")
         } footer: {
-            Text("Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el piso.")
+            Text("Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el inmueble.")
         }
         .filaLista()
         if vm.conDatosFinancieros {
@@ -168,7 +208,8 @@ struct NuevoPisoView: View {
         Section("Resumen") {
             LabeledContent("Dirección", value: vm.direccion.trimmingCharacters(in: .whitespacesAndNewlines))
             LabeledContent("Ciudad", value: vm.otraCiudad ? vm.nuevaCiudad : (vm.ciudades.first { $0.id == vm.idCiudad }?.nombre ?? ""))
-            LabeledContent("Habitaciones", value: "\(vm.habitaciones.count)")
+            LabeledContent("Tipo", value: vm.tipo.nombre)
+            LabeledContent(vm.tipo.unidad.plural, value: "\(vm.habitaciones.count)")
             LabeledContent("Rentas al mes", value: Formato.euros(vm.habitaciones.reduce(0) { $0 + $1.precio }))
         }
         .filaLista()
@@ -202,6 +243,7 @@ struct NuevoPisoView: View {
 /// "Paso 2 de 3 · Habitaciones" con tres segmentos.
 private struct IndicadorPasos: View {
     let paso: NuevoPisoViewModel.Paso
+    let tipo: TipoInmueble
 
     var body: some View {
         let total = NuevoPisoViewModel.Paso.allCases.count
@@ -213,19 +255,20 @@ private struct IndicadorPasos: View {
                         .frame(height: Tema.Tamano.alturaBarraProgreso)
                 }
             }
-            Text("Paso \(paso.rawValue + 1) de \(total) · \(paso.titulo)")
+            Text("Paso \(paso.rawValue + 1) de \(total) · \(paso.titulo(tipo))")
                 .font(Tema.Fuente.detalle.weight(.semibold))
                 .foregroundStyle(Tema.Color.textoSecundario)
         }
         .padding(.horizontal, Tema.Espacio.xxs)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Paso \(paso.rawValue + 1) de \(total): \(paso.titulo)")
+        .accessibilityLabel("Paso \(paso.rawValue + 1) de \(total): \(paso.titulo(tipo))")
     }
 }
 
 /// Fila editable de una habitación nueva: número y precio al mes, con su error debajo.
 private struct FilaHabitacionNueva: View {
     let habitacion: NuevoPisoViewModel.HabitacionBorrador
+    var unidad: TipoUnidad = .habitacion
     let errorNumero: String?
     let errorPrecio: String?
     let cambiarNumero: (Int) -> Void
@@ -234,12 +277,12 @@ private struct FilaHabitacionNueva: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
             HStack(spacing: Tema.Espacio.s) {
-                Text("Hab.").foregroundStyle(Tema.Color.textoSecundario)
+                Text(unidad.abreviatura).foregroundStyle(Tema.Color.textoSecundario)
                 TextField("Nº", value: Binding(get: { habitacion.numero }, set: { cambiarNumero($0) }), format: .number)
                     .keyboardType(.numberPad)
                     .frame(width: 48)
                     .monospacedDigit()
-                    .accessibilityLabel("Número de la habitación")
+                    .accessibilityLabel(unidad.numeroDe)
                 CampoNumerico("Precio", valor: Binding(get: { habitacion.precio }, set: { cambiarPrecio($0) }), sufijo: "€")
                     .accessibilityIdentifier("precioHabitacion")
             }
@@ -299,11 +342,11 @@ struct EditarPisoView: View {
                     Picker("Ciudad", selection: $idCiudad) {
                         ForEach(ciudades) { Text($0.nombre).tag(Int?.some($0.id)) }
                     }
-                    Stepper(value: $numero, in: max(1, piso.ocupacion.total)...NuevoPisoViewModel.maxHabitaciones) {
-                        LabeledContent("Habitaciones", value: "\(numero)").monospacedDigit()
+                    Stepper(value: $numero, in: max(1, piso.ocupacion.total)...piso.tipoInmueble.maximoUnidades) {
+                        LabeledContent(piso.tipoInmueble.unidad.plural, value: "\(numero)").monospacedDigit()
                     }
                 } footer: {
-                    Text("Las habitaciones se añaden o quitan desde «Gestionar habitaciones».")
+                    Text(String(localized: "Se añaden o quitan desde «\(piso.tipoInmueble.unidad.gestionar)»."))
                 }
                 .filaLista()
                 if let error {
@@ -312,7 +355,7 @@ struct EditarPisoView: View {
                 }
             }
             .estiloLista()
-            .navigationTitle("Editar piso")
+            .navigationTitle(piso.tipoInmueble == .vivienda ? String(localized: "Editar piso") : String(localized: "Editar inmueble"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancelar") { cerrar() } }

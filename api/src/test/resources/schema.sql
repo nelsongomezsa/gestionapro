@@ -23,7 +23,8 @@ CREATE TABLE Pisos (
     direccion           VARCHAR(150) NOT NULL,
     numero_habitaciones INT NOT NULL,
     id_ciudad           INT NOT NULL REFERENCES Ciudades (id_ciudad),
-    id_propietario      INT NOT NULL REFERENCES Usuarios (id_usuario)
+    id_propietario      INT NOT NULL REFERENCES Usuarios (id_usuario),
+    tipo                VARCHAR(20) NOT NULL DEFAULT 'vivienda'
 );
 
 CREATE TABLE DatosPiso (
@@ -55,7 +56,11 @@ CREATE TABLE Habitaciones (
     numero        INT NOT NULL,
     precio        DECIMAL(8,2) NOT NULL,
     estado        VARCHAR(20) NOT NULL DEFAULT 'disponible',
-    id_piso       INT NOT NULL REFERENCES Pisos (id_piso)
+    id_piso       INT NOT NULL REFERENCES Pisos (id_piso),
+    tipo          VARCHAR(20) NOT NULL DEFAULT 'habitacion',
+    metros        DECIMAL(6,2),
+    planta        VARCHAR(20),
+    vehiculo      VARCHAR(10)
 );
 
 CREATE TABLE Inquilinos (
@@ -75,7 +80,9 @@ CREATE TABLE Contratos (
     id_inquilino   INT NOT NULL REFERENCES Inquilinos (id_inquilino),
     fecha_inicio   DATE NOT NULL,
     fecha_fin      DATE NOT NULL,
-    precio_mensual DECIMAL(8,2) NOT NULL
+    precio_mensual DECIMAL(8,2) NOT NULL,
+    aplica_iva     BOOLEAN NOT NULL DEFAULT FALSE,
+    iva_pct        DECIMAL(5,2)
 );
 
 CREATE TABLE Pagos (
@@ -133,6 +140,9 @@ CREATE TABLE Recibos (
     anio           INT NOT NULL,
     numero         INT NOT NULL,
     fecha_emision  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    base_imponible DECIMAL(8,2),
+    iva_pct        DECIMAL(5,2),
+    cuota_iva      DECIMAL(8,2),
     CONSTRAINT uk_recibos_numero UNIQUE (id_propietario, anio, numero)
 );
 

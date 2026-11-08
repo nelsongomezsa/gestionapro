@@ -4,6 +4,8 @@ import Foundation
 struct Piso: Decodable, Identifiable, Equatable, Sendable {
     let id: Int
     let direccion: String
+    /// V12: vivienda, garajes o trasteros; nil en datos antiguos (vivienda).
+    var tipo: TipoInmueble? = nil
     let ciudad: Ciudad
     let numeroHabitaciones: Int
     let idPropietario: Int
@@ -82,5 +84,6 @@ enum Calificacion: String, Decodable, Sendable {
 }
 
 extension Piso {
-    var breve: PisoBreve { PisoBreve(id: id, direccion: direccion, ciudad: ciudad.nombre) }
+    var breve: PisoBreve { PisoBreve(id: id, direccion: direccion, ciudad: ciudad.nombre, tipo: tipo) }
+    var tipoInmueble: TipoInmueble { tipo ?? .vivienda }
 }

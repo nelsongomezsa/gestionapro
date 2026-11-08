@@ -134,7 +134,8 @@ public class InquilinoService {
                     ? "Añade tu IBAN en Perfil → Datos de cobro para generar el QR"
                     : "El propietario del piso no tiene IBAN configurado");
         }
-        String concepto = recortar("Alquiler Hab." + c.getHabitacion().getNumero() + " " + i.getNombreCompleto()
+        String concepto = recortar("Alquiler " + (c.getHabitacion().getTipo() == com.gestionap.api.domain.TipoUnidad.habitacion
+                ? "Hab." + c.getHabitacion().getNumero() : c.getHabitacion().etiqueta()) + " " + i.getNombreCompleto()
                 + " " + Textos.mes(YearMonth.from(hoy)), 140);
         String beneficiario = recortar(propietario.getNombre(), 70);
         String importe = c.getPrecioMensual().setScale(2, RoundingMode.HALF_UP).toPlainString();

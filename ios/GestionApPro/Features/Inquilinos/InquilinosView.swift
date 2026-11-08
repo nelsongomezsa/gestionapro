@@ -84,7 +84,7 @@ struct FilaInquilino: View {
                     }
                 }
                 if let c = inquilino.contratoActivo {
-                    Text("Hab. \(c.numeroHabitacion) · \(c.piso.direccion)")
+                    Text("\(c.etiquetaUnidad) · \(c.piso.direccion)")
                         .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario).lineLimit(2)
                 } else {
                     Text("Sin contrato activo").font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)

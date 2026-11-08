@@ -45,12 +45,12 @@ final class ContratosViewModel {
     func pdf() -> DocumentoPDF {
         let f = Date.FormatStyle.dateTime.day().month(.twoDigits).year().locale(Formato.locale)
         let columnas: [GeneradorPDF.Columna] = [
-            .init(titulo: "Inquilino", peso: 2), .init(titulo: "Habitación", peso: 2.2),
+            .init(titulo: "Inquilino", peso: 2), .init(titulo: String(localized: "Unidad"), peso: 2.2),
             .init(titulo: "Inicio", peso: 1), .init(titulo: "Fin", peso: 1),
             .init(titulo: "Renta", peso: 1, alineacion: .right), .init(titulo: "Estado", peso: 1.2),
         ]
         let filas = visibles.map { c in
-            [c.inquilino.nombre, "Hab. \(c.habitacion.numero) · \(c.piso.direccion)", c.fechaInicio.formatted(f),
+            [c.inquilino.nombre, "\(c.habitacion.etiqueta) · \(c.piso.direccion)", c.fechaInicio.formatted(f),
              c.fechaFin.formatted(f), Formato.euros(c.precioMensual), c.activo ? c.vencimiento.texto : "Finalizado"]
         }
         return DocumentoPDF(titulo: "Contratos", datos: GeneradorPDF.tabla(
@@ -60,11 +60,20 @@ final class ContratosViewModel {
 
 /// Texto del recordatorio de pago del escritorio (ContratosController.enviarRecordatorio).
 enum Recordatorio {
+    /// "de la habitación 3" (el texto del escritorio), "de la plaza 3" o "del trastero 3".
+    static func deLaUnidad(_ c: Contrato) -> String {
+        switch c.habitacion.unidad {
+        case .habitacion: "de la habitación \(c.habitacion.numero)"
+        case .plaza: "de la plaza \(c.habitacion.numero)"
+        case .trastero: "del trastero \(c.habitacion.numero)"
+        }
+    }
+
     static func asunto(_ c: Contrato) -> String { "Recordatorio de pago - \(c.inquilino.nombre)" }
 
     static func cuerpo(_ c: Contrato) -> String {
         "Estimado/a \(c.inquilino.nombre),\n\n"
-            + "Le recordamos que el próximo pago de su arrendamiento de la habitación \(c.habitacion.numero) "
+            + "Le recordamos que el próximo pago de su arrendamiento \(Self.deLaUnidad(c)) "
             + "en \(c.piso.direccion) está pendiente.\n\n"
             + "Importe mensual: \(Formato.euros(c.precioMensual))\n"
             + "Fecha fin de contrato: \(c.fechaFin.formatted(.dateTime.day().month(.wide).year().locale(Formato.locale)))\n\n"

@@ -165,7 +165,7 @@ struct FilaContrato: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
             HStack {
-                Text("Hab. \(contrato.numeroHabitacion) · \(contrato.piso.direccion)")
+                Text("\(contrato.etiquetaUnidad) · \(contrato.piso.direccion)")
                     .font(Tema.Fuente.subtitulo)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()

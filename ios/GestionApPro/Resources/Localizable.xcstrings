@@ -2,7 +2,16 @@
   "sourceLanguage" : "es",
   "strings" : {
     "" : {},
-    "%@" : {},
+    "%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
+    },
     "%@ %@: %@ → %@" : {
       "localizations" : {
         "es" : {
@@ -19,6 +28,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "%@ (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (%2$lld)"
           }
         }
       }
@@ -68,6 +87,16 @@
       }
     },
     "%@ análisis" : {},
+    "%@ años" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ yrs"
+          }
+        }
+      }
+    },
     "%@ de %@ alquiladas" : {
       "localizations" : {
         "es" : {
@@ -134,6 +163,16 @@
         }
       }
     },
+    "%@ de ocupación · %lld %@ libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ occupancy · %2$lld %3$@ free"
+          }
+        }
+      }
+    },
     "%@ de ocupación · %lld habitaciones libres" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -191,6 +230,12 @@
     },
     "%@ · %@" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "new",
@@ -205,6 +250,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ · %2$@ per month"
+          }
+        }
+      }
+    },
+    "%@ · %@ · renta %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@ · rent %3$@"
+          }
+        }
+      }
+    },
+    "%@ · %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@, %3$@"
           }
         }
       }
@@ -251,8 +316,34 @@
         }
       }
     },
+    "%@ · urgencia %@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@ urgency. %3$@"
+          }
+        }
+      }
+    },
+    "%@%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@"
+          }
+        }
+      }
+    },
     "%@, %@" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "new",
@@ -278,6 +369,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$@ sin leer"
+          }
+        }
+      }
+    },
+    "%@, %@. %@ al mes. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@. %3$@ a month. %4$@"
           }
         }
       }
@@ -333,6 +434,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@: %2$@ a %3$@, IBAN %4$@"
+          }
+        }
+      }
+    },
+    "%@: %@ de ocupación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@ occupancy"
           }
         }
       }
@@ -425,6 +536,16 @@
         }
       }
     },
+    "%lld de %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld %3$@"
+          }
+        }
+      }
+    },
     "%lld de %lld alquiladas" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -447,6 +568,16 @@
         }
       }
     },
+    "%lld de %lld habitaciones alquiladas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld rooms rented"
+          }
+        }
+      }
+    },
     "%lld de %lld meses sin pagar · %lld fuera de plazo" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -454,6 +585,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld of %2$lld months unpaid · %3$lld late"
+          }
+        }
+      }
+    },
+    "%lld de %lld plazas alquiladas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld spaces rented"
+          }
+        }
+      }
+    },
+    "%lld de %lld trasteros alquilados" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld storage units rented"
           }
         }
       }
@@ -502,6 +653,16 @@
         }
       }
     },
+    "%lld gastos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld expenses"
+          }
+        }
+      }
+    },
     "%lld habitaciones" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -520,6 +681,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld issues"
+          }
+        }
+      }
+    },
+    "%lld inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld properties"
           }
         }
       }
@@ -546,6 +717,26 @@
         }
       }
     },
+    "%lld m" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld mo"
+          }
+        }
+      }
+    },
+    "%lld meses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld months"
+          }
+        }
+      }
+    },
     "%lld ocupadas" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -568,6 +759,36 @@
         }
       }
     },
+    "%lld plazas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld spaces"
+          }
+        }
+      }
+    },
+    "%lld trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld storage units"
+          }
+        }
+      }
+    },
+    "%lld unidades" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld units"
+          }
+        }
+      }
+    },
     "%lld.º más rentable de %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -575,6 +796,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No. %1$lld most profitable of %2$lld"
+          }
+        }
+      }
+    },
+    "%lld/255" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/255"
           }
         }
       }
@@ -612,6 +843,16 @@
         }
       }
     },
+    "1 año" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 yr"
+          }
+        }
+      }
+    },
     "1 cobro atrasado" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -645,6 +886,16 @@
         }
       }
     },
+    "1 gasto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 expense"
+          }
+        }
+      }
+    },
     "1 habitación" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -663,6 +914,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1 issue"
+          }
+        }
+      }
+    },
+    "1 inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 property"
           }
         }
       }
@@ -711,6 +972,36 @@
         }
       }
     },
+    "1 plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 space"
+          }
+        }
+      }
+    },
+    "1 trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 storage unit"
+          }
+        }
+      }
+    },
+    "1 unidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 unit"
+          }
+        }
+      }
+    },
     "75 %" : {
       "localizations" : {
         "en" : {
@@ -728,6 +1019,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open"
+          }
+        }
+      }
+    },
+    "Abre cómo se calcula, su evolución y la comparación con tus otros inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens how it is calculated, its trend and how it compares with your other properties"
           }
         }
       }
@@ -771,6 +1072,16 @@
         }
       }
     },
+    "Abre el detalle del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the property details"
+          }
+        }
+      }
+    },
     "Abre el detalle del piso" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -793,6 +1104,16 @@
         }
       }
     },
+    "Abre la calculadora con los datos de este inmueble para probar cambios" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
     "Abre la calculadora con los datos de este piso para probar cambios" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -800,6 +1121,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
+    "Abre la calculadora con los datos reales de este inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's real data"
           }
         }
       }
@@ -826,6 +1157,16 @@
         }
       }
     },
+    "Abre la ficha para crear un contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the details to create a contract"
+          }
+        }
+      }
+    },
     "Abre la habitación para crear un contrato" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -848,6 +1189,16 @@
         }
       }
     },
+    "Abre la lista de unidades libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the list of free units"
+          }
+        }
+      }
+    },
     "Abre la lista filtrada" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -855,6 +1206,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens the filtered list"
+          }
+        }
+      }
+    },
+    "Abre la ocupación de cada inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the occupancy of each property"
           }
         }
       }
@@ -926,7 +1287,16 @@
         }
       }
     },
-    "Acciones" : {},
+    "Acciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actions"
+          }
+        }
+      }
+    },
     "Aceptar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1074,7 +1444,47 @@
         }
       }
     },
+    "Alquilada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rented"
+          }
+        }
+      }
+    },
     "Alquilada hace %@ días" : {},
+    "Alquilada hace %lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rented %lld days ago"
+          }
+        }
+      }
+    },
+    "Alquilado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rented"
+          }
+        }
+      }
+    },
+    "Alquilado hace %lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rented %lld days ago"
+          }
+        }
+      }
+    },
     "Alquiler anual" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1093,6 +1503,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annual rent ÷ total investment"
+          }
+        }
+      }
+    },
+    "Alquiler de habitaciones, garajes y trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renting rooms, parking and storage"
           }
         }
       }
@@ -1119,7 +1539,26 @@
         }
       }
     },
-    "Analizando el extracto…" : {},
+    "Amortización del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property depreciation"
+          }
+        }
+      }
+    },
+    "Analizando el extracto…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysing the statement…"
+          }
+        }
+      }
+    },
     "Analizar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1148,6 +1587,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analyse an investment"
+          }
+        }
+      }
+    },
+    "Análisis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyses"
+          }
+        }
+      }
+    },
+    "Análisis %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysis %lld"
           }
         }
       }
@@ -1219,12 +1678,52 @@
         }
       }
     },
+    "Aplicar IVA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply VAT"
+          }
+        }
+      }
+    },
+    "Aplicar IVA del 21 %" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply 21% VAT"
+          }
+        }
+      }
+    },
     "Aplicar a todas" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apply to all"
+          }
+        }
+      }
+    },
+    "Aplicar a todos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply to all"
+          }
+        }
+      }
+    },
+    "Armario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wardrobe"
           }
         }
       }
@@ -1319,6 +1818,46 @@
         }
       }
     },
+    "Avería de la caldera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boiler breakdown"
+          }
+        }
+      }
+    },
+    "Avisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alerts"
+          }
+        }
+      }
+    },
+    "Avisos, %lld sin leer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alerts, %lld unread"
+          }
+        }
+      }
+    },
+    "Añade un inmueble para ver su ocupación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a property to see its occupancy."
+          }
+        }
+      }
+    },
     "Añade un piso para ver su ocupación." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1326,6 +1865,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add a property to see its occupancy."
+          }
+        }
+      }
+    },
+    "Añadir" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
           }
         }
       }
@@ -1350,6 +1899,26 @@
         }
       }
     },
+    "Añadir elemento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add item"
+          }
+        }
+      }
+    },
+    "Añadir foto de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add photo of %@"
+          }
+        }
+      }
+    },
     "Año" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1361,12 +1930,32 @@
         }
       }
     },
+    "Año anterior" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous year"
+          }
+        }
+      }
+    },
     "Año anterior: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Previous year: %@"
+          }
+        }
+      }
+    },
+    "Año siguiente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next year"
           }
         }
       }
@@ -1395,6 +1984,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aún no hay mensajes"
+          }
+        }
+      }
+    },
+    "Base imponible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taxable base"
           }
         }
       }
@@ -1433,6 +2032,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete permanently"
+          }
+        }
+      }
+    },
+    "Borrar incidencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete issue"
+          }
+        }
+      }
+    },
+    "Borrar inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete property"
+          }
+        }
+      }
+    },
+    "Borrar inventario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete inventory"
           }
         }
       }
@@ -1547,6 +2176,16 @@
         }
       }
     },
+    "Cama" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bed"
+          }
+        }
+      }
+    },
     "Cambiar contraseña" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1564,6 +2203,16 @@
         }
       }
     },
+    "Cambiar estado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change status"
+          }
+        }
+      }
+    },
     "Cancelar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1577,6 +2226,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Candado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padlock"
           }
         }
       }
@@ -1627,6 +2286,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading…"
+          }
+        }
+      }
+    },
+    "Cartera · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portfolio · %@"
           }
         }
       }
@@ -1713,6 +2382,36 @@
         }
       }
     },
+    "Categoría" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "Cerradura de la puerta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Door lock"
+          }
+        }
+      }
+    },
+    "Cerradura o candado roto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Broken lock or padlock"
+          }
+        }
+      }
+    },
     "Cerrar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1775,7 +2474,16 @@
         }
       }
     },
-    "Clasificando…" : {},
+    "Clasificando…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classifying…"
+          }
+        }
+      }
+    },
     "Cobrado" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1909,6 +2617,16 @@
         }
       }
     },
+    "Cobros del mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This month's payments"
+          }
+        }
+      }
+    },
     "Cobros pendientes" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1944,6 +2662,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Income and expenses · 12 months"
+          }
+        }
+      }
+    },
+    "Coche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Car"
+          }
+        }
+      }
+    },
+    "Colchón" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mattress"
           }
         }
       }
@@ -1998,6 +2736,16 @@
         }
       }
     },
+    "Compartir contacto…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share contact…"
+          }
+        }
+      }
+    },
     "Compartir o guardar (%lld archivos)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2048,7 +2796,16 @@
         }
       }
     },
-    "Comunicada el %@" : {},
+    "Comunicada el %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported on %@"
+          }
+        }
+      }
+    },
     "Comunidad autónoma" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2060,7 +2817,36 @@
         }
       }
     },
-    "Con contrato, el inquilino también lo ve en la app." : {},
+    "Con contrato, el inquilino también lo ve en la app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With a contract, the tenant also sees it in the app."
+          }
+        }
+      }
+    },
+    "Con fianza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With deposit"
+          }
+        }
+      }
+    },
+    "Concepto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
     "Conciliar con el banco" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2089,7 +2875,16 @@
         }
       }
     },
-    "Confianza alta: el importe coincide con la renta y el concepto nombra al inquilino. Revisa las de confianza media o baja antes de marcarlas." : {},
+    "Confianza alta: el importe coincide con la renta y el concepto nombra al inquilino. Revisa las de confianza media o baja antes de marcarlas." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "High confidence: the amount matches the rent and the description names the tenant. Check the medium or low confidence ones before ticking them."
+          }
+        }
+      }
+    },
     "Confirma con tu contraseña" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2103,6 +2898,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirma con tu contraseña"
+          }
+        }
+      }
+    },
+    "Contactar con %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact %@"
           }
         }
       }
@@ -2124,7 +2929,16 @@
         }
       }
     },
-    "Contacto" : {},
+    "Contacto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact"
+          }
+        }
+      }
+    },
     "Contraseña" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2181,6 +2995,16 @@
         }
       }
     },
+    "Contrato de arrendamiento (PDF)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rental contract (PDF)"
+          }
+        }
+      }
+    },
     "Contrato finalizado" : {
       "localizations" : {
         "en" : {
@@ -2221,6 +3045,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contratos activos"
+          }
+        }
+      }
+    },
+    "Contratos anteriores" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous contracts"
           }
         }
       }
@@ -2286,7 +3120,36 @@
         }
       }
     },
-    "Coste" : {},
+    "Coste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cost"
+          }
+        }
+      }
+    },
+    "Coste de reparación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repair cost"
+          }
+        }
+      }
+    },
+    "Coste estimado (opcional)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated cost (optional)"
+          }
+        }
+      }
+    },
     "Crear" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2355,6 +3218,16 @@
         }
       }
     },
+    "DNI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID number"
+          }
+        }
+      }
+    },
     "Datos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2394,7 +3267,47 @@
       }
     },
     "Daños, recibos pendientes…" : {},
+    "Deducible en el IRPF" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deductible for income tax"
+          }
+        }
+      }
+    },
     "Depósito" : {},
+    "Desactivado por defecto. Si lo activas, la renta incluye el IVA y el recibo lo desglosa. Si no sabes si debes aplicarlo, confírmalo con tu asesor." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off by default. If you turn it on, the rent includes VAT and the receipt itemises it. If you are not sure whether to apply it, check with your adviser."
+          }
+        }
+      }
+    },
+    "Descarga el extracto de tu banco en CSV" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download your bank statement as CSV"
+          }
+        }
+      }
+    },
+    "Describe el problema" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Describe the problem"
+          }
+        }
+      }
+    },
     "Desde" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2406,7 +3319,16 @@
         }
       }
     },
-    "Desliza a la derecha para avanzar el estado y a la izquierda para borrar." : {},
+    "Desliza a la derecha para avanzar el estado y a la izquierda para borrar." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe right to move the status forward and left to delete."
+          }
+        }
+      }
+    },
     "Desliza arriba o abajo para cambiar de mes" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2418,8 +3340,26 @@
         }
       }
     },
-    "Desliza para editar, borrar o cambiar el estado." : {},
-    "Desliza para quitar uno. Las fotos se añaden después, desde el inventario." : {},
+    "Desliza para editar, borrar o cambiar el estado." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe to edit, delete or change the status."
+          }
+        }
+      }
+    },
+    "Desliza para quitar uno. Las fotos se añaden después, desde el inventario." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe to remove one. Photos are added later, from the inventory."
+          }
+        }
+      }
+    },
     "Desplegado" : {
       "localizations" : {
         "en" : {
@@ -2430,12 +3370,42 @@
         }
       }
     },
+    "Detalles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        }
+      }
+    },
     "Dirección" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Address"
+          }
+        }
+      }
+    },
+    "Disponible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available"
+          }
+        }
+      }
+    },
+    "Documentos y avisos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Documents and reminders"
           }
         }
       }
@@ -2486,6 +3456,16 @@
         }
       }
     },
+    "Días medios sin alquilar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average days unlet"
+          }
+        }
+      }
+    },
     "Días medios vacía" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2497,7 +3477,27 @@
         }
       }
     },
+    "Dónde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where"
+          }
+        }
+      }
+    },
     "ES00 0000 0000 0000 0000 0000" : {},
+    "Edificio o planta de trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage building or floor"
+          }
+        }
+      }
+    },
     "Editar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2505,6 +3505,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Editar gasto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit expense"
+          }
+        }
+      }
+    },
+    "Editar inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit property"
           }
         }
       }
@@ -2520,7 +3540,26 @@
       }
     },
     "Ejercicio %@" : {},
-    "El QR de pago necesita un contrato activo." : {},
+    "El QR de pago necesita un contrato activo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The payment QR needs an active contract."
+          }
+        }
+      }
+    },
+    "El cálculo es el mismo: pon el precio, los gastos y el alquiler de la plaza o el trastero. La calculadora usa el tipo general de ITP de cada comunidad." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The calculation is the same: enter the price, costs and rent of the parking space or storage unit. The calculator uses the general transfer tax (ITP) rate of each region."
+          }
+        }
+      }
+    },
     "El email es el que usas para iniciar sesión." : {},
     "El idioma (español o inglés) se elige en los Ajustes del iPhone, en la página de GestionAp." : {
       "localizations" : {
@@ -2549,9 +3588,58 @@
         }
       }
     },
-    "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo." : {},
+    "El recibo lleva el nombre y el DNI o NIE del arrendador. Sin ellos no es un justificante completo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The receipt carries the landlord's name and ID number. Without them it is not a complete proof of payment."
+          }
+        }
+      }
+    },
     "El índice elegido supera el IRAV: el máximo es el IRAV (LAU, art. 18.1)." : {},
+    "Elegir extracto (CSV)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose statement (CSV)"
+          }
+        }
+      }
+    },
+    "Elegir un PDF" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a PDF"
+          }
+        }
+      }
+    },
+    "Elemento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
+        }
+      }
+    },
     "Elementos (%@)" : {},
+    "Elementos (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Items (%lld)"
+          }
+        }
+      }
+    },
     "Elige la ciudad" : {
       "localizations" : {
         "en" : {
@@ -2562,9 +3650,56 @@
         }
       }
     },
-    "Elige un contrato" : {},
-    "Elige un inquilino" : {},
-    "Elige un piso" : {},
+    "Elige un contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a contract"
+          }
+        }
+      }
+    },
+    "Elige un inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a property"
+          }
+        }
+      }
+    },
+    "Elige un inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a tenant"
+          }
+        }
+      }
+    },
+    "Elige un piso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a property"
+          }
+        }
+      }
+    },
+    "Elige un trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a storage unit"
+          }
+        }
+      }
+    },
     "Elige una" : {
       "localizations" : {
         "en" : {
@@ -2575,7 +3710,26 @@
         }
       }
     },
-    "Elige una habitación" : {},
+    "Elige una habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a room"
+          }
+        }
+      }
+    },
+    "Elige una plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a space"
+          }
+        }
+      }
+    },
     "Eliminar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2626,6 +3780,16 @@
         }
       }
     },
+    "Elígelo aquí: la app propone qué ingreso es de qué inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose it here: the app suggests which payment belongs to which tenant"
+          }
+        }
+      }
+    },
     "Email" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2639,6 +3803,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Email"
+          }
+        }
+      }
+    },
+    "Email · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email · %@"
           }
         }
       }
@@ -2659,12 +3833,32 @@
         }
       }
     },
+    "En cobros, inquilinos e inmuebles: llamar, escribir por WhatsApp, registrar el pago o abrir en Mapas." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In payments, tenants and properties: call, message on WhatsApp, record the payment or open in Maps."
+          }
+        }
+      }
+    },
     "En el siguiente paso se crean solas, con su precio." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "In the next step they're created for you, with their price."
+          }
+        }
+      }
+    },
+    "En el siguiente paso se crean solas, con su precio. La superficie y la planta son opcionales y se pueden cambiar en cada una." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the next step they are created automatically, with their price. Size and floor are optional and can be changed for each one."
           }
         }
       }
@@ -2741,6 +3935,16 @@
         }
       }
     },
+    "Enviar recordatorio de pago" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send payment reminder"
+          }
+        }
+      }
+    },
     "Error: %@" : {
       "localizations" : {
         "en" : {
@@ -2752,6 +3956,16 @@
       }
     },
     "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino." : {},
+    "Es el único inmueble con este dato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It is the only property with this figure"
+          }
+        }
+      }
+    },
     "Es el único piso con este dato" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2818,6 +4032,86 @@
         }
       }
     },
+    "Escribir al inquilino sobre esta incidencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message the tenant about this issue"
+          }
+        }
+      }
+    },
+    "Escribir al propietario sobre esta incidencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message the landlord about this issue"
+          }
+        }
+      }
+    },
+    "Escritorio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desk"
+          }
+        }
+      }
+    },
+    "Estado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
+    "Estado de la plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condition of the space"
+          }
+        }
+      }
+    },
+    "Estado de plaza cambiado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space status changed"
+          }
+        }
+      }
+    },
+    "Estado de trastero cambiado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit status changed"
+          }
+        }
+      }
+    },
+    "Estado: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: %@"
+          }
+        }
+      }
+    },
     "Estadísticas" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2831,6 +4125,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Estadísticas"
+          }
+        }
+      }
+    },
+    "Este garaje aún no tiene plazas." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This garage has no spaces yet."
+          }
+        }
+      }
+    },
+    "Este inmueble aún no tiene trasteros." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This property has no storage units yet."
+          }
+        }
+      }
+    },
+    "Este piso aún no tiene habitaciones." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This flat has no rooms yet."
+          }
+        }
+      }
+    },
+    "Estimados con los datos del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated from the property's data"
           }
         }
       }
@@ -2874,6 +4208,16 @@
         }
       }
     },
+    "Factura" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invoice"
+          }
+        }
+      }
+    },
     "Faltan tus datos fiscales" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2898,6 +4242,16 @@
     },
     "Fianza" : {},
     "Fianza de %@." : {},
+    "Ficha" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        }
+      }
+    },
     "Filtrar y ordenar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2931,6 +4285,16 @@
         }
       }
     },
+    "Finalizar contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End contract"
+          }
+        }
+      }
+    },
     "Finalizar hoy" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2938,6 +4302,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "End today"
+          }
+        }
+      }
+    },
+    "Finalizó hace %lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended %lld days ago"
           }
         }
       }
@@ -2955,6 +4329,36 @@
     },
     "Firma" : {},
     "Firma con el dedo dentro del recuadro." : {},
+    "Foto de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo of %@"
+          }
+        }
+      }
+    },
+    "Foto de la factura" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo of the invoice"
+          }
+        }
+      }
+    },
+    "Frente a tus inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compared with your properties"
+          }
+        }
+      }
+    },
     "Frente a tus pisos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2966,7 +4370,36 @@
         }
       }
     },
-    "Funciona con el formato genérico y los extractos habituales de Santander, BBVA, CaixaBank, Sabadell e ING." : {},
+    "Fuga de agua" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Water leak"
+          }
+        }
+      }
+    },
+    "Funciona con el formato genérico y los extractos habituales de Santander, BBVA, CaixaBank, Sabadell e ING." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Works with the generic format and the usual statements from Santander, BBVA, CaixaBank, Sabadell and ING."
+          }
+        }
+      }
+    },
+    "Garaje" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garage"
+          }
+        }
+      }
+    },
     "Gasto" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3094,8 +4527,47 @@
         }
       }
     },
-    "GestionAp PRO" : {},
+    "GestionAp PRO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GestionAp PRO"
+          }
+        }
+      }
+    },
     "GestionAp PRO está bloqueada" : {},
+    "Gestionar habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage rooms"
+          }
+        }
+      }
+    },
+    "Gestionar plazas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage spaces"
+          }
+        }
+      }
+    },
+    "Gestionar trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage storage units"
+          }
+        }
+      }
+    },
     "Gestión" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3175,6 +4647,16 @@
         }
       }
     },
+    "Guardar coste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save cost"
+          }
+        }
+      }
+    },
     "Hab." : {
       "localizations" : {
         "en" : {
@@ -3201,6 +4683,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Hab. %1$@%2$@"
+          }
+        }
+      }
+    },
+    "Hab. %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room %lld"
           }
         }
       }
@@ -3321,6 +4813,16 @@
         }
       }
     },
+    "Haz uno al entregarla y otro al recogerla." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make one at handover and another when it is returned."
+          }
+        }
+      }
+    },
     "Herramientas" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3338,7 +4840,16 @@
         }
       }
     },
-    "Hipoteca" : {},
+    "Hipoteca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mortgage"
+          }
+        }
+      }
+    },
     "Hola, %@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3356,7 +4867,57 @@
         }
       }
     },
+    "Humedades en el trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Damp in the storage unit"
+          }
+        }
+      }
+    },
+    "Humedades o goteras" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Damp or leaks"
+          }
+        }
+      }
+    },
     "IBAN para el QR de pago de tus inquilinos." : {},
+    "IVA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VAT"
+          }
+        }
+      }
+    },
+    "IVA %@ %%" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VAT %@%%"
+          }
+        }
+      }
+    },
+    "IVA del contrato cambiado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contract VAT changed"
+          }
+        }
+      }
+    },
     "Identificación" : {},
     "Idioma" : {
       "extractionState" : "stale",
@@ -3371,6 +4932,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Idioma"
+          }
+        }
+      }
+    },
+    "Iluminación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lighting"
+          }
+        }
+      }
+    },
+    "Iluminación del garaje fundida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garage lighting out"
+          }
+        }
+      }
+    },
+    "Iluminación fundida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lighting out"
           }
         }
       }
@@ -3538,6 +5129,16 @@
         }
       }
     },
+    "Ingresos frente a gastos por inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income vs. expenses by property"
+          }
+        }
+      }
+    },
     "Ingresos frente a gastos por piso" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3550,6 +5151,16 @@
       }
     },
     "Ingresos sin contrato (%@)" : {},
+    "Ingresos sin contrato (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payments without a contract (%lld)"
+          }
+        }
+      }
+    },
     "Ingresos y gastos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3585,6 +5196,76 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inicio"
+          }
+        }
+      }
+    },
+    "Inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property"
+          }
+        }
+      }
+    },
+    "Inmueble borrado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property deleted"
+          }
+        }
+      }
+    },
+    "Inmueble creado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property created"
+          }
+        }
+      }
+    },
+    "Inmueble editado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property edited"
+          }
+        }
+      }
+    },
+    "Inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties"
+          }
+        }
+      }
+    },
+    "Inmuebles, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties, payments and expenses, separated by semicolons; they open in Excel or Numbers."
+          }
+        }
+      }
+    },
+    "Inmuebles, inquilinos, contratos…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties, tenants, contracts…"
           }
         }
       }
@@ -3628,6 +5309,16 @@
         }
       }
     },
+    "Inquilino, dirección o número" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tenant, address or number"
+          }
+        }
+      }
+    },
     "Inquilinos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3645,6 +5336,26 @@
         }
       }
     },
+    "Inventario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inventory"
+          }
+        }
+      }
+    },
+    "Inventario de %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inventory of %@"
+          }
+        }
+      }
+    },
     "Inventarios" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3652,6 +5363,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inventories"
+          }
+        }
+      }
+    },
+    "Inventarios de la habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Room inventories"
+          }
+        }
+      }
+    },
+    "Inventarios de la plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space inventories"
+          }
+        }
+      }
+    },
+    "Inventarios del trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit inventories"
           }
         }
       }
@@ -3700,6 +5441,16 @@
         }
       }
     },
+    "Invitar a la app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite to the app"
+          }
+        }
+      }
+    },
     "K7M2-QX9P-4TBW" : {},
     "La app de iPhone solo usa frameworks de Apple (SwiftUI, Swift Charts, MapKit, LocalAuthentication, App Intents y WidgetKit)." : {
       "localizations" : {
@@ -3717,8 +5468,46 @@
         }
       }
     },
-    "La cuota se calcula con amortización francesa, como en el escritorio." : {},
-    "La fecha de fin pasa a ser hoy y la habitación queda disponible." : {},
+    "La cuota se calcula con amortización francesa, como en el escritorio." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The payment uses a standard (French) amortisation schedule, as in the desktop app."
+          }
+        }
+      }
+    },
+    "La fecha de fin pasa a ser hoy y el trastero queda disponible." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The end date becomes today and the storage unit becomes available."
+          }
+        }
+      }
+    },
+    "La fecha de fin pasa a ser hoy y la habitación queda disponible." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The end date becomes today and the room becomes available."
+          }
+        }
+      }
+    },
+    "La fecha de fin pasa a ser hoy y la plaza queda disponible." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The end date becomes today and the space becomes available."
+          }
+        }
+      }
+    },
     "La fecha propuesta es del mes que salda (%@); los cobros se cuentan por la fecha del pago." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3731,6 +5520,16 @@
       }
     },
     "La próxima vez que inicies sesión usa la nueva contraseña." : {},
+    "La puerta automática no abre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic door won't open"
+          }
+        }
+      }
+    },
     "Las habitaciones se añaden o quitan desde «Gestionar habitaciones»." : {
       "localizations" : {
         "en" : {
@@ -3776,7 +5575,16 @@
         }
       }
     },
-    "Leyendo la factura…" : {},
+    "Leyendo la factura…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reading the invoice…"
+          }
+        }
+      }
+    },
     "Libre desde el %@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3850,6 +5658,26 @@
         }
       }
     },
+    "Llamar · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call · %@"
+          }
+        }
+      }
+    },
+    "Llaves" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keys"
+          }
+        }
+      }
+    },
     "Lo que rinde el piso sin descontar gastos ni la hipoteca." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3857,6 +5685,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "What the property yields before expenses and mortgage."
+          }
+        }
+      }
+    },
+    "Lo que rinde tras los gastos del inmueble, antes de la financiación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What it yields after the property's costs, before financing."
           }
         }
       }
@@ -3910,7 +5748,16 @@
         }
       }
     },
-    "Los gastos de incidencias resueltas con coste se añaden solos." : {},
+    "Los gastos de incidencias resueltas con coste se añaden solos." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Costs of resolved issues are added automatically."
+          }
+        }
+      }
+    },
     "Los inquilinos crean su cuenta con el código de invitación de su ficha." : {},
     "Los mensajes van ligados a un contrato." : {
       "extractionState" : "stale",
@@ -3925,6 +5772,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Los mensajes van ligados a un contrato."
+          }
+        }
+      }
+    },
+    "Los recibos ya emitidos no cambian. Si no sabes si debes aplicar IVA, confírmalo con tu asesor." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receipts already issued do not change. If you are not sure whether to apply VAT, check with your adviser."
+          }
+        }
+      }
+    },
+    "Mando que no funciona" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remote control doesn't work"
+          }
+        }
+      }
+    },
+    "Mandos de la puerta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Door remotes"
+          }
+        }
+      }
+    },
+    "Mantenimiento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenance"
           }
         }
       }
@@ -3957,12 +5844,32 @@
         }
       }
     },
+    "Mapa de inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property map"
+          }
+        }
+      }
+    },
     "Marca 2 o 3 para compararlos lado a lado. Toca uno para abrirlo en la calculadora." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select 2 or 3 to compare them side by side. Tap one to open it in the calculator."
+          }
+        }
+      }
+    },
+    "Marca los que estén bien y regístralos como pagos, con su recibo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tick the correct ones and record them as payments, with their receipt"
           }
         }
       }
@@ -3974,6 +5881,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mark as available"
+          }
+        }
+      }
+    },
+    "Marcas y numeración" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markings and numbering"
           }
         }
       }
@@ -4036,6 +5953,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mensajes"
+          }
+        }
+      }
+    },
+    "Mensajes con %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messages with %@"
+          }
+        }
+      }
+    },
+    "Mensajes con el propietario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messages with the landlord"
           }
         }
       }
@@ -4155,7 +6092,16 @@
         }
       }
     },
-    "Mis pagos" : {},
+    "Mis pagos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My payments"
+          }
+        }
+      }
+    },
     "Morosidad" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4174,6 +6120,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Arrears by tenant"
+          }
+        }
+      }
+    },
+    "Moto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motorbike"
           }
         }
       }
@@ -4225,6 +6181,16 @@
         }
       }
     },
+    "Máximo 20 caracteres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum 20 characters"
+          }
+        }
+      }
+    },
     "Método" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4238,6 +6204,26 @@
     },
     "Mínimo 10 caracteres. No se admiten contraseñas que aparezcan en filtraciones conocidas." : {},
     "Mínimo 10 caracteres. Pásasela a la persona para que la cambie desde su perfil." : {},
+    "Ninguna coincide con el filtro." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing matches the filter."
+          }
+        }
+      }
+    },
+    "Ningún inmueble coincide con la búsqueda o el filtro." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No property matches the search or filter."
+          }
+        }
+      }
+    },
     "No hay habitaciones libres ni en mantenimiento." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4260,6 +6246,36 @@
         }
       }
     },
+    "No hay nada disponible" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing available"
+          }
+        }
+      }
+    },
+    "No hay unidades libres ni en mantenimiento." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No free units or units in maintenance."
+          }
+        }
+      }
+    },
+    "No hay unidades libres." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No free units."
+          }
+        }
+      }
+    },
     "No puede superar el máximo." : {},
     "No se pudieron cargar" : {
       "extractionState" : "stale",
@@ -4272,7 +6288,16 @@
         }
       }
     },
-    "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar." : {},
+    "No se pudieron cargar los ingresos. Desliza hacia abajo para reintentar." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The payments could not be loaded. Pull down to try again."
+          }
+        }
+      }
+    },
     "No se pudo conectar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4290,6 +6315,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Can't be deleted"
+          }
+        }
+      }
+    },
+    "No se puede comparar: faltan datos en este inmueble o en los demás." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cannot compare: data is missing for this property or the others."
           }
         }
       }
@@ -4413,6 +6448,16 @@
         }
       }
     },
+    "Nueva habitación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New room"
+          }
+        }
+      }
+    },
     "Nueva incidencia" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4420,6 +6465,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New issue"
+          }
+        }
+      }
+    },
+    "Nueva plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New space"
           }
         }
       }
@@ -4435,6 +6490,26 @@
         }
       }
     },
+    "Nuevo gasto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New expense"
+          }
+        }
+      }
+    },
+    "Nuevo inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New property"
+          }
+        }
+      }
+    },
     "Nuevo inquilino" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4442,6 +6517,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New tenant"
+          }
+        }
+      }
+    },
+    "Nuevo inventario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New inventory"
           }
         }
       }
@@ -4456,12 +6541,32 @@
         }
       }
     },
+    "Nuevo trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New storage unit"
+          }
+        }
+      }
+    },
     "Nº" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "No."
+          }
+        }
+      }
+    },
+    "Número" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number"
           }
         }
       }
@@ -4476,12 +6581,42 @@
         }
       }
     },
+    "Número de la plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space number"
+          }
+        }
+      }
+    },
+    "Número del trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit number"
+          }
+        }
+      }
+    },
     "Número entre 1 y 999" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Number between 1 and 999"
+          }
+        }
+      }
+    },
+    "Número o inquilino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number or tenant"
           }
         }
       }
@@ -4508,6 +6643,26 @@
       }
     },
     "Obligatorio si no se devuelve entera." : {},
+    "Observaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes"
+          }
+        }
+      }
+    },
+    "Observaciones generales" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General notes"
+          }
+        }
+      }
+    },
     "Ocultar en el selector de apps" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4618,6 +6773,26 @@
         }
       }
     },
+    "Opcional en plazas y trasteros. Puedes registrarla también más tarde desde el contrato." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional for spaces and storage units. You can also record it later from the contract."
+          }
+        }
+      }
+    },
+    "Opcional." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional."
+          }
+        }
+      }
+    },
     "Opcionales. El teléfono permite llamar o escribir por WhatsApp desde la ficha." : {},
     "Ordenados por %@" : {
       "extractionState" : "stale",
@@ -4643,7 +6818,16 @@
     },
     "Organismo de tu comunidad autónoma" : {},
     "Orientativo" : {},
-    "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza." : {},
+    "Orientativo: los gastos de reparación y conservación, comunidad, IBI, seguro o suministros que paga el propietario suelen ser deducibles; el mobiliario se amortiza." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For guidance: repairs and upkeep, community fees, property tax, insurance or utilities paid by the landlord are usually deductible; furniture is depreciated."
+          }
+        }
+      }
+    },
     "Oscuro" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4684,6 +6868,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Otro pago…"
+          }
+        }
+      }
+    },
+    "PDF para firmar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDF to sign"
           }
         }
       }
@@ -4761,6 +6955,16 @@
         }
       }
     },
+    "Para" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For"
+          }
+        }
+      }
+    },
     "Para alquilarla, márcala antes como disponible." : {
       "localizations" : {
         "en" : {
@@ -4771,7 +6975,46 @@
         }
       }
     },
-    "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {},
+    "Para alquilarlo, márcalo antes como disponible." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To rent it out, first mark it as available."
+          }
+        }
+      }
+    },
+    "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For the property depreciation (3% of the building value, excluding the land)."
+          }
+        }
+      }
+    },
+    "Paredes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walls"
+          }
+        }
+      }
+    },
+    "Paredes y suelo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walls and floor"
+          }
+        }
+      }
+    },
     "Paso %lld de %lld · %@" : {
       "localizations" : {
         "en" : {
@@ -4961,6 +7204,16 @@
         }
       }
     },
+    "Piso con habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flat with rooms"
+          }
+        }
+      }
+    },
     "Pisos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4990,6 +7243,116 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers."
+          }
+        }
+      }
+    },
+    "Planta %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Floor %@"
+          }
+        }
+      }
+    },
+    "Planta (p. ej. -1)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Floor (e.g. -1)"
+          }
+        }
+      }
+    },
+    "Plaza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space"
+          }
+        }
+      }
+    },
+    "Plaza %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space %lld"
+          }
+        }
+      }
+    },
+    "Plaza borrada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space deleted"
+          }
+        }
+      }
+    },
+    "Plaza creada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space created"
+          }
+        }
+      }
+    },
+    "Plaza de garaje" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parking space"
+          }
+        }
+      }
+    },
+    "Plaza editada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space edited"
+          }
+        }
+      }
+    },
+    "Plazas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spaces"
+          }
+        }
+      }
+    },
+    "Plazas de garaje (y algún trastero)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parking spaces (and some storage units)"
+          }
+        }
+      }
+    },
+    "Plazas libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free spaces"
           }
         }
       }
@@ -5063,7 +7426,16 @@
         }
       }
     },
-    "Por %@" : {},
+    "Por %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By %@"
+          }
+        }
+      }
+    },
     "Por habitación" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5071,6 +7443,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Per room"
+          }
+        }
+      }
+    },
+    "Por inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property"
+          }
+        }
+      }
+    },
+    "Por inmueble · de menor a mayor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property · lowest first"
           }
         }
       }
@@ -5104,6 +7496,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "By property · lowest first"
+          }
+        }
+      }
+    },
+    "Por tipo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By type"
+          }
+        }
+      }
+    },
+    "Por unidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per unit"
           }
         }
       }
@@ -5149,7 +7561,37 @@
         }
       }
     },
+    "Precio mensual de cada plaza. Puedes cambiar cualquiera abajo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly price of each space. You can change any of them below."
+          }
+        }
+      }
+    },
+    "Precio mensual de cada trastero. Puedes cambiar cualquiera abajo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly price of each storage unit. You can change any of them below."
+          }
+        }
+      }
+    },
     "Precio para todas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price for all"
+          }
+        }
+      }
+    },
+    "Precio para todos" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5193,7 +7635,27 @@
       }
     },
     "Pregúntame por tu cartera. Si me pides registrar un pago o crear una incidencia, te lo preparo y tú lo confirmas." : {},
+    "Progreso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        }
+      }
+    },
     "Propuestas (%@)" : {},
+    "Propuestas (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions (%lld)"
+          }
+        }
+      }
+    },
     "Próximos vencimientos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5211,6 +7673,16 @@
         }
       }
     },
+    "Puerta y cerradura" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Door and lock"
+          }
+        }
+      }
+    },
     "Puesto %lld: %@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5222,12 +7694,62 @@
         }
       }
     },
+    "QR de pago del mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This month's payment QR"
+          }
+        }
+      }
+    },
+    "Queda 1 día de contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 day of contract left"
+          }
+        }
+      }
+    },
+    "Quedan %lld días" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld days left"
+          }
+        }
+      }
+    },
+    "Quedan %lld días de contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld days of contract left"
+          }
+        }
+      }
+    },
     "Quitar de la comparación" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Remove from comparison"
+          }
+        }
+      }
+    },
+    "Quitar el IVA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove VAT"
           }
         }
       }
@@ -5248,7 +7770,46 @@
         }
       }
     },
-    "Qué pasa" : {},
+    "Qué compras" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What you are buying"
+          }
+        }
+      }
+    },
+    "Qué das de alta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What you are adding"
+          }
+        }
+      }
+    },
+    "Qué pasa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's wrong"
+          }
+        }
+      }
+    },
+    "Ranking de inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property ranking"
+          }
+        }
+      }
+    },
     "Ranking de pisos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5289,6 +7850,16 @@
         }
       }
     },
+    "Recuerda pagar la renta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remember to pay the rent"
+          }
+        }
+      }
+    },
     "Referencia" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5324,6 +7895,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Registrar"
+          }
+        }
+      }
+    },
+    "Registrar %lld pagos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record %lld payments"
+          }
+        }
+      }
+    },
+    "Registrar 1 pago" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record 1 payment"
           }
         }
       }
@@ -5384,6 +7975,36 @@
         }
       }
     },
+    "Rellenar con el asistente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill in with the assistant"
+          }
+        }
+      }
+    },
+    "Renta mensual" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly rent"
+          }
+        }
+      }
+    },
+    "Renta mensual (IVA incluido)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly rent (VAT included)"
+          }
+        }
+      }
+    },
     "Rentabilidad" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5412,6 +8033,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Net yield"
+          }
+        }
+      }
+    },
+    "Rentabilidad, hipoteca y cash flow de un inmueble antes de comprarlo; guarda y compara." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yield, mortgage and cash flow of a property before buying it; save and compare."
           }
         }
       }
@@ -5514,6 +8145,16 @@
         }
       }
     },
+    "Revisa quién no ha pagado la renta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check who hasn't paid the rent."
+          }
+        }
+      }
+    },
     "Rotación" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5521,6 +8162,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Turnover"
+          }
+        }
+      }
+    },
+    "Se añaden o quitan desde «%@»." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add or remove them from “%@”."
           }
         }
       }
@@ -5568,6 +8219,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "They're created as available; later you can edit them, let them or put them under maintenance."
+          }
+        }
+      }
+    },
+    "Se ha registrado 1 pago con su recibo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 payment has been recorded with its receipt."
+          }
+        }
+      }
+    },
+    "Se han registrado %lld pagos con sus recibos." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld payments have been recorded with their receipts."
           }
         }
       }
@@ -5629,12 +8300,32 @@
         }
       }
     },
+    "Si lo activas en el servidor, el botón flotante pregunta sobre el inmueble o contrato que tengas abierto. Puedes ocultarlo en Perfil." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you enable it on the server, the floating button asks about the property or contract you have open. You can hide it in Profile."
+          }
+        }
+      }
+    },
     "Siguiente" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next"
+          }
+        }
+      }
+    },
+    "Silla" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chair"
           }
         }
       }
@@ -5661,7 +8352,26 @@
         }
       }
     },
-    "Sin actividad registrada todavía." : {},
+    "Sin IVA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No VAT"
+          }
+        }
+      }
+    },
+    "Sin actividad registrada todavía." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity recorded yet."
+          }
+        }
+      }
+    },
     "Sin análisis guardados" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5694,7 +8404,16 @@
         }
       }
     },
-    "Sin contrato" : {},
+    "Sin contrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No contract"
+          }
+        }
+      }
+    },
     "Sin contrato activo" : {
       "localizations" : {
         "en" : {
@@ -5732,7 +8451,26 @@
         }
       }
     },
-    "Sin datos financieros" : {},
+    "Sin datos financieros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No financial data"
+          }
+        }
+      }
+    },
+    "Sin habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No rooms"
+          }
+        }
+      }
+    },
     "Sin habitaciones disponibles" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5744,7 +8482,46 @@
         }
       }
     },
-    "Sin incidencias abiertas" : {},
+    "Sin incidencias abiertas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No open issues"
+          }
+        }
+      }
+    },
+    "Sin indicar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not specified"
+          }
+        }
+      }
+    },
+    "Sin inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No property"
+          }
+        }
+      }
+    },
+    "Sin inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No properties"
+          }
+        }
+      }
+    },
     "Sin leer (%@)" : {},
     "Sin meses vencidos en este periodo." : {
       "localizations" : {
@@ -5795,6 +8572,26 @@
         }
       }
     },
+    "Sin plazas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No spaces"
+          }
+        }
+      }
+    },
+    "Sin trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No storage units"
+          }
+        }
+      }
+    },
     "Sin vencimientos en los próximos 30 días" : {
       "localizations" : {
         "en" : {
@@ -5838,6 +8635,16 @@
         }
       }
     },
+    "Situando %lld inmuebles…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Placing %lld properties…"
+          }
+        }
+      }
+    },
     "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual." : {
       "localizations" : {
         "en" : {
@@ -5875,8 +8682,66 @@
         }
       }
     },
-    "Solo se pueden borrar habitaciones sin contratos ni incidencias." : {},
-    "Solo se pueden borrar inquilinos sin contratos ni incidencias." : {},
+    "Solo letras, números, espacios y guiones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only letters, numbers, spaces and hyphens"
+          }
+        }
+      }
+    },
+    "Solo se pueden borrar habitaciones sin contratos ni incidencias." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only rooms without contracts or issues can be deleted."
+          }
+        }
+      }
+    },
+    "Solo se pueden borrar inquilinos sin contratos ni incidencias." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only tenants without contracts or issues can be deleted."
+          }
+        }
+      }
+    },
+    "Solo se pueden borrar plazas sin contratos ni incidencias." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only spaces without contracts or issues can be deleted."
+          }
+        }
+      }
+    },
+    "Solo se pueden borrar trasteros sin contratos ni incidencias." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only storage units without contracts or issues can be deleted."
+          }
+        }
+      }
+    },
+    "Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el inmueble." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They are optional: they are used to calculate yield and cash flow. You can complete them later from the property."
+          }
+        }
+      }
+    },
     "Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el piso." : {
       "localizations" : {
         "en" : {
@@ -5887,7 +8752,57 @@
         }
       }
     },
+    "Soy inquilino y tengo un código" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I'm a tenant and I have a code"
+          }
+        }
+      }
+    },
     "Subiendo…" : {},
+    "Suelo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Floor"
+          }
+        }
+      }
+    },
+    "Sugerir categoría y urgencia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggest category and urgency"
+          }
+        }
+      }
+    },
+    "Superficie" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size"
+          }
+        }
+      }
+    },
+    "Superficie entre 0 y 9.999 m²" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size between 0 and 9,999 m²"
+          }
+        }
+      }
+    },
     "T%lld %@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5916,7 +8831,37 @@
         }
       }
     },
+    "También se borrarán: %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This will also delete: %@."
+          }
+        }
+      }
+    },
+    "Tarjetas de acceso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access cards"
+          }
+        }
+      }
+    },
     "Te lo da tu propietario. Caduca a los pocos días; si no funciona, pídele uno nuevo." : {},
+    "Teléfono" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone"
+          }
+        }
+      }
+    },
     "Tema" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5978,12 +8923,32 @@
         }
       }
     },
+    "Tiene %lld contratos activos. Finalízalos antes de borrarlo: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has %lld active contracts. End them before deleting: contracts and their payments are kept."
+          }
+        }
+      }
+    },
     "Tiene 1 contrato activo. Finalízalo antes de borrar el piso: los contratos y sus pagos se conservan." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "It has 1 active lease. End it before deleting the property: leases and their payments are kept."
+          }
+        }
+      }
+    },
+    "Tiene 1 contrato activo. Finalízalo antes de borrarlo: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has 1 active contract. End it before deleting: contracts and their payments are kept."
           }
         }
       }
@@ -6021,6 +8986,16 @@
         }
       }
     },
+    "Tipo de inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property type"
+          }
+        }
+      }
+    },
     "Toca actualizar el %@" : {},
     "Toca dos veces para plegarlo" : {
       "localizations" : {
@@ -6044,6 +9019,36 @@
         }
       }
     },
+    "Toca para editar; desliza para más acciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to edit; swipe for more actions"
+          }
+        }
+      }
+    },
+    "Toca para no registrarlo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to skip it"
+          }
+        }
+      }
+    },
+    "Toca para registrarlo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to record it"
+          }
+        }
+      }
+    },
     "Toda la cartera" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6055,9 +9060,47 @@
         }
       }
     },
-    "Todas" : {},
+    "Todas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        }
+      }
+    },
     "Todas (%@)" : {},
-    "Todas las ciudades" : {},
+    "Todas (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All (%lld)"
+          }
+        }
+      }
+    },
+    "Todas las ciudades" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All cities"
+          }
+        }
+      }
+    },
+    "Todavía no tienes inmuebles dados de alta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You haven't added any properties yet."
+          }
+        }
+      }
+    },
     "Todo a mano" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6103,6 +9146,16 @@
         }
       }
     },
+    "Todo el inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whole property"
+          }
+        }
+      }
+    },
     "Todo el piso" : {},
     "Todos" : {
       "extractionState" : "stale",
@@ -6111,6 +9164,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All"
+          }
+        }
+      }
+    },
+    "Todos (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All (%lld)"
           }
         }
       }
@@ -6137,7 +9200,96 @@
         }
       }
     },
-    "Todos los inquilinos" : {},
+    "Todos los inquilinos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All tenants"
+          }
+        }
+      }
+    },
+    "Total al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total per month"
+          }
+        }
+      }
+    },
+    "Trastero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit"
+          }
+        }
+      }
+    },
+    "Trastero %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit %lld"
+          }
+        }
+      }
+    },
+    "Trastero borrado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit deleted"
+          }
+        }
+      }
+    },
+    "Trastero creado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit created"
+          }
+        }
+      }
+    },
+    "Trastero editado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage unit edited"
+          }
+        }
+      }
+    },
+    "Trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage units"
+          }
+        }
+      }
+    },
+    "Trasteros libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free storage units"
+          }
+        }
+      }
+    },
     "Trimestre" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6149,7 +9301,67 @@
         }
       }
     },
+    "Tu propietario aún no ha hecho ninguno." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your landlord hasn't made any yet."
+          }
+        }
+      }
+    },
+    "Un año" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One year"
+          }
+        }
+      }
+    },
     "Una foto ayuda a entender el problema y a presupuestar la reparación." : {},
+    "Unidad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unit"
+          }
+        }
+      }
+    },
+    "Unidades" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Units"
+          }
+        }
+      }
+    },
+    "Unidades libres" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free units"
+          }
+        }
+      }
+    },
+    "Unidades por estado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Units by status"
+          }
+        }
+      }
+    },
     "Usa la app" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6262,12 +9474,52 @@
         }
       }
     },
+    "Ventana" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Window"
+          }
+        }
+      }
+    },
+    "Ver contrato (PDF)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View contract (PDF)"
+          }
+        }
+      }
+    },
     "Ver en Cobros" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "View in Payments"
+          }
+        }
+      }
+    },
+    "Ver en el mapa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View on map"
+          }
+        }
+      }
+    },
+    "Ver factura" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View invoice"
           }
         }
       }
@@ -6366,7 +9618,16 @@
         }
       }
     },
-    "Viene de una incidencia: su importe se cambia en la incidencia." : {},
+    "Viene de una incidencia: su importe se cambia en la incidencia." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It comes from an issue: change its amount in the issue."
+          }
+        }
+      }
+    },
     "Vista previa" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6380,6 +9641,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vista previa"
+          }
+        }
+      }
+    },
+    "Vivienda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
           }
         }
       }
@@ -6417,7 +9688,26 @@
         }
       }
     },
-    "al mes" : {},
+    "Ya usa la app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already uses the app"
+          }
+        }
+      }
+    },
+    "al mes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "a month"
+          }
+        }
+      }
+    },
     "año anterior" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6430,6 +9720,16 @@
       }
     },
     "de %@ habitaciones" : {},
+    "de %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "of %1$lld %2$@"
+          }
+        }
+      }
+    },
     "de %lld habitaciones" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6454,6 +9754,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "este contrato"
+          }
+        }
+      }
+    },
+    "este inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this property"
           }
         }
       }
@@ -6492,6 +9802,16 @@
         }
       }
     },
+    "habitaciones" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rooms"
+          }
+        }
+      }
+    },
     "hoy" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6513,7 +9833,26 @@
         }
       }
     },
-    "ocupación" : {},
+    "ocupación" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "occupancy"
+          }
+        }
+      }
+    },
+    "plazas" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "spaces"
+          }
+        }
+      }
+    },
     "puntualidad" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6536,6 +9875,26 @@
         }
       }
     },
+    "trasteros" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "storage units"
+          }
+        }
+      }
+    },
+    "unidades" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "units"
+          }
+        }
+      }
+    },
     "¿Borrar a %@?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6543,6 +9902,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete %@?"
+          }
+        }
+      }
+    },
+    "¿Borrar el gasto de %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete the expense of %@?"
+          }
+        }
+      }
+    },
+    "¿Borrar el inventario?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete the inventory?"
           }
         }
       }
@@ -6558,6 +9937,26 @@
         }
       }
     },
+    "¿Borrar el trastero %lld?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete storage unit %lld?"
+          }
+        }
+      }
+    },
+    "¿Borrar la habitación %lld?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete room %lld?"
+          }
+        }
+      }
+    },
     "¿Borrar la incidencia?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6565,6 +9964,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete the issue?"
+          }
+        }
+      }
+    },
+    "¿Borrar la plaza %lld?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete space %lld?"
           }
         }
       }
@@ -6593,6 +10002,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Cerrar sesión?"
+          }
+        }
+      }
+    },
+    "¿De qué inmueble?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which property?"
           }
         }
       }
@@ -6665,6 +10084,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to delete it?"
+          }
+        }
+      }
+    },
+    "Últimos pagos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest payments"
           }
         }
       }

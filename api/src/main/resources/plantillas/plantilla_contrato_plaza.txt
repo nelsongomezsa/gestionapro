@@ -1,0 +1,61 @@
+CONTRATO DE ARRENDAMIENTO DE PLAZA DE GARAJE
+
+REUNIDOS:
+De una parte, como ARRENDADOR: {{ARRENDADOR_NOMBRE}}, mayor de edad, con DNI {{ARRENDADOR_DNI}}, con domicilio a efectos de notificaciones en {{DIRECCION_PISO}}, {{CIUDAD}}.
+
+De otra parte, como ARRENDATARIO: {{ARRENDATARIO_NOMBRE}}, mayor de edad, con DNI {{ARRENDATARIO_DNI}}.
+
+Ambas partes se reconocen capacidad legal suficiente para contratar y, libre y voluntariamente,
+
+EXPONEN:
+Que el ARRENDADOR es propietario de la plaza de garaje número {{NUMERO_HABITACION}} del inmueble sito en {{DIRECCION_PISO}}, {{CIUDAD}}{{DETALLE_UNIDAD}}, y desea arrendarla al ARRENDATARIO, que la acepta.
+
+CLÁUSULAS:
+
+PRIMERA - OBJETO
+El ARRENDADOR cede en arrendamiento al ARRENDATARIO el uso de la PLAZA DE GARAJE Nº {{NUMERO_HABITACION}} para el estacionamiento de {{VEHICULO}}. Se trata de un arrendamiento para uso distinto del de vivienda, que se rige por lo pactado en este contrato y, en lo no previsto, por el Código Civil. La plaza no podrá destinarse a almacén, taller ni a ningún otro uso distinto del estacionamiento.
+
+SEGUNDA - DURACIÓN
+El contrato comienza el {{FECHA_INICIO}} y finaliza el {{FECHA_FIN}}. Cualquiera de las partes podrá darlo por terminado antes de esa fecha comunicándolo por escrito a la otra con al menos 15 días de antelación. Al vencimiento, si ninguna de las partes manifiesta lo contrario, se prorrogará por meses.
+
+TERCERA - RENTA
+{{RENTA_TEXTO}} La renta se abonará dentro de los primeros 5 días de cada mes mediante transferencia bancaria o domiciliación. El impago de dos mensualidades será causa de resolución del contrato.
+
+CUARTA - FIANZA
+{{FIANZA_TEXTO}}
+
+QUINTA - LLAVES, MANDOS Y TARJETAS
+El ARRENDADOR entrega al ARRENDATARIO los mandos, llaves y tarjetas de acceso que se detallan en el Anexo I. El ARRENDATARIO no podrá hacer copias sin autorización y los devolverá al terminar el contrato. Su pérdida o reposición correrá a cargo del ARRENDATARIO.
+
+SEXTA - USO Y CONSERVACIÓN
+El ARRENDATARIO se obliga a usar la plaza con diligencia, respetar las normas de la comunidad de propietarios y las marcas de la plaza, no almacenar combustibles ni materiales inflamables, no realizar reparaciones ni lavados del vehículo en el garaje y comunicar cualquier avería de la puerta, la iluminación o las instalaciones.
+
+SÉPTIMA - GASTOS
+Los gastos de comunidad y el IBI de la plaza corren a cargo del ARRENDADOR. El seguro del vehículo y su responsabilidad civil corren a cargo del ARRENDATARIO. El ARRENDADOR no responde de los robos o daños que sufra el vehículo o los objetos dejados en él.
+
+OCTAVA - CESIÓN Y SUBARRIENDO
+El ARRENDATARIO no podrá ceder ni subarrendar la plaza sin el consentimiento escrito del ARRENDADOR.
+
+NOVENA - PROTECCIÓN DE DATOS
+Los datos personales de ambas partes se tratarán conforme al Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018, exclusivamente para la gestión del presente contrato.
+
+DÉCIMA - JURISDICCIÓN
+Para cualquier controversia derivada del presente contrato, las partes se someten a los Juzgados y Tribunales de {{CIUDAD}}.
+
+FIRMA:
+En {{CIUDAD}}, a {{FECHA_HOY}}.
+
+EL ARRENDADOR:::{{ARRENDADOR_NOMBRE}}:::DNI: {{ARRENDADOR_DNI}}
+EL ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}:::DNI: {{ARRENDATARIO_DNI}}
+
+ANEXO I - ENTREGA DE LA PLAZA DE GARAJE Nº {{NUMERO_HABITACION}}
+Estado en el momento de la entrega: BUENO
+- Mandos de la puerta (número):______________
+- Llaves (número):______________
+- Tarjetas de acceso (número):______________
+- Estado de la plaza y marcas:______________
+- Otros:______________
+
+Conforme:
+ARRENDADOR:::{{ARRENDADOR_NOMBRE}}
+ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}

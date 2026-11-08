@@ -6,12 +6,16 @@ struct HabitacionesLibresView: View {
     @Environment(SesionStore.self) private var sesion
     @State private var estado: EstadoCarga<[Habitacion]> = .cargando
     @State private var incluirMantenimiento = false
+    /// "Habitaciones libres" o, con garajes o trasteros, "Unidades libres".
+    @State private var titulo = String(localized: "Habitaciones libres")
     /// Abre una pantalla en la pila de Inicio.
     let abrir: (DestinoInicio) -> Void
 
     var body: some View {
         VistaCarga(estado: estado, reintentar: { Task { await cargar() } }) { todas in
             let visibles = ResumenesInicio.libres(todas, incluirMantenimiento: incluirMantenimiento)
+            // Con garajes o trasteros en la cartera, los textos dicen "unidades".
+            let otros = todas.contains { $0.unidad != .habitacion }
             List {
                 Section {
                     Toggle(isOn: $incluirMantenimiento.animation(Tema.Movimiento.suave)) {
@@ -24,13 +28,17 @@ struct HabitacionesLibresView: View {
 
                 if visibles.isEmpty {
                     EstadoVacio(icono: "checkmark.seal", titulo: "Todo alquilado",
-                                mensaje: incluirMantenimiento ? "No hay habitaciones libres ni en mantenimiento."
-                                                              : "No hay habitaciones libres.")
+                                mensaje: otros
+                                    ? (incluirMantenimiento ? String(localized: "No hay unidades libres ni en mantenimiento.")
+                                                            : String(localized: "No hay unidades libres."))
+                                    : (incluirMantenimiento ? String(localized: "No hay habitaciones libres ni en mantenimiento.")
+                                                            : String(localized: "No hay habitaciones libres.")))
                         .listRowBackground(Color.clear)
                 } else {
-                    Section(visibles.count == 1 ? String(localized: "1 habitación") : String(localized: "\(visibles.count) habitaciones")) {
+                    Section(otros ? (visibles.count == 1 ? String(localized: "1 unidad") : String(localized: "\(visibles.count) unidades"))
+                                  : TipoUnidad.habitacion.cantidad(visibles.count)) {
                         ForEach(visibles) { h in
-                            TarjetaTocable(pista: "Abre la habitación para crear un contrato", mostrarChevron: false,
+                            TarjetaTocable(pista: String(localized: "Abre la ficha para crear un contrato"), mostrarChevron: false,
                                            accion: { abrir(.fichaHabitacion(h)) }) { FilaHabitacionLibre(habitacion: h) }
                                 .accessibilityIdentifier("filaHabitacionLibre")
                         }
@@ -40,7 +48,7 @@ struct HabitacionesLibresView: View {
             }
             .estiloLista()
         }
-        .navigationTitle("Habitaciones libres")
+        .navigationTitle(titulo)
         .navigationBarTitleDisplayMode(.inline)
         .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in Task { await cargar() } }
         .refreshable { await cargar() }
@@ -48,7 +56,11 @@ struct HabitacionesLibresView: View {
     }
 
     private func cargar() async {
-        do { estado = .cargado(try await sesion.api.enviar(.habitaciones())) }
+        do {
+            let todas: [Habitacion] = try await sesion.api.enviar(.habitaciones())
+            titulo = todas.contains { $0.unidad != .habitacion } ? String(localized: "Unidades libres") : String(localized: "Habitaciones libres")
+            estado = .cargado(todas)
+        }
         catch .noAutorizado {}
         catch {
             if estado.valor == nil { estado = .error(error.localizedDescription) }
@@ -62,8 +74,9 @@ private struct FilaHabitacionLibre: View {
     var body: some View {
         let h = habitacion
         HStack(spacing: Tema.Espacio.s) {
-            Text("\(h.numero)")
+            Text(h.unidad == .habitacion ? "\(h.numero)" : "\(h.etiqueta)")
                 .font(Tema.Fuente.cifraPequena)
+                .minimumScaleFactor(0.5).lineLimit(2).multilineTextAlignment(.center)
                 .frame(width: Tema.Tamano.avatarFila, height: Tema.Tamano.avatarFila)
                 .background(h.estado.tono.color.opacity(0.14), in: .rect(cornerRadius: Tema.Radio.pequeno))
                 .foregroundStyle(h.estado.tono.color)
@@ -82,7 +95,7 @@ private struct FilaHabitacionLibre: View {
         }
         .padding(.vertical, Tema.Espacio.linea)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Habitación \(h.numero), \(h.piso.direccion). \(Formato.euros(h.precio)) al mes. \(ResumenesInicio.textoLibre(h))")
+        .accessibilityLabel("\(h.titulo), \(h.piso.direccion). \(Formato.euros(h.precio)) al mes. \(ResumenesInicio.textoLibre(h))")
     }
 }
 
@@ -106,15 +119,16 @@ struct HabitacionFichaView: View {
         let h = habitacion
         ScrollView {
             VStack(alignment: .leading, spacing: Tema.Espacio.l) {
-                TarjetaHero(titulo: "Habitación \(h.numero)", valor: Formato.euros(h.precio),
-                            accesorio: AnyView(InsigniaEstado(texto: h.estado.nombre, tono: h.estado.tono, icono: h.estado.icono))) {
+                TarjetaHero(titulo: "\(h.titulo)", valor: Formato.euros(h.precio),
+                            accesorio: AnyView(InsigniaEstado(texto: h.estado.nombre(para: h.unidad), tono: h.estado.tono, icono: h.estado.icono))) {
                     Text(ResumenesInicio.textoLibre(h)).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
                     switch h.estado {
                     case .disponible:
                         BotonPrincipal(titulo: "Nuevo contrato", icono: "doc.badge.plus") { creando = true }
                             .accessibilityIdentifier("nuevoContratoHabitacion")
                     case .mantenimiento:
-                        Text("Para alquilarla, márcala antes como disponible.")
+                        Text(h.unidad == .trastero ? String(localized: "Para alquilarlo, márcalo antes como disponible.")
+                                                   : String(localized: "Para alquilarla, márcala antes como disponible."))
                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                         BotonPrincipal(titulo: "Marcar como disponible", icono: EstadoHabitacion.disponible.icono,
                                        cargando: cambiandoEstado) { Task { await marcarDisponible() } }
@@ -123,12 +137,12 @@ struct HabitacionFichaView: View {
                     }
                 }
 
-                SeccionTarjeta(titulo: "Piso") {
+                SeccionTarjeta(titulo: "Inmueble") {
                     NavigationLink(value: DestinoInicio.piso(h.piso.id)) {
                         FilaMetrica(titulo: h.piso.direccion, valor: "", nota: h.piso.ciudad, icono: "building.2")
                     }
                     .buttonStyle(.plain)
-                    .accessibilityHint("Abre el detalle del piso")
+                    .accessibilityHint("Abre el detalle del inmueble")
                     .accessibilityIdentifier("enlacePisoFicha")
                     Divider().overlay(Tema.Color.borde)
                     Button { inventarios = true } label: {
@@ -141,7 +155,7 @@ struct HabitacionFichaView: View {
             .padding(.bottom, Tema.Espacio.l)
         }
         .background(Tema.Color.fondo)
-        .navigationTitle("Habitación \(h.numero)")
+        .navigationTitle("\(h.titulo)")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $creando) {
             NuevoContratoView(habitacionInicial: h) { c in
@@ -151,7 +165,7 @@ struct HabitacionFichaView: View {
         }
         .sheet(isPresented: $inventarios) {
             NavigationStack {
-                InventariosView(idHabitacion: h.id, titulo: "Inventarios · hab. \(h.numero)")
+                InventariosView(idHabitacion: h.id, titulo: "\(String(localized: "Inventarios")) · \(h.etiqueta)", unidad: h.unidad)
                     .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { inventarios = false } } }
             }
         }

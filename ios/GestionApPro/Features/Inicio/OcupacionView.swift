@@ -20,12 +20,12 @@ struct OcupacionView: View {
                     .aparicion(0)
 
                     if pisos.isEmpty {
-                        EstadoVacio(icono: "building.2", titulo: "Sin pisos", mensaje: "Añade un piso para ver su ocupación.")
+                        EstadoVacio(icono: "building.2", titulo: "Sin inmuebles", mensaje: "Añade un inmueble para ver su ocupación.")
                     } else {
-                        SeccionTarjeta(titulo: "Por piso · de menor a mayor") {
+                        SeccionTarjeta(titulo: "Por inmueble · de menor a mayor") {
                             let ordenados = ResumenesInicio.porOcupacion(pisos)
                             ForEach(ordenados) { p in
-                                TarjetaTocable(pista: "Abre el detalle del piso", mostrarChevron: false,
+                                TarjetaTocable(pista: "Abre el detalle del inmueble", mostrarChevron: false,
                                                accion: { abrir(.piso(p.id)) }) { FilaOcupacionPiso(piso: p) }
                                     .accessibilityIdentifier("filaOcupacionPiso")
                                 if p.id != ordenados.last?.id { Divider().overlay(Tema.Color.borde) }

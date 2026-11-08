@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.NivelVencimiento;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,22 +16,24 @@ public record ContratoResponse(
         InquilinoBreve inquilino,
         LocalDate fechaInicio,
         LocalDate fechaFin,
-        BigDecimal precioMensual,
+        @Schema(description = "Lo que paga el inquilino al mes (con IVA si aplicaIva)") BigDecimal precioMensual,
+        boolean aplicaIva,
+        @Schema(description = "Solo si aplicaIva") BigDecimal ivaPct,
         @Schema(description = "Vigente hoy") boolean activo,
         @Schema(description = "Crítico: vence en 7 días o menos; próximo: en 30 o menos") NivelVencimiento vencimiento,
         @Schema(description = "Días hasta la fecha de fin (negativo si ya pasó)") long diasRestantes) {
 
-    public record HabitacionBreve(Integer id, int numero) {}
+    public record HabitacionBreve(Integer id, int numero, TipoUnidad tipo) {}
 
     public record InquilinoBreve(Integer id, String nombre, String dni, String telefono, String email) {}
 
     public static ContratoResponse de(Contrato c, LocalDate hoy) {
         var i = c.getInquilino();
         return new ContratoResponse(c.getId(),
-                new HabitacionBreve(c.getHabitacion().getId(), c.getHabitacion().getNumero()),
+                new HabitacionBreve(c.getHabitacion().getId(), c.getHabitacion().getNumero(), c.getHabitacion().getTipo()),
                 PisoBreve.de(c.getHabitacion().getPiso()),
                 new InquilinoBreve(i.getId(), i.getNombreCompleto(), i.getDni(), i.getTelefono(), i.getEmail()),
-                c.getFechaInicio(), c.getFechaFin(), c.getPrecioMensual(), c.estaActivoEn(hoy),
+                c.getFechaInicio(), c.getFechaFin(), c.getPrecioMensual(), c.isAplicaIva(), c.getIvaPct(), c.estaActivoEn(hoy),
                 NivelVencimiento.de(c.getFechaFin(), hoy), ChronoUnit.DAYS.between(hoy, c.getFechaFin()));
     }
 }

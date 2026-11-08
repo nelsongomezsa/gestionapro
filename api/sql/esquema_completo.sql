@@ -1,5 +1,5 @@
 -- =====================================================================
--- gestionapro-api · Esquema completo (escritorio + V1–V11), SIN datos.
+-- gestionapro-api · Esquema completo (escritorio + V1–V12), SIN datos.
 -- Para crear la base en un servidor nuevo (ver docs/DESPLIEGUE.md):
 --   mysql -h <host> -u <usuario> -p <base> < esquema_completo.sql
 -- Generado con mysqldump --no-data a partir de gestion_alquileres_pro (MariaDB 10.4).
@@ -53,6 +53,8 @@ CREATE TABLE `Contratos` (
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
   `precio_mensual` decimal(8,2) NOT NULL,
+  `aplica_iva` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'V12: el recibo desglosa base e IVA',
+  `iva_pct` decimal(5,2) DEFAULT NULL COMMENT 'V12: porcentaje de IVA si aplica_iva',
   PRIMARY KEY (`id_contrato`),
   KEY `id_habitacion` (`id_habitacion`),
   KEY `id_inquilino` (`id_inquilino`),
@@ -193,6 +195,10 @@ CREATE TABLE `Habitaciones` (
   `precio` decimal(8,2) NOT NULL,
   `estado` enum('disponible','alquilada','mantenimiento') NOT NULL DEFAULT 'disponible',
   `id_piso` int(11) NOT NULL,
+  `tipo` enum('habitacion','plaza','trastero') NOT NULL DEFAULT 'habitacion' COMMENT 'V12: tipo de unidad',
+  `metros` decimal(6,2) DEFAULT NULL COMMENT 'V12: superficie en m² (opcional)',
+  `planta` varchar(20) DEFAULT NULL COMMENT 'V12: planta, p. ej. -1 (opcional)',
+  `vehiculo` enum('coche','moto') DEFAULT NULL COMMENT 'V12: solo plazas de garaje',
   PRIMARY KEY (`id_habitacion`),
   KEY `id_piso` (`id_piso`),
   CONSTRAINT `habitaciones_ibfk_1` FOREIGN KEY (`id_piso`) REFERENCES `Pisos` (`id_piso`)
@@ -326,6 +332,7 @@ CREATE TABLE `Pisos` (
   `numero_habitaciones` int(11) NOT NULL,
   `id_ciudad` int(11) NOT NULL,
   `id_propietario` int(11) NOT NULL,
+  `tipo` enum('vivienda','garajes','trasteros') NOT NULL DEFAULT 'vivienda' COMMENT 'V12: tipo de inmueble',
   PRIMARY KEY (`id_piso`),
   KEY `id_ciudad` (`id_ciudad`),
   KEY `idx_pisos_propietario` (`id_propietario`),
@@ -342,6 +349,9 @@ CREATE TABLE `Recibos` (
   `anio` int(11) NOT NULL,
   `numero` int(11) NOT NULL,
   `fecha_emision` datetime NOT NULL DEFAULT current_timestamp(),
+  `base_imponible` decimal(8,2) DEFAULT NULL COMMENT 'V12: base sin IVA; NULL si el recibo no lleva IVA',
+  `iva_pct` decimal(5,2) DEFAULT NULL COMMENT 'V12',
+  `cuota_iva` decimal(8,2) DEFAULT NULL COMMENT 'V12',
   PRIMARY KEY (`id_recibo`),
   UNIQUE KEY `uk_recibos_pago` (`id_pago`),
   UNIQUE KEY `uk_recibos_numero` (`id_propietario`,`anio`,`numero`),

@@ -26,7 +26,7 @@ struct EstadisticasView: View {
                     EstadoVacio(icono: "exclamationmark.triangle", titulo: "No se pudieron cargar", mensaje: mensaje,
                                 accionTitulo: "Reintentar") { Task { await vm.cargar(con: sesion.api) } }
                 case let .cargado(a):
-                    ContenidoAnalisis(analisis: a, periodo: vm.periodo)
+                    ContenidoAnalisis(analisis: a, periodo: vm.periodo, unidades: vm.unidades, soloHabitaciones: vm.soloHabitaciones)
                         .opacity(vm.cargando ? 0.5 : 1)
                 }
                 if let s = vm.situacion { SituacionActual(estadisticas: s) }
@@ -63,18 +63,25 @@ private struct FiltrosEstadisticas: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.s) {
             Menu {
-                Button { vm.ambito = .cartera } label: { etiqueta("Toda la cartera", elegido: vm.ambito == .cartera) }
-                Section("Pisos") {
+                Button { vm.ambito = .cartera } label: { etiqueta(String(localized: "Toda la cartera"), elegido: vm.ambito == .cartera) }
+                if vm.tiposPresentes.count > 1 {
+                    Section("Por tipo") {
+                        ForEach(vm.tiposPresentes) { t in
+                            Button { vm.ambito = .tipo(t) } label: { etiqueta(t.nombre, elegido: vm.ambito == .tipo(t)) }
+                        }
+                    }
+                }
+                Section("Inmuebles") {
                     ForEach(vm.pisos) { p in
                         Button { vm.ambito = .piso(p.breve) } label: { etiqueta(p.direccion, elegido: vm.ambito == .piso(p.breve)) }
                     }
                 }
-                Section("Habitaciones") {
+                Section(Unidades.pluralTitulo(conOtrosTipos: vm.pisos.contains { $0.tipoInmueble != .vivienda })) {
                     ForEach(vm.pisos) { p in
                         Menu(p.direccion) {
                             ForEach(vm.habitaciones.filter { $0.piso.id == p.id }.sorted { $0.numero < $1.numero }) { h in
                                 Button { vm.ambito = .habitacion(h) } label: {
-                                    etiqueta(String(localized: "Habitación \(h.numero)"), elegido: vm.ambito == .habitacion(h))
+                                    etiqueta(String(localized: "\(h.titulo)"), elegido: vm.ambito == .habitacion(h))
                                 }
                             }
                         }
@@ -133,8 +140,9 @@ private struct FiltrosEstadisticas: View {
     private var icono: String {
         switch vm.ambito {
         case .cartera: "square.grid.2x2"
+        case let .tipo(t): t.icono
         case .piso: "building.2"
-        case .habitacion: "bed.double"
+        case let .habitacion(h): h.unidad.icono
         }
     }
 
@@ -148,6 +156,9 @@ private struct FiltrosEstadisticas: View {
 private struct ContenidoAnalisis: View {
     let analisis: Analisis
     let periodo: PeriodoEstadisticas
+    /// "habitaciones", "plazas", "trasteros" o "unidades".
+    var unidades = TipoUnidad.habitacion.pluralMinusculas
+    var soloHabitaciones = true
 
     var body: some View {
         let a = analisis, t = a.actual
@@ -191,8 +202,8 @@ private struct ContenidoAnalisis: View {
             }
 
             if a.pisos.count > 1 {
-                SeccionTarjeta(titulo: "Ingresos frente a gastos por piso") { GraficoPisos(pisos: a.pisos) }
-                SeccionTarjeta(titulo: "Ranking de pisos") {
+                SeccionTarjeta(titulo: "Ingresos frente a gastos por inmueble") { GraficoPisos(pisos: a.pisos) }
+                SeccionTarjeta(titulo: "Ranking de inmuebles") {
                     ForEach(Array(a.pisos.enumerated()), id: \.element.id) { i, p in
                         FilaRanking(puesto: i + 1, piso: p)
                         if i < a.pisos.count - 1 { Divider().overlay(Tema.Color.borde) }
@@ -205,9 +216,10 @@ private struct ContenidoAnalisis: View {
             Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
                 GridRow {
                     TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(t.ocupacionPct), icono: "chart.pie",
-                               tono: Tono.ocupacion(t.ocupacionPct), detalle: String(localized: "\(t.habitaciones) habitaciones"))
-                    TarjetaKPI(titulo: "Días medios vacía", valor: Formato.numero(t.diasMediosVacia), icono: "calendar.badge.minus",
-                               tono: .primario, detalle: "Por habitación")
+                               tono: Tono.ocupacion(t.ocupacionPct), detalle: "\(t.habitaciones) \(unidades)")
+                    TarjetaKPI(titulo: soloHabitaciones ? String(localized: "Días medios vacía") : String(localized: "Días medios sin alquilar"),
+                               valor: Formato.numero(t.diasMediosVacia), icono: "calendar.badge.minus",
+                               tono: .primario, detalle: soloHabitaciones ? String(localized: "Por habitación") : String(localized: "Por unidad"))
                 }
                 GridRow {
                     TarjetaKPI(titulo: "Rotación", valor: Formato.porcentaje(t.rotacionPct), icono: "arrow.triangle.2.circlepath",
@@ -327,12 +339,12 @@ private struct GraficoPisos: View {
     var body: some View {
         Chart {
             ForEach(pisos) { p in
-                BarMark(x: .value("Importe", p.ingresos.double), y: .value("Piso", p.piso.direccion))
+                BarMark(x: .value("Importe", p.ingresos.double), y: .value("Inmueble", p.piso.direccion))
                     .foregroundStyle(by: .value("Tipo", "Ingresos"))
                     .position(by: .value("Tipo", "Ingresos"))
                     .accessibilityLabel("\(p.piso.direccion), ingresos")
                     .accessibilityValue(Formato.euros(p.ingresos))
-                BarMark(x: .value("Importe", p.gastos.double), y: .value("Piso", p.piso.direccion))
+                BarMark(x: .value("Importe", p.gastos.double), y: .value("Inmueble", p.piso.direccion))
                     .foregroundStyle(by: .value("Tipo", "Gastos"))
                     .position(by: .value("Tipo", "Gastos"))
                     .accessibilityLabel("\(p.piso.direccion), gastos")
@@ -355,7 +367,7 @@ private struct GraficoPisos: View {
             AxisMarks { _ in AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.texto) }
         }
         .frame(height: CGFloat(pisos.count) * 52 + 40)
-        .accessibilityLabel("Ingresos frente a gastos por piso")
+        .accessibilityLabel("Ingresos frente a gastos por inmueble")
     }
 }
 
@@ -425,7 +437,7 @@ private struct SituacionActual: View {
             Text("Situación actual").font(Tema.Fuente.titulo).foregroundStyle(Tema.Color.texto)
                 .accessibilityAddTraits(.isHeader)
                 .padding(.top, Tema.Espacio.s)
-            SeccionTarjeta(titulo: "Habitaciones por estado") {
+            SeccionTarjeta(titulo: e.ocupacion.conOtrosTipos == true ? String(localized: "Unidades por estado") : String(localized: "Habitaciones por estado")) {
                 AnilloHabitaciones(ocupacion: e.ocupacion)
             }
             SeccionTarjeta(titulo: "Incidencias comunicadas · 6 meses") {
@@ -470,7 +482,7 @@ struct AnilloHabitaciones: View {
             VStack(spacing: Tema.Espacio.m) { anillo; leyenda }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Habitaciones: \(Formato.porcentaje(ocupacion.porcentaje)) de ocupación")
+        .accessibilityLabel("\(Unidades.pluralTitulo(conOtrosTipos: ocupacion.conOtrosTipos ?? false)): \(Formato.porcentaje(ocupacion.porcentaje)) de ocupación")
         .accessibilityValue(porciones.map { "\($0.cantidad) \($0.nombre.lowercased())" }.joined(separator: ", "))
     }
 
@@ -499,7 +511,7 @@ struct AnilloHabitaciones: View {
                     Text("\(p.cantidad)").font(Tema.Fuente.cifraPequena).foregroundStyle(Tema.Color.texto)
                 }
             }
-            Text("de \(ocupacion.habitaciones) habitaciones")
+            Text("de \(ocupacion.habitaciones) \(ocupacion.plural)")
                 .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
         }
     }

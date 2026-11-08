@@ -36,6 +36,16 @@ public class Recibo {
     @Column(name = "fecha_emision", nullable = false)
     private LocalDateTime fechaEmision;
 
+    /** V12: desglose del IVA el día de la emisión; null si el recibo no lleva IVA. */
+    @Column(name = "base_imponible", precision = 8, scale = 2)
+    private java.math.BigDecimal baseImponible;
+
+    @Column(name = "iva_pct", precision = 5, scale = 2)
+    private java.math.BigDecimal ivaPct;
+
+    @Column(name = "cuota_iva", precision = 8, scale = 2)
+    private java.math.BigDecimal cuotaIva;
+
     /** 2026-0007 */
     public String codigo() {
         return codigo(anio, numero);

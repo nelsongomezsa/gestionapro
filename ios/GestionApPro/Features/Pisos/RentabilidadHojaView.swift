@@ -27,9 +27,9 @@ struct RentabilidadHojaView: View {
                         }
                         calculo(m)
                         SeccionTarjeta(titulo: "Cobros y gastos · 12 meses") { grafico }
-                        SeccionTarjeta(titulo: "Frente a tus pisos") { ranking }
+                        SeccionTarjeta(titulo: "Frente a tus inmuebles") { ranking }
                         BotonPrincipal(titulo: "Simular en la calculadora", icono: "function") { simulando = true }
-                        .accessibilityHint("Abre la calculadora con los datos de este piso para probar cambios")
+                        .accessibilityHint("Abre la calculadora con los datos de este inmueble para probar cambios")
                         .accessibilityIdentifier("simularCalculadora")
                     }
                     .padding(.horizontal, Tema.Espacio.m)
@@ -105,7 +105,7 @@ struct RentabilidadHojaView: View {
             }
             .accessibilityElement(children: .combine)
         } else if rankingCargado {
-            Text("No se puede comparar: faltan datos en este piso o en los demás.")
+            Text("No se puede comparar: faltan datos en este inmueble o en los demás.")
                 .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
         } else {
             ProgressView().frame(maxWidth: .infinity)
