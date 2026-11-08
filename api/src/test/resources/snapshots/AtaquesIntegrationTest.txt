@@ -1,0 +1,143 @@
+### cabecerasDeSeguridad_enTodaLaApi #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cabecerasDeSeguridad_enTodaLaApi #2
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### cabecerasDeSeguridad_enTodaLaApi #3
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### inventariosDeUnaHabitacionAjena_404 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inventariosDeUnaHabitacionAjena_404 #2
+GET /api/habitaciones/{n}/inventarios
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Habitación no encontrado",
+  "path": "/api/habitaciones/{n}/inventarios"
+}
+
+### inventariosDeUnaHabitacionAjena_404 #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inventariosDeUnaHabitacionAjena_404 #4
+GET /api/habitaciones/{n}/inventarios
+200 application/json
+[]
+
+### pdfConHtmlDentro_seSirveConPoliticaQueImpideEjecutarlo #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pdfConHtmlDentro_seSirveConPoliticaQueImpideEjecutarlo #2
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle de Ana 1",
+  "categoria": "IBI",
+  "concepto": "IBI",
+  "importe": 100.00,
+  "fecha": "2026-11-08",
+  "deducible": false,
+  "tieneFactura": false
+}
+
+### pdfConHtmlDentro_seSirveConPoliticaQueImpideEjecutarlo #3
+POST /api/gastos/{n}/factura
+200 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle de Ana 1",
+  "categoria": "IBI",
+  "concepto": "IBI",
+  "importe": 100.00,
+  "fecha": "2026-11-08",
+  "deducible": false,
+  "tieneFactura": true
+}
+
+### pdfConHtmlDentro_seSirveConPoliticaQueImpideEjecutarlo #4
+GET /api/gastos/{n}/factura
+200 application/pdf
+<pdf>
+
+### pdfConHtmlDentro_seSirveConPoliticaQueImpideEjecutarlo #5
+GET /api/gastos/{n}/factura
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/gastos/{n}/factura"
+}
+

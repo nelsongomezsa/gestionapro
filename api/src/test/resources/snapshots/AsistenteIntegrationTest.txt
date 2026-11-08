@@ -1,0 +1,472 @@
+### accionSobreDatosAjenos_seRechaza_sinPropuesta #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### accionSobreDatosAjenos_seRechaza_sinPropuesta #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Registra el pago de Bea\nproponer_pago [error] Contrato no encontrado\nproponer_pago [error] El importe debe ser mayor que cero",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### acciones_soloSeProponen_nuncaSeEjecutan #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### acciones_soloSeProponen_nuncaSeEjecutan #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Registra el pago de Lucía\nproponer_pago: Propuesta preparada. El usuario tiene que confirmarla en la app.\nproponer_incidencia: Propuesta preparada. El usuario tiene que confirmarla en la app.\nproponer_recordatorio: Recordatorio preparado: Hola, Ana. Te recuerdo que la renta de noviembre 2026 (450,00 €) de habitación 1 está pendiente. Si ya la has pagado, ignora este mensaje. Gracias.",
+  "acciones": [
+    {
+      "tipo": "REGISTRAR_PAGO",
+      "resumen": "Registrar pago de 450,00 € de Ana García 1A (2026-11-08)",
+      "datos": {
+        "idContrato": "<id>",
+        "cantidad": 450.00,
+        "fechaPago": "2026-11-08",
+        "metodoPago": "transferencia"
+      }
+    },
+    {
+      "tipo": "CREAR_INCIDENCIA",
+      "resumen": "Crear incidencia en habitación 1 de Calle de Ana 1: Gotera en el baño",
+      "datos": {
+        "idHabitacion": "<id>",
+        "descripcion": "Gotera en el baño"
+      }
+    },
+    {
+      "tipo": "RECORDATORIO",
+      "resumen": "Recordatorio para Ana García 1A",
+      "datos": {
+        "idContrato": "<id>",
+        "texto": "Hola, Ana. Te recuerdo que la renta de noviembre 2026 (450,00 €) de habitación 1 está pendiente. Si ya la has pagado, ignora este mensaje. Gracias."
+      }
+    }
+  ],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### clasificarIncidencia_yValoresFueraDeLaLista #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### clasificarIncidencia_yValoresFueraDeLaLista #2
+POST /api/asistente/clasificar-incidencia
+200 application/json
+{
+  "categoria": "FONTANERIA",
+  "urgencia": "ALTA",
+  "motivo": "Hay una fuga de agua"
+}
+
+### clasificarIncidencia_yValoresFueraDeLaLista #3
+POST /api/asistente/clasificar-incidencia
+200 application/json
+{
+  "categoria": "OTROS",
+  "urgencia": "MEDIA",
+  "motivo": "x"
+}
+
+### consultas_usanLosDatosDelUsuario_yNoLosDeOtros #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### consultas_usanLosDatosDelUsuario_yNoLosDeOtros #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: ¿Quién me debe este mes?\nbuscar_contratos: [{\"id\":<id>,\"habitacion\":{\"id\":<id>,\"numero\":1,\"tipo\":\"habitacion\"},\"piso\":{\"id\":<id>,\"direccion\":\"Calle de Ana 1\",\"ciudad\":\"Madrid\",\"tipo\":\"vivienda\"},\"inquilino\":{\"id\":<id>,\"nombre\":\"Ana García 1A\",\"dni\":\"11111111A\"},\"fechaInicio\":\"2026-08-08\",\"fechaFin\":\"2027-08-08\",\"precioMensual\":450.00,\"aplicaIva\":false,\"activo\":true,\"vencimiento\":\"NORMAL\",\"diasRestantes\":273}]\ncobros_del_mes: {\"mes\":\"2026-11\",\"nombreMes\":\"noviembre 2026\",\"esperado\":450.00,\"cobrado\":0,\"pendiente\":450.00,\"numeroPagos\":0,\"pendientes\":[{\"idContrato\":<id>,\"inquilino\":{\"id\":<id>,\"nombre\":\"Ana García 1A\",\"dni\":\"11111111A\"},\"numeroHabitacion\":1,\"tipoUnidad\":\"habitacion\",\"piso\":{\"id\":<id>,\"direccion\":\"Calle de Ana 1\",\"ciudad\":\"Madrid\",\"tipo\":\"vivienda\"},\"importe\":450.00}]}",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: ¿Qué tal va?",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #3
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: ¿Y este?",
+  "acciones": [],
+  "usadosHoy": 2,
+  "limiteDiario": 5
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #4
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: ¿Paga bien?",
+  "acciones": [],
+  "usadosHoy": 3,
+  "limiteDiario": 5
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #5
+POST /api/asistente/conversar
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/asistente/conversar"
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #6
+POST /api/asistente/conversar
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/asistente/conversar"
+}
+
+### contextoDePantalla_llegaAlModelo_soloSiElUsuarioPuedeVerlo #7
+POST /api/asistente/conversar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/asistente/conversar",
+  "errores": [
+    {
+      "campo": "contexto.tipo",
+      "mensaje": "debe ser PISO, CONTRATO o INQUILINO"
+    }
+  ]
+}
+
+### contexto_limpiaInstruccionesInyectadasEnDireccion #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contexto_limpiaInstruccionesInyectadasEnDireccion #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: ¿Qué tal va?",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### elInquilinoNoUsaElAsistente #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### elInquilinoNoUsaElAsistente #2
+GET /api/asistente/estado
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/asistente/estado"
+}
+
+### falloDelServicioDeIA_llegaComoMensajeClaro #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### falloDelServicioDeIA_llegaComoMensajeClaro #2
+POST /api/asistente/conversar
+503 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 503,
+  "codigo": "ASISTENTE_NO_RESPONDE",
+  "mensaje": "El servicio de IA está recibiendo demasiadas consultas.",
+  "path": "/api/asistente/conversar"
+}
+
+### leerFactura_soloFotos_yProponeElGasto #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### leerFactura_soloFotos_yProponeElGasto #2
+POST /api/asistente/leer-factura
+200 application/json
+{
+  "proveedor": "Fontanería López",
+  "concepto": "Reparación de la caldera",
+  "fecha": "2026-10-12",
+  "importe": 145.2,
+  "categoria": "REPARACION",
+  "observaciones": ""
+}
+
+### leerFactura_soloFotos_yProponeElGasto #3
+POST /api/asistente/leer-factura
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_NO_ADMITIDO",
+  "mensaje": "Envía la factura como foto JPEG o PNG",
+  "path": "/api/asistente/leer-factura"
+}
+
+### limiteDiario_porUsuario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### limiteDiario_porUsuario #2
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola 0",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### limiteDiario_porUsuario #3
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola 1",
+  "acciones": [],
+  "usadosHoy": 2,
+  "limiteDiario": 5
+}
+
+### limiteDiario_porUsuario #4
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola 2",
+  "acciones": [],
+  "usadosHoy": 3,
+  "limiteDiario": 5
+}
+
+### limiteDiario_porUsuario #5
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola 3",
+  "acciones": [],
+  "usadosHoy": 4,
+  "limiteDiario": 5
+}
+
+### limiteDiario_porUsuario #6
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola 4",
+  "acciones": [],
+  "usadosHoy": 5,
+  "limiteDiario": 5
+}
+
+### limiteDiario_porUsuario #7
+POST /api/asistente/conversar
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "LIMITE_ASISTENTE",
+  "mensaje": "Has llegado al límite de 5 consultas de hoy. Vuelve a intentarlo mañana.",
+  "path": "/api/asistente/conversar"
+}
+
+### limiteDiario_porUsuario #8
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### limiteDiario_porUsuario #9
+POST /api/asistente/conversar
+200 application/json
+{
+  "respuesta": "Respuesta simulada a: Hola",
+  "acciones": [],
+  "usadosHoy": 1,
+  "limiteDiario": 5
+}
+
+### sinClave_estaDesactivado_conUnMensajeClaro #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinClave_estaDesactivado_conUnMensajeClaro #2
+GET /api/asistente/estado
+200 application/json
+{
+  "disponible": false,
+  "mensaje": "Falta la clave de la API de Claude en el servidor. Cuando se configure, podrás usarlo aquí.",
+  "usadosHoy": 0,
+  "limiteDiario": 5
+}
+
+### sinClave_estaDesactivado_conUnMensajeClaro #3
+POST /api/asistente/conversar
+503 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 503,
+  "codigo": "ASISTENTE_DESACTIVADO",
+  "mensaje": "Falta la clave de la API de Claude en el servidor. Cuando se configure, podrás usarlo aquí.",
+  "path": "/api/asistente/conversar"
+}
+

@@ -1,0 +1,1442 @@
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #2
+GET /api/pagos/atrasados
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-08",
+    "nombreMes": "agosto 2026",
+    "importe": 450.00,
+    "diasRetraso": 95,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-08",
+    "nombreMes": "agosto 2026",
+    "importe": 500.00,
+    "diasRetraso": 95,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-09",
+    "nombreMes": "septiembre 2026",
+    "importe": 500.00,
+    "diasRetraso": 64,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-10",
+    "nombreMes": "octubre 2026",
+    "importe": 450.00,
+    "diasRetraso": 34,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-10",
+    "nombreMes": "octubre 2026",
+    "importe": 500.00,
+    "diasRetraso": 34,
+    "contratoActivo": true
+  }
+]
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #4
+GET /api/pagos/atrasados
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2025-11",
+    "nombreMes": "noviembre 2025",
+    "importe": 400.00,
+    "diasRetraso": 368,
+    "contratoActivo": false
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2025-12",
+    "nombreMes": "diciembre 2025",
+    "importe": 500.00,
+    "diasRetraso": 338,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-01",
+    "nombreMes": "enero 2026",
+    "importe": 500.00,
+    "diasRetraso": 307,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-02",
+    "nombreMes": "febrero 2026",
+    "importe": 500.00,
+    "diasRetraso": 276,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-03",
+    "nombreMes": "marzo 2026",
+    "importe": 500.00,
+    "diasRetraso": 248,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-04",
+    "nombreMes": "abril 2026",
+    "importe": 500.00,
+    "diasRetraso": 217,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-05",
+    "nombreMes": "mayo 2026",
+    "importe": 500.00,
+    "diasRetraso": 187,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-06",
+    "nombreMes": "junio 2026",
+    "importe": 500.00,
+    "diasRetraso": 156,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-07",
+    "nombreMes": "julio 2026",
+    "importe": 500.00,
+    "diasRetraso": 126,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-08",
+    "nombreMes": "agosto 2026",
+    "importe": 450.00,
+    "diasRetraso": 95,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-08",
+    "nombreMes": "agosto 2026",
+    "importe": 500.00,
+    "diasRetraso": 95,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-09",
+    "nombreMes": "septiembre 2026",
+    "importe": 500.00,
+    "diasRetraso": 64,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-10",
+    "nombreMes": "octubre 2026",
+    "importe": 450.00,
+    "diasRetraso": 34,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "mes": "2026-10",
+    "nombreMes": "octubre 2026",
+    "importe": 500.00,
+    "diasRetraso": 34,
+    "contratoActivo": true
+  }
+]
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #6
+GET /api/pagos/atrasados
+200 application/json
+[]
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #8
+GET /api/pagos/atrasados
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "meses debe estar entre 1 y 24",
+  "path": "/api/pagos/atrasados"
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #10
+GET /api/pagos/atrasados
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "meses debe estar entre 1 y 24",
+  "path": "/api/pagos/atrasados"
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #11
+GET /api/pagos/atrasados
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/pagos/atrasados"
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #12
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### atrasados_mesesAnterioresSinPago_soloDelPropietario_yValidados #13
+GET /api/dashboard
+200 application/json
+{
+  "ocupacion": {
+    "habitaciones": 3,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 0,
+    "porcentaje": 66.67,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "inquilinos": 2,
+  "contratosActivos": 2,
+  "incidenciasPendientes": 0,
+  "incidenciasEnProceso": 0,
+  "cobradoMes": 450.00,
+  "cobradoMesAnterior": 0,
+  "cobradoMesAnteriorMismoDia": 0,
+  "diaComparado": 8,
+  "mesComparado": "oct",
+  "esperadoMes": 950.00,
+  "cashFlowMensual": 0,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 450.00
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 0
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 450.00
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "COBROS_ATRASADOS",
+      "titulo": "14 cobros atrasados · 6.800,00 €",
+      "mensaje": "De meses anteriores; el más antiguo, de noviembre 2025",
+      "tono": "negativo"
+    },
+    {
+      "tipo": "CONTRATOS_POR_VENCER",
+      "titulo": "1 contrato vence en los próximos 30 días",
+      "mensaje": "",
+      "tono": "negativo"
+    },
+    {
+      "tipo": "OCUPACION",
+      "titulo": "Ocupación media",
+      "mensaje": "1 habitaciones libres y 0 en mantenimiento",
+      "tono": "aviso"
+    }
+  ],
+  "proximosVencimientos": [
+    {
+      "id": "<id>",
+      "habitacion": {
+        "id": "<id>",
+        "numero": 3,
+        "tipo": "habitacion"
+      },
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 2B",
+        "dni": "22222222B"
+      },
+      "fechaInicio": "2025-12-08",
+      "fechaFin": "2026-11-13",
+      "precioMensual": 500.00,
+      "aplicaIva": false,
+      "activo": true,
+      "vencimiento": "CRITICO",
+      "diasRestantes": 5
+    }
+  ],
+  "actividadReciente": []
+}
+
+### crear_reservaLaHabitacion_ySiYaNoEstaLibre_409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_reservaLaHabitacion_ySiYaNoEstaLibre_409 #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-11-08",
+  "fechaFin": "2027-11-08",
+  "precioMensual": 430.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 365
+}
+
+### crear_reservaLaHabitacion_ySiYaNoEstaLibre_409 #3
+POST /api/contratos
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "HABITACION_NO_DISPONIBLE",
+  "mensaje": "La habitación ya no está disponible (puede que otro usuario la haya alquilado)",
+  "path": "/api/contratos"
+}
+
+### crear_validaciones #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_validaciones #2
+POST /api/contratos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FECHAS_NO_VALIDAS",
+  "mensaje": "La fecha de fin debe ser posterior a la de inicio",
+  "path": "/api/contratos"
+}
+
+### crear_validaciones #3
+POST /api/contratos
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Habitación no encontrado",
+  "path": "/api/contratos"
+}
+
+### crear_validaciones #4
+POST /api/contratos
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/contratos"
+}
+
+### finalizar_liberaLaHabitacion_yNoSeRepite #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### finalizar_liberaLaHabitacion_yNoSeRepite #2
+POST /api/contratos/{n}/finalizar
+200 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 2,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-08-08",
+  "fechaFin": "2026-11-08",
+  "precioMensual": 450.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "CRITICO",
+  "diasRestantes": 0
+}
+
+### finalizar_liberaLaHabitacion_yNoSeRepite #3
+POST /api/contratos/{n}/finalizar
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "CONTRATO_NO_ACTIVO",
+  "mensaje": "El contrato ya está finalizado o aún no ha empezado",
+  "path": "/api/contratos/{n}/finalizar"
+}
+
+### finalizar_liberaLaHabitacion_yNoSeRepite #4
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### finalizar_liberaLaHabitacion_yNoSeRepite #5
+POST /api/contratos/{n}/finalizar
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/finalizar"
+}
+
+### inquilinoSinFichaEnlazada_noVeNada #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario suelto@test.com",
+    "email": "suelto@test.com",
+    "rol": "INQUILINO"
+  }
+}
+
+### inquilinoSinFichaEnlazada_noVeNada #2
+GET /api/contratos
+200 application/json
+[]
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #2
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 2,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "fechaInicio": "2026-08-08",
+    "fechaFin": "2027-08-08",
+    "precioMensual": 450.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 273
+  }
+]
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #3
+GET /api/contratos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}"
+}
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #4
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-11-08",
+    "cantidad": 450.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #5
+POST /api/contratos/{n}/finalizar
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/{n}/finalizar"
+}
+
+### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #6
+POST /api/pagos
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/pagos"
+}
+
+### lista_conFiltrosYNivelDeVencimiento #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### lista_conFiltrosYNivelDeVencimiento #2
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 2,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "fechaInicio": "2026-08-08",
+    "fechaFin": "2027-08-08",
+    "precioMensual": 450.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 273
+  },
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 3,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "fechaInicio": "2025-12-08",
+    "fechaFin": "2026-11-13",
+    "precioMensual": 500.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "CRITICO",
+    "diasRestantes": 5
+  },
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 1,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "fechaInicio": "2024-11-08",
+    "fechaFin": "2025-11-08",
+    "precioMensual": 400.00,
+    "aplicaIva": false,
+    "activo": false,
+    "vencimiento": "VENCIDO",
+    "diasRestantes": -365
+  }
+]
+
+### lista_conFiltrosYNivelDeVencimiento #3
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 2,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "fechaInicio": "2026-08-08",
+    "fechaFin": "2027-08-08",
+    "precioMensual": 450.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "NORMAL",
+    "diasRestantes": 273
+  },
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 3,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "fechaInicio": "2025-12-08",
+    "fechaFin": "2026-11-13",
+    "precioMensual": 500.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "CRITICO",
+    "diasRestantes": 5
+  }
+]
+
+### lista_conFiltrosYNivelDeVencimiento #4
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 1,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "fechaInicio": "2024-11-08",
+    "fechaFin": "2025-11-08",
+    "precioMensual": 400.00,
+    "aplicaIva": false,
+    "activo": false,
+    "vencimiento": "VENCIDO",
+    "diasRestantes": -365
+  }
+]
+
+### lista_conFiltrosYNivelDeVencimiento #5
+GET /api/contratos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "habitacion": {
+      "id": "<id>",
+      "numero": 3,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "fechaInicio": "2025-12-08",
+    "fechaFin": "2026-11-13",
+    "precioMensual": 500.00,
+    "aplicaIva": false,
+    "activo": true,
+    "vencimiento": "CRITICO",
+    "diasRestantes": 5
+  }
+]
+
+### lista_conFiltrosYNivelDeVencimiento #6
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### lista_conFiltrosYNivelDeVencimiento #7
+GET /api/contratos
+200 application/json
+[]
+
+### lista_porMesYPorInquilino #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### lista_porMesYPorInquilino #2
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-11-08",
+    "cantidad": 450.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 2,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### lista_porMesYPorInquilino #3
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-10-01",
+    "cantidad": 500.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### lista_porMesYPorInquilino #4
+GET /api/pagos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "Valor no válido para 'mes'",
+  "path": "/api/pagos"
+}
+
+### pago_reglas #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pago_reglas #2
+POST /api/pagos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/pagos",
+  "errores": [
+    {
+      "campo": "cantidad",
+      "mensaje": "debe ser mayor que 0"
+    },
+    {
+      "campo": "fechaPago",
+      "mensaje": "no puede ser una fecha futura"
+    }
+  ]
+}
+
+### pago_reglas #3
+POST /api/pagos
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "CONTRATO_NO_ACTIVO",
+  "mensaje": "Solo se pueden registrar pagos de contratos activos",
+  "path": "/api/pagos"
+}
+
+### registrarYBorrarPago #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrarYBorrarPago #2
+POST /api/pagos
+201 application/json
+{
+  "id": "<id>",
+  "fechaPago": "2026-11-08",
+  "cantidad": 500.00,
+  "metodoPago": "efectivo",
+  "idContrato": "<id>",
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 2B",
+    "dni": "22222222B"
+  },
+  "numeroHabitacion": 3,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "recibo": "2026-0001"
+}
+
+### registrarYBorrarPago #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrarYBorrarPago #4
+DELETE /api/pagos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Pago no encontrado",
+  "path": "/api/pagos/{n}"
+}
+
+### registrarYBorrarPago #5
+DELETE /api/pagos/{n}
+204 -
+<vacío>
+
+### resumenDelMes_esperadoCobradoYPendientes #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### resumenDelMes_esperadoCobradoYPendientes #2
+GET /api/pagos/resumen
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 950.00,
+  "cobrado": 450.00,
+  "pendiente": 500.00,
+  "numeroPagos": 1,
+  "pendientes": [
+    {
+      "idContrato": "<id>",
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 2B",
+        "dni": "22222222B"
+      },
+      "numeroHabitacion": 3,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 500.00
+    }
+  ]
+}
+

@@ -1,0 +1,420 @@
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #2
+GET /api/contratos/{n}/actualizacion-renta
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #3
+POST /api/contratos/{n}/actualizacion-renta
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #4
+GET /api/contratos/{n}/actualizaciones-renta
+200 application/json
+[]
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #6
+GET /api/contratos/{n}/actualizacion-renta
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #7
+GET /api/contratos/{n}/actualizaciones-renta
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/actualizaciones-renta"
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #2
+POST /api/contratos/{n}/actualizacion-renta
+201 application/json
+{
+  "id": "<id>",
+  "fechaEfecto": "2026-11-18",
+  "indice": "IRAV",
+  "periodoIndice": "2026-10",
+  "porcentaje": 2.54,
+  "rentaAnterior": 500.00,
+  "rentaNueva": 512.70,
+  "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de octubre 2026 (serie manual)",
+  "fechaConfirmacion": "<ahora dddd-dd-ddTdd:dd:dd.f>"
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #3
+GET /api/contratos/{n}
+200 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2025-11-18",
+  "fechaFin": "2028-11-08",
+  "precioMensual": 512.70,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 731
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #4
+POST /api/contratos/{n}/actualizacion-renta
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "YA_ACTUALIZADA",
+  "mensaje": "La renta de esa anualidad ya está actualizada",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #5
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": false,
+  "fechaEfecto": "2027-11-18",
+  "indice": "IRAV",
+  "indiceRecomendado": "IRAV",
+  "periodoIndice": "2026-11",
+  "porcentaje": 2.54,
+  "limitadoPorIrav": false,
+  "rentaActual": 512.70,
+  "rentaNueva": 525.72,
+  "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de noviembre 2026 (serie manual)",
+  "motivoIndice": "Contrato firmado desde el 26-05-2023 (Ley 12/2023): índice de referencia IRAV del INE.",
+  "aviso": "Orientativo: aplica lo que diga la cláusula de actualización de tu contrato (si no la tiene, no se actualiza) y nunca más que el IRAV (LAU, art. 18.1). Puedes aplicar menos que el máximo."
+}
+
+### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #6
+GET /api/contratos/{n}/actualizaciones-renta
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaEfecto": "2026-11-18",
+    "indice": "IRAV",
+    "periodoIndice": "2026-10",
+    "porcentaje": 2.54,
+    "rentaAnterior": 500.00,
+    "rentaNueva": 512.70,
+    "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de octubre 2026 (serie manual)",
+    "fechaConfirmacion": "<ahora dddd-dd-ddTdd:dd:dd.f>"
+  }
+]
+
+### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #2
+POST /api/contratos/{n}/actualizacion-renta
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FECHA_ACTUALIZACION_NO_VALIDA",
+  "mensaje": "La actualización es en un aniversario del contrato, como mucho dentro de 30 días",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #3
+POST /api/contratos/{n}/actualizacion-renta
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FECHA_ACTUALIZACION_NO_VALIDA",
+  "mensaje": "La actualización es en un aniversario del contrato, como mucho dentro de 30 días",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #4
+POST /api/contratos/{n}/actualizacion-renta
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FALTA_PORCENTAJE",
+  "mensaje": "Indica el porcentaje pactado",
+  "path": "/api/contratos/{n}/actualizacion-renta"
+}
+
+### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #5
+POST /api/contratos/{n}/actualizacion-renta
+201 application/json
+{
+  "id": "<id>",
+  "fechaEfecto": "2026-01-10",
+  "indice": "PACTADO",
+  "periodoIndice": "2025-11",
+  "porcentaje": 2.54,
+  "rentaAnterior": 400.00,
+  "rentaNueva": 410.16,
+  "fuente": "Porcentaje pactado en el contrato; limitado al INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de noviembre 2025 (serie manual) (LAU, art. 18.1)",
+  "fechaConfirmacion": "<ahora dddd-dd-ddTdd:dd:dd.f>"
+}
+
+### propuesta_recomiendaIravParaContratosNuevos_eIpcParaAntiguos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propuesta_recomiendaIravParaContratosNuevos_eIpcParaAntiguos #2
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": true,
+  "fechaEfecto": "2026-11-18",
+  "indice": "IRAV",
+  "indiceRecomendado": "IRAV",
+  "periodoIndice": "2026-10",
+  "porcentaje": 2.54,
+  "limitadoPorIrav": false,
+  "rentaActual": 500.00,
+  "rentaNueva": 512.70,
+  "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de octubre 2026 (serie manual)",
+  "motivoIndice": "Contrato firmado desde el 26-05-2023 (Ley 12/2023): índice de referencia IRAV del INE.",
+  "aviso": "Orientativo: aplica lo que diga la cláusula de actualización de tu contrato (si no la tiene, no se actualiza) y nunca más que el IRAV (LAU, art. 18.1). Puedes aplicar menos que el máximo."
+}
+
+### propuesta_recomiendaIravParaContratosNuevos_eIpcParaAntiguos #3
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": true,
+  "fechaEfecto": "2026-01-10",
+  "indice": "IPC",
+  "indiceRecomendado": "IPC",
+  "periodoIndice": "2025-11",
+  "porcentaje": 2.54,
+  "limitadoPorIrav": true,
+  "rentaActual": 400.00,
+  "rentaNueva": 410.16,
+  "fuente": "INE · IPC general, variación anual de noviembre 2025 (serie manual); limitado al INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de noviembre 2025 (serie manual) (LAU, art. 18.1)",
+  "motivoIndice": "Contrato anterior al 26-05-2023: lo habitual es el IPC del INE; revisa la cláusula de tu contrato.",
+  "aviso": "Orientativo: aplica lo que diga la cláusula de actualización de tu contrato (si no la tiene, no se actualiza) y nunca más que el IRAV (LAU, art. 18.1). Puedes aplicar menos que el máximo."
+}
+
+### propuesta_recomiendaIravParaContratosNuevos_eIpcParaAntiguos #4
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": true,
+  "fechaEfecto": "2026-01-10",
+  "indice": "IRAV",
+  "indiceRecomendado": "IPC",
+  "periodoIndice": "2025-11",
+  "porcentaje": 2.54,
+  "limitadoPorIrav": false,
+  "rentaActual": 400.00,
+  "rentaNueva": 410.16,
+  "fuente": "INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de noviembre 2025 (serie manual)",
+  "motivoIndice": "Contrato anterior al 26-05-2023: lo habitual es el IPC del INE; revisa la cláusula de tu contrato.",
+  "aviso": "Orientativo: aplica lo que diga la cláusula de actualización de tu contrato (si no la tiene, no se actualiza) y nunca más que el IRAV (LAU, art. 18.1). Puedes aplicar menos que el máximo."
+}
+
+### sePuedeAplicarMenosQueElMaximo_nuncaMas #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sePuedeAplicarMenosQueElMaximo_nuncaMas #2
+POST /api/contratos/{n}/actualizacion-renta
+201 application/json
+{
+  "id": "<id>",
+  "fechaEfecto": "2026-11-18",
+  "indice": "IRAV",
+  "periodoIndice": "2026-10",
+  "porcentaje": 1.5,
+  "rentaAnterior": 500.00,
+  "rentaNueva": 507.50,
+  "fuente": "Por debajo del máximo (2.54 %): INE · IRAV (Índice de Referencia de Arrendamientos de Vivienda), variación anual de octubre 2026 (serie manual)",
+  "fechaConfirmacion": "<ahora dddd-dd-ddTdd:dd:dd.f>"
+}
+
+### sinAniversarioAntesDelFin_noHayPropuesta #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinAniversarioAntesDelFin_noHayPropuesta #2
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": false,
+  "indice": "IRAV",
+  "indiceRecomendado": "IRAV",
+  "limitadoPorIrav": false,
+  "rentaActual": 500.00,
+  "motivoIndice": "Contrato firmado desde el 26-05-2023 (Ley 12/2023): índice de referencia IRAV del INE.",
+  "aviso": "El contrato termina antes del próximo aniversario: no hay actualización pendiente."
+}
+
+### sinDatoDelIne_seUsaElPorcentajeDelPropietario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinDatoDelIne_seUsaElPorcentajeDelPropietario #2
+GET /api/contratos/{n}/actualizacion-renta
+200 application/json
+{
+  "debida": true,
+  "fechaEfecto": "2026-11-18",
+  "indice": "IRAV",
+  "indiceRecomendado": "IRAV",
+  "limitadoPorIrav": false,
+  "rentaActual": 500.00,
+  "fuente": "Sin conexión con el INE: introduce el porcentaje",
+  "motivoIndice": "Contrato firmado desde el 26-05-2023 (Ley 12/2023): índice de referencia IRAV del INE.",
+  "aviso": "Orientativo: aplica lo que diga la cláusula de actualización de tu contrato (si no la tiene, no se actualiza) y nunca más que el IRAV (LAU, art. 18.1). Puedes aplicar menos que el máximo."
+}
+
+### sinDatoDelIne_seUsaElPorcentajeDelPropietario #3
+POST /api/contratos/{n}/actualizacion-renta
+201 application/json
+{
+  "id": "<id>",
+  "fechaEfecto": "2026-11-18",
+  "indice": "IRAV",
+  "porcentaje": 2.5,
+  "rentaAnterior": 500.00,
+  "rentaNueva": 512.50,
+  "fuente": "IRAV del INE introducido por el propietario",
+  "fechaConfirmacion": "<ahora dddd-dd-ddTdd:dd:dd.f>"
+}
+

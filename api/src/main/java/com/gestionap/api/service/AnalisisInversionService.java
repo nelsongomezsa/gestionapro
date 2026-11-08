@@ -1,7 +1,7 @@
 package com.gestionap.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.gestionap.api.domain.AnalisisInversion;
 import com.gestionap.api.repository.AnalisisInversionRepository;
 import com.gestionap.api.security.UsuarioAutenticado;
@@ -84,7 +84,7 @@ public class AnalisisInversionService {
         String datos;
         try {
             datos = json.writeValueAsString(e);
-        } catch (JsonProcessingException ex) {
+        } catch (JacksonException ex) {
             throw ApiException.badRequest("DATOS_INVALIDOS", "No se pudieron guardar los datos");
         }
         if (datos.length() > 2000) throw ApiException.badRequest("DATOS_INVALIDOS", "Datos demasiado largos");
@@ -107,7 +107,7 @@ public class AnalisisInversionService {
         RentabilidadRequest entrada;
         try {
             entrada = json.readValue(a.getDatos(), RentabilidadRequest.class);
-        } catch (JsonProcessingException ex) {
+        } catch (JacksonException ex) {
             throw new IllegalStateException("Análisis " + a.getId() + " con datos ilegibles", ex);
         }
         RentabilidadResponse resultado;

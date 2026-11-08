@@ -1,6 +1,6 @@
 # gestionapro-api
 
-API REST de **GestionAp PRO** para la app iOS. Spring Boot 3.5 · Java 21 · Maven · MariaDB.
+API REST de **GestionAp PRO** para la app iOS. Spring Boot 4.1 · Java 21 · Maven · MariaDB.
 
 Comparte la base de datos `gestion_alquileres_pro` con la app de escritorio
 (GestionAp, JavaFX): lo que se hace en una se ve en la otra.
@@ -150,8 +150,15 @@ curl -s localhost:8080/api/pisos -H "Authorization: Bearer $TOKEN"
 ## Tests
 
 ```bash
-mvn test     # 83 tests, H2 en memoria; no necesita MariaDB
+mvn test                          # H2 en memoria; no necesita MariaDB
+mvn test -Dsnapshots=comparar     # además, compara cada respuesta con src/test/resources/snapshots
+mvn test -Dsnapshots=grabar       # reescribe esas referencias (solo si el cambio de JSON es intencionado)
 ```
+
+Los snapshots guardan el estado, el tipo y el JSON de cada respuesta de los tests en forma canónica
+(orden de campos, nulos, decimales y formato de fechas tal cual; ids, tokens y fechas de «ahora»
+enmascarados). Sirven de red de seguridad en cambios de versión: con la propiedad se ejecutan aparte
+porque algunas respuestas dependen del mes en curso.
 
 - `CalculadoraFinancieraPisoTest`: los tests del escritorio, con los mismos valores esperados.
 - `CalculadoraRentabilidadTest`: valores obtenidos ejecutando el
@@ -159,6 +166,8 @@ mvn test     # 83 tests, H2 en memoria; no necesita MariaDB
   coinciden con delta 0.
 - `ItpRatesTest`: `itp-rates.yml` = `ITP_MAP` del escritorio.
 - `ArranqueTest`: sin perfil activo, o en prod sin `JWT_SECRET` válido, la API no arranca.
+- `BarridoEndpointsTest`: todos los endpoints sin token, con token manipulado, con cada rol,
+  ids inexistentes y cuerpos vacíos (nunca 500 ni acceso sin autenticar).
 - Integración (MockMvc): login, JWT, aislamiento entre propietarios,
   invitaciones de un solo uso/caducadas, PDF por roles, errores JSON.
 

@@ -1,0 +1,511 @@
+### crear_depositar_yListarConElTotalPorDevolver #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_depositar_yListarConElTotalPorDevolver #2
+GET /api/contratos/{n}/fianza
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Fianza no encontrado",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### crear_depositar_yListarConElTotalPorDevolver #3
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "estado": "SIN_DEPOSITAR",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### crear_depositar_yListarConElTotalPorDevolver #4
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "fechaDeposito": "2026-11-08",
+  "organismoDeposito": "Agencia de Vivienda Social",
+  "estado": "DEPOSITADA",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### crear_depositar_yListarConElTotalPorDevolver #5
+GET /api/fianzas
+200 application/json
+{
+  "fianzas": [
+    {
+      "id": "<id>",
+      "idContrato": "<id>",
+      "inquilino": "Ana García 1A",
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 900.00,
+      "fechaCobro": "2026-09-08",
+      "fechaDeposito": "2026-11-08",
+      "organismoDeposito": "Agencia de Vivienda Social",
+      "estado": "DEPOSITADA",
+      "pendienteDevolver": 900.00,
+      "retenido": 0
+    }
+  ],
+  "totalPendienteDevolver": 900.00
+}
+
+### crear_depositar_yListarConElTotalPorDevolver #6
+PUT /api/contratos/{n}/fianza
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FECHA_DEPOSITO_NO_VALIDA",
+  "mensaje": "El depósito no puede ser anterior al cobro",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #2
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "fechaDeposito": "2026-10-08",
+  "organismoDeposito": "Agencia de Vivienda Social",
+  "estado": "DEPOSITADA",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #4
+POST /api/contratos/{n}/fianza/devolucion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "IMPORTE_DEVOLUCION_NO_VALIDO",
+  "mensaje": "No se puede devolver más que la fianza",
+  "path": "/api/contratos/{n}/fianza/devolucion"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #5
+POST /api/contratos/{n}/fianza/devolucion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "MOTIVO_RETENCION_OBLIGATORIO",
+  "mensaje": "Indica por qué no se devuelve entera",
+  "path": "/api/contratos/{n}/fianza/devolucion"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #6
+POST /api/contratos/{n}/fianza/devolucion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "FECHA_DEVOLUCION_NO_VALIDA",
+  "mensaje": "La devolución no puede ser anterior al cobro",
+  "path": "/api/contratos/{n}/fianza/devolucion"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #7
+POST /api/contratos/{n}/fianza/devolucion
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "fechaDeposito": "2026-10-08",
+  "organismoDeposito": "Agencia de Vivienda Social",
+  "fechaDevolucion": "2026-11-08",
+  "importeDevuelto": 800,
+  "motivoRetencion": "Pintura de la pared",
+  "estado": "DEVUELTA_PARCIAL",
+  "pendienteDevolver": 0,
+  "retenido": 100.00
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #8
+GET /api/fianzas
+200 application/json
+{
+  "fianzas": [
+    {
+      "id": "<id>",
+      "idContrato": "<id>",
+      "inquilino": "Ana García 1A",
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 900.00,
+      "fechaCobro": "2026-09-08",
+      "fechaDeposito": "2026-10-08",
+      "organismoDeposito": "Agencia de Vivienda Social",
+      "fechaDevolucion": "2026-11-08",
+      "importeDevuelto": 800,
+      "motivoRetencion": "Pintura de la pared",
+      "estado": "DEVUELTA_PARCIAL",
+      "pendienteDevolver": 0,
+      "retenido": 100.00
+    }
+  ],
+  "totalPendienteDevolver": 0
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #9
+POST /api/contratos/{n}/fianza/devolucion
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "FIANZA_YA_DEVUELTA",
+  "mensaje": "La devolución ya está registrada",
+  "path": "/api/contratos/{n}/fianza/devolucion"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #10
+PUT /api/contratos/{n}/fianza
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "FIANZA_YA_DEVUELTA",
+  "mensaje": "La fianza ya está devuelta: su importe no se puede cambiar",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #11
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "fechaDevolucion": "2026-11-08",
+  "importeDevuelto": 800,
+  "motivoRetencion": "Pintura de la pared",
+  "estado": "DEVUELTA_PARCIAL",
+  "pendienteDevolver": 0,
+  "retenido": 100.00
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #2
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "estado": "SIN_DEPOSITAR",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #4
+GET /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "estado": "SIN_DEPOSITAR",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #5
+GET /api/fianzas
+200 application/json
+{
+  "fianzas": [
+    {
+      "id": "<id>",
+      "idContrato": "<id>",
+      "inquilino": "Ana García 1A",
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 900.00,
+      "fechaCobro": "2026-09-08",
+      "estado": "SIN_DEPOSITAR",
+      "pendienteDevolver": 900.00,
+      "retenido": 0
+    }
+  ],
+  "totalPendienteDevolver": 900.00
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #6
+PUT /api/contratos/{n}/fianza
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### inquilino_veLaSuya_yNoPuedeModificarla #7
+POST /api/contratos/{n}/fianza/devolucion
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/{n}/fianza/devolucion"
+}
+
+### propietarioAjeno_noLaVeNiLaToca #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propietarioAjeno_noLaVeNiLaToca #2
+PUT /api/contratos/{n}/fianza
+200 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "importe": 900.00,
+  "fechaCobro": "2026-09-08",
+  "estado": "SIN_DEPOSITAR",
+  "pendienteDevolver": 900.00,
+  "retenido": 0
+}
+
+### propietarioAjeno_noLaVeNiLaToca #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propietarioAjeno_noLaVeNiLaToca #4
+GET /api/contratos/{n}/fianza
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### propietarioAjeno_noLaVeNiLaToca #5
+PUT /api/contratos/{n}/fianza
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/{n}/fianza"
+}
+
+### propietarioAjeno_noLaVeNiLaToca #6
+GET /api/fianzas
+200 application/json
+{
+  "fianzas": [],
+  "totalPendienteDevolver": 0
+}
+

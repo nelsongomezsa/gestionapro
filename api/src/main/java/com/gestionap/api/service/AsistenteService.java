@@ -1,7 +1,7 @@
 package com.gestionap.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.EstadoIncidencia;
 import com.gestionap.api.domain.Gasto;
@@ -279,7 +279,7 @@ public class AsistenteService {
         if (descripcion.isBlank() || descripcion.length() > 255) return new Resultado("Descripción vacía o demasiado larga", true);
         acciones.add(new Accion("CREAR_INCIDENCIA", "Crear incidencia en " + h.getTipo().nombre() + " " + h.getNumero() + " de "
                 + h.getPiso().getDireccion() + ": " + descripcion,
-                Map.of("idHabitacion", h.getId(), "descripcion", descripcion)));
+                ordenado("idHabitacion", h.getId(), "descripcion", descripcion)));
         return new Resultado("Propuesta preparada. El usuario tiene que confirmarla en la app.", false);
     }
 
@@ -289,14 +289,14 @@ public class AsistenteService {
                 + Textos.mes(YearMonth.now()) + " (" + Textos.euros(c.getPrecioMensual()) + ") de " + c.getHabitacion().getTipo().nombre() + " "
                 + c.getHabitacion().getNumero() + " está pendiente. Si ya la has pagado, ignora este mensaje. Gracias.";
         acciones.add(new Accion("RECORDATORIO", "Recordatorio para " + c.getInquilino().getNombreCompleto(),
-                Map.of("idContrato", c.getId(), "texto", texto)));
+                ordenado("idContrato", c.getId(), "texto", texto)));
         return new Resultado("Recordatorio preparado: " + texto, false);
     }
 
     private Resultado ok(Object datos) {
         try {
             return new Resultado(json.writeValueAsString(datos), false);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             return new Resultado("No se pudieron leer los datos", true);
         }
     }
@@ -327,5 +327,13 @@ public class AsistenteService {
     private long usadosHoy(UsuarioAutenticado actor) {
         return actividadRepo.countByIdUsuarioAndAccionStartingWithAndFechaGreaterThanEqual(actor.id(), "ASISTENTE_",
                 LocalDate.now().atStartOfDay());
+    }
+
+    /** Datos de una acción en orden fijo (Map.of no lo garantiza y el JSON cambiaría de un arranque a otro). */
+    private static Map<String, Object> ordenado(String k1, Object v1, String k2, Object v2) {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put(k1, v1);
+        m.put(k2, v2);
+        return m;
     }
 }

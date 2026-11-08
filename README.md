@@ -6,12 +6,12 @@
 
 [![CI](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml/badge.svg)](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F?logo=springboot&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1-6DB33F?logo=springboot&logoColor=white)
 ![Swift](https://img.shields.io/badge/Swift%206-SwiftUI%20·%20iOS%2017-F05138?logo=swift&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-220%20API%20·%2081%20iOS-2ea44f)
 ![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-yellow)
 
-> **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing rentals of rooms, parking spaces and storage units in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
+> **English summary:** A Spring Boot 4 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing rentals of rooms, parking spaces and storage units in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
 
 <p>
 <img src="docs/capturas/destacadas/oscuro/01-inicio.png" width="180" alt="Inicio en modo oscuro">
@@ -94,7 +94,7 @@ flowchart LR
 
 | Parte | Tecnología |
 |---|---|
-| API | Java 21 · Spring Boot 3.5 (Web, Data JPA, Security, Validation, Mail, Actuator) · JJWT · springdoc-openapi · iText 7 · SDK oficial de Anthropic para Java |
+| API | Java 21 · Spring Boot 4.1 (Web MVC, Data JPA, Security, Validation, Mail, Actuator) · JJWT · springdoc-openapi · iText 7 · SDK oficial de Anthropic para Java |
 | Datos | MariaDB / MySQL (compartida con el escritorio) · H2 en los tests |
 | iOS | Swift 6 · SwiftUI · Swift Charts · WidgetKit · LocalAuthentication · UserNotifications · PhotosUI · XcodeGen |
 | Calidad | JUnit 5 · MockMvc · Spring Security Test · Swift Testing · XCUITest · GitHub Actions |

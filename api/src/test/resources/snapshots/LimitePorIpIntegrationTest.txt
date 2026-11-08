@@ -1,0 +1,66 @@
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #1
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #2
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #3
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #4
+POST /api/auth/login
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "DEMASIADOS_INTENTOS",
+  "mensaje": "Demasiados intentos. Prueba de nuevo en 15 minutos",
+  "path": "/api/auth/login"
+}
+
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #5
+POST /api/auth/register-inquilino
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "DEMASIADOS_INTENTOS",
+  "mensaje": "Demasiados intentos. Prueba de nuevo en 15 minutos",
+  "path": "/api/auth/register-inquilino"
+}
+
+### porIp_alCuartoIntento_429ConRetryAfter_tambienEnRegistro #6
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+

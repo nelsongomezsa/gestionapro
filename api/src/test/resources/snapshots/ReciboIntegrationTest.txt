@@ -1,0 +1,342 @@
+### enviarRecibo_sinEmailConfigurado_devuelveNoEnviado_ySinEmailDelInquilino409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### enviarRecibo_sinEmailConfigurado_devuelveNoEnviado_ySinEmailDelInquilino409 #2
+POST /api/pagos/{n}/recibo/enviar
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "INQUILINO_SIN_EMAIL",
+  "mensaje": "El inquilino no tiene email",
+  "path": "/api/pagos/{n}/recibo/enviar"
+}
+
+### enviarRecibo_sinEmailConfigurado_devuelveNoEnviado_ySinEmailDelInquilino409 #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### enviarRecibo_sinEmailConfigurado_devuelveNoEnviado_ySinEmailDelInquilino409 #4
+POST /api/pagos/{n}/recibo/enviar
+200 application/json
+{
+  "enviado": false
+}
+
+### pagoDelEscritorio_recibeNumeroAlPedirSuRecibo_yLoConserva #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pagoDelEscritorio_recibeNumeroAlPedirSuRecibo_yLoConserva #2
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-10-08",
+    "cantidad": 450.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### pagoDelEscritorio_recibeNumeroAlPedirSuRecibo_yLoConserva #3
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### pagoDelEscritorio_recibeNumeroAlPedirSuRecibo_yLoConserva #4
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-10-08",
+    "cantidad": 450.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "recibo": "2026-0001"
+  }
+]
+
+### pagoDelEscritorio_recibeNumeroAlPedirSuRecibo_yLoConserva #5
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #2
+GET /api/pagos/{n}/recibo
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Pago no encontrado",
+  "path": "/api/pagos/{n}/recibo"
+}
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #4
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #6
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #7
+GET /api/pagos/{n}/recibo
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Pago no encontrado",
+  "path": "/api/pagos/{n}/recibo"
+}
+
+### recibo_soloLoVenElPropietarioElAdminYSuInquilino #8
+POST /api/pagos/{n}/recibo/enviar
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/pagos/{n}/recibo/enviar"
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #2
+POST /api/pagos
+201 application/json
+{
+  "id": "<id>",
+  "fechaPago": "2026-11-08",
+  "cantidad": 450,
+  "metodoPago": "transferencia",
+  "idContrato": "<id>",
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "recibo": "2026-0001"
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #3
+POST /api/pagos
+201 application/json
+{
+  "id": "<id>",
+  "fechaPago": "2026-11-08",
+  "cantidad": 450,
+  "metodoPago": "transferencia",
+  "idContrato": "<id>",
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "recibo": "2026-0002"
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #4
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #5
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #6
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrarPago_numeraLosRecibosPorPropietarioYAnio #7
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-11-08",
+    "cantidad": 400.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Bea 2",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "recibo": "2026-0001"
+  }
+]
+

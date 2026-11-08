@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 @Configuration
 @EnableMethodSecurity
@@ -39,7 +40,7 @@ public class SecurityConfig {
                 .headers(h -> h
                         .referrerPolicy(r -> r.policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))
                         .addHeaderWriter(new org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter(
-                                new org.springframework.security.web.util.matcher.AntPathRequestMatcher("/api/**"),
+                                PathPatternRequestMatcher.pathPattern("/api/**"),
                                 new org.springframework.security.web.header.writers.StaticHeadersWriter("Content-Security-Policy",
                                         "default-src 'none'; frame-ancestors 'none'; sandbox"))))
                 .build();

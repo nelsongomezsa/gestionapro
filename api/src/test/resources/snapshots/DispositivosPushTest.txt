@@ -1,0 +1,144 @@
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #2
+POST /api/dispositivos
+204 -
+<vacío>
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #4
+POST /api/dispositivos
+204 -
+<vacío>
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #6
+DELETE /api/dispositivos/a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90
+204 -
+<vacío>
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### registrar_yReasignarAlCambiarDeUsuario_yBorrar #8
+DELETE /api/dispositivos/a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90
+204 -
+<vacío>
+
+### tokenNoValido #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### tokenNoValido #2
+POST /api/dispositivos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/dispositivos",
+  "errores": [
+    {
+      "campo": "token",
+      "mensaje": "token de dispositivo no válido"
+    }
+  ]
+}
+
+### tokenNoValido #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### tokenNoValido #4
+POST /api/dispositivos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/dispositivos",
+  "errores": [
+    {
+      "campo": "token",
+      "mensaje": "must not be blank"
+    }
+  ]
+}
+

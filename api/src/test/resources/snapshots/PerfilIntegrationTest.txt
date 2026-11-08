@@ -1,0 +1,117 @@
+### emailDeOtraCuenta_409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### emailDeOtraCuenta_409 #2
+PATCH /api/me
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "EMAIL_EN_USO",
+  "mensaje": "Ya existe una cuenta con ese email",
+  "path": "/api/me"
+}
+
+### ibanConDigitoDeControlMalo_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ibanConDigitoDeControlMalo_400 #2
+PATCH /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "IBAN_NO_VALIDO",
+  "mensaje": "El IBAN no es válido; revisa los dígitos",
+  "path": "/api/me"
+}
+
+### me_devuelveDniEIban #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO",
+    "iban": "ES91 2100 0418 4502 0005 1332"
+  }
+}
+
+### me_devuelveDniEIban #2
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO",
+  "iban": "ES91 2100 0418 4502 0005 1332"
+}
+
+### soloCambiaLoEnviado_yUnIbanVacioLoBorra #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### soloCambiaLoEnviado_yUnIbanVacioLoBorra #2
+PATCH /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO",
+  "dni": "12345678Z",
+  "iban": "ES91 2100 0418 4502 0005 1332"
+}
+
+### soloCambiaLoEnviado_yUnIbanVacioLoBorra #3
+PATCH /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO",
+  "dni": "12345678Z"
+}
+
