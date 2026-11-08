@@ -1,0 +1,578 @@
+### bajaSinCoincidenciasYNoExponeContratosAjeno #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### bajaSinCoincidenciasYNoExponeContratosAjeno #2
+POST /api/conciliacion/analizar
+200 application/json
+{
+  "propuestas": [
+    {
+      "indice": 0,
+      "movimiento": {
+        "fecha": "2026-11-08",
+        "concepto": "Pago desconocido",
+        "importe": 12.34
+      },
+      "propuesta": {
+        "idContrato": "<id>",
+        "inquilino": "Lucía Pérez",
+        "numeroHabitacion": 2,
+        "tipoUnidad": "habitacion",
+        "direccion": "Calle Mayor 1",
+        "renta": 450.00,
+        "puntuacion": 0,
+        "confianza": "BAJA",
+        "yaRegistrado": false,
+        "preseleccionada": false
+      }
+    }
+  ],
+  "sinPropuesta": []
+}
+
+### bajaSinCoincidenciasYNoExponeContratosAjeno #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### bajaSinCoincidenciasYNoExponeContratosAjeno #4
+POST /api/conciliacion/analizar
+200 application/json
+{
+  "propuestas": [
+    {
+      "indice": 0,
+      "movimiento": {
+        "fecha": "2026-11-08",
+        "concepto": "Pago",
+        "importe": 400.00
+      },
+      "propuesta": {
+        "idContrato": "<id>",
+        "inquilino": "Lucía Pérez",
+        "numeroHabitacion": 2,
+        "tipoUnidad": "habitacion",
+        "direccion": "Calle Mayor 1",
+        "renta": 450.00,
+        "puntuacion": 0,
+        "confianza": "BAJA",
+        "yaRegistrado": false,
+        "preseleccionada": false
+      }
+    }
+  ],
+  "sinPropuesta": []
+}
+
+### confirmaCreaReciboYRechazaDuplicado #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmaCreaReciboYRechazaDuplicado #2
+POST /api/conciliacion/confirmar
+200 application/json
+{
+  "pagos": [
+    {
+      "id": "<id>",
+      "fechaPago": "2026-11-08",
+      "cantidad": 450.00,
+      "metodoPago": "transferencia",
+      "idContrato": "<id>",
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Lucía Pérez",
+        "dni": "11111111A"
+      },
+      "numeroHabitacion": 2,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle Mayor 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "recibo": "2026-0001"
+    }
+  ]
+}
+
+### confirmaCreaReciboYRechazaDuplicado #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmaCreaReciboYRechazaDuplicado #4
+POST /api/conciliacion/confirmar
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "PAGO_DUPLICADO",
+  "mensaje": "Ya existe ese pago",
+  "path": "/api/conciliacion/confirmar"
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2999-01-01","importe":"450.00"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2999-01-01","importe":"450.00"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].fecha",
+      "mensaje": "no puede ser una fecha futura"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] cuerpo={} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] cuerpo={} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos",
+      "mensaje": "selecciona al menos un pago"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] cuerpo={"pagos":[]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] cuerpo={"pagos":[]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos",
+      "mensaje": "selecciona al menos un pago"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] cuerpo={"pagos":[null]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] cuerpo={"pagos":[null]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0]",
+      "mensaje": "must not be null"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] cuerpo={"pagos":[{"fecha":"2026-01-01","importe":"450.00"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] cuerpo={"pagos":[{"fecha":"2026-01-01","importe":"450.00"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].idContrato",
+      "mensaje": "must not be null"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] cuerpo={"pagos":[{"idContrato":ID,"importe":"450.00"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] cuerpo={"pagos":[{"idContrato":ID,"importe":"450.00"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].fecha",
+      "mensaje": "must not be null"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].importe",
+      "mensaje": "must not be null"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"0"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"0"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].importe",
+      "mensaje": "debe ser mayor que 0"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"-450.00"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"-450.00"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].importe",
+      "mensaje": "debe ser mayor que 0"
+    }
+  ]
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"450.001"}]} #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"450.001"}]} #2
+POST /api/conciliacion/confirmar
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/conciliacion/confirmar",
+  "errores": [
+    {
+      "campo": "pagos[0].importe",
+      "mensaje": "numeric value out of bounds (<6 digits>.<2 digits> expected)"
+    }
+  ]
+}
+
+### inquilinoNoPuedeAnalizar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inquilinoNoPuedeAnalizar #2
+POST /api/conciliacion/analizar
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/conciliacion/analizar"
+}
+
+### proponePorNombreEImporteYSeñalaPagoExistente #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### proponePorNombreEImporteYSeñalaPagoExistente #2
+POST /api/conciliacion/analizar
+200 application/json
+{
+  "propuestas": [
+    {
+      "indice": 0,
+      "movimiento": {
+        "fecha": "2026-11-08",
+        "concepto": "Transferencia Lucia Perez",
+        "importe": 450.00
+      },
+      "propuesta": {
+        "idContrato": "<id>",
+        "inquilino": "Lucía Pérez",
+        "numeroHabitacion": 2,
+        "tipoUnidad": "habitacion",
+        "direccion": "Calle Mayor 1",
+        "renta": 450.00,
+        "puntuacion": 90,
+        "confianza": "ALTA",
+        "yaRegistrado": false,
+        "preseleccionada": true
+      }
+    }
+  ],
+  "sinPropuesta": []
+}
+
+### proponePorNombreEImporteYSeñalaPagoExistente #3
+POST /api/conciliacion/analizar
+200 application/json
+{
+  "propuestas": [
+    {
+      "indice": 0,
+      "movimiento": {
+        "fecha": "2026-11-08",
+        "concepto": "Transferencia",
+        "importe": 450.00
+      },
+      "propuesta": {
+        "idContrato": "<id>",
+        "inquilino": "Lucía Pérez",
+        "numeroHabitacion": 2,
+        "tipoUnidad": "habitacion",
+        "direccion": "Calle Mayor 1",
+        "renta": 450.00,
+        "puntuacion": 50,
+        "confianza": "BAJA",
+        "yaRegistrado": true,
+        "preseleccionada": false
+      }
+    }
+  ],
+  "sinPropuesta": []
+}
+

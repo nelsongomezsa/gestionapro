@@ -1,0 +1,556 @@
+### calculaIngresosLimiteAmortizacionesYNeto #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #2
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Fiscal 1",
+  "tipo": "vivienda",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 2,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 0,
+    "alquiladas": 0,
+    "disponibles": 0,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0,
+  "datosFinancieros": {
+    "precioCompra": 100000,
+    "itpPagado": 8000,
+    "gastosNotaria": 1000,
+    "gastosRegistro": 500,
+    "costeReforma": 0,
+    "costeMobiliario": 5000,
+    "otrosGastosCompra": 0,
+    "tieneHipoteca": false,
+    "importeHipoteca": 0,
+    "tipoInteres": 0,
+    "plazoAnos": 0,
+    "cuotaMensualHipoteca": 0,
+    "gastoIbiAnual": 0,
+    "gastoComunidadMensual": 0,
+    "gastoSeguroAnual": 0,
+    "gastoMantenimientoAnual": 0,
+    "valorMercadoActual": 0
+  },
+  "metricas": {
+    "inversionTotal": 114500,
+    "cuotaMensualHipoteca": 0,
+    "gastosAnuales": 0,
+    "rentabilidadBrutaPct": 0.0,
+    "rentabilidadNetaPct": 0.0,
+    "calificacion": "A_REVISAR",
+    "cashFlowMensual": 0.00,
+    "cashOnCashPct": 0.0,
+    "capitalPropio": 114500,
+    "plusvaliaLatente": -114500,
+    "gastosReales": false
+  }
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #3
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "IBI",
+  "concepto": "IBI",
+  "importe": 400,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #4
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "REPARACION",
+  "concepto": "REPARACION",
+  "importe": 300,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #5
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "INTERESES",
+  "concepto": "INTERESES",
+  "importe": 900,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #6
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "SEGURO",
+  "concepto": "SEGURO",
+  "importe": 120,
+  "fecha": "2025-06-15",
+  "deducible": false,
+  "tieneFactura": false
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### calculaIngresosLimiteAmortizacionesYNeto #8
+GET /api/pisos/{n}/resumen-fiscal
+200 application/json
+{
+  "anio": 2025,
+  "idPiso": "<id>",
+  "piso": "Calle Fiscal 1, Madrid",
+  "ingresos": 1000.00,
+  "numeroPagos": 2,
+  "gastosConLimite": [
+    {
+      "concepto": "Reparación",
+      "importe": 300
+    },
+    {
+      "concepto": "Intereses de financiación",
+      "importe": 900
+    }
+  ],
+  "gastosConLimiteAplicables": 1000.00,
+  "excesoParaAniosSiguientes": 200.00,
+  "otrosGastos": [
+    {
+      "concepto": "IBI y otros tributos",
+      "importe": 400
+    }
+  ],
+  "amortizacionInmueble": 1971.00,
+  "baseAmortizacion": "3 % de 65.700,00 € (coste de adquisición de la construcción: el 60.0 % del coste total, según el reparto del valor catastral)",
+  "amortizacionMobiliario": 500.00,
+  "rendimientoNeto": -2871.00,
+  "notas": [
+    "Orientativo: no sustituye a la declaración de la renta ni al consejo de un asesor fiscal.",
+    "Ingresos: pagos registrados en el año. Hacienda usa las rentas devengadas: revisa los pagos atrasados o adelantados.",
+    "Si el piso no estuvo alquilado todo el año, la amortización se prorratea por los días alquilados.",
+    "Intereses, reparación y conservación superan los ingresos: 200,00 € se pueden deducir en los cuatro años siguientes.",
+    "Reducción por alquiler de vivienda (art. 23.2 LIRPF): si es vivienda habitual del inquilino, el rendimiento neto positivo puede reducirse (60 % en contratos anteriores al 26-05-2023; desde entonces, 50 % con carácter general y más en algunos casos). No se aplica aquí: depende de cada contrato.",
+    "Fuente: Agencia Tributaria, Manual práctico de Renta 2025, capítulo 4 (rendimientos del capital inmobiliario)."
+  ]
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #2
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Fiscal 1",
+  "tipo": "vivienda",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 2,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 0,
+    "alquiladas": 0,
+    "disponibles": 0,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0,
+  "datosFinancieros": {
+    "precioCompra": 100000,
+    "itpPagado": 8000,
+    "gastosNotaria": 1000,
+    "gastosRegistro": 500,
+    "costeReforma": 0,
+    "costeMobiliario": 5000,
+    "otrosGastosCompra": 0,
+    "tieneHipoteca": false,
+    "importeHipoteca": 0,
+    "tipoInteres": 0,
+    "plazoAnos": 0,
+    "cuotaMensualHipoteca": 0,
+    "gastoIbiAnual": 0,
+    "gastoComunidadMensual": 0,
+    "gastoSeguroAnual": 0,
+    "gastoMantenimientoAnual": 0,
+    "valorMercadoActual": 0
+  },
+  "metricas": {
+    "inversionTotal": 114500,
+    "cuotaMensualHipoteca": 0,
+    "gastosAnuales": 0,
+    "rentabilidadBrutaPct": 0.0,
+    "rentabilidadNetaPct": 0.0,
+    "calificacion": "A_REVISAR",
+    "cashFlowMensual": 0.00,
+    "cashOnCashPct": 0.0,
+    "capitalPropio": 114500,
+    "plusvaliaLatente": -114500,
+    "gastosReales": false
+  }
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #3
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "IBI",
+  "concepto": "IBI",
+  "importe": 400,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #4
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "REPARACION",
+  "concepto": "REPARACION",
+  "importe": 300,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #5
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "INTERESES",
+  "concepto": "INTERESES",
+  "importe": 900,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #6
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "SEGURO",
+  "concepto": "SEGURO",
+  "importe": 120,
+  "fecha": "2025-06-15",
+  "deducible": false,
+  "tieneFactura": false
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #8
+GET /api/pisos/{n}/resumen-fiscal/pdf
+200 application/pdf
+<pdf>
+
+### pdfYCsv_yAccesoSoloDelPropietario #9
+GET /api/pisos/{n}/resumen-fiscal/csv
+200 text/csv;charset=UTF-8
+﻿Concepto;Importe
+"Ingresos íntegros (2 pagos)";1000,00
+"Reparación";-300,00
+"Intereses de financiación";-900,00
+"Exceso para los 4 años siguientes";200,00
+"IBI y otros tributos";-400,00
+"Amortización del mobiliario";-500,00
+"Rendimiento neto (orientativo)";-900,00
+
+
+### pdfYCsv_yAccesoSoloDelPropietario #10
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pdfYCsv_yAccesoSoloDelPropietario #11
+GET /api/pisos/{n}/resumen-fiscal
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/125/resumen-fiscal"
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #2
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Fiscal 1",
+  "tipo": "vivienda",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 2,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 0,
+    "alquiladas": 0,
+    "disponibles": 0,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0,
+  "datosFinancieros": {
+    "precioCompra": 100000,
+    "itpPagado": 8000,
+    "gastosNotaria": 1000,
+    "gastosRegistro": 500,
+    "costeReforma": 0,
+    "costeMobiliario": 5000,
+    "otrosGastosCompra": 0,
+    "tieneHipoteca": false,
+    "importeHipoteca": 0,
+    "tipoInteres": 0,
+    "plazoAnos": 0,
+    "cuotaMensualHipoteca": 0,
+    "gastoIbiAnual": 0,
+    "gastoComunidadMensual": 0,
+    "gastoSeguroAnual": 0,
+    "gastoMantenimientoAnual": 0,
+    "valorMercadoActual": 0
+  },
+  "metricas": {
+    "inversionTotal": 114500,
+    "cuotaMensualHipoteca": 0,
+    "gastosAnuales": 0,
+    "rentabilidadBrutaPct": 0.0,
+    "rentabilidadNetaPct": 0.0,
+    "calificacion": "A_REVISAR",
+    "cashFlowMensual": 0.00,
+    "cashOnCashPct": 0.0,
+    "capitalPropio": 114500,
+    "plusvaliaLatente": -114500,
+    "gastosReales": false
+  }
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #3
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "IBI",
+  "concepto": "IBI",
+  "importe": 400,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #4
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "REPARACION",
+  "concepto": "REPARACION",
+  "importe": 300,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #5
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "INTERESES",
+  "concepto": "INTERESES",
+  "importe": 900,
+  "fecha": "2025-06-15",
+  "deducible": true,
+  "tieneFactura": false
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #6
+POST /api/gastos
+201 application/json
+{
+  "id": "<id>",
+  "idPiso": "<id>",
+  "direccionPiso": "Calle Fiscal 1",
+  "categoria": "SEGURO",
+  "concepto": "SEGURO",
+  "importe": 120,
+  "fecha": "2025-06-15",
+  "deducible": false,
+  "tieneFactura": false
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinValorCatastral_noCalculaLaAmortizacionDelInmueble_yLoDice #8
+GET /api/pisos/{n}/resumen-fiscal
+200 application/json
+{
+  "anio": 2025,
+  "idPiso": "<id>",
+  "piso": "Calle Fiscal 1, Madrid",
+  "ingresos": 1000.00,
+  "numeroPagos": 2,
+  "gastosConLimite": [
+    {
+      "concepto": "Reparación",
+      "importe": 300
+    },
+    {
+      "concepto": "Intereses de financiación",
+      "importe": 900
+    }
+  ],
+  "gastosConLimiteAplicables": 1000.00,
+  "excesoParaAniosSiguientes": 200.00,
+  "otrosGastos": [
+    {
+      "concepto": "IBI y otros tributos",
+      "importe": 400
+    }
+  ],
+  "baseAmortizacion": "Indica el valor catastral y el de la construcción (recibo del IBI) para calcularla.",
+  "amortizacionMobiliario": 500.00,
+  "rendimientoNeto": -900.00,
+  "notas": [
+    "Orientativo: no sustituye a la declaración de la renta ni al consejo de un asesor fiscal.",
+    "Ingresos: pagos registrados en el año. Hacienda usa las rentas devengadas: revisa los pagos atrasados o adelantados.",
+    "Intereses, reparación y conservación superan los ingresos: 200,00 € se pueden deducir en los cuatro años siguientes.",
+    "Reducción por alquiler de vivienda (art. 23.2 LIRPF): si es vivienda habitual del inquilino, el rendimiento neto positivo puede reducirse (60 % en contratos anteriores al 26-05-2023; desde entonces, 50 % con carácter general y más en algunos casos). No se aplica aquí: depende de cada contrato.",
+    "Fuente: Agencia Tributaria, Manual práctico de Renta 2025, capítulo 4 (rendimientos del capital inmobiliario)."
+  ]
+}
+

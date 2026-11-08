@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -78,6 +81,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     ResponseEntity<ErrorResponse> metodo(HttpRequestMethodNotSupportedException e, HttpServletRequest req) {
         return responder(HttpStatus.METHOD_NOT_ALLOWED, "METODO_NO_PERMITIDO", e.getMessage(), req);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    ResponseEntity<ErrorResponse> tipoNoSoportado(HttpMediaTypeNotSupportedException e, HttpServletRequest req) {
+        return responder(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "TIPO_NO_SOPORTADO",
+                "Tipo de contenido no admitido en esta ruta", req);
+    }
+
+    @ExceptionHandler({MissingServletRequestPartException.class, MultipartException.class})
+    ResponseEntity<ErrorResponse> faltaArchivo(Exception e, HttpServletRequest req) {
+        return responder(HttpStatus.BAD_REQUEST, "ARCHIVO_REQUERIDO", "Falta el archivo de la petición", req);
     }
 
     @ExceptionHandler(Exception.class)

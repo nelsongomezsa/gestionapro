@@ -1,0 +1,360 @@
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #2
+POST /api/incidencias/{n}/fotos
+201 application/json
+{
+  "id": "<id>",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f>",
+  "tipo": "image/png",
+  "mia": true
+}
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #4
+GET /api/incidencias/{n}/fotos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f>",
+    "tipo": "image/png",
+    "mia": false
+  }
+]
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #5
+GET /api/incidencias/fotos/{n}
+200 image/png
+<binario>
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #6
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### fotosDeIncidencia_lasSubeElInquilino_yLasVeElPropietario #7
+GET /api/incidencias/fotos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/fotos/1"
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #2
+POST /api/habitaciones/{n}/inventarios
+201 application/json
+{
+  "id": "<id>",
+  "idHabitacion": "<id>",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "tipo": "ENTRADA",
+  "fecha": "2026-11-08",
+  "elementos": [
+    {
+      "id": "<id>",
+      "nombre": "Cama",
+      "estado": "BUENO",
+      "tieneFoto": false
+    },
+    {
+      "id": "<id>",
+      "nombre": "Pared",
+      "estado": "DANADO",
+      "observaciones": "Desconchón junto a la ventana",
+      "tieneFoto": false
+    }
+  ]
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #3
+POST /api/inventarios/elementos/{n}/foto
+200 application/json
+{
+  "id": "<id>",
+  "idHabitacion": "<id>",
+  "numeroHabitacion": 1,
+  "tipoUnidad": "habitacion",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "idContrato": "<id>",
+  "inquilino": "Ana García 1A",
+  "tipo": "ENTRADA",
+  "fecha": "2026-11-08",
+  "elementos": [
+    {
+      "id": "<id>",
+      "nombre": "Cama",
+      "estado": "BUENO",
+      "tieneFoto": false
+    },
+    {
+      "id": "<id>",
+      "nombre": "Pared",
+      "estado": "DANADO",
+      "observaciones": "Desconchón junto a la ventana",
+      "tieneFoto": true
+    }
+  ]
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #4
+GET /api/inventarios/{n}/pdf
+200 application/pdf
+<pdf>
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #6
+GET /api/habitaciones/{n}/inventarios
+200 application/json
+[
+  {
+    "id": "<id>",
+    "idHabitacion": "<id>",
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "idContrato": "<id>",
+    "inquilino": "Ana García 1A",
+    "tipo": "ENTRADA",
+    "fecha": "2026-11-08",
+    "elementos": [
+      {
+        "id": "<id>",
+        "nombre": "Cama",
+        "estado": "BUENO",
+        "tieneFoto": false
+      },
+      {
+        "id": "<id>",
+        "nombre": "Pared",
+        "estado": "DANADO",
+        "observaciones": "Desconchón junto a la ventana",
+        "tieneFoto": true
+      }
+    ]
+  }
+]
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #7
+GET /api/inventarios/{n}/pdf
+200 application/pdf
+<pdf>
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #8
+DELETE /api/inventarios/{n}
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/inventarios/1"
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inventario_crearConFotoYPdf_yElInquilinoLoVe #10
+GET /api/inventarios/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inventario no encontrado",
+  "path": "/api/inventarios/1"
+}
+
+### inventario_validaElContratoYLosElementos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inventario_validaElContratoYLosElementos #2
+POST /api/habitaciones/{n}/inventarios
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "CONTRATO_NO_VALIDO",
+  "mensaje": "El contrato no es de esta habitación",
+  "path": "/api/habitaciones/356/inventarios"
+}
+
+### inventario_validaElContratoYLosElementos #3
+POST /api/habitaciones/{n}/inventarios
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/habitaciones/355/inventarios",
+  "errores": [
+    {
+      "campo": "elementos",
+      "mensaje": "must not be empty"
+    }
+  ]
+}
+
+### soloSeAdmitenFotos_yConElTipoReal #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### soloSeAdmitenFotos_yConElTipoReal #2
+POST /api/incidencias/{n}/fotos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_NO_ADMITIDO",
+  "mensaje": "Solo fotos (JPEG, PNG, HEIC) o PDF",
+  "path": "/api/incidencias/28/fotos"
+}
+
+### soloSeAdmitenFotos_yConElTipoReal #3
+POST /api/incidencias/{n}/fotos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_NO_ADMITIDO",
+  "mensaje": "Solo fotos (JPEG, PNG o HEIC)",
+  "path": "/api/incidencias/28/fotos"
+}
+
+### soloSeAdmitenFotos_yConElTipoReal #4
+POST /api/incidencias/{n}/fotos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "ARCHIVO_DANADO",
+  "mensaje": "El archivo está dañado o incompleto",
+  "path": "/api/incidencias/28/fotos"
+}
+

@@ -1,0 +1,662 @@
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #2
+GET /api/contratos/{n}/mensajes
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/61/mensajes"
+}
+
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #4
+GET /api/contratos/{n}/mensajes
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/60/mensajes"
+}
+
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #6
+POST /api/contratos/{n}/mensajes
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "INQUILINO_SIN_CUENTA",
+  "mensaje": "El inquilino aún no tiene cuenta en la app: invítale desde su ficha para poder escribirle",
+  "path": "/api/contratos/61/mensajes"
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #2
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #3
+POST /api/contratos/{n}/mensajes
+201 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "autor": "Usuario ana@test.com",
+  "mio": true,
+  "texto": "Hola, Lucía",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "leido": false
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #4
+POST /api/contratos/{n}/mensajes
+201 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "autor": "Usuario ana@test.com",
+  "mio": true,
+  "texto": "¿Todo bien?",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "leido": false
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #5
+GET /api/notificaciones
+200 application/json
+[
+  {
+    "id": "<id>",
+    "tipo": "pago_atrasado",
+    "titulo": "Renta pendiente",
+    "descripcion": "La renta de noviembre 2026 (450,00 €) vencía el 7 de noviembre. Si ya la has pagado, avisa a tu propietario.",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "mensaje",
+    "titulo": "Mensaje de Usuario ana@test.com",
+    "descripcion": "Hola, Lucía",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "MENSAJES",
+      "id": "<id>"
+    }
+  }
+]
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #6
+GET /api/conversaciones
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "con": "Usuario ana@test.com",
+    "asunto": "Habitación 1 · Calle de Ana 1",
+    "ultimoMensaje": "¿Todo bien?",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "ultimoMio": false,
+    "sinLeer": 2
+  }
+]
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #7
+GET /api/contratos/{n}/mensajes
+200 application/json
+[
+  {
+    "id": "<id>",
+    "idContrato": "<id>",
+    "autor": "Usuario ana@test.com",
+    "mio": false,
+    "texto": "Hola, Lucía",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leido": true
+  },
+  {
+    "id": "<id>",
+    "idContrato": "<id>",
+    "autor": "Usuario ana@test.com",
+    "mio": false,
+    "texto": "¿Todo bien?",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leido": true
+  }
+]
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #8
+GET /api/conversaciones
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "con": "Usuario ana@test.com",
+    "asunto": "Habitación 1 · Calle de Ana 1",
+    "ultimoMensaje": "¿Todo bien?",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "ultimoMio": false,
+    "sinLeer": 0
+  }
+]
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #9
+POST /api/contratos/{n}/mensajes
+201 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "autor": "Usuario lucia@test.com",
+  "mio": true,
+  "texto": "Sí, gracias",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "leido": false
+}
+
+### conversacion_propietarioEInquilino_conAvisoYLeidos #10
+GET /api/conversaciones
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "con": "Ana García 1A",
+    "asunto": "Habitación 1 · Calle de Ana 1",
+    "ultimoMensaje": "Sí, gracias",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "ultimoMio": false,
+    "sinLeer": 1
+  }
+]
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #2
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #3
+GET /api/contratos/{n}/pdf-firmado
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "SIN_FIRMAS",
+  "mensaje": "El contrato aún no tiene firmas",
+  "path": "/api/contratos/58/pdf-firmado"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #4
+POST /api/contratos/{n}/firmas/ARRENDATARIO
+200 application/json
+{
+  "firmas": [
+    {
+      "parte": "ARRENDATARIO",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": true
+    }
+  ],
+  "completo": false,
+  "cambiadoTrasFirmar": false,
+  "huellaActual": "2b7fb693745abe401b961df647eb68858094580ea679672972315a2921e99ef0"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #5
+POST /api/contratos/{n}/firmas/ARRENDADOR
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/58/firmas/ARRENDADOR"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #6
+POST /api/contratos/{n}/firmas/ARRENDATARIO
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "YA_FIRMADO",
+  "mensaje": "Esta parte ya ha firmado el contrato",
+  "path": "/api/contratos/58/firmas/ARRENDATARIO"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #7
+POST /api/contratos/{n}/firmas/ARRENDADOR
+200 application/json
+{
+  "firmas": [
+    {
+      "parte": "ARRENDATARIO",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": true
+    },
+    {
+      "parte": "ARRENDADOR",
+      "nombre": "Usuario ana@test.com",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": true
+    }
+  ],
+  "completo": true,
+  "cambiadoTrasFirmar": false,
+  "huellaActual": "2b7fb693745abe401b961df647eb68858094580ea679672972315a2921e99ef0"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #8
+GET /api/contratos/{n}/pdf-firmado
+200 application/pdf
+<pdf>
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #9
+GET /api/contratos/{n}/firmas
+200 application/json
+{
+  "firmas": [
+    {
+      "parte": "ARRENDATARIO",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": false
+    },
+    {
+      "parte": "ARRENDADOR",
+      "nombre": "Usuario ana@test.com",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": false
+    }
+  ],
+  "completo": false,
+  "cambiadoTrasFirmar": true,
+  "huellaActual": "899791554d483dd5f93d4eaee780298c453cf9d8c93069b93c2ec6f27ab1f5d6"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #10
+POST /api/contratos/{n}/firmas/ARRENDATARIO
+200 application/json
+{
+  "firmas": [
+    {
+      "parte": "ARRENDADOR",
+      "nombre": "Usuario ana@test.com",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": false
+    },
+    {
+      "parte": "ARRENDATARIO",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A",
+      "fecha": "<ahora d/M/yyyy HH:mm>",
+      "proveedor": "EN_PANTALLA",
+      "vigente": true
+    }
+  ],
+  "completo": false,
+  "cambiadoTrasFirmar": true,
+  "huellaActual": "899791554d483dd5f93d4eaee780298c453cf9d8c93069b93c2ec6f27ab1f5d6"
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #12
+GET /api/contratos/{n}/firmas
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/58/firmas"
+}
+
+### hiloDeIncidencia_separado_yValidado #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #2
+POST /api/contratos/{n}/mensajes
+201 application/json
+{
+  "id": "<id>",
+  "idContrato": "<id>",
+  "idIncidencia": "<id>",
+  "autor": "Usuario lucia@test.com",
+  "mio": true,
+  "texto": "Sigue goteando",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "leido": false
+}
+
+### hiloDeIncidencia_separado_yValidado #3
+GET /api/contratos/{n}/mensajes
+200 application/json
+[]
+
+### hiloDeIncidencia_separado_yValidado #4
+GET /api/contratos/{n}/mensajes
+200 application/json
+[
+  {
+    "id": "<id>",
+    "idContrato": "<id>",
+    "idIncidencia": "<id>",
+    "autor": "Usuario lucia@test.com",
+    "mio": true,
+    "texto": "Sigue goteando",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leido": false
+  }
+]
+
+### hiloDeIncidencia_separado_yValidado #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #6
+GET /api/conversaciones
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "idIncidencia": "<id>",
+    "con": "Ana García 1A",
+    "asunto": "Incidencia: Gotera en el techo",
+    "ultimoMensaje": "Sigue goteando",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "ultimoMio": false,
+    "sinLeer": 1
+  }
+]
+
+### hiloDeIncidencia_separado_yValidado #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #8
+GET /api/notificaciones
+200 application/json
+[
+  {
+    "id": "<id>",
+    "tipo": "cobro_vencido",
+    "titulo": "Cobro vencido",
+    "descripcion": "Ana García 1A · 450,00 €: vencía el 7 de noviembre (hace 1 día)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "cobro_vencido",
+    "titulo": "Cobro vencido",
+    "descripcion": "Ana García 2B · 400,00 €: vencía el 7 de noviembre (hace 1 día)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "mensaje",
+    "titulo": "Mensaje de Usuario lucia@test.com",
+    "descripcion": "Sigue goteando",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "MENSAJES_INCIDENCIA",
+      "id": "<id>"
+    }
+  }
+]
+
+### hiloDeIncidencia_separado_yValidado #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #10
+GET /api/incidencias/{n}/mensajes
+200 application/json
+[
+  {
+    "id": "<id>",
+    "idContrato": "<id>",
+    "idIncidencia": "<id>",
+    "autor": "Usuario lucia@test.com",
+    "mio": false,
+    "texto": "Sigue goteando",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leido": true
+  }
+]
+
+### hiloDeIncidencia_separado_yValidado #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #12
+GET /api/incidencias/{n}/mensajes
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/9/mensajes"
+}
+
+### hiloDeIncidencia_separado_yValidado #13
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### hiloDeIncidencia_separado_yValidado #14
+POST /api/contratos/{n}/mensajes
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "INCIDENCIA_NO_VALIDA",
+  "mensaje": "La incidencia no es de este contrato",
+  "path": "/api/contratos/57/mensajes"
+}
+

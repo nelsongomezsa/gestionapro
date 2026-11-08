@@ -1,0 +1,565 @@
+### avanzarEstado_pendienteEnProcesoResuelta #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### avanzarEstado_pendienteEnProcesoResuelta #2
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo que gotea",
+  "estado": "en_proceso",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### avanzarEstado_pendienteEnProcesoResuelta #3
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo que gotea",
+  "estado": "resuelta",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### avanzarEstado_pendienteEnProcesoResuelta #4
+PATCH /api/incidencias/{n}/estado
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "INCIDENCIA_RESUELTA",
+  "mensaje": "La incidencia ya está resuelta",
+  "path": "/api/incidencias/19/estado"
+}
+
+### avanzarEstado_pendienteEnProcesoResuelta #5
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo que gotea",
+  "estado": "pendiente",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### costeDeReparacion_yBorrar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### costeDeReparacion_yBorrar #2
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo que gotea",
+  "estado": "pendiente",
+  "fecha": "2026-11-08",
+  "costeReparacion": 85.50,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### costeDeReparacion_yBorrar #3
+PATCH /api/incidencias/{n}
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/incidencias/25",
+  "errores": [
+    {
+      "campo": "costeReparacion",
+      "mensaje": "must be greater than or equal to 0"
+    }
+  ]
+}
+
+### costeDeReparacion_yBorrar #4
+DELETE /api/incidencias/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/26"
+}
+
+### costeDeReparacion_yBorrar #5
+DELETE /api/incidencias/{n}
+204 -
+<vacío>
+
+### crear_usaElInquilinoDelContratoActivo_ySinContratoLoExige #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_usaElInquilinoDelContratoActivo_ySinContratoLoExige #2
+POST /api/incidencias
+201 application/json
+{
+  "id": "<id>",
+  "descripcion": "No funciona la calefacción",
+  "estado": "pendiente",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### crear_usaElInquilinoDelContratoActivo_ySinContratoLoExige #3
+POST /api/incidencias
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "INQUILINO_REQUERIDO",
+  "mensaje": "La habitación no tiene contrato activo: indica el inquilino",
+  "path": "/api/incidencias"
+}
+
+### crear_usaElInquilinoDelContratoActivo_ySinContratoLoExige #4
+POST /api/incidencias
+201 application/json
+{
+  "id": "<id>",
+  "descripcion": "Pintar",
+  "estado": "pendiente",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 2,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### crear_usaElInquilinoDelContratoActivo_ySinContratoLoExige #5
+POST /api/incidencias
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "INQUILINO_NO_VALIDO",
+  "mensaje": "Ese inquilino no tiene contrato en este piso",
+  "path": "/api/incidencias"
+}
+
+### detalleDePiso_ingresosPagosYPdf #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### detalleDePiso_ingresosPagosYPdf #2
+GET /api/pisos/{n}/ingresos
+200 application/json
+[
+  {
+    "mes": "2025-12",
+    "etiqueta": "dic",
+    "importe": 0
+  },
+  {
+    "mes": "2026-01",
+    "etiqueta": "ene",
+    "importe": 0
+  },
+  {
+    "mes": "2026-02",
+    "etiqueta": "feb",
+    "importe": 0
+  },
+  {
+    "mes": "2026-03",
+    "etiqueta": "mar",
+    "importe": 0
+  },
+  {
+    "mes": "2026-04",
+    "etiqueta": "abr",
+    "importe": 0
+  },
+  {
+    "mes": "2026-05",
+    "etiqueta": "may",
+    "importe": 0
+  },
+  {
+    "mes": "2026-06",
+    "etiqueta": "jun",
+    "importe": 0
+  },
+  {
+    "mes": "2026-07",
+    "etiqueta": "jul",
+    "importe": 0
+  },
+  {
+    "mes": "2026-08",
+    "etiqueta": "ago",
+    "importe": 0
+  },
+  {
+    "mes": "2026-09",
+    "etiqueta": "sept",
+    "importe": 0
+  },
+  {
+    "mes": "2026-10",
+    "etiqueta": "oct",
+    "importe": 0
+  },
+  {
+    "mes": "2026-11",
+    "etiqueta": "nov",
+    "importe": 450.00
+  }
+]
+
+### detalleDePiso_ingresosPagosYPdf #3
+GET /api/pagos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-11-08",
+    "cantidad": 450.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A",
+      "dni": "11111111A"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### detalleDePiso_ingresosPagosYPdf #4
+GET /api/pisos/{n}/pdf
+200 application/pdf
+<pdf>
+
+### detalleDePiso_ingresosPagosYPdf #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### detalleDePiso_ingresosPagosYPdf #6
+GET /api/pisos/{n}/pdf
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/213/pdf"
+}
+
+### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>"
+  }
+}
+
+### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #2
+GET /api/incidencias
+200 application/json
+[
+  {
+    "id": "<id>",
+    "descripcion": "Grifo que gotea",
+    "estado": "pendiente",
+    "fecha": "2026-11-08",
+    "costeReparacion": 0,
+    "habitacion": {
+      "id": "<id>",
+      "numero": 1,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A"
+    },
+    "dias": 0
+  }
+]
+
+### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #3
+POST /api/incidencias
+201 application/json
+{
+  "id": "<id>",
+  "descripcion": "Se ha fundido la bombilla",
+  "estado": "pendiente",
+  "fecha": "2026-11-08",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle de Ana 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A"
+  },
+  "dias": 0
+}
+
+### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #4
+PATCH /api/incidencias/{n}/estado
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/incidencias/16/estado"
+}
+
+### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #5
+DELETE /api/incidencias/{n}
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/incidencias/16"
+}
+
+### propietario_listaFiltraYNoVeLasDeOtros #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propietario_listaFiltraYNoVeLasDeOtros #2
+GET /api/incidencias
+200 application/json
+[
+  {
+    "id": "<id>",
+    "descripcion": "Grifo que gotea",
+    "estado": "pendiente",
+    "fecha": "2026-11-08",
+    "costeReparacion": 0,
+    "habitacion": {
+      "id": "<id>",
+      "numero": 1,
+      "tipo": "habitacion"
+    },
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 1A"
+    },
+    "dias": 0
+  }
+]
+
+### propietario_listaFiltraYNoVeLasDeOtros #3
+GET /api/incidencias
+200 application/json
+[]
+
+### propietario_listaFiltraYNoVeLasDeOtros #4
+GET /api/incidencias/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Incidencia no encontrado",
+  "path": "/api/incidencias/22"
+}
+

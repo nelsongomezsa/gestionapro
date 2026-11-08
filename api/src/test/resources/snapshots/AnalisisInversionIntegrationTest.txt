@@ -1,0 +1,821 @@
+### cadaUnoSoloLosSuyos_tambienElAdmin #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #2
+POST /api/analisis-inversion
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "De Ana",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 200000.0,
+    "alquilerMensual": 1400.0,
+    "porcentajeFinanciado": 80.0,
+    "plazoAnos": 25,
+    "tipoInteresPct": 3.0
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 12000.00,
+    "totalCompra": 212000.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 16800.00,
+    "hipoteca": 160000.00,
+    "capitalAportado": 52000.00,
+    "cuotaMensual": 758.74,
+    "interesesMensualesPromedio": 225.41,
+    "amortizacionMensualPromedio": 533.33,
+    "rentabilidadBrutaPct": 7.92,
+    "rentabilidadNetaPct": 7.92,
+    "cashFlowMensual": 641.26,
+    "cashFlowAnual": 7695.12,
+    "aniosRecuperacion": 6.76
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #4
+GET /api/analisis-inversion
+200 application/json
+[]
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #6
+PUT /api/analisis-inversion/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Análisis no encontrado",
+  "path": "/api/analisis-inversion/4"
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #8
+DELETE /api/analisis-inversion/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Análisis no encontrado",
+  "path": "/api/analisis-inversion/4"
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #10
+GET /api/analisis-inversion
+200 application/json
+[]
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #12
+PUT /api/analisis-inversion/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Análisis no encontrado",
+  "path": "/api/analisis-inversion/4"
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #13
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #14
+DELETE /api/analisis-inversion/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Análisis no encontrado",
+  "path": "/api/analisis-inversion/4"
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #15
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cadaUnoSoloLosSuyos_tambienElAdmin #16
+POST /api/analisis-inversion
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/analisis-inversion"
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #2
+POST /api/analisis-inversion
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Piso de Ana",
+  "idPiso": "<id>",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 200000.0,
+    "alquilerMensual": 1400.0,
+    "porcentajeFinanciado": 80.0,
+    "plazoAnos": 25,
+    "tipoInteresPct": 3.0
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 12000.00,
+    "totalCompra": 212000.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 16800.00,
+    "hipoteca": 160000.00,
+    "capitalAportado": 52000.00,
+    "cuotaMensual": 758.74,
+    "interesesMensualesPromedio": 225.41,
+    "amortizacionMensualPromedio": 533.33,
+    "rentabilidadBrutaPct": 7.92,
+    "rentabilidadNetaPct": 7.92,
+    "cashFlowMensual": 641.26,
+    "cashFlowAnual": 7695.12,
+    "aniosRecuperacion": 6.76
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #4
+POST /api/analisis-inversion
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Piso nuevo",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 150000.0,
+    "alquilerMensual": 900.0,
+    "porcentajeFinanciado": 80.0,
+    "plazoAnos": 25,
+    "tipoInteresPct": 3.0
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 9000.00,
+    "totalCompra": 159000.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 10800.00,
+    "hipoteca": 120000.00,
+    "capitalAportado": 39000.00,
+    "cuotaMensual": 569.05,
+    "interesesMensualesPromedio": 169.05,
+    "amortizacionMensualPromedio": 400.00,
+    "rentabilidadBrutaPct": 6.79,
+    "rentabilidadNetaPct": 6.79,
+    "cashFlowMensual": 330.95,
+    "cashFlowAnual": 3971.40,
+    "aniosRecuperacion": 9.82
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #6
+GET /api/analisis-inversion
+200 application/json
+[
+  {
+    "id": "<id>",
+    "nombre": "Piso nuevo",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "entrada": {
+      "comunidad": "Madrid",
+      "precioCompra": 150000.0,
+      "alquilerMensual": 900.0,
+      "porcentajeFinanciado": 80.0,
+      "plazoAnos": 25,
+      "tipoInteresPct": 3.0
+    },
+    "resultado": {
+      "itpPct": 6.00,
+      "itpImporte": 9000.00,
+      "totalCompra": 159000.00,
+      "gastosMensuales": 0.00,
+      "gastosAnuales": 0.00,
+      "alquilerAnual": 10800.00,
+      "hipoteca": 120000.00,
+      "capitalAportado": 39000.00,
+      "cuotaMensual": 569.05,
+      "interesesMensualesPromedio": 169.05,
+      "amortizacionMensualPromedio": 400.00,
+      "rentabilidadBrutaPct": 6.79,
+      "rentabilidadNetaPct": 6.79,
+      "cashFlowMensual": 330.95,
+      "cashFlowAnual": 3971.40,
+      "aniosRecuperacion": 9.82
+    }
+  },
+  {
+    "id": "<id>",
+    "nombre": "Piso de Ana",
+    "idPiso": "<id>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "entrada": {
+      "comunidad": "Madrid",
+      "precioCompra": 200000.0,
+      "alquilerMensual": 1400.0,
+      "porcentajeFinanciado": 80.0,
+      "plazoAnos": 25,
+      "tipoInteresPct": 3.0
+    },
+    "resultado": {
+      "itpPct": 6.00,
+      "itpImporte": 12000.00,
+      "totalCompra": 212000.00,
+      "gastosMensuales": 0.00,
+      "gastosAnuales": 0.00,
+      "alquilerAnual": 16800.00,
+      "hipoteca": 160000.00,
+      "capitalAportado": 52000.00,
+      "cuotaMensual": 758.74,
+      "interesesMensualesPromedio": 225.41,
+      "amortizacionMensualPromedio": 533.33,
+      "rentabilidadBrutaPct": 7.92,
+      "rentabilidadNetaPct": 7.92,
+      "cashFlowMensual": 641.26,
+      "cashFlowAnual": 7695.12,
+      "aniosRecuperacion": 6.76
+    }
+  }
+]
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #8
+PUT /api/analisis-inversion/{n}
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Piso de Ana con reforma",
+  "idPiso": "<id>",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 200000.0,
+    "alquilerMensual": 1600.0,
+    "porcentajeFinanciado": 80.0,
+    "plazoAnos": 25,
+    "tipoInteresPct": 3.0
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 12000.00,
+    "totalCompra": 212000.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 19200.00,
+    "hipoteca": 160000.00,
+    "capitalAportado": 52000.00,
+    "cuotaMensual": 758.74,
+    "interesesMensualesPromedio": 225.41,
+    "amortizacionMensualPromedio": 533.33,
+    "rentabilidadBrutaPct": 9.06,
+    "rentabilidadNetaPct": 9.06,
+    "cashFlowMensual": 841.26,
+    "cashFlowAnual": 10095.12,
+    "aniosRecuperacion": 5.15
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #10
+DELETE /api/analisis-inversion/{n}
+204 -
+<vacío>
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crearListarCambiarYBorrar_conResultadoRecalculado #12
+GET /api/analisis-inversion
+200 application/json
+[
+  {
+    "id": "<id>",
+    "nombre": "Piso nuevo",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "entrada": {
+      "comunidad": "Madrid",
+      "precioCompra": 150000.0,
+      "alquilerMensual": 900.0,
+      "porcentajeFinanciado": 80.0,
+      "plazoAnos": 25,
+      "tipoInteresPct": 3.0
+    },
+    "resultado": {
+      "itpPct": 6.00,
+      "itpImporte": 9000.00,
+      "totalCompra": 159000.00,
+      "gastosMensuales": 0.00,
+      "gastosAnuales": 0.00,
+      "alquilerAnual": 10800.00,
+      "hipoteca": 120000.00,
+      "capitalAportado": 39000.00,
+      "cuotaMensual": 569.05,
+      "interesesMensualesPromedio": 169.05,
+      "amortizacionMensualPromedio": 400.00,
+      "rentabilidadBrutaPct": 6.79,
+      "rentabilidadNetaPct": 6.79,
+      "cashFlowMensual": 330.95,
+      "cashFlowAnual": 3971.40,
+      "aniosRecuperacion": 9.82
+    }
+  }
+]
+
+### validacion_limiteYRoles #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #2
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/analisis-inversion",
+  "errores": [
+    {
+      "campo": "nombre",
+      "mensaje": "must not be blank"
+    }
+  ]
+}
+
+### validacion_limiteYRoles #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #4
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/analisis-inversion",
+  "errores": [
+    {
+      "campo": "nombre",
+      "mensaje": "size must be between 0 and 80"
+    }
+  ]
+}
+
+### validacion_limiteYRoles #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #6
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/analisis-inversion",
+  "errores": [
+    {
+      "campo": "entrada",
+      "mensaje": "must not be null"
+    }
+  ]
+}
+
+### validacion_limiteYRoles #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #8
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/analisis-inversion",
+  "errores": [
+    {
+      "campo": "entrada.precioCompra",
+      "mensaje": "must be greater than or equal to 0"
+    }
+  ]
+}
+
+### validacion_limiteYRoles #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #10
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "DATOS_INVALIDOS",
+  "mensaje": "Algún importe está fuera de rango",
+  "path": "/api/analisis-inversion"
+}
+
+### validacion_limiteYRoles #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #12
+POST /api/analisis-inversion
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "COMUNIDAD_DESCONOCIDA",
+  "mensaje": "Comunidad autónoma desconocida: Atlántida",
+  "path": "/api/analisis-inversion"
+}
+
+### validacion_limiteYRoles #13
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #14
+POST /api/analisis-inversion
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Colado",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 200000.0,
+    "alquilerMensual": 1400.0,
+    "porcentajeFinanciado": 80.0,
+    "plazoAnos": 25,
+    "tipoInteresPct": 3.0
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 12000.00,
+    "totalCompra": 212000.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 16800.00,
+    "hipoteca": 160000.00,
+    "capitalAportado": 52000.00,
+    "cuotaMensual": 758.74,
+    "interesesMensualesPromedio": 225.41,
+    "amortizacionMensualPromedio": 533.33,
+    "rentabilidadBrutaPct": 7.92,
+    "rentabilidadNetaPct": 7.92,
+    "cashFlowMensual": 641.26,
+    "cashFlowAnual": 7695.12,
+    "aniosRecuperacion": 6.76
+  }
+}
+
+### validacion_limiteYRoles #15
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_limiteYRoles #16
+POST /api/analisis-inversion
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "LIMITE_ANALISIS",
+  "mensaje": "Puedes guardar hasta 50 análisis; borra alguno antes",
+  "path": "/api/analisis-inversion"
+}
+
+### validacion_limiteYRoles #17
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario inq@test.com",
+    "email": "inq@test.com",
+    "rol": "INQUILINO"
+  }
+}
+
+### validacion_limiteYRoles #18
+POST /api/analisis-inversion
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/analisis-inversion"
+}
+
+### validacion_limiteYRoles #19
+GET /api/analisis-inversion
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/analisis-inversion"
+}
+

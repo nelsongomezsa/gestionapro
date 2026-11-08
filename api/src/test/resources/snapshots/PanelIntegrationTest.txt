@@ -1,0 +1,1204 @@
+### actividad_propietarioVeLaSuya_sinInicioDeSesion #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### actividad_propietarioVeLaSuya_sinInicioDeSesion #2
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### actividad_propietarioVeLaSuya_sinInicioDeSesion #3
+GET /api/actividad
+200 application/json
+[
+  {
+    "id": "<id>",
+    "accion": "REGISTRAR_PAGO",
+    "descripcion": "Pago de 400 €",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>"
+  }
+]
+
+### actividad_propietarioVeLaSuya_sinInicioDeSesion #4
+GET /api/dashboard
+200 application/json
+{
+  "ocupacion": {
+    "habitaciones": 4,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 1,
+    "porcentaje": 50.0,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "inquilinos": 2,
+  "contratosActivos": 2,
+  "incidenciasPendientes": 1,
+  "incidenciasEnProceso": 0,
+  "cobradoMes": 400.00,
+  "cobradoMesAnterior": 1000.00,
+  "cobradoMesAnteriorMismoDia": 1000.00,
+  "diaComparado": 8,
+  "mesComparado": "oct",
+  "tendenciaPct": -60.0,
+  "esperadoMes": 1000.00,
+  "cashFlowMensual": 0,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 1000.00
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 400.00
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "COBROS_ATRASADOS",
+      "titulo": "10 cobros atrasados · 5.000,00 €",
+      "mensaje": "De meses anteriores; el más antiguo, de mayo 2026",
+      "tono": "negativo"
+    },
+    {
+      "tipo": "CONTRATOS_POR_VENCER",
+      "titulo": "1 contrato vence en los próximos 30 días",
+      "mensaje": "",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "INCIDENCIAS_PENDIENTES",
+      "titulo": "1 incidencia pendiente",
+      "mensaje": "Sin empezar a resolver",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "OCUPACION",
+      "titulo": "Ocupación media",
+      "mensaje": "1 habitaciones libres y 1 en mantenimiento",
+      "tono": "aviso"
+    }
+  ],
+  "proximosVencimientos": [
+    {
+      "id": "<id>",
+      "habitacion": {
+        "id": "<id>",
+        "numero": 1,
+        "tipo": "habitacion"
+      },
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 1A",
+        "dni": "11111111A"
+      },
+      "fechaInicio": "2026-05-08",
+      "fechaFin": "2026-11-28",
+      "precioMensual": 400.00,
+      "aplicaIva": false,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 20
+    }
+  ],
+  "actividadReciente": [
+    {
+      "id": "<id>",
+      "accion": "REGISTRAR_PAGO",
+      "descripcion": "Pago de 400 €",
+      "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>"
+    }
+  ]
+}
+
+### actividad_propietarioVeLaSuya_sinInicioDeSesion #5
+GET /api/actividad
+200 application/json
+[
+  {
+    "id": "<id>",
+    "accion": "REGISTRAR_PAGO",
+    "descripcion": "Pago de 400 €",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>"
+  },
+  {
+    "id": "<id>",
+    "accion": "LOGIN_API",
+    "descripcion": "Inicio de sesión desde la app móvil",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>"
+  }
+]
+
+### calendario_estadosDelDiaComoEnElEscritorio #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### calendario_estadosDelDiaComoEnElEscritorio #2
+GET /api/calendario
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 1000.00,
+  "cobrado": 400.00,
+  "pendiente": 600.00,
+  "dias": [
+    {
+      "fecha": "2026-11-01",
+      "estado": "PAGADO",
+      "pagos": [
+        {
+          "id": "<id>",
+          "fechaPago": "2026-11-01",
+          "cantidad": 400.00,
+          "metodoPago": "transferencia",
+          "idContrato": "<id>",
+          "inquilino": {
+            "id": "<id>",
+            "nombre": "Ana García 1A",
+            "dni": "11111111A"
+          },
+          "numeroHabitacion": 1,
+          "tipoUnidad": "habitacion",
+          "piso": {
+            "id": "<id>",
+            "direccion": "Calle de Ana 1",
+            "ciudad": "Madrid",
+            "tipo": "vivienda"
+          }
+        }
+      ],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-02",
+      "estado": "VENCIDO",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-03",
+      "estado": "VENCIDO",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-04",
+      "estado": "VENCIDO",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-05",
+      "estado": "VENCIDO",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-06",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-07",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-08",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-09",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-10",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-11",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-12",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-13",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-14",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-15",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-16",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-17",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-18",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-19",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-20",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-21",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-22",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-23",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-24",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-25",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-26",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-27",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-28",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": [
+        {
+          "id": "<id>",
+          "habitacion": {
+            "id": "<id>",
+            "numero": 1,
+            "tipo": "habitacion"
+          },
+          "piso": {
+            "id": "<id>",
+            "direccion": "Calle de Ana 1",
+            "ciudad": "Madrid",
+            "tipo": "vivienda"
+          },
+          "inquilino": {
+            "id": "<id>",
+            "nombre": "Ana García 1A",
+            "dni": "11111111A"
+          },
+          "fechaInicio": "2026-05-08",
+          "fechaFin": "2026-11-28",
+          "precioMensual": 400.00,
+          "aplicaIva": false,
+          "activo": true,
+          "vencimiento": "PROXIMO",
+          "diasRestantes": 20
+        }
+      ]
+    },
+    {
+      "fecha": "2026-11-29",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    },
+    {
+      "fecha": "2026-11-30",
+      "estado": "NORMAL",
+      "pagos": [],
+      "vencimientos": []
+    }
+  ]
+}
+
+### dashboard_soloConLoDelPropietario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### dashboard_soloConLoDelPropietario #2
+GET /api/dashboard
+200 application/json
+{
+  "ocupacion": {
+    "habitaciones": 4,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 1,
+    "porcentaje": 50.0,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "inquilinos": 2,
+  "contratosActivos": 2,
+  "incidenciasPendientes": 1,
+  "incidenciasEnProceso": 0,
+  "cobradoMes": 400.00,
+  "cobradoMesAnterior": 1000.00,
+  "cobradoMesAnteriorMismoDia": 1000.00,
+  "diaComparado": 8,
+  "mesComparado": "oct",
+  "tendenciaPct": -60.0,
+  "esperadoMes": 1000.00,
+  "cashFlowMensual": 0,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 1000.00
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 400.00
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "COBROS_ATRASADOS",
+      "titulo": "10 cobros atrasados · 5.000,00 €",
+      "mensaje": "De meses anteriores; el más antiguo, de mayo 2026",
+      "tono": "negativo"
+    },
+    {
+      "tipo": "CONTRATOS_POR_VENCER",
+      "titulo": "1 contrato vence en los próximos 30 días",
+      "mensaje": "",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "INCIDENCIAS_PENDIENTES",
+      "titulo": "1 incidencia pendiente",
+      "mensaje": "Sin empezar a resolver",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "OCUPACION",
+      "titulo": "Ocupación media",
+      "mensaje": "1 habitaciones libres y 1 en mantenimiento",
+      "tono": "aviso"
+    }
+  ],
+  "proximosVencimientos": [
+    {
+      "id": "<id>",
+      "habitacion": {
+        "id": "<id>",
+        "numero": 1,
+        "tipo": "habitacion"
+      },
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 1A",
+        "dni": "11111111A"
+      },
+      "fechaInicio": "2026-05-08",
+      "fechaFin": "2026-11-28",
+      "precioMensual": 400.00,
+      "aplicaIva": false,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 20
+    }
+  ],
+  "actividadReciente": []
+}
+
+### estadisticas_comparanConElAnioPasadoHastaLaMismaFecha #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### estadisticas_comparanConElAnioPasadoHastaLaMismaFecha #2
+GET /api/estadisticas
+200 application/json
+{
+  "ingresos12Meses": [
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "importe": 9000.00
+    },
+    {
+      "mes": "2026-01",
+      "etiqueta": "ene",
+      "importe": 0
+    },
+    {
+      "mes": "2026-02",
+      "etiqueta": "feb",
+      "importe": 0
+    },
+    {
+      "mes": "2026-03",
+      "etiqueta": "mar",
+      "importe": 0
+    },
+    {
+      "mes": "2026-04",
+      "etiqueta": "abr",
+      "importe": 0
+    },
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "importe": 0
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 1000.00
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 400.00
+    }
+  ],
+  "ocupacion": {
+    "habitaciones": 4,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 1,
+    "porcentaje": 50.0,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "incidencias6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "cantidad": 1
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "cantidad": 0
+    }
+  ],
+  "ingresosAnioActual": 1400.00,
+  "ingresosAnioAnterior": 9300.00,
+  "ingresosAnioAnteriorHastaHoy": 300.00,
+  "fechaComparada": "2025-11-08",
+  "variacionAnualPct": 366.67,
+  "anioActual": 2026
+}
+
+### estadisticas_mesesEnEspanolYVariacionAnual #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### estadisticas_mesesEnEspanolYVariacionAnual #2
+GET /api/estadisticas
+200 application/json
+{
+  "ingresos12Meses": [
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "importe": 0
+    },
+    {
+      "mes": "2026-01",
+      "etiqueta": "ene",
+      "importe": 0
+    },
+    {
+      "mes": "2026-02",
+      "etiqueta": "feb",
+      "importe": 0
+    },
+    {
+      "mes": "2026-03",
+      "etiqueta": "mar",
+      "importe": 0
+    },
+    {
+      "mes": "2026-04",
+      "etiqueta": "abr",
+      "importe": 0
+    },
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "importe": 0
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 1000.00
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 400.00
+    }
+  ],
+  "ocupacion": {
+    "habitaciones": 4,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 1,
+    "porcentaje": 50.0,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "incidencias6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "cantidad": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "cantidad": 1
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "cantidad": 0
+    }
+  ],
+  "ingresosAnioActual": 1400.00,
+  "ingresosAnioAnterior": 0,
+  "ingresosAnioAnteriorHastaHoy": 0,
+  "fechaComparada": "2025-11-08",
+  "anioActual": 2026
+}
+
+### informeMensual_esUnPdf #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### informeMensual_esUnPdf #2
+GET /api/informes/mensual
+200 application/pdf
+<pdf>
+
+### inquilino_403EnLosPaneles #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario inq@test.com",
+    "email": "inq@test.com",
+    "rol": "INQUILINO"
+  }
+}
+
+### inquilino_403EnLosPaneles #2
+GET /api/dashboard
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/dashboard"
+}
+
+### inquilino_403EnLosPaneles #3
+GET /api/notificaciones
+200 application/json
+[]
+
+### notificaciones_destinoDeCadaTipo #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### notificaciones_destinoDeCadaTipo #2
+GET /api/notificaciones
+200 application/json
+[
+  {
+    "id": "<id>",
+    "tipo": "mantenimiento_largo",
+    "titulo": "Habitación en mantenimiento > 30 días",
+    "descripcion": "Hab. 4 — Calle de Ana 1",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "HABITACION",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "incidencia_antigua",
+    "titulo": "Incidencia sin resolver > 7 días",
+    "descripcion": "Grifo que gotea (Hab. 1)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "INCIDENCIA",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "cobro_vencido",
+    "titulo": "Cobro vencido",
+    "descripcion": "Ana García 2B · 600,00 €: vencía el 7 de noviembre (hace 1 día)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "contrato_vence",
+    "titulo": "Contrato próximo a vencer",
+    "descripcion": "Contrato de Ana García 1A vence el 28 de noviembre",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  }
+]
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #2
+GET /api/notificaciones
+200 application/json
+[
+  {
+    "id": "<id>",
+    "tipo": "mantenimiento_largo",
+    "titulo": "Habitación en mantenimiento > 30 días",
+    "descripcion": "Hab. 4 — Calle de Ana 1",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "HABITACION",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "incidencia_antigua",
+    "titulo": "Incidencia sin resolver > 7 días",
+    "descripcion": "Grifo que gotea (Hab. 1)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "INCIDENCIA",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "cobro_vencido",
+    "titulo": "Cobro vencido",
+    "descripcion": "Ana García 2B · 600,00 €: vencía el 7 de noviembre (hace 1 día)",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  },
+  {
+    "id": "<id>",
+    "tipo": "contrato_vence",
+    "titulo": "Contrato próximo a vencer",
+    "descripcion": "Contrato de Ana García 1A vence el 28 de noviembre",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "leida": false,
+    "destino": {
+      "pantalla": "CONTRATO",
+      "id": "<id>"
+    }
+  }
+]
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #3
+GET /api/notificaciones/no-leidas
+200 application/json
+{
+  "total": 4
+}
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #4
+POST /api/notificaciones/{n}/leida
+200 application/json
+{
+  "id": "<id>",
+  "tipo": "mantenimiento_largo",
+  "titulo": "Habitación en mantenimiento > 30 días",
+  "descripcion": "Hab. 4 — Calle de Ana 1",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "leida": true,
+  "destino": {
+    "pantalla": "HABITACION",
+    "id": "<id>"
+  }
+}
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #5
+POST /api/notificaciones/leidas
+200 application/json
+{
+  "marcadas": 3
+}
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #6
+GET /api/notificaciones
+200 application/json
+[]
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### notificaciones_generaLosCuatroTiposSinDuplicar #8
+POST /api/notificaciones/{n}/leida
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Notificación no encontrado",
+  "path": "/api/notificaciones/21/leida"
+}
+
+### tendencia_comparaHastaElMismoDiaDelMesAnterior #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### tendencia_comparaHastaElMismoDiaDelMesAnterior #2
+GET /api/dashboard
+200 application/json
+{
+  "ocupacion": {
+    "habitaciones": 4,
+    "alquiladas": 2,
+    "disponibles": 1,
+    "mantenimiento": 1,
+    "porcentaje": 50.0,
+    "salud": "Ocupación media",
+    "conOtrosTipos": false
+  },
+  "inquilinos": 2,
+  "contratosActivos": 2,
+  "incidenciasPendientes": 1,
+  "incidenciasEnProceso": 0,
+  "cobradoMes": 400.00,
+  "cobradoMesAnterior": 6000.00,
+  "cobradoMesAnteriorMismoDia": 1000.00,
+  "diaComparado": 8,
+  "mesComparado": "oct",
+  "tendenciaPct": -60.0,
+  "esperadoMes": 1000.00,
+  "cashFlowMensual": 0,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 6000.00
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 400.00
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "COBROS_ATRASADOS",
+      "titulo": "10 cobros atrasados · 5.000,00 €",
+      "mensaje": "De meses anteriores; el más antiguo, de mayo 2026",
+      "tono": "negativo"
+    },
+    {
+      "tipo": "CONTRATOS_POR_VENCER",
+      "titulo": "1 contrato vence en los próximos 30 días",
+      "mensaje": "",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "INCIDENCIAS_PENDIENTES",
+      "titulo": "1 incidencia pendiente",
+      "mensaje": "Sin empezar a resolver",
+      "tono": "aviso"
+    },
+    {
+      "tipo": "OCUPACION",
+      "titulo": "Ocupación media",
+      "mensaje": "1 habitaciones libres y 1 en mantenimiento",
+      "tono": "aviso"
+    }
+  ],
+  "proximosVencimientos": [
+    {
+      "id": "<id>",
+      "habitacion": {
+        "id": "<id>",
+        "numero": 1,
+        "tipo": "habitacion"
+      },
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 1A",
+        "dni": "11111111A"
+      },
+      "fechaInicio": "2026-05-08",
+      "fechaFin": "2026-11-28",
+      "precioMensual": 400.00,
+      "aplicaIva": false,
+      "activo": true,
+      "vencimiento": "PROXIMO",
+      "diasRestantes": 20
+    }
+  ],
+  "actividadReciente": []
+}
+

@@ -1,0 +1,1063 @@
+### autorizacionYValidacion #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #2
+GET /api/estadisticas/analisis
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #4
+GET /api/estadisticas/analisis
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Habitación no encontrado",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #6
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2025-01-01",
+  "hasta": "2025-12-31",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 365.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 366.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Bea 3",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 365.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2025-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-04",
+      "etiqueta": "abr",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-05",
+      "etiqueta": "may",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-06",
+      "etiqueta": "jun",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-07",
+      "etiqueta": "jul",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-08",
+      "etiqueta": "ago",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-09",
+      "etiqueta": "sept",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-10",
+      "etiqueta": "oct",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-11",
+      "etiqueta": "nov",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    }
+  ],
+  "morosidad": []
+}
+
+### autorizacionYValidacion #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #8
+GET /api/estadisticas/analisis
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "AMBITO_INVALIDO",
+  "mensaje": "La habitación no es de ese piso",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #9
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #10
+GET /api/estadisticas/analisis
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PERIODO_INVALIDO",
+  "mensaje": "hasta no puede ser anterior a desde",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #11
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #12
+GET /api/estadisticas/analisis
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PERIODO_INVALIDO",
+  "mensaje": "El periodo no puede superar 5 años",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #13
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #14
+GET /api/estadisticas/analisis
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "Valor no válido para 'desde'",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #15
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### autorizacionYValidacion #16
+GET /api/estadisticas/analisis
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_REQUERIDO",
+  "mensaje": "Falta el parámetro desde",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #17
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario inq@test.com",
+    "email": "inq@test.com",
+    "rol": "INQUILINO"
+  }
+}
+
+### autorizacionYValidacion #18
+GET /api/estadisticas/analisis
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/estadisticas/analisis"
+}
+
+### autorizacionYValidacion #19
+GET /api/estadisticas/analisis
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/estadisticas/analisis"
+}
+
+### cartera_ingresosGastosOcupacionMorosidadRotacionYRanking #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cartera_ingresosGastosOcupacionMorosidadRotacionYRanking #2
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2025-01-01",
+  "hasta": "2025-12-31",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 7900.00,
+    "gastos": 180.00,
+    "neto": 7720.00,
+    "ocupacionPct": 50.14,
+    "diasMediosVacia": 182.0,
+    "habitaciones": 3,
+    "contratosIniciados": 2,
+    "contratosFinalizados": 2,
+    "duracionMediaMeses": 8.99,
+    "rotacionPct": 66.67,
+    "impagado": 500.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 366.0,
+    "habitaciones": 3,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle A 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 7900.00,
+      "gastos": 130.00,
+      "neto": 7770.00,
+      "ocupacionPct": 75.21,
+      "diasMediosVacia": 90.5,
+      "habitaciones": 2
+    },
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle B 2",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 50.00,
+      "neto": -50.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 365.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2025-01",
+      "etiqueta": "ene",
+      "ingresos": 500.00,
+      "gastos": 0.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-02",
+      "etiqueta": "feb",
+      "ingresos": 500.00,
+      "gastos": 100.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-04",
+      "etiqueta": "abr",
+      "ingresos": 500.00,
+      "gastos": 0.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-05",
+      "etiqueta": "may",
+      "ingresos": 500.00,
+      "gastos": 50.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-06",
+      "etiqueta": "jun",
+      "ingresos": 500.00,
+      "gastos": 0.00,
+      "ocupacionPct": 33.33
+    },
+    {
+      "mes": "2025-07",
+      "etiqueta": "jul",
+      "ingresos": 900.00,
+      "gastos": 0.00,
+      "ocupacionPct": 66.67
+    },
+    {
+      "mes": "2025-08",
+      "etiqueta": "ago",
+      "ingresos": 900.00,
+      "gastos": 30.00,
+      "ocupacionPct": 66.67
+    },
+    {
+      "mes": "2025-09",
+      "etiqueta": "sept",
+      "ingresos": 900.00,
+      "gastos": 0.00,
+      "ocupacionPct": 66.67
+    },
+    {
+      "mes": "2025-10",
+      "etiqueta": "oct",
+      "ingresos": 900.00,
+      "gastos": 0.00,
+      "ocupacionPct": 66.67
+    },
+    {
+      "mes": "2025-11",
+      "etiqueta": "nov",
+      "ingresos": 900.00,
+      "gastos": 0.00,
+      "ocupacionPct": 66.67
+    },
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "ingresos": 900.00,
+      "gastos": 0.00,
+      "ocupacionPct": 66.67
+    }
+  ],
+  "morosidad": [
+    {
+      "idInquilino": "<id>",
+      "nombre": "Ana García 1A",
+      "mesesDebidos": 12,
+      "mesesImpagados": 1,
+      "pagosFueraDePlazo": 1,
+      "importeImpagado": 500.00,
+      "puntualidadPct": 83.33
+    },
+    {
+      "idInquilino": "<id>",
+      "nombre": "Ana García 2B",
+      "mesesDebidos": 6,
+      "mesesImpagados": 0,
+      "pagosFueraDePlazo": 0,
+      "importeImpagado": 0.00,
+      "puntualidadPct": 100.0
+    }
+  ]
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #2
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2025-01-01",
+  "hasta": "2025-12-31",
+  "ambito": "PISO",
+  "actual": {
+    "ingresos": 0.00,
+    "gastos": 50.00,
+    "neto": -50.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 365.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 366.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle B 2",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 50.00,
+      "neto": -50.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 365.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2025-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-04",
+      "etiqueta": "abr",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-05",
+      "etiqueta": "may",
+      "ingresos": 0.00,
+      "gastos": 50.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-06",
+      "etiqueta": "jun",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-07",
+      "etiqueta": "jul",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-08",
+      "etiqueta": "ago",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-09",
+      "etiqueta": "sept",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-10",
+      "etiqueta": "oct",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-11",
+      "etiqueta": "nov",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    }
+  ],
+  "morosidad": []
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #4
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2025-01-01",
+  "hasta": "2025-12-31",
+  "ambito": "HABITACION",
+  "actual": {
+    "ingresos": 2400.00,
+    "gastos": 30.00,
+    "neto": 2370.00,
+    "ocupacionPct": 50.41,
+    "diasMediosVacia": 181.0,
+    "habitaciones": 1,
+    "contratosIniciados": 1,
+    "contratosFinalizados": 1,
+    "duracionMediaMeses": 6.01,
+    "rotacionPct": 100.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 366.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle A 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 2400.00,
+      "gastos": 30.00,
+      "neto": 2370.00,
+      "ocupacionPct": 50.41,
+      "diasMediosVacia": 181.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2025-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-04",
+      "etiqueta": "abr",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-05",
+      "etiqueta": "may",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-06",
+      "etiqueta": "jun",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2025-07",
+      "etiqueta": "jul",
+      "ingresos": 400.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2025-08",
+      "etiqueta": "ago",
+      "ingresos": 400.00,
+      "gastos": 30.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2025-09",
+      "etiqueta": "sept",
+      "ingresos": 400.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2025-10",
+      "etiqueta": "oct",
+      "ingresos": 400.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2025-11",
+      "etiqueta": "nov",
+      "ingresos": 400.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2025-12",
+      "etiqueta": "dic",
+      "ingresos": 400.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    }
+  ],
+  "morosidad": [
+    {
+      "idInquilino": "<id>",
+      "nombre": "Ana García 2B",
+      "mesesDebidos": 6,
+      "mesesImpagados": 0,
+      "pagosFueraDePlazo": 0,
+      "importeImpagado": 0.00,
+      "puntualidadPct": 100.0
+    }
+  ]
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #6
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2026-01-01",
+  "hasta": "2026-03-31",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 90.0,
+    "habitaciones": 3,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 1000.00,
+    "gastos": 100.00,
+    "neto": 900.00,
+    "ocupacionPct": 33.33,
+    "diasMediosVacia": 60.0,
+    "habitaciones": 3,
+    "contratosIniciados": 1,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 500.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle A 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 90.0,
+      "habitaciones": 2
+    },
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle B 2",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 90.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2026-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2026-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    },
+    {
+      "mes": "2026-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 0.0
+    }
+  ],
+  "morosidad": []
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #7
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### pisoYHabitacion_soloSuParte_yElAnioAnteriorComparable #8
+GET /api/estadisticas/analisis
+200 application/json
+{
+  "desde": "2027-01-01",
+  "hasta": "2027-02-28",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 0.0,
+    "habitaciones": 3,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 59.0,
+    "habitaciones": 3,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle A 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 0.0,
+      "habitaciones": 2
+    },
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle B 2",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 0.0,
+      "diasMediosVacia": 0.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2027-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00
+    },
+    {
+      "mes": "2027-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00
+    }
+  ],
+  "morosidad": []
+}
+

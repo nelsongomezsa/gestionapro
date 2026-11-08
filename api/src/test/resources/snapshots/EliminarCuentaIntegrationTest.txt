@@ -1,0 +1,311 @@
+### cambiarContrasena_tambienTieneLimiteDeIntentos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #2
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #3
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #4
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #5
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #6
+PUT /api/me/password
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_ACTUAL_INCORRECTA",
+  "mensaje": "La contraseña actual no es correcta",
+  "path": "/api/me/password"
+}
+
+### cambiarContrasena_tambienTieneLimiteDeIntentos #7
+PUT /api/me/password
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "DEMASIADOS_INTENTOS",
+  "mensaje": "Demasiados intentos. Prueba de nuevo en 15 minutos",
+  "path": "/api/me/password"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #2
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_INCORRECTA",
+  "mensaje": "La contraseña no es correcta",
+  "path": "/api/me"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #3
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_INCORRECTA",
+  "mensaje": "La contraseña no es correcta",
+  "path": "/api/me"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #4
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_INCORRECTA",
+  "mensaje": "La contraseña no es correcta",
+  "path": "/api/me"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #5
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_INCORRECTA",
+  "mensaje": "La contraseña no es correcta",
+  "path": "/api/me"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #6
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PASSWORD_INCORRECTA",
+  "mensaje": "La contraseña no es correcta",
+  "path": "/api/me"
+}
+
+### contrasenaIncorrecta_400_yAlQuintoFallo429 #7
+DELETE /api/me
+429 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 429,
+  "codigo": "DEMASIADOS_INTENTOS",
+  "mensaje": "Demasiados intentos. Prueba de nuevo en 15 minutos",
+  "path": "/api/me"
+}
+
+### inquilino_eliminaSuCuenta_seAnonimiza_yConservaContratoYPagos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario lucia@test.com",
+    "email": "lucia@test.com",
+    "rol": "INQUILINO",
+    "idInquilino": "<id>",
+    "dni": "11111111A",
+    "iban": "ES91 2100 0418 4502 0005 1332"
+  }
+}
+
+### inquilino_eliminaSuCuenta_seAnonimiza_yConservaContratoYPagos #2
+DELETE /api/me
+204 -
+<vacío>
+
+### inquilino_eliminaSuCuenta_seAnonimiza_yConservaContratoYPagos #3
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### inquilino_eliminaSuCuenta_seAnonimiza_yConservaContratoYPagos #4
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### sinContrasena_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinContrasena_400 #2
+DELETE /api/me
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/me",
+  "errores": [
+    {
+      "campo": "password",
+      "mensaje": "must not be blank"
+    }
+  ]
+}
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario jefe@test.com",
+    "email": "jefe@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #2
+DELETE /api/me
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "ULTIMO_ADMIN",
+  "mensaje": "Eres el único administrador: nombra otro antes de eliminar tu cuenta",
+  "path": "/api/me"
+}
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #4
+DELETE /api/me
+204 -
+<vacío>
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario jefe@test.com",
+    "email": "jefe@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### ultimoAdmin_noPuedeEliminarse_yUnaCuentaEliminadaNoSeReactiva #6
+PATCH /api/usuarios/{n}/activo
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "CUENTA_ELIMINADA",
+  "mensaje": "Esta cuenta fue eliminada por su titular",
+  "path": "/api/usuarios/380/activo"
+}
+

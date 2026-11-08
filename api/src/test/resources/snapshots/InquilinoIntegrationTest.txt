@@ -1,0 +1,548 @@
+### borrarConContrato_409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### borrarConContrato_409 #2
+DELETE /api/inquilinos/{n}
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "INQUILINO_CON_HISTORIAL",
+  "mensaje": "No se puede borrar un inquilino con contratos o incidencias registrados",
+  "path": "/api/inquilinos/68"
+}
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #2
+POST /api/inquilinos
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Marta",
+  "apellidos": "López Ruiz",
+  "dni": "33333333C",
+  "telefono": "+34600111222",
+  "email": "marta@test.com",
+  "tieneCuentaApp": false,
+  "contratos": [],
+  "pagos": []
+}
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #3
+GET /api/inquilinos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "nombre": "Ana",
+    "apellidos": "García 2B",
+    "dni": "22222222B",
+    "tieneCuentaApp": false,
+    "contratos": [],
+    "pagos": []
+  },
+  {
+    "id": "<id>",
+    "nombre": "Marta",
+    "apellidos": "López Ruiz",
+    "dni": "33333333C",
+    "telefono": "+34600111222",
+    "email": "marta@test.com",
+    "tieneCuentaApp": false,
+    "contratos": [],
+    "pagos": []
+  }
+]
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #4
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #5
+GET /api/inquilinos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/inquilinos/55"
+}
+
+### crear_quedaComoSuyo_aunqueNoTengaContrato #6
+POST /api/inquilinos/{n}/invitaciones
+201 application/json
+{
+  "codigo": "<codigo XXXX-XXXX-XXXX>",
+  "idInquilino": "<id>",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "emailEnviado": false
+}
+
+### dniDuplicado_409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### dniDuplicado_409 #2
+POST /api/inquilinos
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "DNI_DUPLICADO",
+  "mensaje": "Ya existe un inquilino con el DNI 22222222B",
+  "path": "/api/inquilinos"
+}
+
+### editar_yBorrar #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### editar_yBorrar #2
+PUT /api/inquilinos/{n}
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Beatriz",
+  "apellidos": "López Ruiz",
+  "dni": "22222222B",
+  "telefono": "+34600111222",
+  "email": "marta@test.com",
+  "tieneCuentaApp": false,
+  "contratos": [],
+  "pagos": []
+}
+
+### editar_yBorrar #3
+DELETE /api/inquilinos/{n}
+204 -
+<vacío>
+
+### ficha_conContratosYPagos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ficha_conContratosYPagos #2
+GET /api/inquilinos/{n}
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Ana",
+  "apellidos": "García 1A",
+  "dni": "11111111A",
+  "email": "lucia@test.com",
+  "tieneCuentaApp": false,
+  "contratoActivo": {
+    "id": "<id>",
+    "idHabitacion": "<id>",
+    "numeroHabitacion": 3,
+    "tipoUnidad": "habitacion",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle de Ana 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    },
+    "fechaInicio": "2026-09-08",
+    "fechaFin": "2027-09-08",
+    "precioMensual": 450.00,
+    "activo": true,
+    "vencimiento": "NORMAL"
+  },
+  "contratos": [
+    {
+      "id": "<id>",
+      "idHabitacion": "<id>",
+      "numeroHabitacion": 3,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "fechaInicio": "2026-09-08",
+      "fechaFin": "2027-09-08",
+      "precioMensual": 450.00,
+      "activo": true,
+      "vencimiento": "NORMAL"
+    }
+  ],
+  "pagos": [
+    {
+      "id": "<id>",
+      "idContrato": "<id>",
+      "fechaPago": "2026-11-08",
+      "cantidad": 450.00,
+      "metodoPago": "transferencia"
+    },
+    {
+      "id": "<id>",
+      "idContrato": "<id>",
+      "fechaPago": "2026-10-08",
+      "cantidad": 450.00,
+      "metodoPago": "transferencia"
+    }
+  ]
+}
+
+### propietario_veLosDeSusContratos_noLosDeOtros #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propietario_veLosDeSusContratos_noLosDeOtros #2
+GET /api/inquilinos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "nombre": "Ana",
+    "apellidos": "García 1A",
+    "dni": "11111111A",
+    "email": "lucia@test.com",
+    "tieneCuentaApp": false,
+    "contratoActivo": {
+      "id": "<id>",
+      "idHabitacion": "<id>",
+      "numeroHabitacion": 3,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "fechaInicio": "2026-09-08",
+      "fechaFin": "2027-09-08",
+      "precioMensual": 450.00,
+      "activo": true,
+      "vencimiento": "NORMAL"
+    },
+    "contratos": [],
+    "pagos": []
+  }
+]
+
+### propietario_veLosDeSusContratos_noLosDeOtros #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### propietario_veLosDeSusContratos_noLosDeOtros #4
+GET /api/inquilinos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Inquilino no encontrado",
+  "path": "/api/inquilinos/73"
+}
+
+### propietario_veLosDeSusContratos_noLosDeOtros #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario admin@test.com",
+    "email": "admin@test.com",
+    "rol": "ADMIN"
+  }
+}
+
+### propietario_veLosDeSusContratos_noLosDeOtros #6
+GET /api/inquilinos
+200 application/json
+[
+  {
+    "id": "<id>",
+    "nombre": "Ana",
+    "apellidos": "García 1A",
+    "dni": "11111111A",
+    "email": "lucia@test.com",
+    "tieneCuentaApp": false,
+    "contratoActivo": {
+      "id": "<id>",
+      "idHabitacion": "<id>",
+      "numeroHabitacion": 3,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle de Ana 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "fechaInicio": "2026-09-08",
+      "fechaFin": "2027-09-08",
+      "precioMensual": 450.00,
+      "activo": true,
+      "vencimiento": "NORMAL"
+    },
+    "contratos": [],
+    "pagos": []
+  },
+  {
+    "id": "<id>",
+    "nombre": "Ana",
+    "apellidos": "García 2B",
+    "dni": "22222222B",
+    "tieneCuentaApp": false,
+    "contratos": [],
+    "pagos": []
+  }
+]
+
+### qrPago_conIban_usaLosDatosDelPropietario #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### qrPago_conIban_usaLosDatosDelPropietario #2
+PATCH /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario ana@test.com",
+  "email": "ana@test.com",
+  "rol": "PROPIETARIO",
+  "iban": "ES91 2100 0418 4502 0005 1332"
+}
+
+### qrPago_conIban_usaLosDatosDelPropietario #3
+GET /api/inquilinos/{n}/qr-pago
+200 application/json
+{
+  "payload": "BCD\n002\n1\nSCT\n\nUsuario ana@test.com\nES9121000418450200051332\nEUR450.00\n\n\nAlquiler Hab.3 Ana García 1A noviembre 2026",
+  "beneficiario": "Usuario ana@test.com",
+  "iban": "ES91 2100 0418 4502 0005 1332",
+  "importe": 450.00,
+  "concepto": "Alquiler Hab.3 Ana García 1A noviembre 2026"
+}
+
+### qrPago_sinContratoActivo_409 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### qrPago_sinContratoActivo_409 #2
+GET /api/inquilinos/{n}/qr-pago
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "SIN_CONTRATO_ACTIVO",
+  "mensaje": "El inquilino no tiene contrato activo",
+  "path": "/api/inquilinos/63/qr-pago"
+}
+
+### qrPago_sinIban_409ConIndicacion #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### qrPago_sinIban_409ConIndicacion #2
+GET /api/inquilinos/{n}/qr-pago
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "IBAN_NO_CONFIGURADO",
+  "mensaje": "Añade tu IBAN en Perfil → Datos de cobro para generar el QR",
+  "path": "/api/inquilinos/56/qr-pago"
+}
+
+### validacion_comoElEscritorio_masNie #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### validacion_comoElEscritorio_masNie #2
+POST /api/inquilinos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/inquilinos",
+  "errores": [
+    {
+      "campo": "dni",
+      "mensaje": "debe ser un DNI (8 cifras y letra) o un NIE"
+    },
+    {
+      "campo": "email",
+      "mensaje": "must be a well-formed email address"
+    },
+    {
+      "campo": "telefono",
+      "mensaje": "debe tener entre 9 y 15 cifras, con + y espacios opcionales"
+    }
+  ]
+}
+
+### validacion_comoElEscritorio_masNie #3
+POST /api/inquilinos
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Marta",
+  "apellidos": "López Ruiz",
+  "dni": "X1234567L",
+  "telefono": "+34600111222",
+  "email": "marta@test.com",
+  "tieneCuentaApp": false,
+  "contratos": [],
+  "pagos": []
+}
+
+### validacion_comoElEscritorio_masNie #4
+POST /api/inquilinos
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Marta",
+  "apellidos": "López Ruiz",
+  "dni": "Y1234567X",
+  "telefono": "633 456 789",
+  "email": "marta@test.com",
+  "tieneCuentaApp": false,
+  "contratos": [],
+  "pagos": []
+}
+

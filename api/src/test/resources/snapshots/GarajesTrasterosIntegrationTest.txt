@@ -1,0 +1,1340 @@
+### altaDeGaraje_creaPlazasConSusDatos #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### altaDeGaraje_creaPlazasConSusDatos #2
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Nueva 3",
+  "tipo": "garajes",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 3,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 3,
+    "alquiladas": 0,
+    "disponibles": 3,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0
+}
+
+### analisisDeUnaPlaza_guardaElTipo #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### analisisDeUnaPlaza_guardaElTipo #2
+POST /api/analisis-inversion
+201 application/json
+{
+  "id": "<id>",
+  "nombre": "Plaza en Chamberí",
+  "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+  "entrada": {
+    "comunidad": "Madrid",
+    "precioCompra": 25000.0,
+    "alquilerMensual": 110.0,
+    "tipoInmueble": "garajes"
+  },
+  "resultado": {
+    "itpPct": 6.00,
+    "itpImporte": 1500.00,
+    "totalCompra": 26500.00,
+    "gastosMensuales": 0.00,
+    "gastosAnuales": 0.00,
+    "alquilerAnual": 1320.00,
+    "hipoteca": 0.00,
+    "capitalAportado": 26500.00,
+    "cuotaMensual": 0.00,
+    "interesesMensualesPromedio": 0.00,
+    "amortizacionMensualPromedio": 0.00,
+    "rentabilidadBrutaPct": 4.98,
+    "rentabilidadNetaPct": 4.98,
+    "cashFlowMensual": 110.00,
+    "cashFlowAnual": 1320.00,
+    "aniosRecuperacion": 20.08
+  }
+}
+
+### cambiarElTipo_soloSiSusUnidadesCaben #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cambiarElTipo_soloSiSusUnidadesCaben #2
+PUT /api/pisos/{n}
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "TIPO_INCOMPATIBLE",
+  "mensaje": "No se puede cambiar el tipo: tiene unidades que no caben en un inmueble de tipo vivienda",
+  "path": "/api/pisos/30"
+}
+
+### cambiarElTipo_soloSiSusUnidadesCaben #3
+PUT /api/pisos/{n}
+200 application/json
+{
+  "id": "<id>",
+  "direccion": "Garaje Sol",
+  "tipo": "trasteros",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 1,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 1,
+    "alquiladas": 0,
+    "disponibles": 1,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0
+}
+
+### cocheOMoto_soloEnPlazas_yPlantaSinCaracteresRaros #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### cocheOMoto_soloEnPlazas_yPlantaSinCaracteresRaros #2
+POST /api/habitaciones
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VEHICULO_NO_VALIDO",
+  "mensaje": "Coche o moto solo se indica en plazas de garaje",
+  "path": "/api/habitaciones"
+}
+
+### cocheOMoto_soloEnPlazas_yPlantaSinCaracteresRaros #3
+POST /api/habitaciones
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/habitaciones",
+  "errores": [
+    {
+      "campo": "planta",
+      "mensaje": "must match \"^[\\p{L}\\p{N} .ºª-]*$\""
+    }
+  ]
+}
+
+### cocheOMoto_soloEnPlazas_yPlantaSinCaracteresRaros #4
+POST /api/habitaciones
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/habitaciones",
+  "errores": [
+    {
+      "campo": "metros",
+      "mensaje": "must be greater than or equal to 0.5"
+    }
+  ]
+}
+
+### cocheOMoto_soloEnPlazas_yPlantaSinCaracteresRaros #5
+POST /api/habitaciones
+201 application/json
+{
+  "id": "<id>",
+  "numero": 8,
+  "tipo": "plaza",
+  "planta": "Sótano 2",
+  "vehiculo": "moto",
+  "precio": 60,
+  "estado": "disponible",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  }
+}
+
+### contratoDePlaza_conIva21PorDefecto #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoDePlaza_conIva21PorDefecto #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": true,
+  "ivaPct": 21.00,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### contratoDePlaza_conIva21PorDefecto #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoDePlaza_conIva21PorDefecto #4
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 2,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### contratoPdfDeHabitacion_sigueIgual #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoPdfDeHabitacion_sigueIgual #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Mayor 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### contratoPdfDeHabitacion_sigueIgual #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoPdfDeHabitacion_sigueIgual #4
+GET /api/contratos/{n}/pdf
+200 application/pdf
+<pdf>
+
+### contratoPdfDePlaza_usaSuPlantilla_conIvaYSinFianza #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoPdfDePlaza_usaSuPlantilla_conIvaYSinFianza #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": true,
+  "ivaPct": 21.00,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### contratoPdfDePlaza_usaSuPlantilla_conIvaYSinFianza #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### contratoPdfDePlaza_usaSuPlantilla_conIvaYSinFianza #4
+GET /api/contratos/{n}/pdf
+200 application/pdf
+<pdf>
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #2
+GET /api/pagos/resumen?tipo=garajes
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 121.00,
+  "cobrado": 121.00,
+  "pendiente": 0,
+  "numeroPagos": 1,
+  "pendientes": []
+}
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #3
+GET /api/pagos/resumen?tipo=vivienda
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 400.00,
+  "cobrado": 0,
+  "pendiente": 400.00,
+  "numeroPagos": 0,
+  "pendientes": [
+    {
+      "idContrato": "<id>",
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 1A",
+        "dni": "11111111A"
+      },
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle Mayor 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 400.00
+    }
+  ]
+}
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #4
+GET /api/pagos/resumen
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 521.00,
+  "cobrado": 121.00,
+  "pendiente": 400.00,
+  "numeroPagos": 1,
+  "pendientes": [
+    {
+      "idContrato": "<id>",
+      "inquilino": {
+        "id": "<id>",
+        "nombre": "Ana García 1A",
+        "dni": "11111111A"
+      },
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle Mayor 1",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "importe": 400.00
+    }
+  ]
+}
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #5
+GET /api/pagos?tipo=vivienda
+200 application/json
+[]
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #6
+GET /api/pagos?tipo=garajes
+200 application/json
+[
+  {
+    "id": "<id>",
+    "fechaPago": "2026-11-08",
+    "cantidad": 121.00,
+    "metodoPago": "transferencia",
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "plaza",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Garaje Sol",
+      "ciudad": "Madrid",
+      "tipo": "garajes"
+    }
+  }
+]
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #7
+GET /api/pagos/atrasados?tipo=garajes&meses=2
+200 application/json
+[
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "plaza",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Garaje Sol",
+      "ciudad": "Madrid",
+      "tipo": "garajes"
+    },
+    "mes": "2026-09",
+    "nombreMes": "septiembre 2026",
+    "importe": 121.00,
+    "diasRetraso": 64,
+    "contratoActivo": true
+  },
+  {
+    "idContrato": "<id>",
+    "inquilino": {
+      "id": "<id>",
+      "nombre": "Ana García 2B",
+      "dni": "22222222B"
+    },
+    "numeroHabitacion": 1,
+    "tipoUnidad": "plaza",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Garaje Sol",
+      "ciudad": "Madrid",
+      "tipo": "garajes"
+    },
+    "mes": "2026-10",
+    "nombreMes": "octubre 2026",
+    "importe": 121.00,
+    "diasRetraso": 34,
+    "contratoActivo": true
+  }
+]
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #8
+GET /api/pagos/atrasados?tipo=trasteros
+200 application/json
+[]
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #9
+GET /api/estadisticas/analisis?desde=2026-11-01&hasta=2026-11-08&tipo=garajes
+200 application/json
+{
+  "desde": "2026-11-01",
+  "hasta": "2026-11-08",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 121.00,
+    "gastos": 0.00,
+    "neto": 121.00,
+    "ocupacionPct": 100.0,
+    "diasMediosVacia": 0.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 8.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Garaje Sol",
+        "ciudad": "Madrid",
+        "tipo": "garajes"
+      },
+      "ingresos": 121.00,
+      "gastos": 0.00,
+      "neto": 121.00,
+      "ocupacionPct": 100.0,
+      "diasMediosVacia": 0.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "ingresos": 121.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    }
+  ],
+  "morosidad": []
+}
+
+### filtrosPorTipo_enCobrosAtrasadosYEstadisticas #10
+GET /api/pagos/resumen?tipo=castillos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "PARAMETRO_INVALIDO",
+  "mensaje": "Valor no válido para 'tipo'",
+  "path": "/api/pagos/resumen"
+}
+
+### inquilino_noPuedeCambiarElIva #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### inquilino_noPuedeCambiarElIva #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### inquilino_noPuedeCambiarElIva #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario inq@test.com",
+    "email": "inq@test.com",
+    "rol": "INQUILINO"
+  }
+}
+
+### inquilino_noPuedeCambiarElIva #4
+PUT /api/contratos/{n}/iva
+403 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "ACCESO_DENEGADO",
+  "mensaje": "No tienes permiso para esta operación",
+  "path": "/api/contratos/32/iva"
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #2
+POST /api/contratos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "IVA_NO_APLICABLE",
+  "mensaje": "El IVA solo se puede aplicar a plazas de garaje y trasteros",
+  "path": "/api/contratos"
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #4
+POST /api/contratos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/contratos",
+  "errores": [
+    {
+      "campo": "ivaPct",
+      "mensaje": "must be less than or equal to 30"
+    }
+  ]
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #6
+POST /api/contratos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/contratos",
+  "errores": [
+    {
+      "campo": "ivaPct",
+      "mensaje": "debe ser mayor que 0"
+    }
+  ]
+}
+
+### masDe50Unidades_soloEnGarajesYTrasteros #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### masDe50Unidades_soloEnGarajesYTrasteros #2
+POST /api/pisos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "HABITACIONES_INVALIDAS",
+  "mensaje": "Una vivienda admite como máximo 50 habitaciones",
+  "path": "/api/pisos"
+}
+
+### masDe50Unidades_soloEnGarajesYTrasteros #3
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Nueva 3",
+  "tipo": "trasteros",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 120,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 120,
+    "alquiladas": 0,
+    "disponibles": 120,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0
+}
+
+### masDe50Unidades_soloEnGarajesYTrasteros #4
+POST /api/pisos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/pisos",
+  "errores": [
+    {
+      "campo": "numeroHabitaciones",
+      "mensaje": "must be less than or equal to 500"
+    }
+  ]
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario bea@test.com",
+    "email": "bea@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #2
+GET /api/pisos/{n}
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/pisos/34"
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #3
+POST /api/habitaciones
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Piso no encontrado",
+  "path": "/api/habitaciones"
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #4
+GET /api/pagos/resumen?tipo=garajes
+200 application/json
+{
+  "mes": "2026-11",
+  "nombreMes": "noviembre 2026",
+  "esperado": 0,
+  "cobrado": 0,
+  "pendiente": 0,
+  "numeroPagos": 0,
+  "pendientes": []
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #5
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #6
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### otroPropietario_noVeNiTocaElGarajeAjeno #7
+PUT /api/contratos/{n}/iva
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "NO_ENCONTRADO",
+  "mensaje": "Contrato no encontrado",
+  "path": "/api/contratos/28/iva"
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": true,
+  "ivaPct": 21,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #4
+POST /api/pagos
+201 application/json
+{
+  "id": "<id>",
+  "fechaPago": "2026-11-08",
+  "cantidad": 121.00,
+  "metodoPago": "transferencia",
+  "idContrato": "<id>",
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "numeroHabitacion": 1,
+  "tipoUnidad": "plaza",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "recibo": "2026-0001"
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #5
+PUT /api/contratos/{n}/iva
+200 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #6
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### reciboSinIva_noLlevaDesglose #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### reciboSinIva_noLlevaDesglose #2
+POST /api/contratos
+201 application/json
+{
+  "id": "<id>",
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "plaza"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "fechaInicio": "2026-10-29",
+  "fechaFin": "2027-02-08",
+  "precioMensual": 121.00,
+  "aplicaIva": false,
+  "activo": true,
+  "vencimiento": "NORMAL",
+  "diasRestantes": 92
+}
+
+### reciboSinIva_noLlevaDesglose #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### reciboSinIva_noLlevaDesglose #4
+POST /api/pagos
+201 application/json
+{
+  "id": "<id>",
+  "fechaPago": "2026-11-08",
+  "cantidad": 121.00,
+  "metodoPago": "efectivo",
+  "idContrato": "<id>",
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 1A",
+    "dni": "11111111A"
+  },
+  "numeroHabitacion": 1,
+  "tipoUnidad": "plaza",
+  "piso": {
+    "id": "<id>",
+    "direccion": "Garaje Sol",
+    "ciudad": "Madrid",
+    "tipo": "garajes"
+  },
+  "recibo": "2026-0001"
+}
+
+### reciboSinIva_noLlevaDesglose #5
+GET /api/pagos/{n}/recibo
+200 application/pdf
+<pdf>
+
+### sinTipo_esUnaViviendaConHabitaciones_comoSiempre #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinTipo_esUnaViviendaConHabitaciones_comoSiempre #2
+POST /api/pisos
+201 application/json
+{
+  "id": "<id>",
+  "direccion": "Calle Nueva 3",
+  "tipo": "vivienda",
+  "ciudad": {
+    "id": "<id>",
+    "nombre": "Madrid"
+  },
+  "numeroHabitaciones": 1,
+  "idPropietario": "<id>",
+  "ocupacion": {
+    "total": 1,
+    "alquiladas": 0,
+    "disponibles": 1,
+    "mantenimiento": 0
+  },
+  "ingresosMensuales": 0
+}
+
+### sinTipo_esUnaViviendaConHabitaciones_comoSiempre #3
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### sinTipo_esUnaViviendaConHabitaciones_comoSiempre #4
+GET /api/habitaciones?piso=51
+200 application/json
+[
+  {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion",
+    "precio": 400.00,
+    "estado": "disponible",
+    "piso": {
+      "id": "<id>",
+      "direccion": "Calle Mayor 1",
+      "ciudad": "Madrid",
+      "tipo": "vivienda"
+    }
+  }
+]
+
+### unidadQueNoCabeEnElInmueble_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### unidadQueNoCabeEnElInmueble_400 #2
+POST /api/pisos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_UNIDAD_NO_VALIDO",
+  "mensaje": "Un inmueble de tipo vivienda no admite unidades de tipo trastero",
+  "path": "/api/pisos"
+}
+
+### unidadQueNoCabeEnElInmueble_400 #3
+POST /api/pisos
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_UNIDAD_NO_VALIDO",
+  "mensaje": "Un inmueble de tipo trasteros no admite unidades de tipo plaza",
+  "path": "/api/pisos"
+}
+
+### unidadQueNoCabeEnElInmueble_400 #4
+POST /api/habitaciones
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "TIPO_UNIDAD_NO_VALIDO",
+  "mensaje": "Un inmueble de tipo garajes no admite unidades de tipo habitacion",
+  "path": "/api/habitaciones"
+}
+

@@ -1,0 +1,286 @@
+### itp_lista19Comunidades #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### itp_lista19Comunidades #2
+GET /api/calculadora/itp
+200 application/json
+{
+  "anioReferencia": "sin verificar (copiado de escritorio, 2026-10)",
+  "comunidades": [
+    {
+      "nombre": "Andalucía",
+      "tipoPct": 7.0
+    },
+    {
+      "nombre": "Aragón",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Asturias",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Baleares",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Canarias",
+      "tipoPct": 6.5
+    },
+    {
+      "nombre": "Cantabria",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Castilla-La Mancha",
+      "tipoPct": 9.0
+    },
+    {
+      "nombre": "Castilla y León",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Cataluña",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Ceuta",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Comunitat Valenciana",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "Extremadura",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Galicia",
+      "tipoPct": 10.0
+    },
+    {
+      "nombre": "La Rioja",
+      "tipoPct": 7.0
+    },
+    {
+      "nombre": "Madrid",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Melilla",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "Murcia",
+      "tipoPct": 8.0
+    },
+    {
+      "nombre": "Navarra",
+      "tipoPct": 6.0
+    },
+    {
+      "nombre": "País Vasco",
+      "tipoPct": 4.0
+    }
+  ]
+}
+
+### jsonMalformado_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### jsonMalformado_400 #2
+POST /api/calculadora/rentabilidad
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "JSON_INVALIDO",
+  "mensaje": "El cuerpo de la petición no es un JSON válido",
+  "path": "/api/calculadora/rentabilidad"
+}
+
+### rentabilidad_camposOpcionalesOmitidos_cuentanComoCero_ySinRevalorizacionNoHayPlusvalia #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### rentabilidad_camposOpcionalesOmitidos_cuentanComoCero_ySinRevalorizacionNoHayPlusvalia #2
+POST /api/calculadora/rentabilidad
+200 application/json
+{
+  "itpPct": 4.00,
+  "itpImporte": 4000.00,
+  "totalCompra": 104000.00,
+  "gastosMensuales": 0.00,
+  "gastosAnuales": 0.00,
+  "alquilerAnual": 7200.00,
+  "hipoteca": 0.00,
+  "capitalAportado": 104000.00,
+  "cuotaMensual": 0.00,
+  "interesesMensualesPromedio": 0.00,
+  "amortizacionMensualPromedio": 0.00,
+  "rentabilidadBrutaPct": 6.92,
+  "rentabilidadNetaPct": 6.92,
+  "cashFlowMensual": 600.00,
+  "cashFlowAnual": 7200.00,
+  "aniosRecuperacion": 14.44
+}
+
+### rentabilidad_casoMadridDelEscritorio_redondeadoADosDecimales #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### rentabilidad_casoMadridDelEscritorio_redondeadoADosDecimales #2
+POST /api/calculadora/rentabilidad
+200 application/json
+{
+  "itpPct": 6.00,
+  "itpImporte": 12000.00,
+  "totalCompra": 233000.00,
+  "gastosMensuales": 260.00,
+  "gastosAnuales": 3120.00,
+  "alquilerAnual": 16800.00,
+  "hipoteca": 160000.00,
+  "capitalAportado": 73000.00,
+  "cuotaMensual": 775.49,
+  "interesesMensualesPromedio": 242.16,
+  "amortizacionMensualPromedio": 533.33,
+  "rentabilidadBrutaPct": 7.21,
+  "rentabilidadNetaPct": 5.87,
+  "cashFlowMensual": 364.51,
+  "cashFlowAnual": 4374.12,
+  "aniosRecuperacion": 16.69,
+  "plusvalia5Anios": 31854.81,
+  "plusvalia10Anios": 68783.28
+}
+
+### rentabilidad_comunidadDesconocida_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### rentabilidad_comunidadDesconocida_400 #2
+POST /api/calculadora/rentabilidad
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "COMUNIDAD_DESCONOCIDA",
+  "mensaje": "Comunidad autónoma desconocida: Atlantis",
+  "path": "/api/calculadora/rentabilidad"
+}
+
+### rentabilidad_porcentajeFinanciadoMayorQue100_400 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### rentabilidad_porcentajeFinanciadoMayorQue100_400 #2
+POST /api/calculadora/rentabilidad
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/calculadora/rentabilidad",
+  "errores": [
+    {
+      "campo": "porcentajeFinanciado",
+      "mensaje": "must be less than or equal to 100"
+    }
+  ]
+}
+
+### rutaInexistente_404EnJson #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana@test.com",
+    "email": "ana@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### rutaInexistente_404EnJson #2
+GET /api/no-existe
+404 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 404,
+  "codigo": "RUTA_NO_ENCONTRADA",
+  "mensaje": "No existe /api/no-existe",
+  "path": "/api/no-existe"
+}
+

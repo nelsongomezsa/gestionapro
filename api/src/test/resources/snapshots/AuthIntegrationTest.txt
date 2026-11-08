@@ -1,0 +1,220 @@
+### login_conHashSha256Antiguo_entraYLoRehasheaABcrypt #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario antiguo@test.com",
+    "email": "antiguo@test.com",
+    "rol": "ADMIN",
+    "debeCambiarPassword": true
+  }
+}
+
+### login_correcto_devuelveTokenYElRolTraducido #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario gestor@test.com",
+    "email": "gestor@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### login_passwordIncorrecta_es401ConFormatoDeError #1
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### login_sinCampos_es400ConErroresPorCampo #1
+POST /api/auth/login
+400 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 400,
+  "codigo": "VALIDACION",
+  "mensaje": "Hay campos con valores no válidos",
+  "path": "/api/auth/login",
+  "errores": [
+    {
+      "campo": "email",
+      "mensaje": "must not be blank"
+    },
+    {
+      "campo": "password",
+      "mensaje": "must not be blank"
+    }
+  ]
+}
+
+### login_usuarioDesactivado_es401 #1
+POST /api/auth/login
+401 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "CREDENCIALES_INCORRECTAS",
+  "mensaje": "Email o contraseña incorrectos",
+  "path": "/api/auth/login"
+}
+
+### me_conFirmaAlterada_es401 #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario gestor@test.com",
+    "email": "gestor@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### me_conFirmaAlterada_es401 #2
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### me_devuelveElUsuarioAutenticado #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario gestor@test.com",
+    "email": "gestor@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### me_devuelveElUsuarioAutenticado #2
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario gestor@test.com",
+  "email": "gestor@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### me_sinToken_es401EnJson #1
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario caducada@test.com",
+    "email": "caducada@test.com",
+    "rol": "PROPIETARIO",
+    "debeCambiarPassword": true
+  }
+}
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #2
+GET /api/pisos
+403 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 403,
+  "codigo": "PASSWORD_CADUCADA",
+  "mensaje": "Tienes que cambiar tu contraseña antes de seguir",
+  "path": "/api/pisos"
+}
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #3
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario caducada@test.com",
+  "email": "caducada@test.com",
+  "rol": "PROPIETARIO",
+  "debeCambiarPassword": true
+}
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #4
+PUT /api/me/password
+204 -
+<vacío>
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #5
+GET /api/pisos
+200 application/json
+[]
+
+### passwordCaducada_soloDejaVerElPerfilYCambiarla_yAlCambiarlaSeLibera #6
+GET /api/me
+200 application/json
+{
+  "id": "<id>",
+  "nombre": "Usuario caducada@test.com",
+  "email": "caducada@test.com",
+  "rol": "PROPIETARIO"
+}
+
+### usuarioDesactivadoTrasElLogin_pierdeElAccesoAunqueElTokenNoHayaCaducado #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario gestor@test.com",
+    "email": "gestor@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### usuarioDesactivadoTrasElLogin_pierdeElAccesoAunqueElTokenNoHayaCaducado #2
+GET /api/me
+401 application/json;charset=UTF-8
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 401,
+  "codigo": "NO_AUTENTICADO",
+  "mensaje": "Falta el token de acceso o no es válido",
+  "path": "/api/me"
+}
+
