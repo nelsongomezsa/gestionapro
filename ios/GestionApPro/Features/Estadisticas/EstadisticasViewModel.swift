@@ -77,17 +77,19 @@ struct PeriodoEstadisticas: Equatable, Sendable {
     var puedeAvanzar: Bool { desplazado(1).desde <= .now }
 }
 
-/// Qué se analiza: toda la cartera, un piso o una habitación.
+/// Qué se analiza: toda la cartera, solo un tipo de inmueble, un piso o una unidad.
 enum AmbitoEstadisticas: Hashable, Sendable {
     case cartera
+    case tipo(TipoInmueble)
     case piso(PisoBreve)
     case habitacion(Habitacion)
 
     var titulo: String {
         switch self {
         case .cartera: String(localized: "Toda la cartera")
+        case let .tipo(t): String(localized: "Cartera · \(t.nombre)")
         case let .piso(p): p.direccion
-        case let .habitacion(h): String(localized: "Hab. \(h.numero) · \(h.piso.direccion)")
+        case let .habitacion(h): String(localized: "\(h.etiqueta) · \(h.piso.direccion)")
         }
     }
 }
@@ -106,6 +108,25 @@ final class EstadisticasViewModel {
     private(set) var habitaciones: [Habitacion] = []
     var error: String?
 
+    /// Tipos presentes: el filtro por tipo solo se ofrece si hay más de uno.
+    var tiposPresentes: [TipoInmueble] {
+        let presentes = Set(pisos.map(\.tipoInmueble))
+        return TipoInmueble.allCases.filter(presentes.contains)
+    }
+
+    /// "habitaciones", "plazas", "trasteros" o "unidades", según lo que se analiza.
+    var unidades: String {
+        switch ambito {
+        case .cartera: Unidades.plural(conOtrosTipos: pisos.contains { $0.tipoInmueble != .vivienda })
+        case let .tipo(t): t.unidad.pluralMinusculas
+        case let .piso(p): p.tipoInmueble.unidad.pluralMinusculas
+        case let .habitacion(h): h.unidad.pluralMinusculas
+        }
+    }
+
+    /// Solo habitaciones (para los textos que dicen "por habitación").
+    var soloHabitaciones: Bool { unidades == TipoUnidad.habitacion.pluralMinusculas }
+
     func cargarListas(con api: APIClient) async {
         async let p = try? api.enviar(.pisos)
         async let h = try? api.enviar(.habitaciones())
@@ -117,15 +138,16 @@ final class EstadisticasViewModel {
 
     func cargar(con api: APIClient) async {
         let (piso, habitacion): (Int?, Int?) = switch ambito {
-        case .cartera: (nil, nil)
+        case .cartera, .tipo: (nil, nil)
         case let .piso(p): (p.id, nil)
         case let .habitacion(h): (nil, h.id)
         }
+        let tipo: TipoInmueble? = if case let .tipo(t) = ambito { t } else { nil }
         if analisis.valor == nil { analisis = .cargando }
         cargando = true
         defer { cargando = false }
         do {
-            let a = try await api.enviar(.analisis(desde: periodo.desde, hasta: periodo.hasta, piso: piso, habitacion: habitacion))
+            let a = try await api.enviar(.analisis(desde: periodo.desde, hasta: periodo.hasta, piso: piso, habitacion: habitacion, tipo: tipo))
             guard !Task.isCancelled else { return }
             analisis = .cargado(a)
         } catch .noAutorizado {

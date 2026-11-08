@@ -31,7 +31,7 @@ struct ContratoDetalleView: View {
                                 .font(Tema.Fuente.titulo)
                                 .foregroundStyle(Tema.Color.texto)
                                 .accessibilityAddTraits(.isHeader)
-                            Text("Habitación \(c.habitacion.numero) · \(c.piso.direccion), \(c.piso.ciudad)")
+                            Text("\(c.habitacion.titulo) · \(c.piso.direccion), \(c.piso.ciudad)")
                                 .font(Tema.Fuente.detalle)
                                 .foregroundStyle(Tema.Color.textoSecundario)
                         }
@@ -59,6 +59,10 @@ struct ContratoDetalleView: View {
 
                 if c.activo || !modeloRenta.historial.isEmpty {
                     SeccionRenta(modelo: modeloRenta, gestor: esGestor && c.activo)
+                }
+
+                if c.habitacion.unidad != .habitacion {
+                    seccionIva(c)
                 }
 
                 SeccionFianza(modelo: modeloFianza, idContrato: c.id, editable: esGestor)
@@ -109,7 +113,7 @@ struct ContratoDetalleView: View {
                             .disabled(trabajando)
                             .frame(maxWidth: .infinity)
                     } footer: {
-                        Text("La fecha de fin pasa a ser hoy y la habitación queda disponible.")
+                        Text(c.habitacion.unidad.quedaDisponible)
                     }
                     .filaLista()
                 }
@@ -153,6 +157,48 @@ struct ContratoDetalleView: View {
         let total = c.fechaFin.timeIntervalSince(c.fechaInicio)
         guard total > 0 else { return 1 }
         return min(max(hoy.timeIntervalSince(c.fechaInicio) / total, 0), 1)
+    }
+
+    /// Plazas y trasteros: IVA del contrato (base e IVA desglosados) y, para el propietario, activarlo o quitarlo.
+    @ViewBuilder
+    private func seccionIva(_ c: Contrato) -> some View {
+        let conIva = c.aplicaIva == true
+        Section {
+            if conIva, let pct = c.ivaPct {
+                let total = c.precioMensual.double
+                let base = (total / (1 + pct.double / 100) * 100).rounded() / 100
+                LabeledContent("Base imponible", value: Formato.euros(Decimal(base)))
+                LabeledContent("IVA \(Formato.numero(pct.double)) %", value: Formato.euros(Decimal(total - base)))
+                LabeledContent("Total al mes", value: Formato.euros(c.precioMensual))
+            } else {
+                Text("Sin IVA").foregroundStyle(Tema.Color.textoSecundario)
+            }
+            if esGestor && c.activo {
+                Button(conIva ? String(localized: "Quitar el IVA") : String(localized: "Aplicar IVA del 21 %")) {
+                    Task { await cambiarIva(c, aplicar: !conIva) }
+                }
+                .disabled(trabajando)
+                .accessibilityIdentifier("cambiarIva")
+            }
+        } header: {
+            Text("IVA")
+        } footer: {
+            Text("Los recibos ya emitidos no cambian. Si no sabes si debes aplicar IVA, confírmalo con tu asesor.")
+        }
+        .filaLista()
+    }
+
+    private func cambiarIva(_ c: Contrato, aplicar: Bool) async {
+        trabajando = true
+        defer { trabajando = false }
+        do {
+            let nuevo = try await sesion.api.enviar(.ivaContrato(id: c.id, IvaContratoRequest(aplicaIva: aplicar, ivaPct: aplicar ? 21 : nil)))
+            estado = .cargado(nuevo)
+            alCambiar()
+        } catch .noAutorizado {
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     private func cargar() async {

@@ -76,7 +76,7 @@ struct NuevoMensajeView: View {
                                     AvatarIniciales(nombre: c.inquilino.nombre, tamano: Tema.Tamano.icono)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(c.inquilino.nombre).foregroundStyle(Tema.Color.texto)
-                                        Text("Hab. \(c.habitacion.numero) · \(c.piso.direccion)")
+                                        Text("\(c.habitacion.etiqueta) · \(c.piso.direccion)")
                                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
                                     }
                                 }
@@ -186,7 +186,7 @@ struct CobroRapidoView: View {
                                     AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(p.inquilino.nombre).foregroundStyle(Tema.Color.texto)
-                                        Text("Hab. \(p.numeroHabitacion) · \(p.piso.direccion)")
+                                        Text("\(p.etiquetaUnidad) · \(p.piso.direccion)")
                                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario).lineLimit(1)
                                     }
                                     Spacer(minLength: Tema.Espacio.xs)

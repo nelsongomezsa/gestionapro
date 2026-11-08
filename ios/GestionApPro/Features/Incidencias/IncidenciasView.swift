@@ -131,7 +131,7 @@ struct FilaIncidencia: View {
                     InsigniaEstado(texto: incidencia.estado.nombre, tono: incidencia.estado.tono, icono: incidencia.estado.icono)
                 }
             }
-            Text(mostrarPiso ? "Hab. \(incidencia.habitacion.numero) · \(incidencia.piso.direccion)" : "Habitación \(incidencia.habitacion.numero)")
+            Text(mostrarPiso ? "\(incidencia.habitacion.etiqueta) · \(incidencia.piso.direccion)" : "\(incidencia.habitacion.titulo)")
                 .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
             // El nombre completo, sin recortar: comparte línea con la antigüedad y pasa a otra si no cabe.
             Text([incidencia.inquilino.nombre,

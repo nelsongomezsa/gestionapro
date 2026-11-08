@@ -1668,7 +1668,7 @@ extension CapturasUITests {
         // En Inicio: sus 3 habitaciones libres.
         r.pestana("Inicio")
         r.app.buttons["kpiLibres"].tap()
-        r.esperar(r.app.navigationBars["Habitaciones libres"])
+        r.esperar(r.app.navigationBars.matching(NSPredicate(format: "identifier IN %@", ["Habitaciones libres", "Unidades libres"])).firstMatch)
         r.esperar(r.elemento(contiene: direccion))
         r.capturar("11-en-habitaciones-libres")
         r.atras()
@@ -1705,6 +1705,61 @@ extension CapturasUITests {
     }
 
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
+    /// Garajes y trasteros (V12): alta por tipo, garaje con sus plazas, contrato con IVA y filtros.
+    @MainActor
+    func testGarajes() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pestana("Pisos")
+        let filtro = r.app.segmentedControls["selectorTipoInmueble"]
+        r.esperar(filtro)
+        r.pausa(1)
+        r.capturar("01-pisos-filtro")
+        r.app.buttons["nuevoPiso"].tap()
+        r.pausa(1.5)
+        r.capturar("02-alta-tipo")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Garaje")).firstMatch.tap()
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("03-alta-garaje")
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+        filtro.buttons["Garaje"].tap()
+        r.pausa(1)
+        r.capturar("04-solo-garajes")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        r.esperar(r.app.buttons["enlaceHabitaciones"])
+        r.pausa(1.5)
+        r.capturar("05-garaje")
+        r.desplazarHasta(r.app.buttons["enlaceHabitaciones"]).tap()
+        r.esperar(r.app.navigationBars["Plazas"])
+        r.pausa(1)
+        r.capturar("06-plazas")
+        r.atras()
+        r.atras()
+        filtro.buttons["Todos"].tap()
+
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["mas-contratos"]).tap()
+        r.esperar(r.app.navigationBars["Contratos"])
+        let fila = r.app.buttons.matching(NSPredicate(format: "identifier == %@ AND label CONTAINS %@", "filaContrato", "Plaza 1")).firstMatch
+        r.desplazarHasta(fila).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.desplazarHasta(r.elemento(contiene: "Base imponible"))
+        r.pausa(1)
+        r.capturar("07-contrato-iva")
+        r.atras()
+        r.pausa(1)
+
+        r.pestana("Cobros")
+        let fc = r.app.segmentedControls["selectorTipoInmueble"]
+        r.esperar(fc)
+        fc.buttons["Trasteros"].tap()
+        r.pausa(2)
+        r.capturar("08-cobros-trasteros")
+        fc.buttons["Todos"].tap()
+    }
+
     @MainActor
     func testTarjetas() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
@@ -1720,7 +1775,7 @@ extension CapturasUITests {
         r.atras()
 
         r.app.buttons["kpiLibres"].tap()
-        r.esperar(r.app.navigationBars["Habitaciones libres"])
+        r.esperar(r.app.navigationBars.matching(NSPredicate(format: "identifier IN %@", ["Habitaciones libres", "Unidades libres"])).firstMatch)
         r.pausa(1)
         r.capturar("04-libres")
         r.app.switches.firstMatch.switches.firstMatch.tap()

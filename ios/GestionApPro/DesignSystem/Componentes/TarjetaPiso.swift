@@ -62,7 +62,7 @@ struct TarjetaPiso: View {
 
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: ocupacion, tono: Tono.ocupacion(ocupacion * 100))
-                Text("\(piso.ocupacion.alquiladas) de \(piso.ocupacion.total) habitaciones alquiladas")
+                Text(piso.tipoInmueble.unidad.alquiladas(piso.ocupacion.alquiladas, de: piso.ocupacion.total))
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }

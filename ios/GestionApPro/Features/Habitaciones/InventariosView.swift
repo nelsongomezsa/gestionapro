@@ -1,12 +1,14 @@
 import PhotosUI
 import SwiftUI
 
-/// Inventarios de entrada y salida de una habitación. El propietario los crea, añade fotos y
+/// Inventarios de entrada y salida de una habitación, plaza o trastero. El propietario los crea, añade fotos y
 /// los exporta en PDF para firmarlos; el inquilino ve los de su contrato.
 struct InventariosView: View {
     @Environment(SesionStore.self) private var sesion
     let idHabitacion: Int
     let titulo: String
+    /// Para proponer los elementos de la entrega (mandos y tarjetas en un garaje, candado en un trastero...).
+    var unidad: TipoUnidad = .habitacion
 
     @State private var estado: EstadoCarga<[Inventario]> = .cargando
     @State private var creando = false
@@ -18,7 +20,7 @@ struct InventariosView: View {
             List {
                 if lista.isEmpty {
                     EstadoVacio(icono: "checklist", titulo: "Sin inventarios",
-                                mensaje: gestiona ? "Haz uno al entregar la habitación y otro al recogerla." : "Tu propietario aún no ha hecho ninguno.")
+                                mensaje: gestiona ? String(localized: "Haz uno al entregarla y otro al recogerla.") : String(localized: "Tu propietario aún no ha hecho ninguno."))
                         .listRowBackground(Color.clear)
                 }
                 Section {
@@ -48,7 +50,7 @@ struct InventariosView: View {
             }
         }
         .sheet(isPresented: $creando) {
-            NavigationStack { NuevoInventarioView(idHabitacion: idHabitacion) { Task { await cargar() } } }
+            NavigationStack { NuevoInventarioView(idHabitacion: idHabitacion, unidad: unidad) { Task { await cargar() } } }
         }
         .refreshable { await cargar() }
         .task { await cargar() }
@@ -179,7 +181,7 @@ struct InventarioDetalleView: View {
 
     private func abrirPDF() async {
         do {
-            documento = DocumentoPDF(titulo: "Inventario \(inventario.tipo.nombre.lowercased()) · hab. \(inventario.numeroHabitacion)",
+            documento = DocumentoPDF(titulo: "\(String(localized: "Inventario")) \(inventario.tipo.nombre.lowercased()) · \(inventario.etiquetaUnidad)",
                                      datos: try await sesion.api.descargar(Rutas.pdfInventario(inventario.id)))
         } catch .noAutorizado {
         } catch {
@@ -204,7 +206,15 @@ struct NuevoInventarioView: View {
     @Environment(SesionStore.self) private var sesion
     @Environment(\.dismiss) private var cerrar
     let idHabitacion: Int
+    let unidad: TipoUnidad
     let alCrear: () -> Void
+
+    init(idHabitacion: Int, unidad: TipoUnidad = .habitacion, alCrear: @escaping () -> Void) {
+        self.idHabitacion = idHabitacion
+        self.unidad = unidad
+        self.alCrear = alCrear
+        _filas = State(initialValue: unidad.elementosInventario.map { Fila(nombre: $0) })
+    }
 
     struct Fila: Identifiable {
         let id = UUID()
@@ -213,13 +223,11 @@ struct NuevoInventarioView: View {
         var observaciones = ""
     }
 
-    static let propuestos = ["Cama", "Colchón", "Armario", "Escritorio", "Silla", "Paredes", "Suelo", "Ventana", "Puerta y cerradura", "Llaves"]
-
     @State private var tipo: TipoInventario = .entrada
     @State private var fecha = Date.now
     @State private var contratos: [Contrato] = []
     @State private var idContrato: Int?
-    @State private var filas = propuestos.map { Fila(nombre: $0) }
+    @State private var filas: [Fila]
     @State private var observaciones = ""
     @State private var guardando = false
     @State private var error: String?

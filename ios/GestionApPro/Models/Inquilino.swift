@@ -20,6 +20,7 @@ struct ContratoBreve: Decodable, Identifiable, Hashable, Sendable {
     let id: Int
     let idHabitacion: Int
     let numeroHabitacion: Int
+    var tipoUnidad: TipoUnidad? = nil
     let piso: PisoBreve
     let fechaInicio: Date
     let fechaFin: Date

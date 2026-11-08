@@ -56,7 +56,7 @@ struct ContratosView: View {
             get: { paraFinalizar != nil }, set: { if !$0 { paraFinalizar = nil } }), titleVisibility: .visible) {
             Button("Finalizar hoy", role: .destructive) { if let c = paraFinalizar { Task { await vm.finalizar(c, con: sesion.api) } } }
         } message: {
-            Text("La fecha de fin pasa a ser hoy y la habitación queda disponible.")
+            Text((paraFinalizar?.habitacion.unidad ?? .habitacion).quedaDisponible)
         }
         .visorPDF($documento)
         .alertaError($vm.error)
@@ -86,7 +86,7 @@ struct FilaContratoCompleto: View {
                 Spacer()
                 Text(Formato.euros(contrato.precioMensual)).font(Tema.Fuente.cifraPequena)
             }
-            Text(mostrarPiso ? "Hab. \(contrato.habitacion.numero) · \(contrato.piso.direccion)" : "Habitación \(contrato.habitacion.numero)")
+            Text(mostrarPiso ? "\(contrato.habitacion.etiqueta) · \(contrato.piso.direccion)" : "\(contrato.habitacion.titulo)")
                 .font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
             HStack {
                 Text(FormatoFecha.rango(contrato.fechaInicio, contrato.fechaFin))

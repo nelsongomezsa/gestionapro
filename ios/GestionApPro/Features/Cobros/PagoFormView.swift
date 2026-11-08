@@ -28,7 +28,7 @@ struct PagoFormView: View {
                     Picker("Contrato activo", selection: $seleccion) {
                         Text("Elige un contrato").tag(Int?.none)
                         ForEach(contratos) { c in
-                            Text("\(c.inquilino.nombre) · Hab. \(c.habitacion.numero)").tag(Int?.some(c.id))
+                            Text("\(c.inquilino.nombre) · \(c.habitacion.etiqueta)").tag(Int?.some(c.id))
                         }
                     }
                 }

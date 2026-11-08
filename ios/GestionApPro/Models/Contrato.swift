@@ -8,7 +8,11 @@ struct Contrato: Decodable, Identifiable, Hashable, Sendable {
     let inquilino: InquilinoBreve
     let fechaInicio: Date
     let fechaFin: Date
+    /// Lo que paga el inquilino al mes (con IVA si `aplicaIva`).
     let precioMensual: Decimal
+    /// V12: el recibo desglosa base e IVA (solo plazas y trasteros).
+    var aplicaIva: Bool? = nil
+    var ivaPct: Decimal? = nil
     let activo: Bool
     let vencimiento: NivelVencimiento
     /// Negativo si ya pasó la fecha de fin.
@@ -17,6 +21,13 @@ struct Contrato: Decodable, Identifiable, Hashable, Sendable {
     struct HabitacionBreve: Decodable, Hashable, Sendable {
         let id: Int
         let numero: Int
+        var tipo: TipoUnidad? = nil
+
+        var unidad: TipoUnidad { tipo ?? .habitacion }
+        /// "Hab. 3", "Plaza 3", "Trastero 3".
+        var etiqueta: String { unidad.etiqueta(numero) }
+        /// "Habitación 3", "Plaza 3", "Trastero 3".
+        var titulo: String { unidad.titulo(numero) }
     }
 }
 
@@ -54,6 +65,15 @@ struct ContratoRequest: Encodable, Sendable {
     let fechaInicio: String
     let fechaFin: String
     let precioMensual: Decimal
+    /// V12: solo plazas y trasteros. nil = sin IVA.
+    var aplicaIva: Bool? = nil
+    var ivaPct: Decimal? = nil
+}
+
+/// PUT /api/contratos/{id}/iva
+struct IvaContratoRequest: Encodable, Sendable {
+    let aplicaIva: Bool
+    let ivaPct: Decimal?
 }
 
 /// GET /api/pagos
@@ -65,6 +85,8 @@ struct Pago: Decodable, Identifiable, Hashable, Sendable {
     let idContrato: Int
     let inquilino: InquilinoBreve
     let numeroHabitacion: Int
+    /// habitacion, plaza o trastero (V12); nil en datos antiguos.
+    var tipoUnidad: TipoUnidad? = nil
     let piso: PisoBreve
     /// Número del recibo (2026-0007); nil si aún no se ha emitido (pagos del escritorio).
     var recibo: String? = nil
@@ -98,6 +120,7 @@ struct ResumenPagos: Decodable, Sendable {
         let idContrato: Int
         let inquilino: InquilinoBreve
         let numeroHabitacion: Int
+        var tipoUnidad: TipoUnidad? = nil
         let piso: PisoBreve
         let importe: Decimal
         var id: Int { idContrato }
@@ -109,6 +132,8 @@ struct CobroAtrasado: Decodable, Identifiable, Hashable, Sendable {
     let idContrato: Int
     let inquilino: InquilinoBreve
     let numeroHabitacion: Int
+    /// habitacion, plaza o trastero (V12); nil en datos antiguos.
+    var tipoUnidad: TipoUnidad? = nil
     let piso: PisoBreve
     /// "2026-09"
     let mes: String

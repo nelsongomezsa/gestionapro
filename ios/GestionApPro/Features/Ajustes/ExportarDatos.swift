@@ -4,13 +4,13 @@ import Foundation
 /// cobros y gastos. Solo con lo que el usuario ya puede ver por la API.
 enum ExportarDatos {
     static func csvPisos(_ pisos: [Piso]) -> String {
-        filas(["Dirección", "Ciudad", "Habitaciones"],
-              pisos.map { [$0.direccion, $0.ciudad.nombre, "\($0.numeroHabitaciones)"] })
+        filas(["Dirección", "Ciudad", "Tipo", "Unidades"],
+              pisos.map { [$0.direccion, $0.ciudad.nombre, $0.tipoInmueble.rawValue, "\($0.numeroHabitaciones)"] })
     }
 
     static func csvCobros(_ pagos: [Pago]) -> String {
-        filas(["Fecha", "Inquilino", "Piso", "Habitación", "Importe", "Método", "Recibo"],
-              pagos.map { [FechaAPI.texto($0.fechaPago), $0.inquilino.nombre, $0.piso.direccion, "\($0.numeroHabitacion)",
+        filas(["Fecha", "Inquilino", "Piso", "Unidad", "Importe", "Método", "Recibo"],
+              pagos.map { [FechaAPI.texto($0.fechaPago), $0.inquilino.nombre, $0.piso.direccion, $0.etiquetaUnidad,
                            importe($0.cantidad), $0.metodoPago.nombre, $0.recibo ?? ""] })
     }
 

@@ -26,6 +26,11 @@ struct Ocupacion: Decodable, Hashable, Sendable {
     let porcentaje: Double
     /// "Sistema saludable", "Ocupación media" o "Baja ocupación" (umbrales del escritorio).
     let salud: String
+    /// V12: hay garajes o trasteros en la cartera (los textos dicen "unidades").
+    var conOtrosTipos: Bool? = nil
+
+    /// "habitaciones" o "unidades".
+    var plural: String { Unidades.plural(conOtrosTipos: conOtrosTipos ?? false) }
 
     var tono: Tono { .ocupacion(porcentaje) }
 }
@@ -58,6 +63,13 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
     /// Texto legible de los códigos de acción del escritorio y de la API.
     var titulo: String {
         guard let accion else { return "Actividad" }
+        // V12: las acciones de "habitación" sobre una plaza o un trastero dicen lo que son
+        // (la descripción empieza por su etiqueta: "Plaza 3 · ...", "Trastero 2 · ...").
+        if accion.hasSuffix("_HABITACION"), let d = descripcion {
+            let unidad: TipoUnidad? = d.hasPrefix("Plaza ") ? .plaza : d.hasPrefix("Trastero ") ? .trastero : nil
+            if let unidad, let t = Self.tituloUnidad(accion, unidad) { return t }
+        }
+        if accion == "IVA_CONTRATO" { return String(localized: "IVA del contrato cambiado") }
         return Self.titulos[accion] ?? accion.replacingOccurrences(of: "_", with: " ").capitalized(with: Formato.localeFechas)
     }
 
@@ -72,6 +84,17 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
         if accion.contains("INCIDENCIA") { return "wrench.and.screwdriver" }
         if accion.contains("PISO") { return "building.2" }
         return "clock"
+    }
+
+    private static func tituloUnidad(_ accion: String, _ u: TipoUnidad) -> String? {
+        let plaza = u == .plaza
+        return switch accion {
+        case "CREAR_HABITACION": plaza ? String(localized: "Plaza creada") : String(localized: "Trastero creado")
+        case "EDITAR_HABITACION": plaza ? String(localized: "Plaza editada") : String(localized: "Trastero editado")
+        case "BORRAR_HABITACION": plaza ? String(localized: "Plaza borrada") : String(localized: "Trastero borrado")
+        case "CAMBIAR_ESTADO_HABITACION": plaza ? String(localized: "Estado de plaza cambiado") : String(localized: "Estado de trastero cambiado")
+        default: nil
+        }
     }
 
     private static let titulos: [String: String] = [

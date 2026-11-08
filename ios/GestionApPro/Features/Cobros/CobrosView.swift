@@ -24,6 +24,9 @@ struct CobrosView: View {
                     Section {
                         VStack(spacing: Tema.Espacio.m) {
                             SelectorMes(mes: vm.mes, maximo: .actual) { nuevo in Task { await vm.cambiarMes(nuevo, con: sesion.api) } }
+                            if vm.tiposPresentes.count > 1 {
+                                SelectorTipoInmueble(tipo: $vm.tipo)
+                            }
                             ResumenCobros(resumen: r)
                         }
                     }
@@ -110,7 +113,7 @@ struct CobrosView: View {
             }
             .background(Tema.Color.fondo)
             .navigationTitle("Cobros")
-            .searchable(text: $vm.busqueda, prompt: "Inquilino, dirección o habitación")
+            .searchable(text: $vm.busqueda, prompt: "Inquilino, dirección o número")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Registrar pago", systemImage: "plus") { nuevoPago = PagoPrellenado(idContrato: nil, importe: nil) }
@@ -135,6 +138,7 @@ struct CobrosView: View {
             }
             .refreshable { await vm.cargar(con: sesion.api) }
             .task { await vm.cargar(con: sesion.api) }
+            .onChange(of: vm.tipo) { Task { await vm.cargar(con: sesion.api) } }
             .sheet(isPresented: $conciliando) {
                 NavigationStack { ConciliacionView { Task { await vm.cargar(con: sesion.api) } } }
             }
@@ -178,7 +182,7 @@ struct CobrosView: View {
                 AvatarIniciales(nombre: p.inquilino.nombre, tamano: Tema.Tamano.icono)
                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text(p.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                    Text(mostrarPiso ? "Hab. \(p.numeroHabitacion) · \(p.piso.direccion)" : "Habitación \(p.numeroHabitacion)")
+                    Text(mostrarPiso ? "\(p.etiquetaUnidad) · \(p.piso.direccion)" : "\(p.tituloUnidad)")
                         .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                 }
             }
@@ -347,7 +351,7 @@ struct FilaPago: View {
         HStack(alignment: .top, spacing: Tema.Espacio.s) {
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text(pago.inquilino.nombre).font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                Text(([pago.fechaPago.formatted(FormatoFecha.corta), pago.metodoPago.nombre, "Hab. \(pago.numeroHabitacion)"]
+                Text(([pago.fechaPago.formatted(FormatoFecha.corta), pago.metodoPago.nombre, "\(pago.etiquetaUnidad)"]
                       + (pago.recibo.map { ["Recibo \($0)"] } ?? [])).joined(separator: " · "))
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
             }

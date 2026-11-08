@@ -46,11 +46,11 @@ final class InquilinosViewModel {
     func pdf() -> DocumentoPDF {
         let columnas: [GeneradorPDF.Columna] = [
             .init(titulo: "Nombre", peso: 2.2), .init(titulo: "DNI", peso: 1.1), .init(titulo: "Teléfono", peso: 1.2),
-            .init(titulo: "Email", peso: 2.2), .init(titulo: "Habitación", peso: 2.0),
+            .init(titulo: "Email", peso: 2.2), .init(titulo: String(localized: "Unidad"), peso: 2.0),
         ]
         let filas = visibles.map { i in
             [i.nombreCompleto, i.dni, i.telefono ?? "—", i.email ?? "—",
-             i.contratoActivo.map { "Hab. \($0.numeroHabitacion) · \($0.piso.direccion)" } ?? "Sin contrato activo"]
+             i.contratoActivo.map { "\($0.etiquetaUnidad) · \($0.piso.direccion)" } ?? "Sin contrato activo"]
         }
         return DocumentoPDF(titulo: "Inquilinos",
                             datos: GeneradorPDF.tabla(titulo: "Inquilinos", subtitulo: "\(filas.count) inquilinos",

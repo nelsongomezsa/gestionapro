@@ -71,3 +71,8 @@
   nada de eso, se borran sus habitaciones y el piso. Doble confirmación en la app.
 - Sin editar pagos ni contratos (ni en escritorio ni en API): un pago con recibo numerado se borra y se vuelve a
   registrar; un contrato se finaliza y se crea otro. Queda anotado como posible mejora (prórroga de contrato).
+
+## Garajes y trasteros (V12, 2026-11-08)
+- Una sola app: `Pisos.tipo` (vivienda, garajes, trasteros) y `Habitaciones.tipo` (habitación, plaza, trastero) con m², planta y vehículo; las tablas conservan su nombre por compatibilidad con el escritorio. Un garaje admite plazas y trasteros; una vivienda, solo habitaciones (máx. 50); garajes y trasteros, hasta 500 unidades.
+- IVA por contrato solo en plazas y trasteros (desactivado por defecto, 21 % editable). `precio_mensual` es lo que paga el inquilino, IVA incluido, para no tocar cobros ni estadísticas; el recibo guarda base, % y cuota al emitirse.
+- Contratos de plaza y trastero con plantilla propia (uso distinto de vivienda), duración libre y fianza opcional. Los PDF siguen en español.

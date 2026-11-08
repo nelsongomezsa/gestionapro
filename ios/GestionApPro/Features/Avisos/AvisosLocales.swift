@@ -45,7 +45,7 @@ enum AvisosLocales {
             cuando.hour = 9
             let contenido = UNMutableNotificationContent()
             contenido.title = "Un contrato termina en una semana"
-            contenido.body = "\(c.inquilino.nombre) · habitación \(c.habitacion.numero), \(c.piso.direccion)"
+            contenido.body = "\(c.inquilino.nombre) · \(c.habitacion.etiqueta), \(c.piso.direccion)"
             contenido.sound = .default
             try? await centro.add(UNNotificationRequest(identifier: "vence-\(c.id)", content: contenido,
                                                         trigger: UNCalendarNotificationTrigger(dateMatching: cuando, repeats: false)))

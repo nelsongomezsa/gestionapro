@@ -140,6 +140,11 @@ extension Endpoint where Respuesta == Contrato {
         Endpoint(metodo: "POST", ruta: "/api/contratos", cuerpo: json(req))
     }
 
+    /// Activa o quita el IVA de un contrato de plaza o trastero.
+    static func ivaContrato(id: Int, _ req: IvaContratoRequest) -> Self {
+        Endpoint(metodo: "PUT", ruta: "/api/contratos/\(id)/iva", cuerpo: json(req))
+    }
+
     static func finalizarContrato(id: Int) -> Self {
         Endpoint(metodo: "POST", ruta: "/api/contratos/\(id)/finalizar")
     }
@@ -359,23 +364,26 @@ extension Endpoint where Respuesta == EnvioRecibo {
 // MARK: Pagos
 
 extension Endpoint where Respuesta == [Pago] {
-    static func pagos(mes: Mes? = nil, inquilino: Int? = nil) -> Self {
+    static func pagos(mes: Mes? = nil, inquilino: Int? = nil, tipo: TipoInmueble? = nil) -> Self {
         Endpoint(metodo: "GET", ruta: "/api/pagos",
                  consulta: [URLQueryItem(name: "mes", value: mes?.texto),
-                            URLQueryItem(name: "inquilino", value: inquilino.map(String.init))])
+                            URLQueryItem(name: "inquilino", value: inquilino.map(String.init)),
+                            URLQueryItem(name: "tipo", value: tipo?.rawValue)])
     }
 }
 
 extension Endpoint where Respuesta == ResumenPagos {
-    static func resumenPagos(mes: Mes) -> Self {
-        Endpoint(metodo: "GET", ruta: "/api/pagos/resumen", consulta: [URLQueryItem(name: "mes", value: mes.texto)])
+    static func resumenPagos(mes: Mes, tipo: TipoInmueble? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos/resumen", consulta: [URLQueryItem(name: "mes", value: mes.texto),
+                                                                       URLQueryItem(name: "tipo", value: tipo?.rawValue)])
     }
 }
 
 extension Endpoint where Respuesta == [CobroAtrasado] {
     /// Meses anteriores al actual (12 por defecto, máximo 24) sin ningún pago.
-    static func cobrosAtrasados(meses: Int = 12) -> Self {
-        Endpoint(metodo: "GET", ruta: "/api/pagos/atrasados", consulta: [URLQueryItem(name: "meses", value: String(meses))])
+    static func cobrosAtrasados(meses: Int = 12, tipo: TipoInmueble? = nil) -> Self {
+        Endpoint(metodo: "GET", ruta: "/api/pagos/atrasados", consulta: [URLQueryItem(name: "meses", value: String(meses)),
+                                                                         URLQueryItem(name: "tipo", value: tipo?.rawValue)])
     }
 }
 
@@ -553,12 +561,13 @@ extension Endpoint where Respuesta == ResultadosBusqueda {
 
 extension Endpoint where Respuesta == Analisis {
     /// Estadísticas de un periodo; sin piso ni habitación, de toda la cartera.
-    static func analisis(desde: Date, hasta: Date, piso: Int? = nil, habitacion: Int? = nil) -> Self {
+    static func analisis(desde: Date, hasta: Date, piso: Int? = nil, habitacion: Int? = nil, tipo: TipoInmueble? = nil) -> Self {
         Endpoint(metodo: "GET", ruta: "/api/estadisticas/analisis",
                  consulta: [URLQueryItem(name: "desde", value: FechaAPI.texto(desde)),
                             URLQueryItem(name: "hasta", value: FechaAPI.texto(hasta)),
                             URLQueryItem(name: "piso", value: piso.map(String.init)),
-                            URLQueryItem(name: "habitacion", value: habitacion.map(String.init))])
+                            URLQueryItem(name: "habitacion", value: habitacion.map(String.init)),
+                            URLQueryItem(name: "tipo", value: tipo?.rawValue)])
     }
 }
 

@@ -12,6 +12,7 @@ struct AnalisisConciliacion: Decodable, Sendable {
         let idContrato: Int
         let inquilino: String
         let numeroHabitacion: Int
+        var tipoUnidad: TipoUnidad? = nil
         let direccion: String
         let renta: Decimal
         let puntuacion: Int

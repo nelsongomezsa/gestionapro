@@ -9,6 +9,8 @@ struct ResumenCartera: Equatable {
     let alquiladas: Int
     let disponibles: Int
     let pisosSinDatos: Int
+    /// "habitaciones", "plazas", "trasteros" o, si se mezclan, "unidades".
+    let unidades: String
 
     var ocupacion: Double { habitaciones > 0 ? Double(alquiladas) / Double(habitaciones) : 0 }
 
@@ -19,6 +21,9 @@ struct ResumenCartera: Equatable {
         alquiladas = pisos.reduce(0) { $0 + $1.ocupacion.alquiladas }
         disponibles = pisos.reduce(0) { $0 + $1.ocupacion.disponibles }
         pisosSinDatos = pisos.filter { $0.metricas == nil }.count
+        let tipos = Set(pisos.map(\.tipoInmueble))
+        unidades = tipos.count == 1 ? tipos.first!.unidad.pluralMinusculas
+            : Unidades.plural(conOtrosTipos: tipos.contains { $0 != .vivienda })
     }
 }
 
@@ -37,19 +42,28 @@ final class PisosViewModel {
     private(set) var estado: EstadoCarga<[Piso]> = .cargando
     var busqueda = ""
     var ciudad: String?
+    /// Filtro por tipo de inmueble (nil: todos).
+    var tipo: TipoInmueble?
     var orden: Orden = .cashFlow
+
+    /// Tipos presentes en la cartera: el filtro solo se muestra si hay más de uno.
+    var tiposPresentes: [TipoInmueble] {
+        let presentes = Set((estado.valor ?? []).map(\.tipoInmueble))
+        return TipoInmueble.allCases.filter(presentes.contains)
+    }
 
     var ciudades: [String] {
         Array(Set((estado.valor ?? []).map(\.ciudad.nombre))).sorted()
     }
 
-    var resumen: ResumenCartera { ResumenCartera(estado.valor ?? []) }
+    var resumen: ResumenCartera { ResumenCartera((estado.valor ?? []).filter { tipo == nil || $0.tipoInmueble == tipo }) }
 
     /// Pisos tras buscar (dirección o ciudad, sin tildes ni mayúsculas), filtrar y ordenar.
     var pisosVisibles: [Piso] {
         let texto = busqueda.trimmingCharacters(in: .whitespaces)
         return (estado.valor ?? [])
             .filter { ciudad == nil || $0.ciudad.nombre == ciudad }
+            .filter { tipo == nil || $0.tipoInmueble == tipo }
             .filter {
                 texto.isEmpty
                     || $0.direccion.localizedStandardContains(texto)

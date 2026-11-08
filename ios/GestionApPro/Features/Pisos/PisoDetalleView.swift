@@ -133,12 +133,12 @@ struct PisoDetalleView: View {
                     }
                 }
 
-                SeccionTarjeta(titulo: "Habitaciones") {
+                SeccionTarjeta(titulo: piso.tipoInmueble.unidad.plural) {
                     let o = piso.ocupacion
                     VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                         BarraProgreso(valor: o.total > 0 ? Double(o.alquiladas) / Double(o.total) : 0,
                                       tono: Tono.ocupacion(o.total > 0 ? Double(o.alquiladas) * 100 / Double(o.total) : 0))
-                        Text("\(o.alquiladas) de \(o.total) alquiladas")
+                        Text(piso.tipoInmueble.unidad.alquiladas(o.alquiladas, de: o.total))
                             .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     }
                     ParDatos {
@@ -149,7 +149,7 @@ struct PisoDetalleView: View {
                     }
                     Divider().overlay(Tema.Color.borde)
                     NavigationLink(value: DestinoPiso.habitaciones(piso.breve)) {
-                        FilaMetrica(titulo: "Gestionar habitaciones", valor: "", icono: "bed.double")
+                        FilaMetrica(titulo: piso.tipoInmueble.unidad.gestionar, valor: "", icono: piso.tipoInmueble.unidad.icono)
                     }
                     .accessibilityIdentifier("enlaceHabitaciones")
                     Divider().overlay(Tema.Color.borde)
@@ -201,7 +201,7 @@ struct PisoDetalleView: View {
             .padding(.bottom, Tema.Espacio.l)
         }
         .background(Tema.Color.fondo)
-        .navigationTitle("Piso")
+        .navigationTitle(piso.tipoInmueble == .vivienda ? String(localized: "Piso") : piso.tipoInmueble.nombre)
         .navigationBarTitleDisplayMode(.inline)
         .contextoAsistente(.piso(piso.id))
         .toolbar {
@@ -242,8 +242,7 @@ struct PisoDetalleView: View {
                 Task { try? await Task.sleep(for: .milliseconds(350)); confirmarBorradoFinal = true }
             }
         } message: {
-            Text(piso.ocupacion.total == 1 ? "Se borrará también su habitación."
-                                           : "Se borrarán también sus \(piso.ocupacion.total) habitaciones.")
+            Text(String(localized: "También se borrarán: \(piso.tipoInmueble.unidad.cantidad(piso.ocupacion.total))."))
         }
         .alert("¿Seguro que quieres borrarlo?", isPresented: $confirmarBorradoFinal) {
             Button("Cancelar", role: .cancel) {}

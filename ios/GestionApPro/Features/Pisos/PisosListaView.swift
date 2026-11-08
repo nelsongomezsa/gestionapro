@@ -62,6 +62,9 @@ struct PisosListaView: View {
         let pisos = vm.pisosVisibles
         ScrollView {
             LazyVStack(spacing: Tema.Espacio.s) {
+                if vm.tiposPresentes.count > 1 {
+                    SelectorTipoInmueble(tipo: $vm.tipo)
+                }
                 ResumenCarteraView(resumen: vm.resumen)
                     .padding(.bottom, Tema.Espacio.xs)
 
@@ -81,6 +84,7 @@ struct PisosListaView: View {
                                     accionTitulo: "Quitar filtros") {
                             vm.busqueda = ""
                             vm.ciudad = nil
+                            vm.tipo = nil
                         }
                     }
                 } else {
@@ -147,7 +151,7 @@ struct ResumenCarteraView: View {
                     tonoValor: resumen.cashFlowMensual < 0 ? .negativo : nil) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: resumen.ocupacion, tono: Tono.ocupacion(resumen.ocupacion * 100))
-                Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) habitaciones libres")
+                Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) \(resumen.unidades) libres")
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }

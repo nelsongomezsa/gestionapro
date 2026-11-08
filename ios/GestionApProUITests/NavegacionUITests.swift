@@ -132,7 +132,7 @@ final class NavegacionUITests: XCTestCase {
         // Habitaciones libres → ficha → su piso.
         arriba(r)
         r.app.buttons["kpiLibres"].tap()
-        r.esperar(r.app.navigationBars["Habitaciones libres"])
+        r.esperar(r.app.navigationBars.matching(NSPredicate(format: "identifier IN %@", ["Habitaciones libres", "Unidades libres"])).firstMatch)
         r.app.buttons["filaHabitacionLibre"].firstMatch.tap()
         r.esperar(r.app.buttons["enlacePisoFicha"])
         r.app.buttons["enlacePisoFicha"].tap()
@@ -196,5 +196,56 @@ final class NavegacionUITests: XCTestCase {
         r.pestana("Cobros")
         let ver = r.app.buttons["verAtrasados"]
         if r.desplazarHasta(ver).exists { abre(r, ver, barra: "Cobros atrasados") }
+    }
+
+    /// Garajes y trasteros (V12): filtro por tipo en Pisos, Cobros y Estadísticas, el garaje con sus
+    /// plazas y el alta que pregunta primero el tipo. Necesita los datos de api/sql/demo_garajes_trasteros.sql.
+    @MainActor
+    func testGarajesYTrasteros() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+
+        // Pisos: filtro por tipo → el garaje → sus plazas (con planta y vehículo en la fila).
+        r.pestana("Pisos")
+        let filtro = r.app.segmentedControls["selectorTipoInmueble"]
+        r.esperar(filtro)
+        filtro.buttons["Garaje"].tap()
+        r.pausa(1)
+        XCTAssertEqual(r.app.buttons.matching(identifier: "tarjetaPiso").count, 1, "Solo el garaje")
+        r.app.buttons["tarjetaPiso"].firstMatch.tap()
+        esperarBarra(r, "Garaje")
+        abre(r, r.app.buttons["enlaceHabitaciones"], barra: "Plazas", volver: false)
+        r.esperar(r.elemento(contiene: "Coche"))
+        volver(r)
+        volver(r)
+        filtro.buttons["Todos"].tap()
+
+        // Alta: lo primero es el tipo; en trasteros se piden m² de cada uno.
+        r.app.buttons["nuevoPiso"].tap()
+        esperarBarra(r, "Nuevo piso")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Trasteros")).firstMatch.tap()
+        esperarBarra(r, "Nuevo inmueble")
+        XCTAssertTrue(r.desplazarHasta(r.app.textFields["metrosUnidades"]).exists || r.app.otherElements["metrosUnidades"].exists
+                      || r.elemento(contiene: "Superficie de cada una").exists)
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+
+        // Cobros: filtrar por garaje deja solo plazas.
+        r.pestana("Cobros")
+        let filtroCobros = r.app.segmentedControls["selectorTipoInmueble"]
+        r.esperar(filtroCobros)
+        filtroCobros.buttons["Garaje"].tap()
+        r.pausa(2)
+        r.esperar(r.elemento(contiene: "Plaza"))
+        XCTAssertFalse(r.elemento(contiene: "Hab. ").exists, "Con el filtro de garaje no salen habitaciones")
+        filtroCobros.buttons["Todos"].tap()
+
+        // Estadísticas: la cartera solo de trasteros.
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["mas-estadisticas"]).tap()
+        r.esperar(r.app.navigationBars["Estadísticas"])
+        r.app.buttons["ambitoEstadisticas"].tap()
+        r.app.buttons["Trasteros"].firstMatch.tap()
+        r.esperar(r.elemento(contiene: "Cartera · Trasteros"))
     }
 }
