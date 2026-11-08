@@ -12,13 +12,13 @@ struct TarjetaPiso: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Tema.Espacio.m) {
             HStack(alignment: .top, spacing: Tema.Espacio.s) {
-                IconoEtiqueta(icono: "building.2", tono: .primario)
+                IconoEtiqueta(icono: piso.tipoInmueble == .vivienda ? "building.2" : piso.tipoInmueble.icono, tono: .primario)
                 VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                     Text(piso.direccion)
                         .font(Tema.Fuente.subtitulo)
                         .foregroundStyle(Tema.Color.texto)
                         .fixedSize(horizontal: false, vertical: true)
-                    Text(piso.ciudad.nombre)
+                    Text(piso.tipoInmueble == .vivienda ? piso.ciudad.nombre : "\(piso.ciudad.nombre) · \(piso.tipoInmueble.nombre)")
                         .font(Tema.Fuente.detalle)
                         .foregroundStyle(Tema.Color.textoSecundario)
                     // Con texto grande la insignia va debajo: a la derecha se partía ("Exce-lente").

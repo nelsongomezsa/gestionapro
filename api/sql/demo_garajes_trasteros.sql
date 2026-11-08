@@ -22,13 +22,17 @@ INSERT INTO Pisos (direccion, numero_habitaciones, id_ciudad, id_propietario, ti
 SELECT 'Calle de Alcalá 120, garaje', 12, c.id_ciudad, @prop, 'garajes' FROM Ciudades c WHERE c.nombre = 'Madrid' AND @nuevo;
 SET @g = IF(@nuevo, LAST_INSERT_ID(), NULL);
 INSERT INTO Pisos (direccion, numero_habitaciones, id_ciudad, id_propietario, tipo)
-SELECT 'Carrer de Sueca 31, trasteros', 8, c.id_ciudad, @prop, 'trasteros' FROM Ciudades c WHERE c.nombre = 'Valencia' AND @nuevo;
+SELECT 'Calle de Colón 31, trasteros', 8, c.id_ciudad, @prop, 'trasteros' FROM Ciudades c WHERE c.nombre = 'Valencia' AND @nuevo;
 SET @t = IF(@nuevo, LAST_INSERT_ID(), NULL);
 
 INSERT INTO DatosPiso (id_piso, precio_compra, itp_pagado, gastos_notaria, gastos_registro, coste_reforma, coste_mobiliario,
                        otros_gastos_compra, tiene_hipoteca, gasto_ibi_anual, gasto_comunidad_mensual, gasto_seguro_anual,
                        gasto_mantenimiento_anual, valor_mercado_actual)
 SELECT @g, 150000, 9000, 900, 600, 2000, 0, 0, 0, 900, 150, 240, 480, 175000 FROM DUAL WHERE @g IS NOT NULL;
+INSERT INTO DatosPiso (id_piso, precio_compra, itp_pagado, gastos_notaria, gastos_registro, coste_reforma, coste_mobiliario,
+                       otros_gastos_compra, tiene_hipoteca, gasto_ibi_anual, gasto_comunidad_mensual, gasto_seguro_anual,
+                       gasto_mantenimiento_anual, valor_mercado_actual)
+SELECT @t, 42000, 4200, 500, 300, 1500, 0, 0, 0, 240, 40, 90, 150, 46000 FROM DUAL WHERE @t IS NOT NULL;
 
 -- Unidades: plazas 1-12 en dos plantas (la 11 y la 12, de moto) y trasteros 1-8.
 CREATE TEMPORARY TABLE demo_n (n INT PRIMARY KEY);

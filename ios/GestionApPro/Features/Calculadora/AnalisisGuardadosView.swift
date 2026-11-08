@@ -175,7 +175,7 @@ struct ComparacionAnalisisView: View {
                                         Text(v.map(fila.formato) ?? "—")
                                             .font(Tema.Fuente.cifraPequena)
                                             .foregroundStyle(i == mejor ? Tema.Color.positivo : Tema.Color.texto)
-                                            .minimumScaleFactor(0.7).lineLimit(1)
+                                            .minimumScaleFactor(0.6).lineLimit(1)
                                             .frame(maxWidth: .infinity, alignment: .trailing)
                                             .accessibilityLabel("\(analisis[i].nombre), \(fila.titulo): "
                                                 + (v.map(fila.formato) ?? String(localized: "sin dato"))
@@ -212,7 +212,8 @@ enum ComparacionAnalisis {
         let filas: [Fila]
     }
 
-    private static func euros(_ v: Double) -> String { Formato.euros(v) }
+    /// Sin céntimos a partir de 1.000 €: con tres columnas, "198.000,00 €" no cabe en un iPhone.
+    static func euros(_ v: Double) -> String { abs(v) >= 1000 ? Formato.eurosRedondo(v) : Formato.euros(v) }
     private static func pct(_ v: Double) -> String { Formato.porcentaje(v) }
 
     static var grupos: [Grupo] {

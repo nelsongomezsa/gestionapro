@@ -1,8 +1,8 @@
 # GestionAp PRO · App iPhone + API
 
-<p align="center"><img src="docs/capturas/destacadas/claro/02-inicio.png" width="260" alt="Pantalla de inicio de GestionAp PRO en iPhone"></p>
+<p align="center"><img src="docs/capturas/destacadas/claro/01-inicio.png" width="260" alt="Pantalla de inicio de GestionAp PRO en iPhone"></p>
 
-**App nativa para iPhone en SwiftUI para gestionar el alquiler de habitaciones, con su propia API REST en Spring Boot que comparte la base de datos con la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
+**App nativa para iPhone en SwiftUI para gestionar el alquiler de habitaciones, plazas de garaje y trasteros, con su propia API REST en Spring Boot que comparte la base de datos con la app de escritorio [GestionAp PRO](https://github.com/nelsongomezsa/gestionAPPRO).**
 
 [![CI](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml/badge.svg)](https://github.com/nelsongomezsa/gestionapro/actions/workflows/ci.yml)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
@@ -11,13 +11,13 @@
 ![Tests](https://img.shields.io/badge/tests-220%20API%20·%2081%20iOS-2ea44f)
 ![Licencia: MIT](https://img.shields.io/badge/licencia-MIT-yellow)
 
-> **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing room rentals in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
+> **English summary:** A Spring Boot 3.5 / Java 21 REST API (JWT, role-based access for admin, owner and tenant) and a native SwiftUI iOS app (Swift 6 strict concurrency) for managing rentals of rooms, parking spaces and storage units in Spain. It shares a MariaDB database with an existing JavaFX desktop app without breaking it. Features include numbered PDF receipts, deposits, annual rent updates using live official indices from Spain's statistics office (INE), real expenses with invoice photos, an indicative tax summary, bank-statement reconciliation, on-screen contract signing, owner–tenant messaging, Face ID, a home-screen widget, and an optional AI assistant built on the Claude API with server-side tools and user-confirmed actions. 220 API tests and 81 iOS tests.
 
 <p>
-<img src="docs/capturas/destacadas/oscuro/02-inicio.png" width="180" alt="Inicio en modo oscuro">
-<img src="docs/capturas/destacadas/claro/04-piso.png" width="180" alt="Detalle de piso">
-<img src="docs/capturas/destacadas/oscuro/08-renta.png" width="180" alt="Actualización de renta con el IRAV">
-<img src="docs/capturas/destacadas/claro/14-mi-alquiler.png" width="180" alt="Vista del inquilino">
+<img src="docs/capturas/destacadas/oscuro/01-inicio.png" width="180" alt="Inicio en modo oscuro">
+<img src="docs/capturas/destacadas/claro/02-pisos.png" width="180" alt="Pisos, garajes y trasteros">
+<img src="docs/capturas/destacadas/oscuro/04-garaje.png" width="180" alt="Garaje con su rentabilidad">
+<img src="docs/capturas/destacadas/claro/10-mi-alquiler.png" width="180" alt="Vista del inquilino">
 </p>
 
 [Más capturas en claro y oscuro](docs/capturas/README.md) · [Vídeo del recorrido (70 s)](docs/video/recorrido.mp4) · [Caso de estudio](docs/CASO_DE_ESTUDIO.md)
@@ -26,7 +26,7 @@
 
 ## Qué es
 
-Un propietario que alquila habitaciones necesita saber, cada mes, quién ha pagado, qué contratos vencen,
+Un propietario que alquila habitaciones, plazas de garaje o trasteros necesita saber, cada mes, quién ha pagado, qué contratos vencen,
 qué se ha roto y cuánto gana de verdad cada piso. La app de escritorio lo resolvía, pero solo delante del
 ordenador. Este proyecto lleva esos datos al móvil, y también al inquilino, con seguridad por roles: cada
 propietario ve solo lo suyo y cada inquilino solo su alquiler.
@@ -40,6 +40,10 @@ propietario ve solo lo suyo y cada inquilino solo su alquiler.
 - Calculadora de rentabilidad con el ITP de cada comunidad autónoma.
 
 **Lo que el escritorio no tenía**
+- **Garajes y trasteros** en la misma app: alta por tipo (unidades, m², planta y coche o moto), textos según
+  el tipo, contratos de plaza o trastero con duración libre, fianza opcional e IVA opcional desglosado en el
+  recibo, inventario de entrega (mandos, llaves, tarjetas, candado), incidencias típicas y filtro por tipo en
+  Pisos, Cobros y Estadísticas.
 - **Recibos PDF numerados** por propietario y año, para verlos, compartirlos o enviarlos por email.
 - **Fianzas:** entrega, depósito en el organismo autonómico y devolución, con motivo si se retiene algo.
 - **Actualización anual de la renta** con el **IRAV o el IPC del INE leídos en directo** de su API oficial.
