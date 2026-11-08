@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.MetodoPago;
 import com.gestionap.api.domain.Pago;
 
@@ -14,6 +15,7 @@ public record PagoResponse(
         Integer idContrato,
         ContratoResponse.InquilinoBreve inquilino,
         int numeroHabitacion,
+        TipoUnidad tipoUnidad,
         PisoBreve piso,
         /** 2026-0007, o null si aún no se ha emitido su recibo. */
         String recibo) {
@@ -27,6 +29,6 @@ public record PagoResponse(
         var i = c.getInquilino();
         return new PagoResponse(p.getId(), p.getFechaPago(), p.getCantidad(), p.getMetodoPago(), c.getId(),
                 new ContratoResponse.InquilinoBreve(i.getId(), i.getNombreCompleto(), i.getDni(), i.getTelefono(), i.getEmail()),
-                c.getHabitacion().getNumero(), PisoBreve.de(c.getHabitacion().getPiso()), recibo);
+                c.getHabitacion().getNumero(), c.getHabitacion().getTipo(), PisoBreve.de(c.getHabitacion().getPiso()), recibo);
     }
 }

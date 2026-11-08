@@ -87,7 +87,7 @@ public class ConciliacionService {
                         && p.getCantidad().compareTo(movimiento.importe()) == 0);
                 var habitacion = mejor.getHabitacion();
                 var propuesta = new ConciliacionDtos.Propuesta(mejor.getId(), mejor.getInquilino().getNombreCompleto(),
-                        habitacion.getNumero(), habitacion.getPiso().getDireccion(), mejor.getPrecioMensual(), mejorPuntuacion,
+                        habitacion.getNumero(), habitacion.getTipo(), habitacion.getPiso().getDireccion(), mejor.getPrecioMensual(), mejorPuntuacion,
                         mejorPuntuacion >= 90 ? "ALTA" : mejorPuntuacion >= 60 ? "MEDIA" : "BAJA",
                         registrado, mejorPuntuacion >= 60 && !registrado);
                 propuestas.add(new ConciliacionDtos.MovimientoAnalizado(indiceMovimiento, dtoMovimiento, propuesta));
@@ -127,8 +127,9 @@ public class ConciliacionService {
         String apellido = normalizar(contrato.getInquilino().getApellidos());
         if (!completo.isBlank() && concepto.contains(completo)) puntos += 40;
         else if (!apellido.isBlank() && concepto.contains(apellido)) puntos += 20;
-        // "hab 1", "hab. 1" o "habitacion 1": un "1" suelto (de una fecha o un importe) no cuenta.
-        boolean habitacion = concepto.matches(".*\\bhab(?:itacion|\\.)?\\s*" + contrato.getHabitacion().getNumero() + "\\b.*");
+        // "hab 1", "hab. 1", "habitacion 1", "plaza 1" o "trastero 1": un "1" suelto (de una fecha o un importe) no cuenta.
+        boolean habitacion = concepto.matches(".*\\b(?:hab(?:itacion|\\.)?|plaza|garaje|trastero)\\s*"
+                + contrato.getHabitacion().getNumero() + "\\b.*");
         String direccion = normalizar(contrato.getHabitacion().getPiso().getDireccion());
         if (habitacion || (!direccion.isBlank() && concepto.contains(direccion))) puntos += 10;
         return puntos;

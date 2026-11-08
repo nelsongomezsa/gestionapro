@@ -54,6 +54,14 @@ public class ContratoController {
         return ResponseEntity.created(uri).body(c);
     }
 
+    @Operation(summary = "Activa o quita el IVA de un contrato de plaza o trastero (los recibos ya emitidos no cambian)")
+    @PutMapping("/{id}/iva")
+    @PreAuthorize("hasAnyRole('PROPIETARIO', 'ADMIN')")
+    public ContratoResponse cambiarIva(@PathVariable Integer id, @Valid @RequestBody ContratoService.IvaRequest req,
+                                       @AuthenticationPrincipal UsuarioAutenticado actor) {
+        return contratos.cambiarIva(id, req, actor);
+    }
+
     @Operation(summary = "Finaliza hoy el contrato y libera la habitación")
     @PostMapping("/{id}/finalizar")
     @PreAuthorize("hasAnyRole('PROPIETARIO', 'ADMIN')")

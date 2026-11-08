@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.Gasto;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ public final class GastoDtos {
             String direccionPiso,
             Integer idHabitacion,
             Integer numeroHabitacion,
+            TipoUnidad tipoUnidad,
             Integer idIncidencia,
             Gasto.Categoria categoria,
             String concepto,
@@ -41,6 +43,7 @@ public final class GastoDtos {
             return new GastoResponse(gasto.getId(), gasto.getPiso().getId(), gasto.getPiso().getDireccion(),
                     gasto.getHabitacion() != null ? gasto.getHabitacion().getId() : null,
                     gasto.getHabitacion() != null ? gasto.getHabitacion().getNumero() : null,
+                    gasto.getHabitacion() != null ? gasto.getHabitacion().getTipo() : null,
                     gasto.getIdIncidencia(), gasto.getCategoria(), gasto.getConcepto(), gasto.getImporte(),
                     gasto.getFecha(), gasto.isDeducible(), gasto.getFacturaRuta() != null);
         }

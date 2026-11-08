@@ -1,5 +1,8 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.domain.TipoUnidad;
+import com.gestionap.api.domain.Vehiculo;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.events.Event;
@@ -55,9 +58,78 @@ public class ContratoPdfGenerator {
             int numeroHabitacion,
             LocalDate fechaInicio,
             LocalDate fechaFin,
-            BigDecimal precioMensual) {}
+            BigDecimal precioMensual,
+            TipoUnidad tipoUnidad,
+            String planta,
+            BigDecimal metros,
+            Vehiculo vehiculo,
+            boolean aplicaIva,
+            BigDecimal ivaPct,
+            @Schema(description = "null si el contrato no tiene fianza registrada") BigDecimal fianza) {
 
-    private static final String PLANTILLA = "/plantillas/plantilla_contrato.txt";
+        /** Contrato de habitación (el de siempre): fianza de una mensualidad, sin IVA. */
+        public DatosContrato(int idContrato, String arrendadorNombre, String arrendadorDni, String arrendatarioNombre,
+                             String arrendatarioDni, String direccionPiso, String ciudad, int numeroHabitacion,
+                             LocalDate fechaInicio, LocalDate fechaFin, BigDecimal precioMensual) {
+            this(idContrato, arrendadorNombre, arrendadorDni, arrendatarioNombre, arrendatarioDni, direccionPiso, ciudad,
+                    numeroHabitacion, fechaInicio, fechaFin, precioMensual, TipoUnidad.habitacion, null, null, null,
+                    false, null, precioMensual);
+        }
+    }
+
+    private static String plantilla(TipoUnidad tipo) {
+        return switch (tipo) {
+            case habitacion -> "/plantillas/plantilla_contrato.txt";
+            case plaza -> "/plantillas/plantilla_contrato_plaza.txt";
+            case trastero -> "/plantillas/plantilla_contrato_trastero.txt";
+        };
+    }
+
+    private static String subtitulo(TipoUnidad tipo) {
+        return switch (tipo) {
+            case habitacion -> "DE HABITACIÓN EN PISO COMPARTIDO";
+            case plaza -> "DE PLAZA DE GARAJE";
+            case trastero -> "DE TRASTERO";
+        };
+    }
+
+    private static String pie(TipoUnidad tipo) {
+        return switch (tipo) {
+            case habitacion -> "Arrendamiento de habitación en piso compartido";
+            case plaza -> "Arrendamiento de plaza de garaje";
+            case trastero -> "Arrendamiento de trastero";
+        };
+    }
+
+    /** ", planta -1, 12 m²" (lo que se haya indicado). */
+    private static String detalleUnidad(DatosContrato d) {
+        StringBuilder sb = new StringBuilder();
+        if (d.planta() != null && !d.planta().isBlank()) sb.append(", planta ").append(d.planta());
+        if (d.metros() != null) sb.append(", de ").append(d.metros().stripTrailingZeros().toPlainString().replace('.', ',')).append(" m²");
+        return sb.toString();
+    }
+
+    private static String rentaTexto(DatosContrato d) {
+        String total = euros(d.precioMensual());
+        if (!d.aplicaIva() || d.ivaPct() == null) return "La renta mensual pactada es de " + total + ".";
+        var iva = Iva.desglosar(d.precioMensual(), d.ivaPct());
+        return "La renta mensual pactada es de " + total + ", IVA incluido (base imponible " + euros(iva.base())
+                + " más IVA del " + iva.pct().stripTrailingZeros().toPlainString().replace('.', ',') + " %, "
+                + euros(iva.cuota()) + ").";
+    }
+
+    private static String fianzaTexto(DatosContrato d) {
+        if (d.fianza() == null || d.fianza().signum() == 0) {
+            return "Las partes acuerdan no constituir fianza.";
+        }
+        return "A la firma del presente contrato, el ARRENDATARIO entrega al ARRENDADOR " + euros(d.fianza())
+                + " en concepto de fianza, que se devolverá al terminar el contrato tras comprobar el estado de lo arrendado "
+                + "y la devolución de llaves y mandos, descontando en su caso los daños o rentas pendientes.";
+    }
+
+    private static String euros(BigDecimal importe) {
+        return Textos.euros(importe);
+    }
 
     // ── Colores ──────────────────────────────────────────────────
     private static final DeviceRgb PURPLE     = new DeviceRgb(108,  99, 255);
@@ -91,9 +163,10 @@ public class ContratoPdfGenerator {
 
     public byte[] generar(DatosContrato d) {
         String template;
-        try (InputStream is = ContratoPdfGenerator.class.getResourceAsStream(PLANTILLA)) {
+        String rutaPlantilla = plantilla(d.tipoUnidad());
+        try (InputStream is = ContratoPdfGenerator.class.getResourceAsStream(rutaPlantilla)) {
             if (is == null)
-                throw new IllegalStateException("No se encontró " + PLANTILLA + " en recursos.");
+                throw new IllegalStateException("No se encontró " + rutaPlantilla + " en recursos.");
             template = new String(is.readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -115,7 +188,11 @@ public class ContratoPdfGenerator {
                 .replace("{{FECHA_INICIO}}",        d.fechaInicio().format(FMT_ES))
                 .replace("{{FECHA_FIN}}",           d.fechaFin().format(FMT_ES))
                 .replace("{{RENTA_MENSUAL}}",       d.precioMensual().toPlainString())
-                .replace("{{FIANZA}}",              d.precioMensual().toPlainString())
+                .replace("{{FIANZA}}",              (d.fianza() != null ? d.fianza() : d.precioMensual()).toPlainString())
+                .replace("{{RENTA_TEXTO}}",         rentaTexto(d))
+                .replace("{{FIANZA_TEXTO}}",        fianzaTexto(d))
+                .replace("{{DETALLE_UNIDAD}}",      detalleUnidad(d))
+                .replace("{{VEHICULO}}",            d.vehiculo() == Vehiculo.moto ? "una motocicleta" : "un vehículo")
                 .replace("{{SUMINISTROS_INCLUIDOS}}", "La renta incluye agua, electricidad e internet.")
                 .replace("{{FECHA_HOY}}",           LocalDate.now().format(FMT_ES));
 
@@ -126,14 +203,14 @@ public class ContratoPdfGenerator {
             ByteArrayOutputStream salida = new ByteArrayOutputStream();
             PdfDocument pdf = new PdfDocument(new PdfWriter(salida));
             pdf.addEventHandler(PdfDocumentEvent.END_PAGE,
-                    new PageFooterHandler(fontNormal, d.idContrato()));
+                    new PageFooterHandler(fontNormal, d.idContrato(), pie(d.tipoUnidad())));
 
             // Márgenes: 2.54 cm ≈ 72 pt
             Document doc = new Document(pdf, PageSize.A4);
             doc.setMargins(72, 72, 72, 72);
 
             renderPdf(doc, texto, fontNormal, fontBold, direccion, ciudad,
-                      nombreInq, dniInq);
+                      nombreInq, dniInq, subtitulo(d.tipoUnidad()));
 
             doc.close();
             return salida.toByteArray();
@@ -152,12 +229,12 @@ public class ContratoPdfGenerator {
 
     private static void renderPdf(Document doc, String texto, PdfFont fontNormal,
                                   PdfFont fontBold, String direccion, String ciudad,
-                                  String nombreInq, String dniInq) {
+                                  String nombreInq, String dniInq, String subtitulo) {
         // ── Cabecera del documento ──
         doc.add(new Paragraph("CONTRATO DE ARRENDAMIENTO")
                 .setFont(fontBold).setFontSize(16).setFontColor(PURPLE)
                 .setTextAlignment(TextAlignment.CENTER).setMarginBottom(2));
-        doc.add(new Paragraph("DE HABITACIÓN EN PISO COMPARTIDO")
+        doc.add(new Paragraph(subtitulo)
                 .setFont(fontBold).setFontSize(16).setFontColor(PURPLE)
                 .setTextAlignment(TextAlignment.CENTER).setMarginBottom(6));
         doc.add(new Paragraph(direccion + " — " + ciudad)
@@ -340,10 +417,12 @@ public class ContratoPdfGenerator {
     static class PageFooterHandler implements IEventHandler {
         private final PdfFont font;
         private final int idContrato;
+        private final String descripcion;
 
-        PageFooterHandler(PdfFont font, int idContrato) {
-            this.font       = font;
-            this.idContrato = idContrato;
+        PageFooterHandler(PdfFont font, int idContrato, String descripcion) {
+            this.font        = font;
+            this.idContrato  = idContrato;
+            this.descripcion = descripcion;
         }
 
         @Override
@@ -370,7 +449,7 @@ public class ContratoPdfGenerator {
                       .setFillColor(new DeviceRgb(100, 100, 130))
                       .moveText(rect.getLeft() + 72, 40)
                       .showText("Contrato #" + idContrato
-                              + "  —  GestionAp  —  Arrendamiento de habitación en piso compartido")
+                              + "  —  GestionAp  —  " + descripcion)
                       .endText();
 
                 // Texto derecho (número de página)

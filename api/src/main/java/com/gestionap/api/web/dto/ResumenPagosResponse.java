@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
@@ -17,5 +18,5 @@ public record ResumenPagosResponse(
         List<Pendiente> pendientes) {
 
     public record Pendiente(Integer idContrato, ContratoResponse.InquilinoBreve inquilino, int numeroHabitacion,
-                            PisoBreve piso, BigDecimal importe) {}
+                            TipoUnidad tipoUnidad, PisoBreve piso, BigDecimal importe) {}
 }

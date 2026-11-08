@@ -74,7 +74,8 @@ public class FichaPisoPdf {
 
             seccion(doc, "RESUMEN", negrita);
             Table r = new Table(UnitValue.createPercentArray(new float[]{3, 2})).useAllAvailableWidth();
-            fila(r, "Habitaciones", String.valueOf(p.ocupacion().total()), normal, negrita);
+            String unidades = p.tipo().unidadPorDefecto().plural();
+            fila(r, Character.toUpperCase(unidades.charAt(0)) + unidades.substring(1), String.valueOf(p.ocupacion().total()), normal, negrita);
             fila(r, "Alquiladas / disponibles / mantenimiento",
                     p.ocupacion().alquiladas() + " / " + p.ocupacion().disponibles() + " / " + p.ocupacion().mantenimiento(), normal, negrita);
             fila(r, "Ingresos mensuales (contratos activos)", euros.format(p.ingresosMensuales()), normal, negrita);
@@ -91,10 +92,10 @@ public class FichaPisoPdf {
             }
             doc.add(r.setMarginBottom(16));
 
-            seccion(doc, "HABITACIONES", negrita);
-            Table th = cabecera(new float[]{1, 1.5f, 2}, negrita, "HAB.", "PRECIO", "ESTADO");
+            seccion(doc, unidades.toUpperCase(Textos.ES), negrita);
+            Table th = cabecera(new float[]{1, 1.5f, 2}, negrita, "UNIDAD", "PRECIO", "ESTADO");
             for (Habitacion h : habs) {
-                th.addCell(celda(String.valueOf(h.getNumero()), normal, false));
+                th.addCell(celda(h.etiqueta(), normal, false));
                 th.addCell(celda(euros.format(h.getPrecio()), normal, true));
                 th.addCell(celda(h.getEstado().name(), normal, false));
             }
@@ -104,11 +105,11 @@ public class FichaPisoPdf {
             if (activos.isEmpty()) {
                 doc.add(new Paragraph("Sin contratos activos.").setFont(normal).setFontSize(10).setFontColor(GRIS));
             } else {
-                Table tc = cabecera(new float[]{2.5f, 1, 1.5f, 1.5f}, negrita, "INQUILINO", "HAB.", "€/MES", "FIN");
+                Table tc = cabecera(new float[]{2.5f, 1, 1.5f, 1.5f}, negrita, "INQUILINO", "UNIDAD", "€/MES", "FIN");
                 BigDecimal total = BigDecimal.ZERO;
                 for (Contrato c : activos) {
                     tc.addCell(celda(c.getInquilino().getNombreCompleto(), normal, false));
-                    tc.addCell(celda(String.valueOf(c.getHabitacion().getNumero()), normal, false));
+                    tc.addCell(celda(c.getHabitacion().etiqueta(), normal, false));
                     tc.addCell(celda(euros.format(c.getPrecioMensual()), normal, true));
                     tc.addCell(celda(c.getFechaFin().format(FECHA), normal, false));
                     total = total.add(c.getPrecioMensual());

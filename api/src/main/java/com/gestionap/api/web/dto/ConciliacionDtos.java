@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.MetodoPago;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
@@ -19,6 +20,7 @@ public final class ConciliacionDtos {
 
     public record Movimiento(LocalDate fecha, String concepto, BigDecimal importe, BigDecimal saldo) {}
     public record Propuesta(Integer idContrato, String inquilino, Integer numeroHabitacion,
+                            TipoUnidad tipoUnidad,
                             String direccion, BigDecimal renta, int puntuacion, String confianza,
                             boolean yaRegistrado, boolean preseleccionada) {}
     public record MovimientoAnalizado(int indice, Movimiento movimiento, Propuesta propuesta) {}

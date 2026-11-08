@@ -1,5 +1,6 @@
 package com.gestionap.api.web;
 
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.service.PagoService;
 import com.gestionap.api.web.dto.CobroAtrasadoResponse;
@@ -43,22 +44,26 @@ public class PagoController {
     public List<PagoResponse> listar(@Parameter(example = "2026-10") @RequestParam(required = false) YearMonth mes,
                                      @RequestParam(required = false) Integer inquilino,
                                      @RequestParam(required = false) Integer piso,
+                                     @RequestParam(required = false) TipoInmueble tipo,
                                      @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return pagos.listar(mes, inquilino, piso, actor);
+        return pagos.listar(mes, inquilino, piso, tipo, actor);
     }
 
     @Operation(summary = "Esperado, cobrado y pendiente del mes, con los contratos sin pago")
     @GetMapping("/resumen")
     public ResumenPagosResponse resumen(@Parameter(example = "2026-10") @RequestParam(required = false) YearMonth mes,
+                                        @Parameter(description = "Opcional: vivienda, garajes o trasteros")
+                                        @RequestParam(required = false) TipoInmueble tipo,
                                         @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return pagos.resumen(mes != null ? mes : YearMonth.now(), actor);
+        return pagos.resumen(mes != null ? mes : YearMonth.now(), tipo, actor);
     }
 
     @Operation(summary = "Cobros atrasados: meses anteriores al actual sin ningún pago de un contrato vigente")
     @GetMapping("/atrasados")
     public List<CobroAtrasadoResponse> atrasados(@RequestParam(defaultValue = "12") int meses,
+                                                 @RequestParam(required = false) TipoInmueble tipo,
                                                  @AuthenticationPrincipal UsuarioAutenticado actor) {
-        return pagos.atrasados(meses, actor);
+        return pagos.atrasados(meses, tipo, actor);
     }
 
     @Operation(summary = "Registra un pago de un contrato activo")

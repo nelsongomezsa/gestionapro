@@ -110,7 +110,7 @@ public class InventarioService {
         }
         inventarios.save(i);
         actividad.registrar(actor.id(), "CREAR_INVENTARIO",
-                "Hab. " + h.getNumero() + " · " + h.getPiso().getDireccion() + " · " + req.tipo().name().toLowerCase());
+                h.etiqueta() + " · " + h.getPiso().getDireccion() + " · " + req.tipo().name().toLowerCase());
         return InventarioResponse.de(i);
     }
 
@@ -156,7 +156,7 @@ public class InventarioService {
             doc.setMargins(48, 48, 48, 48);
             doc.add(new Paragraph("GestionAp").setFont(negrita).setFontSize(11).setFontColor(AZUL));
             doc.add(new Paragraph("INVENTARIO DE " + i.getTipo().name()).setFont(negrita).setFontSize(18).setFontColor(MARINO));
-            doc.add(new Paragraph("Habitación " + h.getNumero() + " · " + h.getPiso().getDireccion() + ", "
+            doc.add(new Paragraph(h.getTipo().titulo() + " " + h.getNumero() + " · " + h.getPiso().getDireccion() + ", "
                     + h.getPiso().getCiudad().getNombre()).setFont(normal).setFontSize(10));
             String inquilino = i.getContrato() != null ? " · Inquilino: " + i.getContrato().getInquilino().getNombreCompleto() : "";
             doc.add(new Paragraph("Fecha: " + i.getFecha().format(FECHA) + inquilino)
@@ -184,7 +184,7 @@ public class InventarioService {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        String nombre = "Inventario-" + i.getTipo().name().toLowerCase() + "-hab" + h.getNumero() + "-" + i.getFecha() + ".pdf";
+        String nombre = "Inventario-" + i.getTipo().name().toLowerCase() + "-" + h.getTipo().name() + h.getNumero() + "-" + i.getFecha() + ".pdf";
         return new Pdf(nombre, salida.toByteArray());
     }
 

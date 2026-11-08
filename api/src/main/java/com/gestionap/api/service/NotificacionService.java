@@ -176,7 +176,7 @@ public class NotificacionService {
             if (!i.getFecha().isAfter(hoy.minusDays(7))) {
                 crearUnaVez(actor.id(), "incidencia_antigua_" + i.getId(), "incidencia_antigua",
                         "Incidencia sin resolver > 7 días",
-                        recortar(i.getDescripcion(), 120) + " (Hab. " + i.getHabitacion().getNumero() + ")");
+                        recortar(i.getDescripcion(), 120) + " (" + i.getHabitacion().etiqueta() + ")");
             }
         }
 
@@ -187,7 +187,7 @@ public class NotificacionService {
             if (!conContratoReciente.contains(h.getId())) {
                 crearUnaVez(actor.id(), "mantenimiento_largo_" + h.getId(), "mantenimiento_largo",
                         "Habitación en mantenimiento > 30 días",
-                        "Hab. " + h.getNumero() + " — " + h.getPiso().getDireccion());
+                        h.etiqueta() + " — " + h.getPiso().getDireccion());
             }
         }
     }

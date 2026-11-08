@@ -27,6 +27,11 @@ public class Piso {
     @JoinColumn(name = "id_ciudad", nullable = false)
     private Ciudad ciudad;
 
+    /** V12: vivienda (habitaciones), garajes o trasteros. */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo", nullable = false, columnDefinition = "enum('vivienda','garajes','trasteros')")
+    private TipoInmueble tipo = TipoInmueble.vivienda;
+
     /** Añadido en la migración V1. */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_propietario", nullable = false)

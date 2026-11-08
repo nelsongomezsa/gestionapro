@@ -54,12 +54,12 @@ public class BusquedaService {
         var rContratos = contratos.buscar(prop, null, null).stream()
                 .filter(c -> coincide(q, c.getInquilino().getNombreCompleto(), c.getHabitacion().getPiso().getDireccion()))
                 .limit(MAX).map(c -> new Resultado(c.getId(), c.getInquilino().getNombreCompleto(),
-                        "Hab. " + c.getHabitacion().getNumero() + " · " + c.getHabitacion().getPiso().getDireccion()
+                        c.getHabitacion().etiqueta() + " · " + c.getHabitacion().getPiso().getDireccion()
                                 + (c.estaActivoEn(hoy) ? "" : " · finalizado"))).toList();
         var rIncidencias = incidencias.buscar(prop, null, null, EnumSet.allOf(EstadoIncidencia.class)).stream()
                 .filter(i -> coincide(q, i.getDescripcion(), i.getHabitacion().getPiso().getDireccion()))
                 .limit(MAX).map(i -> new Resultado(i.getId(), i.getDescripcion(),
-                        "Hab. " + i.getHabitacion().getNumero() + " · " + i.getEstado().name().replace('_', ' '))).toList();
+                        i.getHabitacion().etiqueta() + " · " + i.getEstado().name().replace('_', ' '))).toList();
         return new BusquedaResponse(rPisos, rInquilinos, rContratos, rIncidencias);
     }
 

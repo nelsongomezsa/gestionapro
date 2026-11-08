@@ -1,5 +1,6 @@
 package com.gestionap.api.service;
 
+import com.gestionap.api.domain.TipoInmueble;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.MetodoPago;
 import com.gestionap.api.domain.Pago;
@@ -50,12 +51,20 @@ public class PagoService {
     /** Lista, opcionalmente de un mes, de un inquilino y de un piso. */
     @Transactional(readOnly = true)
     public List<PagoResponse> listar(YearMonth mes, Integer idInquilino, Integer idPiso, UsuarioAutenticado actor) {
+        return listar(mes, idInquilino, idPiso, null, actor);
+    }
+
+    /** Con filtro opcional por tipo de inmueble (vivienda, garajes, trasteros). */
+    @Transactional(readOnly = true)
+    public List<PagoResponse> listar(YearMonth mes, Integer idInquilino, Integer idPiso, TipoInmueble tipo,
+                                     UsuarioAutenticado actor) {
         var alcance = acceso.alcance(actor);
         Integer inquilino = alcance.idInquilino() != null ? alcance.idInquilino() : idInquilino;
         List<Pago> lista = pagos.buscar(alcance.idPropietario(), inquilino,
                         mes == null ? null : mes.atDay(1), mes == null ? null : mes.atEndOfMonth())
                 .stream()
                 .filter(p -> idPiso == null || p.getContrato().getHabitacion().getPiso().getId().equals(idPiso))
+                .filter(p -> tipo == null || p.getContrato().getHabitacion().getPiso().getTipo() == tipo)
                 .toList();
         var codigos = recibos.codigos(lista.stream().map(Pago::getId).toList());
         return lista.stream().map(p -> PagoResponse.de(p, codigos.get(p.getId()))).toList();
@@ -68,13 +77,20 @@ public class PagoService {
      */
     @Transactional(readOnly = true)
     public ResumenPagosResponse resumen(YearMonth mes, UsuarioAutenticado actor) {
+        return resumen(mes, null, actor);
+    }
+
+    @Transactional(readOnly = true)
+    public ResumenPagosResponse resumen(YearMonth mes, TipoInmueble tipo, UsuarioAutenticado actor) {
         var alcance = acceso.alcance(actor);
         LocalDate inicio = mes.atDay(1);
         LocalDate fin = mes.atEndOfMonth();
         List<Contrato> vigentes = contratos.buscar(alcance.idPropietario(), alcance.idInquilino(), null).stream()
                 .filter(c -> !c.getFechaInicio().isAfter(fin) && !c.getFechaFin().isBefore(inicio))
+                .filter(c -> tipo == null || c.getHabitacion().getPiso().getTipo() == tipo)
                 .toList();
-        List<Pago> delMes = pagos.buscar(alcance.idPropietario(), alcance.idInquilino(), inicio, fin);
+        List<Pago> delMes = pagos.buscar(alcance.idPropietario(), alcance.idInquilino(), inicio, fin).stream()
+                .filter(p -> tipo == null || p.getContrato().getHabitacion().getPiso().getTipo() == tipo).toList();
         Set<Integer> conPago = delMes.stream().map(p -> p.getContrato().getId()).collect(Collectors.toSet());
 
         List<ResumenPagosResponse.Pendiente> pendientes = vigentes.stream()
@@ -82,7 +98,7 @@ public class PagoService {
                 .map(c -> new ResumenPagosResponse.Pendiente(c.getId(),
                         new ContratoResponse.InquilinoBreve(c.getInquilino().getId(), c.getInquilino().getNombreCompleto(),
                                 c.getInquilino().getDni(), c.getInquilino().getTelefono(), c.getInquilino().getEmail()),
-                        c.getHabitacion().getNumero(), PisoBreve.de(c.getHabitacion().getPiso()), c.getPrecioMensual()))
+                        c.getHabitacion().getNumero(), c.getHabitacion().getTipo(), PisoBreve.de(c.getHabitacion().getPiso()), c.getPrecioMensual()))
                 .toList();
 
         return new ResumenPagosResponse(mes.toString(), Textos.mes(mes),
@@ -103,6 +119,11 @@ public class PagoService {
      */
     @Transactional(readOnly = true)
     public List<CobroAtrasadoResponse> atrasados(int meses, UsuarioAutenticado actor) {
+        return atrasados(meses, null, actor);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CobroAtrasadoResponse> atrasados(int meses, TipoInmueble tipo, UsuarioAutenticado actor) {
         if (meses < 1 || meses > MESES_ATRASADOS_MAX) {
             throw ApiException.badRequest("PARAMETRO_INVALIDO", "meses debe estar entre 1 y " + MESES_ATRASADOS_MAX);
         }
@@ -111,7 +132,8 @@ public class PagoService {
         YearMonth actual = YearMonth.from(hoy);
         YearMonth desde = actual.minusMonths(meses);
         YearMonth hasta = actual.minusMonths(1);
-        List<Contrato> lista = contratos.buscar(alcance.idPropietario(), alcance.idInquilino(), null);
+        List<Contrato> lista = contratos.buscar(alcance.idPropietario(), alcance.idInquilino(), null).stream()
+                .filter(c -> tipo == null || c.getHabitacion().getPiso().getTipo() == tipo).toList();
         Set<String> conPago = pagos.buscar(alcance.idPropietario(), alcance.idInquilino(), desde.atDay(1), hasta.atEndOfMonth())
                 .stream().map(p -> p.getContrato().getId() + "|" + YearMonth.from(p.getFechaPago()))
                 .collect(Collectors.toSet());
@@ -123,7 +145,7 @@ public class PagoService {
                 res.add(new CobroAtrasadoResponse(c.getId(),
                         new ContratoResponse.InquilinoBreve(c.getInquilino().getId(), c.getInquilino().getNombreCompleto(),
                                 c.getInquilino().getDni(), c.getInquilino().getTelefono(), c.getInquilino().getEmail()),
-                        c.getHabitacion().getNumero(), PisoBreve.de(c.getHabitacion().getPiso()), m.toString(), Textos.mes(m),
+                        c.getHabitacion().getNumero(), c.getHabitacion().getTipo(), PisoBreve.de(c.getHabitacion().getPiso()), m.toString(), Textos.mes(m),
                         c.getPrecioMensual(), Math.max(0, ChronoUnit.DAYS.between(m.atDay(DIA_LIMITE_PAGO), hoy)),
                         c.estaActivoEn(hoy)));
             }

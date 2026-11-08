@@ -1,0 +1,61 @@
+CONTRATO DE ARRENDAMIENTO DE TRASTERO
+
+REUNIDOS:
+De una parte, como ARRENDADOR: {{ARRENDADOR_NOMBRE}}, mayor de edad, con DNI {{ARRENDADOR_DNI}}, con domicilio a efectos de notificaciones en {{DIRECCION_PISO}}, {{CIUDAD}}.
+
+De otra parte, como ARRENDATARIO: {{ARRENDATARIO_NOMBRE}}, mayor de edad, con DNI {{ARRENDATARIO_DNI}}.
+
+Ambas partes se reconocen capacidad legal suficiente para contratar y, libre y voluntariamente,
+
+EXPONEN:
+Que el ARRENDADOR es propietario del trastero número {{NUMERO_HABITACION}} del inmueble sito en {{DIRECCION_PISO}}, {{CIUDAD}}{{DETALLE_UNIDAD}}, y desea arrendarlo al ARRENDATARIO, que lo acepta.
+
+CLÁUSULAS:
+
+PRIMERA - OBJETO
+El ARRENDADOR cede en arrendamiento al ARRENDATARIO el uso del TRASTERO Nº {{NUMERO_HABITACION}} para guardar enseres y objetos personales. Se trata de un arrendamiento para uso distinto del de vivienda, que se rige por lo pactado en este contrato y, en lo no previsto, por el Código Civil. El trastero no podrá usarse como vivienda, local de trabajo ni lugar de reunión.
+
+SEGUNDA - DURACIÓN
+El contrato comienza el {{FECHA_INICIO}} y finaliza el {{FECHA_FIN}}. Cualquiera de las partes podrá darlo por terminado antes de esa fecha comunicándolo por escrito a la otra con al menos 15 días de antelación. Al vencimiento, si ninguna de las partes manifiesta lo contrario, se prorrogará por meses.
+
+TERCERA - RENTA
+{{RENTA_TEXTO}} La renta se abonará dentro de los primeros 5 días de cada mes mediante transferencia bancaria o domiciliación. El impago de dos mensualidades será causa de resolución del contrato.
+
+CUARTA - FIANZA
+{{FIANZA_TEXTO}}
+
+QUINTA - LLAVES Y CANDADO
+El ARRENDADOR entrega al ARRENDATARIO las llaves y, en su caso, el candado que se detallan en el Anexo I. Al terminar el contrato, el ARRENDATARIO devolverá las llaves y dejará el trastero vacío y limpio.
+
+SEXTA - USO Y CONSERVACIÓN
+Queda prohibido guardar en el trastero materiales inflamables, explosivos, tóxicos, perecederos o ilegales, así como animales. El ARRENDATARIO respetará las normas de la comunidad de propietarios y comunicará cualquier humedad, filtración o avería de la iluminación o la cerradura.
+
+SÉPTIMA - GASTOS Y SEGURO
+Los gastos de comunidad y el IBI del trastero corren a cargo del ARRENDADOR. El ARRENDADOR no responde del robo, la pérdida o el deterioro de los objetos guardados; se recomienda al ARRENDATARIO asegurarlos.
+
+OCTAVA - ACCESO DEL ARRENDADOR
+El ARRENDADOR podrá acceder al trastero con aviso previo de 24 horas, salvo urgencia (por ejemplo, una fuga de agua).
+
+NOVENA - CESIÓN Y SUBARRIENDO
+El ARRENDATARIO no podrá ceder ni subarrendar el trastero sin el consentimiento escrito del ARRENDADOR.
+
+DÉCIMA - PROTECCIÓN DE DATOS Y JURISDICCIÓN
+Los datos personales de ambas partes se tratarán conforme al RGPD y la Ley Orgánica 3/2018, exclusivamente para la gestión del presente contrato. Para cualquier controversia, las partes se someten a los Juzgados y Tribunales de {{CIUDAD}}.
+
+FIRMA:
+En {{CIUDAD}}, a {{FECHA_HOY}}.
+
+EL ARRENDADOR:::{{ARRENDADOR_NOMBRE}}:::DNI: {{ARRENDADOR_DNI}}
+EL ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}:::DNI: {{ARRENDATARIO_DNI}}
+
+ANEXO I - ENTREGA DEL TRASTERO Nº {{NUMERO_HABITACION}}
+Estado en el momento de la entrega: BUENO
+- Llaves (número):______________
+- Candado:______________
+- Estado de paredes, suelo y puerta:______________
+- Iluminación:______________
+- Otros:______________
+
+Conforme:
+ARRENDADOR:::{{ARRENDADOR_NOMBRE}}
+ARRENDATARIO:::{{ARRENDATARIO_NOMBRE}}

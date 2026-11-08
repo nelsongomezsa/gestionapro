@@ -89,7 +89,8 @@ public class PanelService {
                 pendientesInc.size() - incPendientes, cobrado, anterior, anteriorMismoDia, diaComparado,
                 Textos.mesCorto(mesAnterior), variacion(cobrado, anteriorMismoDia),
                 activos.stream().map(Contrato::getPrecioMensual).reduce(BigDecimal.ZERO, BigDecimal::add),
-                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes, pagoService.atrasados(12, actor)), proximos,
+                cashFlow, seisMeses, alertas(ocupacion, proximos, incPendientes, pagoService.atrasados(12, actor),
+                        pisos.hayNoViviendas(acceso.filtroPropietario(actor))), proximos,
                 actividadReciente(actor, ACTIVIDAD_RECIENTE));
     }
 
@@ -203,7 +204,7 @@ public class PanelService {
     }
 
     private static List<Alerta> alertas(Ocupacion ocupacion, List<ContratoResponse> proximos, long incidenciasPendientes,
-                                        List<CobroAtrasadoResponse> atrasados) {
+                                        List<CobroAtrasadoResponse> atrasados, boolean unidades) {
         List<Alerta> alertas = new ArrayList<>();
         if (!atrasados.isEmpty()) {
             // Lo primero: dinero que se debe de meses ya cerrados.
@@ -227,7 +228,7 @@ public class PanelService {
         }
         if (ocupacion.habitaciones() > 0 && ocupacion.porcentaje() < 75) {
             alertas.add(new Alerta("OCUPACION", ocupacion.salud(),
-                    ocupacion.disponibles() + " habitaciones libres y " + ocupacion.mantenimiento() + " en mantenimiento",
+                    ocupacion.disponibles() + (unidades ? " unidades libres y " : " habitaciones libres y ") + ocupacion.mantenimiento() + " en mantenimiento",
                     ocupacion.porcentaje() < 40 ? "negativo" : "aviso"));
         }
         return alertas;

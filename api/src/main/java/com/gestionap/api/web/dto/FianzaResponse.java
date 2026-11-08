@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.Fianza;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ public record FianzaResponse(
         Integer idContrato,
         String inquilino,
         int numeroHabitacion,
+        TipoUnidad tipoUnidad,
         PisoBreve piso,
         BigDecimal importe,
         LocalDate fechaCobro,
@@ -35,7 +37,7 @@ public record FianzaResponse(
                 ? (retenido.signum() == 0 ? Estado.DEVUELTA : Estado.DEVUELTA_PARCIAL)
                 : (f.getFechaDeposito() != null ? Estado.DEPOSITADA : Estado.SIN_DEPOSITAR);
         return new FianzaResponse(f.getId(), c.getId(), c.getInquilino().getNombreCompleto(),
-                c.getHabitacion().getNumero(), PisoBreve.de(c.getHabitacion().getPiso()),
+                c.getHabitacion().getNumero(), c.getHabitacion().getTipo(), PisoBreve.de(c.getHabitacion().getPiso()),
                 f.getImporte(), f.getFechaCobro(), f.getFechaDeposito(), f.getOrganismoDeposito(),
                 f.getReferenciaDeposito(), f.getFechaDevolucion(), f.getImporteDevuelto(), f.getMotivoRetencion(),
                 f.getNotas(), estado, f.devuelta() ? BigDecimal.ZERO : f.getImporte(), retenido);

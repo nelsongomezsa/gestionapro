@@ -93,7 +93,7 @@ public class RecordatoriosPago {
             if (notificaciones.yaExiste(propietario, referencia)) continue;
             boolean ok = email.enviar(inquilino.getEmail(), "Recordatorio: renta de " + Textos.mes(mes),
                     "Hola, " + inquilino.getNombre() + ":\n\nTe recordamos que la renta de " + Textos.mes(mes) + " ("
-                            + Textos.euros(c.getPrecioMensual()) + ") de la habitación " + c.getHabitacion().getNumero()
+                            + Textos.euros(c.getPrecioMensual()) + ") de " + c.getHabitacion().getTipo().nombre() + " " + c.getHabitacion().getNumero()
                             + " vence el " + vence.format(FECHA) + ". Si ya la has pagado, ignora este mensaje.\n\nGestionAp");
             if (ok) {
                 notificaciones.crearUnaVez(propietario, referencia, "recordatorio_enviado", "Recordatorio enviado",

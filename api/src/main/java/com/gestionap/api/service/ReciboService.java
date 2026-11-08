@@ -84,6 +84,13 @@ public class ReciboService {
             Integer ultimo = recibos.ultimoNumero(prop, anio);
             r.setNumero(ultimo == null ? 1 : ultimo + 1);
             r.setFechaEmision(LocalDateTime.now());
+            Contrato c = p.getContrato();
+            if (c.isAplicaIva() && c.getIvaPct() != null) {
+                var d = Iva.desglosar(p.getCantidad(), c.getIvaPct());
+                r.setBaseImponible(d.base());
+                r.setIvaPct(d.pct());
+                r.setCuotaIva(d.cuota());
+            }
             return recibos.saveAndFlush(r);
         });
     }
@@ -157,13 +164,27 @@ public class ReciboService {
             partes.addCell(parte("ARRENDATARIO", inquilino.getNombreCompleto(), inquilino.getDni(), normal, negrita));
             doc.add(partes.setMarginBottom(12));
 
-            String concepto = "Renta de " + Textos.mes(YearMonth.from(p.getFechaPago())) + " · habitación "
-                    + c.getHabitacion().getNumero() + ", " + piso.getDireccion() + ", " + piso.getCiudad().getNombre();
+            String concepto = "Renta de " + Textos.mes(YearMonth.from(p.getFechaPago())) + " · "
+                    + c.getHabitacion().getTipo().nombre() + " " + c.getHabitacion().getNumero() + ", "
+                    + piso.getDireccion() + ", " + piso.getCiudad().getNombre();
             Table detalle = new Table(UnitValue.createPercentArray(new float[]{3, 1})).useAllAvailableWidth();
             detalle.addCell(sin(etiqueta("CONCEPTO", negrita)).add(new Paragraph(concepto).setFont(normal).setFontSize(10)));
             detalle.addCell(sin(etiqueta("IMPORTE", negrita).setTextAlignment(TextAlignment.RIGHT))
                     .add(new Paragraph(euros.format(p.getCantidad())).setFont(negrita).setFontSize(16)
                             .setFontColor(MARINO).setTextAlignment(TextAlignment.RIGHT)));
+            if (r.getBaseImponible() != null) {
+                // Desglose guardado al emitir el recibo (V12).
+                detalle.addCell(sin(new Paragraph("Base imponible").setFont(normal).setFontSize(9)));
+                detalle.addCell(sin(new Paragraph(euros.format(r.getBaseImponible())).setFont(normal).setFontSize(9)
+                        .setTextAlignment(TextAlignment.RIGHT)));
+                detalle.addCell(sin(new Paragraph("IVA " + r.getIvaPct().stripTrailingZeros().toPlainString().replace('.', ',') + " %")
+                        .setFont(normal).setFontSize(9)));
+                detalle.addCell(sin(new Paragraph(euros.format(r.getCuotaIva())).setFont(normal).setFontSize(9)
+                        .setTextAlignment(TextAlignment.RIGHT)));
+                detalle.addCell(sin(new Paragraph("Total").setFont(negrita).setFontSize(9)));
+                detalle.addCell(sin(new Paragraph(euros.format(p.getCantidad())).setFont(negrita).setFontSize(9)
+                        .setTextAlignment(TextAlignment.RIGHT)));
+            }
             doc.add(detalle.setBorderTop(new SolidBorder(GRIS, 0.5f)).setBorderBottom(new SolidBorder(GRIS, 0.5f))
                     .setPaddingTop(6).setPaddingBottom(6).setMarginBottom(10));
 

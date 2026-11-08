@@ -1,5 +1,6 @@
 package com.gestionap.api.web.dto;
 
+import com.gestionap.api.domain.TipoUnidad;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.NivelVencimiento;
 
@@ -10,6 +11,7 @@ public record ContratoBreve(
         Integer id,
         Integer idHabitacion,
         int numeroHabitacion,
+        TipoUnidad tipoUnidad,
         PisoBreve piso,
         LocalDate fechaInicio,
         LocalDate fechaFin,
@@ -18,7 +20,7 @@ public record ContratoBreve(
         NivelVencimiento vencimiento) {
 
     public static ContratoBreve de(Contrato c, LocalDate hoy) {
-        return new ContratoBreve(c.getId(), c.getHabitacion().getId(), c.getHabitacion().getNumero(),
+        return new ContratoBreve(c.getId(), c.getHabitacion().getId(), c.getHabitacion().getNumero(), c.getHabitacion().getTipo(),
                 PisoBreve.de(c.getHabitacion().getPiso()), c.getFechaInicio(), c.getFechaFin(), c.getPrecioMensual(),
                 c.estaActivoEn(hoy), NivelVencimiento.de(c.getFechaFin(), hoy));
     }
