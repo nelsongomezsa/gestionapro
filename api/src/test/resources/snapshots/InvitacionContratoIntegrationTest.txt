@@ -205,7 +205,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/208/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### flujoCompleto_invitar_registrar_yVerSoloSuContrato #7
@@ -270,7 +270,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 409,
   "codigo": "INQUILINO_YA_REGISTRADO",
   "mensaje": "Este inquilino ya tiene una cuenta",
-  "path": "/api/inquilinos/239/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### la_BD_guardaElHashDelCodigo_noElCodigo #1
@@ -407,7 +407,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/211/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### propietario_noPuedeInvitarAInquilinosDeOtro #1
@@ -434,6 +434,6 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/230/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 

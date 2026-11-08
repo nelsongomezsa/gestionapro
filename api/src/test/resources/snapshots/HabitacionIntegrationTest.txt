@@ -87,7 +87,7 @@ DELETE /api/habitaciones/{n}
   "status": 409,
   "codigo": "HABITACION_CON_HISTORIAL",
   "mensaje": "No se puede borrar una habitación con contratos o incidencias registrados",
-  "path": "/api/habitaciones/291"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### borrarConContrato_409_yAjena_404 #3
@@ -98,7 +98,7 @@ DELETE /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/293"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### cambiarEstado_yNoDejarDeEstarAlquiladaConContratoActivo #1
@@ -141,7 +141,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 409,
   "codigo": "HABITACION_CON_CONTRATO_ACTIVO",
   "mensaje": "La habitación tiene un contrato activo: finalízalo antes de cambiar su estado",
-  "path": "/api/habitaciones/297/estado"
+  "path": "/api/habitaciones/{n}/estado"
 }
 
 ### cambiarEstado_yNoDejarDeEstarAlquiladaConContratoActivo #4
@@ -152,7 +152,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 400,
   "codigo": "JSON_INVALIDO",
   "mensaje": "El cuerpo de la petición no es un JSON válido",
-  "path": "/api/habitaciones/298/estado"
+  "path": "/api/habitaciones/{n}/estado"
 }
 
 ### crearEnPisoAjeno_404_yDatosInvalidos_400 #1
@@ -264,7 +264,7 @@ GET /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/278"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### filtros_porPisoEstadoYTexto #1

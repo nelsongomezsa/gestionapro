@@ -1070,7 +1070,7 @@ POST /api/notificaciones/{n}/leida
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Notificación no encontrado",
-  "path": "/api/notificaciones/21/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### tendencia_comparaHastaElMismoDiaDelMesAnterior #1

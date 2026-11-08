@@ -57,7 +57,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/445/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### inventariosDeUnaHabitacionAjena_404 #3
@@ -138,6 +138,6 @@ GET /api/gastos/{n}/factura
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/18/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 

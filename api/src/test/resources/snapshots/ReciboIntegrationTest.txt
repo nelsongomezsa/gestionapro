@@ -21,7 +21,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 409,
   "codigo": "INQUILINO_SIN_EMAIL",
   "mensaje": "El inquilino no tiene email",
-  "path": "/api/pagos/47/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### enviarRecibo_sinEmailConfigurado_devuelveNoEnviado_ySinEmailDelInquilino409 #3
@@ -147,7 +147,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/53/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### recibo_soloLoVenElPropietarioElAdminYSuInquilino #3
@@ -199,7 +199,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/54/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### recibo_soloLoVenElPropietarioElAdminYSuInquilino #8
@@ -210,7 +210,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pagos/53/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### registrarPago_numeraLosRecibosPorPropietarioYAnio #1

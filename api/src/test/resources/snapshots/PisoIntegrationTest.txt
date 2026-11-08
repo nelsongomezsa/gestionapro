@@ -201,7 +201,7 @@ DELETE /api/pisos/{n}
   "status": 409,
   "codigo": "PISO_CON_CONTRATOS_ACTIVOS",
   "mensaje": "Tiene 1 contrato activo: finalízalos antes de borrar el piso",
-  "path": "/api/pisos/79"
+  "path": "/api/pisos/{n}"
 }
 
 ### borrar_conContratoActivo_conHistorial_oConGastos_409ExplicandoPorque #3
@@ -212,7 +212,7 @@ DELETE /api/pisos/{n}
   "status": 409,
   "codigo": "PISO_CON_HISTORIAL",
   "mensaje": "Tiene contratos o incidencias anteriores, que hay que conservar; no se puede borrar",
-  "path": "/api/pisos/80"
+  "path": "/api/pisos/{n}"
 }
 
 ### borrar_conContratoActivo_conHistorial_oConGastos_409ExplicandoPorque #4
@@ -238,7 +238,7 @@ DELETE /api/pisos/{n}
   "status": 409,
   "codigo": "PISO_CON_GASTOS",
   "mensaje": "Tiene gastos registrados (justificantes fiscales); bórralos antes si de verdad sobran",
-  "path": "/api/pisos/81"
+  "path": "/api/pisos/{n}"
 }
 
 ### borrar_conContratoActivo_conHistorial_oConGastos_409ExplicandoPorque #6
@@ -249,7 +249,7 @@ DELETE /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/78"
+  "path": "/api/pisos/{n}"
 }
 
 ### borrar_conContratoActivo_conHistorial_oConGastos_409ExplicandoPorque #7
@@ -275,7 +275,7 @@ DELETE /api/pisos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/77"
+  "path": "/api/pisos/{n}"
 }
 
 ### borrar_sinHistorial_borraTambienSusHabitaciones #1
@@ -306,7 +306,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/62"
+  "path": "/api/pisos/{n}"
 }
 
 ### ciudades_listarYDarDeAlta_sinDuplicar #1
@@ -975,7 +975,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/96"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietario_pisoDeOtro_es404ParaNoRevelarQueExiste #3
@@ -986,7 +986,7 @@ PUT /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/96"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietario_pisoDeOtro_es404ParaNoRevelarQueExiste #4
@@ -997,7 +997,7 @@ DELETE /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/96"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietario_soloVeSusPisos #1

@@ -306,6 +306,6 @@ PATCH /api/usuarios/{n}/activo
   "status": 409,
   "codigo": "CUENTA_ELIMINADA",
   "mensaje": "Esta cuenta fue eliminada por su titular",
-  "path": "/api/usuarios/380/activo"
+  "path": "/api/usuarios/{n}/activo"
 }
 

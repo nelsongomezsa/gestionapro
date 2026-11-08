@@ -14,6 +14,9 @@ spring:
         # se usan tal cual vienen en @Table/@Column.
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   jackson:
+    # Jackson 3 con los valores por defecto de Jackson 2: el JSON que reciben las apps no cambia
+    # (orden de los campos, enums, nulos en primitivos...). Ver docs/DECISIONES.md.
+    use-jackson2-defaults: true
     default-property-inclusion: non_null
   servlet:
     multipart:
@@ -85,3 +88,6 @@ management:
   endpoint:
     health:
       show-details: never
+      # Boot 4 activa las sondas liveness/readiness y las lista en /actuator/health: la respuesta queda como antes.
+      probes:
+        enabled: false

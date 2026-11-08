@@ -22,7 +22,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #3
@@ -38,7 +38,7 @@ DELETE /api/gastos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #5
@@ -49,7 +49,7 @@ DELETE /api/habitaciones/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #6
@@ -60,7 +60,7 @@ DELETE /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #7
@@ -71,7 +71,7 @@ DELETE /api/incidencias/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #8
@@ -82,7 +82,7 @@ DELETE /api/inquilinos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #9
@@ -93,7 +93,7 @@ DELETE /api/inventarios/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #10
@@ -104,7 +104,7 @@ DELETE /api/pagos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pagos/999999"
+  "path": "/api/pagos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #11
@@ -115,7 +115,7 @@ DELETE /api/pisos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #12
@@ -235,7 +235,7 @@ GET /api/contratos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999"
+  "path": "/api/contratos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #21
@@ -246,7 +246,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### inquilino_noLlegaALoDelPropietario #22
@@ -257,7 +257,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### inquilino_noLlegaALoDelPropietario #23
@@ -268,7 +268,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### inquilino_noLlegaALoDelPropietario #24
@@ -279,7 +279,7 @@ GET /api/contratos/{n}/firmas
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### inquilino_noLlegaALoDelPropietario #25
@@ -290,7 +290,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### inquilino_noLlegaALoDelPropietario #26
@@ -301,7 +301,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### inquilino_noLlegaALoDelPropietario #27
@@ -312,7 +312,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### inquilino_noLlegaALoDelPropietario #28
@@ -380,7 +380,7 @@ GET /api/gastos/{n}/factura
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### inquilino_noLlegaALoDelPropietario #35
@@ -402,7 +402,7 @@ GET /api/habitaciones/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #37
@@ -413,7 +413,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### inquilino_noLlegaALoDelPropietario #38
@@ -453,7 +453,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #40
@@ -464,7 +464,7 @@ GET /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #41
@@ -475,7 +475,7 @@ GET /api/incidencias/{n}/fotos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### inquilino_noLlegaALoDelPropietario #42
@@ -486,7 +486,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### inquilino_noLlegaALoDelPropietario #43
@@ -519,7 +519,7 @@ GET /api/inquilinos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #46
@@ -530,7 +530,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/999999/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### inquilino_noLlegaALoDelPropietario #47
@@ -541,7 +541,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### inquilino_noLlegaALoDelPropietario #48
@@ -552,7 +552,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #49
@@ -563,7 +563,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### inquilino_noLlegaALoDelPropietario #50
@@ -862,7 +862,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### inquilino_noLlegaALoDelPropietario #57
@@ -884,7 +884,7 @@ GET /api/pisos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #59
@@ -895,7 +895,7 @@ GET /api/pisos/{n}/ingresos
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/999999/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### inquilino_noLlegaALoDelPropietario #60
@@ -906,7 +906,7 @@ GET /api/pisos/{n}/pdf
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/999999/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### inquilino_noLlegaALoDelPropietario #61
@@ -917,7 +917,7 @@ GET /api/pisos/{n}/resumen-fiscal
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### inquilino_noLlegaALoDelPropietario #62
@@ -928,7 +928,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### inquilino_noLlegaALoDelPropietario #63
@@ -950,7 +950,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/estado",
+  "path": "/api/habitaciones/{n}/estado",
   "errores": [
     {
       "campo": "estado",
@@ -967,7 +967,7 @@ PATCH /api/incidencias/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### inquilino_noLlegaALoDelPropietario #66
@@ -978,7 +978,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/incidencias/999999/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### inquilino_noLlegaALoDelPropietario #67
@@ -1000,7 +1000,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/activo",
+  "path": "/api/usuarios/{n}/activo",
   "errores": [
     {
       "campo": "activo",
@@ -1017,7 +1017,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/rol",
+  "path": "/api/usuarios/{n}/rol",
   "errores": [
     {
       "campo": "rol",
@@ -1249,7 +1249,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/actualizacion-renta",
+  "path": "/api/contratos/{n}/actualizacion-renta",
   "errores": [
     {
       "campo": "fechaEfecto",
@@ -1270,7 +1270,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza/devolucion",
+  "path": "/api/contratos/{n}/fianza/devolucion",
   "errores": [
     {
       "campo": "fechaDevolucion",
@@ -1291,7 +1291,7 @@ POST /api/contratos/{n}/finalizar
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/999999/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### inquilino_noLlegaALoDelPropietario #84
@@ -1302,7 +1302,7 @@ POST /api/contratos/{n}/firmas/inquilino
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/contratos/999999/firmas/inquilino"
+  "path": "/api/contratos/{n}/firmas/inquilino"
 }
 
 ### inquilino_noLlegaALoDelPropietario #85
@@ -1313,7 +1313,7 @@ POST /api/contratos/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/mensajes",
+  "path": "/api/contratos/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -1380,7 +1380,7 @@ POST /api/gastos/{n}/factura
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### inquilino_noLlegaALoDelPropietario #89
@@ -1416,7 +1416,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/inventarios",
+  "path": "/api/habitaciones/{n}/inventarios",
   "errores": [
     {
       "campo": "elementos",
@@ -1458,7 +1458,7 @@ POST /api/incidencias/{n}/fotos
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### inquilino_noLlegaALoDelPropietario #93
@@ -1469,7 +1469,7 @@ POST /api/incidencias/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/incidencias/999999/mensajes",
+  "path": "/api/incidencias/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -1511,7 +1511,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/999999/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### inquilino_noLlegaALoDelPropietario #96
@@ -1522,7 +1522,7 @@ POST /api/inventarios/elementos/{n}/foto
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### inquilino_noLlegaALoDelPropietario #97
@@ -1540,7 +1540,7 @@ POST /api/notificaciones/{n}/leida
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Notificación no encontrado",
-  "path": "/api/notificaciones/999999/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### inquilino_noLlegaALoDelPropietario #99
@@ -1576,7 +1576,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pagos/999999/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### inquilino_noLlegaALoDelPropietario #101
@@ -1641,7 +1641,7 @@ PUT /api/analisis-inversion/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/analisis-inversion/999999",
+  "path": "/api/analisis-inversion/{n}",
   "errores": [
     {
       "campo": "entrada",
@@ -1662,7 +1662,7 @@ PUT /api/contratos/{n}/fianza
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza",
+  "path": "/api/contratos/{n}/fianza",
   "errores": [
     {
       "campo": "importe",
@@ -1679,7 +1679,7 @@ PUT /api/contratos/{n}/iva
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/iva",
+  "path": "/api/contratos/{n}/iva",
   "errores": [
     {
       "campo": "aplicaIva",
@@ -1696,7 +1696,7 @@ PUT /api/gastos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/gastos/999999",
+  "path": "/api/gastos/{n}",
   "errores": [
     {
       "campo": "categoria",
@@ -1729,7 +1729,7 @@ PUT /api/habitaciones/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999",
+  "path": "/api/habitaciones/{n}",
   "errores": [
     {
       "campo": "idPiso",
@@ -1754,7 +1754,7 @@ PUT /api/inquilinos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/inquilinos/999999",
+  "path": "/api/inquilinos/{n}",
   "errores": [
     {
       "campo": "apellidos",
@@ -1800,7 +1800,7 @@ PUT /api/pisos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/pisos/999999",
+  "path": "/api/pisos/{n}",
   "errores": [
     {
       "campo": "direccion",
@@ -2267,7 +2267,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Fianza no encontrado",
-  "path": "/api/contratos/226/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### lecturas_conDatos_cadaRol #14
@@ -2298,7 +2298,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 409,
   "codigo": "SIN_FIRMAS",
   "mensaje": "El contrato aún no tiene firmas",
-  "path": "/api/contratos/226/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### lecturas_conDatos_cadaRol #18
@@ -2664,7 +2664,7 @@ GET /api/gastos/{n}/factura
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### lecturas_conDatos_cadaRol #25
@@ -2757,7 +2757,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #30
@@ -2898,7 +2898,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 409,
   "codigo": "IBAN_NO_CONFIGURADO",
   "mensaje": "Añade tu IBAN en Perfil → Datos de cobro para generar el QR",
-  "path": "/api/inquilinos/246/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### lecturas_conDatos_cadaRol #37
@@ -2909,7 +2909,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### lecturas_conDatos_cadaRol #38
@@ -2920,7 +2920,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #39
@@ -2931,7 +2931,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #40
@@ -3703,7 +3703,7 @@ GET /api/contratos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226"
+  "path": "/api/contratos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #64
@@ -3714,7 +3714,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### lecturas_conDatos_cadaRol #65
@@ -3725,7 +3725,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### lecturas_conDatos_cadaRol #66
@@ -3736,7 +3736,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### lecturas_conDatos_cadaRol #67
@@ -3747,7 +3747,7 @@ GET /api/contratos/{n}/firmas
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### lecturas_conDatos_cadaRol #68
@@ -3758,7 +3758,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### lecturas_conDatos_cadaRol #69
@@ -3769,7 +3769,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #70
@@ -3780,7 +3780,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/226/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### lecturas_conDatos_cadaRol #71
@@ -4108,7 +4108,7 @@ GET /api/gastos/{n}/factura
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### lecturas_conDatos_cadaRol #78
@@ -4124,7 +4124,7 @@ GET /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/449"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #80
@@ -4135,7 +4135,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/449/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### lecturas_conDatos_cadaRol #81
@@ -4151,7 +4151,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #83
@@ -4162,7 +4162,7 @@ GET /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/44"
+  "path": "/api/incidencias/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #84
@@ -4173,7 +4173,7 @@ GET /api/incidencias/{n}/fotos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/44/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### lecturas_conDatos_cadaRol #85
@@ -4184,7 +4184,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/44/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### lecturas_conDatos_cadaRol #86
@@ -4205,7 +4205,7 @@ GET /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/246"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #89
@@ -4216,7 +4216,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/246/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### lecturas_conDatos_cadaRol #90
@@ -4227,7 +4227,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### lecturas_conDatos_cadaRol #91
@@ -4238,7 +4238,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #92
@@ -4249,7 +4249,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #93
@@ -4305,7 +4305,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/112/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### lecturas_conDatos_cadaRol #100
@@ -4321,7 +4321,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/281"
+  "path": "/api/pisos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #102
@@ -4332,7 +4332,7 @@ GET /api/pisos/{n}/ingresos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/281/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### lecturas_conDatos_cadaRol #103
@@ -4343,7 +4343,7 @@ GET /api/pisos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/281/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #104
@@ -4354,7 +4354,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/281/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### lecturas_conDatos_cadaRol #105
@@ -4365,7 +4365,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/281/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### lecturas_conDatos_cadaRol #106
@@ -4829,7 +4829,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Fianza no encontrado",
-  "path": "/api/contratos/226/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### lecturas_conDatos_cadaRol #120
@@ -4860,7 +4860,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 409,
   "codigo": "SIN_FIRMAS",
   "mensaje": "El contrato aún no tiene firmas",
-  "path": "/api/contratos/226/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### lecturas_conDatos_cadaRol #124
@@ -5226,7 +5226,7 @@ GET /api/gastos/{n}/factura
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### lecturas_conDatos_cadaRol #131
@@ -5319,7 +5319,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #136
@@ -5460,7 +5460,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 409,
   "codigo": "IBAN_NO_CONFIGURADO",
   "mensaje": "El propietario del piso no tiene IBAN configurado",
-  "path": "/api/inquilinos/246/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### lecturas_conDatos_cadaRol #143
@@ -5471,7 +5471,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### lecturas_conDatos_cadaRol #144
@@ -5482,7 +5482,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #145
@@ -5493,7 +5493,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #146
@@ -6118,7 +6118,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/226/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### lecturas_conDatos_cadaRol #171
@@ -6134,7 +6134,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Fianza no encontrado",
-  "path": "/api/contratos/226/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### lecturas_conDatos_cadaRol #173
@@ -6165,7 +6165,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 409,
   "codigo": "SIN_FIRMAS",
   "mensaje": "El contrato aún no tiene firmas",
-  "path": "/api/contratos/226/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### lecturas_conDatos_cadaRol #177
@@ -6233,7 +6233,7 @@ GET /api/gastos/{n}/factura
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### lecturas_conDatos_cadaRol #184
@@ -6255,7 +6255,7 @@ GET /api/habitaciones/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/habitaciones/449"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #186
@@ -6266,7 +6266,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/449/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### lecturas_conDatos_cadaRol #187
@@ -6306,7 +6306,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #189
@@ -6376,7 +6376,7 @@ GET /api/inquilinos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/246"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #195
@@ -6387,7 +6387,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inquilinos/246/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### lecturas_conDatos_cadaRol #196
@@ -6398,7 +6398,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### lecturas_conDatos_cadaRol #197
@@ -6409,7 +6409,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #198
@@ -6420,7 +6420,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #199
@@ -6718,7 +6718,7 @@ GET /api/pisos/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/281"
+  "path": "/api/pisos/{n}"
 }
 
 ### lecturas_conDatos_cadaRol #208
@@ -6729,7 +6729,7 @@ GET /api/pisos/{n}/ingresos
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/281/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### lecturas_conDatos_cadaRol #209
@@ -6740,7 +6740,7 @@ GET /api/pisos/{n}/pdf
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/281/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### lecturas_conDatos_cadaRol #210
@@ -6751,7 +6751,7 @@ GET /api/pisos/{n}/resumen-fiscal?anio=2026
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/281/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### lecturas_conDatos_cadaRol #211
@@ -6762,7 +6762,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv?anio=2026
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/pisos/281/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### lecturas_conDatos_cadaRol #212
@@ -6799,7 +6799,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #3
@@ -6815,7 +6815,7 @@ DELETE /api/gastos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #5
@@ -6826,7 +6826,7 @@ DELETE /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #6
@@ -6837,7 +6837,7 @@ DELETE /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #7
@@ -6848,7 +6848,7 @@ DELETE /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #8
@@ -6859,7 +6859,7 @@ DELETE /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #9
@@ -6870,7 +6870,7 @@ DELETE /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #10
@@ -6881,7 +6881,7 @@ DELETE /api/pagos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999"
+  "path": "/api/pagos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #11
@@ -6892,7 +6892,7 @@ DELETE /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #12
@@ -7227,7 +7227,7 @@ GET /api/contratos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999"
+  "path": "/api/contratos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #21
@@ -7238,7 +7238,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #22
@@ -7249,7 +7249,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #23
@@ -7260,7 +7260,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #24
@@ -7271,7 +7271,7 @@ GET /api/contratos/{n}/firmas
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #25
@@ -7282,7 +7282,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #26
@@ -7293,7 +7293,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #27
@@ -7304,7 +7304,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #28
@@ -7523,7 +7523,7 @@ GET /api/gastos/{n}/factura
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #35
@@ -7539,7 +7539,7 @@ GET /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #37
@@ -7550,7 +7550,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #38
@@ -7566,7 +7566,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #40
@@ -7577,7 +7577,7 @@ GET /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #41
@@ -7588,7 +7588,7 @@ GET /api/incidencias/{n}/fotos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #42
@@ -7599,7 +7599,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #43
@@ -7620,7 +7620,7 @@ GET /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #46
@@ -7631,7 +7631,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #47
@@ -7642,7 +7642,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #48
@@ -7653,7 +7653,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #49
@@ -7664,7 +7664,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #50
@@ -7720,7 +7720,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #57
@@ -7736,7 +7736,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #59
@@ -7747,7 +7747,7 @@ GET /api/pisos/{n}/ingresos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #60
@@ -7758,7 +7758,7 @@ GET /api/pisos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #61
@@ -7769,7 +7769,7 @@ GET /api/pisos/{n}/resumen-fiscal
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #62
@@ -7780,7 +7780,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #63
@@ -7802,7 +7802,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/estado",
+  "path": "/api/habitaciones/{n}/estado",
   "errores": [
     {
       "campo": "estado",
@@ -7819,7 +7819,7 @@ PATCH /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #66
@@ -7830,7 +7830,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #67
@@ -7851,7 +7851,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/activo",
+  "path": "/api/usuarios/{n}/activo",
   "errores": [
     {
       "campo": "activo",
@@ -7868,7 +7868,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/rol",
+  "path": "/api/usuarios/{n}/rol",
   "errores": [
     {
       "campo": "rol",
@@ -8100,7 +8100,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/actualizacion-renta",
+  "path": "/api/contratos/{n}/actualizacion-renta",
   "errores": [
     {
       "campo": "fechaEfecto",
@@ -8121,7 +8121,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza/devolucion",
+  "path": "/api/contratos/{n}/fianza/devolucion",
   "errores": [
     {
       "campo": "fechaDevolucion",
@@ -8142,7 +8142,7 @@ POST /api/contratos/{n}/finalizar
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #84
@@ -8153,7 +8153,7 @@ POST /api/contratos/{n}/firmas/inquilino
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/contratos/999999/firmas/inquilino"
+  "path": "/api/contratos/{n}/firmas/inquilino"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #85
@@ -8164,7 +8164,7 @@ POST /api/contratos/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/mensajes",
+  "path": "/api/contratos/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -8231,7 +8231,7 @@ POST /api/gastos/{n}/factura
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #89
@@ -8267,7 +8267,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/inventarios",
+  "path": "/api/habitaciones/{n}/inventarios",
   "errores": [
     {
       "campo": "elementos",
@@ -8309,7 +8309,7 @@ POST /api/incidencias/{n}/fotos
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #93
@@ -8320,7 +8320,7 @@ POST /api/incidencias/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/incidencias/999999/mensajes",
+  "path": "/api/incidencias/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -8362,7 +8362,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #96
@@ -8373,7 +8373,7 @@ POST /api/inventarios/elementos/{n}/foto
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #97
@@ -8391,7 +8391,7 @@ POST /api/notificaciones/{n}/leida
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Notificación no encontrado",
-  "path": "/api/notificaciones/999999/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #99
@@ -8427,7 +8427,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #101
@@ -8492,7 +8492,7 @@ PUT /api/analisis-inversion/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/analisis-inversion/999999",
+  "path": "/api/analisis-inversion/{n}",
   "errores": [
     {
       "campo": "entrada",
@@ -8513,7 +8513,7 @@ PUT /api/contratos/{n}/fianza
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza",
+  "path": "/api/contratos/{n}/fianza",
   "errores": [
     {
       "campo": "importe",
@@ -8530,7 +8530,7 @@ PUT /api/contratos/{n}/iva
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/iva",
+  "path": "/api/contratos/{n}/iva",
   "errores": [
     {
       "campo": "aplicaIva",
@@ -8547,7 +8547,7 @@ PUT /api/gastos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/gastos/999999",
+  "path": "/api/gastos/{n}",
   "errores": [
     {
       "campo": "categoria",
@@ -8580,7 +8580,7 @@ PUT /api/habitaciones/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999",
+  "path": "/api/habitaciones/{n}",
   "errores": [
     {
       "campo": "idPiso",
@@ -8605,7 +8605,7 @@ PUT /api/inquilinos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/inquilinos/999999",
+  "path": "/api/inquilinos/{n}",
   "errores": [
     {
       "campo": "apellidos",
@@ -8651,7 +8651,7 @@ PUT /api/pisos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/pisos/999999",
+  "path": "/api/pisos/{n}",
   "errores": [
     {
       "campo": "direccion",
@@ -8691,7 +8691,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #113
@@ -8707,7 +8707,7 @@ DELETE /api/gastos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #115
@@ -8718,7 +8718,7 @@ DELETE /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #116
@@ -8729,7 +8729,7 @@ DELETE /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #117
@@ -8740,7 +8740,7 @@ DELETE /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #118
@@ -8751,7 +8751,7 @@ DELETE /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #119
@@ -8762,7 +8762,7 @@ DELETE /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #120
@@ -8773,7 +8773,7 @@ DELETE /api/pagos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999"
+  "path": "/api/pagos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #121
@@ -8784,7 +8784,7 @@ DELETE /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #122
@@ -9153,7 +9153,7 @@ GET /api/contratos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999"
+  "path": "/api/contratos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #131
@@ -9164,7 +9164,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #132
@@ -9175,7 +9175,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #133
@@ -9186,7 +9186,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #134
@@ -9197,7 +9197,7 @@ GET /api/contratos/{n}/firmas
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #135
@@ -9208,7 +9208,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #136
@@ -9219,7 +9219,7 @@ GET /api/contratos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #137
@@ -9230,7 +9230,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #138
@@ -9469,7 +9469,7 @@ GET /api/gastos/{n}/factura
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Gasto no encontrado",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #145
@@ -9505,7 +9505,7 @@ GET /api/habitaciones/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #147
@@ -9516,7 +9516,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Habitación no encontrado",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #148
@@ -9556,7 +9556,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Foto no encontrado",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #150
@@ -9567,7 +9567,7 @@ GET /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #151
@@ -9578,7 +9578,7 @@ GET /api/incidencias/{n}/fotos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #152
@@ -9589,7 +9589,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #153
@@ -9637,7 +9637,7 @@ GET /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #156
@@ -9648,7 +9648,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #157
@@ -9659,7 +9659,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Elemento no encontrado",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #158
@@ -9670,7 +9670,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #159
@@ -9681,7 +9681,7 @@ GET /api/inventarios/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #160
@@ -9979,7 +9979,7 @@ GET /api/pagos/{n}/recibo
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #167
@@ -10014,7 +10014,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #169
@@ -10025,7 +10025,7 @@ GET /api/pisos/{n}/ingresos
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #170
@@ -10036,7 +10036,7 @@ GET /api/pisos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/999999/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #171
@@ -10047,7 +10047,7 @@ GET /api/pisos/{n}/resumen-fiscal
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #172
@@ -10058,7 +10058,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv
   "status": 400,
   "codigo": "PARAMETRO_REQUERIDO",
   "mensaje": "Falta el parámetro anio",
-  "path": "/api/pisos/999999/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #173
@@ -10103,7 +10103,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/estado",
+  "path": "/api/habitaciones/{n}/estado",
   "errores": [
     {
       "campo": "estado",
@@ -10120,7 +10120,7 @@ PATCH /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #176
@@ -10131,7 +10131,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/999999/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #177
@@ -10152,7 +10152,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/activo",
+  "path": "/api/usuarios/{n}/activo",
   "errores": [
     {
       "campo": "activo",
@@ -10169,7 +10169,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/usuarios/999999/rol",
+  "path": "/api/usuarios/{n}/rol",
   "errores": [
     {
       "campo": "rol",
@@ -10401,7 +10401,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/actualizacion-renta",
+  "path": "/api/contratos/{n}/actualizacion-renta",
   "errores": [
     {
       "campo": "fechaEfecto",
@@ -10422,7 +10422,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza/devolucion",
+  "path": "/api/contratos/{n}/fianza/devolucion",
   "errores": [
     {
       "campo": "fechaDevolucion",
@@ -10443,7 +10443,7 @@ POST /api/contratos/{n}/finalizar
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/999999/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #194
@@ -10454,7 +10454,7 @@ POST /api/contratos/{n}/firmas/inquilino
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/contratos/999999/firmas/inquilino"
+  "path": "/api/contratos/{n}/firmas/inquilino"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #195
@@ -10465,7 +10465,7 @@ POST /api/contratos/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/mensajes",
+  "path": "/api/contratos/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -10532,7 +10532,7 @@ POST /api/gastos/{n}/factura
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #199
@@ -10568,7 +10568,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999/inventarios",
+  "path": "/api/habitaciones/{n}/inventarios",
   "errores": [
     {
       "campo": "elementos",
@@ -10610,7 +10610,7 @@ POST /api/incidencias/{n}/fotos
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #203
@@ -10621,7 +10621,7 @@ POST /api/incidencias/{n}/mensajes
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/incidencias/999999/mensajes",
+  "path": "/api/incidencias/{n}/mensajes",
   "errores": [
     {
       "campo": "texto",
@@ -10663,7 +10663,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/999999/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #206
@@ -10674,7 +10674,7 @@ POST /api/inventarios/elementos/{n}/foto
   "status": 415,
   "codigo": "TIPO_NO_SOPORTADO",
   "mensaje": "Tipo de contenido no admitido en esta ruta",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #207
@@ -10692,7 +10692,7 @@ POST /api/notificaciones/{n}/leida
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Notificación no encontrado",
-  "path": "/api/notificaciones/999999/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #209
@@ -10728,7 +10728,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/999999/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### propietarioYAdmin_idsInexistentesYCuerposVacios #211
@@ -10793,7 +10793,7 @@ PUT /api/analisis-inversion/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/analisis-inversion/999999",
+  "path": "/api/analisis-inversion/{n}",
   "errores": [
     {
       "campo": "entrada",
@@ -10814,7 +10814,7 @@ PUT /api/contratos/{n}/fianza
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/fianza",
+  "path": "/api/contratos/{n}/fianza",
   "errores": [
     {
       "campo": "importe",
@@ -10831,7 +10831,7 @@ PUT /api/contratos/{n}/iva
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/contratos/999999/iva",
+  "path": "/api/contratos/{n}/iva",
   "errores": [
     {
       "campo": "aplicaIva",
@@ -10848,7 +10848,7 @@ PUT /api/gastos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/gastos/999999",
+  "path": "/api/gastos/{n}",
   "errores": [
     {
       "campo": "categoria",
@@ -10881,7 +10881,7 @@ PUT /api/habitaciones/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/999999",
+  "path": "/api/habitaciones/{n}",
   "errores": [
     {
       "campo": "idPiso",
@@ -10906,7 +10906,7 @@ PUT /api/inquilinos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/inquilinos/999999",
+  "path": "/api/inquilinos/{n}",
   "errores": [
     {
       "campo": "apellidos",
@@ -10952,7 +10952,7 @@ PUT /api/pisos/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/pisos/999999",
+  "path": "/api/pisos/{n}",
   "errores": [
     {
       "campo": "direccion",
@@ -10977,7 +10977,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #2
@@ -10999,7 +10999,7 @@ DELETE /api/gastos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #4
@@ -11010,7 +11010,7 @@ DELETE /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #5
@@ -11021,7 +11021,7 @@ DELETE /api/incidencias/fotos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #6
@@ -11032,7 +11032,7 @@ DELETE /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #7
@@ -11043,7 +11043,7 @@ DELETE /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #8
@@ -11054,7 +11054,7 @@ DELETE /api/inventarios/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #9
@@ -11076,7 +11076,7 @@ DELETE /api/pagos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999"
+  "path": "/api/pagos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #11
@@ -11087,7 +11087,7 @@ DELETE /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #12
@@ -11186,7 +11186,7 @@ GET /api/contratos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999"
+  "path": "/api/contratos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #21
@@ -11197,7 +11197,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #22
@@ -11208,7 +11208,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #23
@@ -11219,7 +11219,7 @@ GET /api/contratos/{n}/fianza
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #24
@@ -11230,7 +11230,7 @@ GET /api/contratos/{n}/firmas
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #25
@@ -11241,7 +11241,7 @@ GET /api/contratos/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #26
@@ -11252,7 +11252,7 @@ GET /api/contratos/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #27
@@ -11263,7 +11263,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #28
@@ -11340,7 +11340,7 @@ GET /api/gastos/{n}/factura
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #35
@@ -11362,7 +11362,7 @@ GET /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #37
@@ -11373,7 +11373,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #38
@@ -11395,7 +11395,7 @@ GET /api/incidencias/fotos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #40
@@ -11406,7 +11406,7 @@ GET /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #41
@@ -11417,7 +11417,7 @@ GET /api/incidencias/{n}/fotos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #42
@@ -11428,7 +11428,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #43
@@ -11461,7 +11461,7 @@ GET /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #46
@@ -11472,7 +11472,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #47
@@ -11483,7 +11483,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #48
@@ -11494,7 +11494,7 @@ GET /api/inventarios/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #49
@@ -11505,7 +11505,7 @@ GET /api/inventarios/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #50
@@ -11582,7 +11582,7 @@ GET /api/pagos/{n}/recibo
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #57
@@ -11604,7 +11604,7 @@ GET /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #59
@@ -11615,7 +11615,7 @@ GET /api/pisos/{n}/ingresos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #60
@@ -11626,7 +11626,7 @@ GET /api/pisos/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #61
@@ -11637,7 +11637,7 @@ GET /api/pisos/{n}/resumen-fiscal
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #62
@@ -11648,7 +11648,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #63
@@ -11670,7 +11670,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/estado"
+  "path": "/api/habitaciones/{n}/estado"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #65
@@ -11681,7 +11681,7 @@ PATCH /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #66
@@ -11692,7 +11692,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #67
@@ -11714,7 +11714,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/usuarios/999999/activo"
+  "path": "/api/usuarios/{n}/activo"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #69
@@ -11725,7 +11725,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/usuarios/999999/rol"
+  "path": "/api/usuarios/{n}/rol"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #70
@@ -11881,7 +11881,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #82
@@ -11892,7 +11892,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #83
@@ -11903,7 +11903,7 @@ POST /api/contratos/{n}/finalizar
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #84
@@ -11914,7 +11914,7 @@ POST /api/contratos/{n}/firmas/inquilino
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/firmas/inquilino"
+  "path": "/api/contratos/{n}/firmas/inquilino"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #85
@@ -11925,7 +11925,7 @@ POST /api/contratos/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #86
@@ -11958,7 +11958,7 @@ POST /api/gastos/{n}/factura
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #89
@@ -11980,7 +11980,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #91
@@ -12002,7 +12002,7 @@ POST /api/incidencias/{n}/fotos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #93
@@ -12013,7 +12013,7 @@ POST /api/incidencias/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #94
@@ -12035,7 +12035,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #96
@@ -12046,7 +12046,7 @@ POST /api/inventarios/elementos/{n}/foto
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #97
@@ -12068,7 +12068,7 @@ POST /api/notificaciones/{n}/leida
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/notificaciones/999999/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #99
@@ -12090,7 +12090,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #101
@@ -12123,7 +12123,7 @@ PUT /api/analisis-inversion/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #104
@@ -12134,7 +12134,7 @@ PUT /api/contratos/{n}/fianza
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #105
@@ -12145,7 +12145,7 @@ PUT /api/contratos/{n}/iva
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/iva"
+  "path": "/api/contratos/{n}/iva"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #106
@@ -12156,7 +12156,7 @@ PUT /api/gastos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #107
@@ -12167,7 +12167,7 @@ PUT /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #108
@@ -12178,7 +12178,7 @@ PUT /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### sinToken_401EnTodoLoQueNoEsPublico #109
@@ -12200,7 +12200,7 @@ PUT /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### tokenManipulado_401 #1
@@ -12226,7 +12226,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### tokenManipulado_401 #3
@@ -12248,7 +12248,7 @@ DELETE /api/gastos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### tokenManipulado_401 #5
@@ -12259,7 +12259,7 @@ DELETE /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### tokenManipulado_401 #6
@@ -12270,7 +12270,7 @@ DELETE /api/incidencias/fotos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### tokenManipulado_401 #7
@@ -12281,7 +12281,7 @@ DELETE /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### tokenManipulado_401 #8
@@ -12292,7 +12292,7 @@ DELETE /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### tokenManipulado_401 #9
@@ -12303,7 +12303,7 @@ DELETE /api/inventarios/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### tokenManipulado_401 #10
@@ -12325,7 +12325,7 @@ DELETE /api/pagos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999"
+  "path": "/api/pagos/{n}"
 }
 
 ### tokenManipulado_401 #12
@@ -12336,7 +12336,7 @@ DELETE /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### tokenManipulado_401 #13
@@ -12435,7 +12435,7 @@ GET /api/contratos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999"
+  "path": "/api/contratos/{n}"
 }
 
 ### tokenManipulado_401 #22
@@ -12446,7 +12446,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### tokenManipulado_401 #23
@@ -12457,7 +12457,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### tokenManipulado_401 #24
@@ -12468,7 +12468,7 @@ GET /api/contratos/{n}/fianza
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### tokenManipulado_401 #25
@@ -12479,7 +12479,7 @@ GET /api/contratos/{n}/firmas
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### tokenManipulado_401 #26
@@ -12490,7 +12490,7 @@ GET /api/contratos/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### tokenManipulado_401 #27
@@ -12501,7 +12501,7 @@ GET /api/contratos/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/pdf"
+  "path": "/api/contratos/{n}/pdf"
 }
 
 ### tokenManipulado_401 #28
@@ -12512,7 +12512,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### tokenManipulado_401 #29
@@ -12589,7 +12589,7 @@ GET /api/gastos/{n}/factura
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### tokenManipulado_401 #36
@@ -12611,7 +12611,7 @@ GET /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### tokenManipulado_401 #38
@@ -12622,7 +12622,7 @@ GET /api/habitaciones/{n}/inventarios
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### tokenManipulado_401 #39
@@ -12644,7 +12644,7 @@ GET /api/incidencias/fotos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/fotos/999999"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### tokenManipulado_401 #41
@@ -12655,7 +12655,7 @@ GET /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### tokenManipulado_401 #42
@@ -12666,7 +12666,7 @@ GET /api/incidencias/{n}/fotos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### tokenManipulado_401 #43
@@ -12677,7 +12677,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### tokenManipulado_401 #44
@@ -12710,7 +12710,7 @@ GET /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### tokenManipulado_401 #47
@@ -12721,7 +12721,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### tokenManipulado_401 #48
@@ -12732,7 +12732,7 @@ GET /api/inventarios/elementos/{n}/foto
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### tokenManipulado_401 #49
@@ -12743,7 +12743,7 @@ GET /api/inventarios/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999"
+  "path": "/api/inventarios/{n}"
 }
 
 ### tokenManipulado_401 #50
@@ -12754,7 +12754,7 @@ GET /api/inventarios/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/999999/pdf"
+  "path": "/api/inventarios/{n}/pdf"
 }
 
 ### tokenManipulado_401 #51
@@ -12831,7 +12831,7 @@ GET /api/pagos/{n}/recibo
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999/recibo"
+  "path": "/api/pagos/{n}/recibo"
 }
 
 ### tokenManipulado_401 #58
@@ -12853,7 +12853,7 @@ GET /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 
 ### tokenManipulado_401 #60
@@ -12864,7 +12864,7 @@ GET /api/pisos/{n}/ingresos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/ingresos"
+  "path": "/api/pisos/{n}/ingresos"
 }
 
 ### tokenManipulado_401 #61
@@ -12875,7 +12875,7 @@ GET /api/pisos/{n}/pdf
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### tokenManipulado_401 #62
@@ -12886,7 +12886,7 @@ GET /api/pisos/{n}/resumen-fiscal
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/resumen-fiscal"
+  "path": "/api/pisos/{n}/resumen-fiscal"
 }
 
 ### tokenManipulado_401 #63
@@ -12897,7 +12897,7 @@ GET /api/pisos/{n}/resumen-fiscal/csv
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999/resumen-fiscal/csv"
+  "path": "/api/pisos/{n}/resumen-fiscal/csv"
 }
 
 ### tokenManipulado_401 #64
@@ -12919,7 +12919,7 @@ PATCH /api/habitaciones/{n}/estado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/estado"
+  "path": "/api/habitaciones/{n}/estado"
 }
 
 ### tokenManipulado_401 #66
@@ -12930,7 +12930,7 @@ PATCH /api/incidencias/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999"
+  "path": "/api/incidencias/{n}"
 }
 
 ### tokenManipulado_401 #67
@@ -12941,7 +12941,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### tokenManipulado_401 #68
@@ -12963,7 +12963,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/usuarios/999999/activo"
+  "path": "/api/usuarios/{n}/activo"
 }
 
 ### tokenManipulado_401 #70
@@ -12974,7 +12974,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/usuarios/999999/rol"
+  "path": "/api/usuarios/{n}/rol"
 }
 
 ### tokenManipulado_401 #71
@@ -13084,7 +13084,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### tokenManipulado_401 #81
@@ -13095,7 +13095,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### tokenManipulado_401 #82
@@ -13106,7 +13106,7 @@ POST /api/contratos/{n}/finalizar
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### tokenManipulado_401 #83
@@ -13117,7 +13117,7 @@ POST /api/contratos/{n}/firmas/inquilino
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/firmas/inquilino"
+  "path": "/api/contratos/{n}/firmas/inquilino"
 }
 
 ### tokenManipulado_401 #84
@@ -13128,7 +13128,7 @@ POST /api/contratos/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### tokenManipulado_401 #85
@@ -13161,7 +13161,7 @@ POST /api/gastos/{n}/factura
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### tokenManipulado_401 #88
@@ -13183,7 +13183,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### tokenManipulado_401 #90
@@ -13205,7 +13205,7 @@ POST /api/incidencias/{n}/fotos
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### tokenManipulado_401 #92
@@ -13216,7 +13216,7 @@ POST /api/incidencias/{n}/mensajes
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/incidencias/999999/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### tokenManipulado_401 #93
@@ -13238,7 +13238,7 @@ POST /api/inquilinos/{n}/invitaciones
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999/invitaciones"
+  "path": "/api/inquilinos/{n}/invitaciones"
 }
 
 ### tokenManipulado_401 #95
@@ -13249,7 +13249,7 @@ POST /api/inventarios/elementos/{n}/foto
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inventarios/elementos/999999/foto"
+  "path": "/api/inventarios/elementos/{n}/foto"
 }
 
 ### tokenManipulado_401 #96
@@ -13271,7 +13271,7 @@ POST /api/notificaciones/{n}/leida
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/notificaciones/999999/leida"
+  "path": "/api/notificaciones/{n}/leida"
 }
 
 ### tokenManipulado_401 #98
@@ -13293,7 +13293,7 @@ POST /api/pagos/{n}/recibo/enviar
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pagos/999999/recibo/enviar"
+  "path": "/api/pagos/{n}/recibo/enviar"
 }
 
 ### tokenManipulado_401 #100
@@ -13326,7 +13326,7 @@ PUT /api/analisis-inversion/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/analisis-inversion/999999"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### tokenManipulado_401 #103
@@ -13337,7 +13337,7 @@ PUT /api/contratos/{n}/fianza
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### tokenManipulado_401 #104
@@ -13348,7 +13348,7 @@ PUT /api/contratos/{n}/iva
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/contratos/999999/iva"
+  "path": "/api/contratos/{n}/iva"
 }
 
 ### tokenManipulado_401 #105
@@ -13359,7 +13359,7 @@ PUT /api/gastos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/gastos/999999"
+  "path": "/api/gastos/{n}"
 }
 
 ### tokenManipulado_401 #106
@@ -13370,7 +13370,7 @@ PUT /api/habitaciones/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/habitaciones/999999"
+  "path": "/api/habitaciones/{n}"
 }
 
 ### tokenManipulado_401 #107
@@ -13381,7 +13381,7 @@ PUT /api/inquilinos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/inquilinos/999999"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### tokenManipulado_401 #108
@@ -13403,6 +13403,6 @@ PUT /api/pisos/{n}
   "status": 401,
   "codigo": "NO_AUTENTICADO",
   "mensaje": "Falta el token de acceso o no es válido",
-  "path": "/api/pisos/999999"
+  "path": "/api/pisos/{n}"
 }
 

@@ -156,7 +156,7 @@ POST /api/conciliacion/confirmar
   "path": "/api/conciliacion/confirmar"
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2999-01-01","importe":"450.00"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] #1
 POST /api/auth/login
 200 application/json
 {
@@ -171,7 +171,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2999-01-01","importe":"450.00"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [10] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -188,7 +188,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] cuerpo={} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] #1
 POST /api/auth/login
 200 application/json
 {
@@ -203,7 +203,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] cuerpo={} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [1] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -220,7 +220,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] cuerpo={"pagos":[]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] #1
 POST /api/auth/login
 200 application/json
 {
@@ -235,7 +235,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] cuerpo={"pagos":[]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [2] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -252,7 +252,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] cuerpo={"pagos":[null]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] #1
 POST /api/auth/login
 200 application/json
 {
@@ -267,7 +267,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] cuerpo={"pagos":[null]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [3] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -284,7 +284,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] cuerpo={"pagos":[{"fecha":"2026-01-01","importe":"450.00"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] #1
 POST /api/auth/login
 200 application/json
 {
@@ -299,7 +299,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] cuerpo={"pagos":[{"fecha":"2026-01-01","importe":"450.00"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [4] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -316,7 +316,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] cuerpo={"pagos":[{"idContrato":ID,"importe":"450.00"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] #1
 POST /api/auth/login
 200 application/json
 {
@@ -331,7 +331,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] cuerpo={"pagos":[{"idContrato":ID,"importe":"450.00"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [5] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -348,7 +348,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] #1
 POST /api/auth/login
 200 application/json
 {
@@ -363,7 +363,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [6] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -380,7 +380,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"0"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] #1
 POST /api/auth/login
 200 application/json
 {
@@ -395,7 +395,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"0"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [7] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -412,7 +412,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"-450.00"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] #1
 POST /api/auth/login
 200 application/json
 {
@@ -427,7 +427,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"-450.00"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [8] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {
@@ -444,7 +444,7 @@ POST /api/conciliacion/confirmar
   ]
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"450.001"}]} #1
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] #1
 POST /api/auth/login
 200 application/json
 {
@@ -459,7 +459,7 @@ POST /api/auth/login
   }
 }
 
-### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] cuerpo={"pagos":[{"idContrato":ID,"fecha":"2026-01-01","importe":"450.001"}]} #2
+### confirmarConDatosNoValidos_es400ConMensaje_nunca500 [9] #2
 POST /api/conciliacion/confirmar
 400 application/json
 {

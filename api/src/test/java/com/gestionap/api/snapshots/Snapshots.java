@@ -45,8 +45,11 @@ public class Snapshots implements BeforeEachCallback, AfterAllCallback {
     @Override
     public void beforeEach(ExtensionContext ctx) {
         clase = ctx.getRequiredTestClass().getSimpleName();
+        // Los parametrizados, por número de invocación (el nombre visible cambia entre versiones de JUnit).
+        String id = ctx.getUniqueId();
+        int p = id.lastIndexOf("[test-template-invocation:#");
         test = ctx.getRequiredTestMethod().getName()
-                + (ctx.getDisplayName().startsWith(ctx.getRequiredTestMethod().getName()) ? "" : " " + ctx.getDisplayName());
+                + (p < 0 ? "" : " [" + id.substring(p + 27, id.indexOf(']', p)) + "]");
     }
 
     static void registrar(MvcResult r) throws Exception {

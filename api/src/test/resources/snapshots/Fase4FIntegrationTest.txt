@@ -32,7 +32,7 @@ PATCH /api/usuarios/{n}/activo
   "status": 409,
   "codigo": "NO_PUEDES_DESACTIVARTE",
   "mensaje": "No puedes desactivar tu propia cuenta",
-  "path": "/api/usuarios/474/activo"
+  "path": "/api/usuarios/{n}/activo"
 }
 
 ### actividadPropia_inclusoParaElAdmin #1
@@ -266,7 +266,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 409,
   "codigo": "INQUILINO_NO_CAMBIA_ROL",
   "mensaje": "Las cuentas de inquilino no pueden cambiar de rol (le daría acceso a todos los datos)",
-  "path": "/api/usuarios/456/rol"
+  "path": "/api/usuarios/{n}/rol"
 }
 
 ### cambiarRol_comoElParcheDelEscritorio #4
@@ -277,7 +277,7 @@ PATCH /api/usuarios/{n}/rol
   "status": 409,
   "codigo": "NO_PUEDES_CAMBIAR_TU_ROL",
   "mensaje": "No puedes cambiar tu propio rol",
-  "path": "/api/usuarios/453/rol"
+  "path": "/api/usuarios/{n}/rol"
 }
 
 ### crearUsuario_noInquilinos_niEmailRepetido #1

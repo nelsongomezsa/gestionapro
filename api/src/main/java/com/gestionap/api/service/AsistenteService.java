@@ -1,7 +1,7 @@
 package com.gestionap.api.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.gestionap.api.domain.Contrato;
 import com.gestionap.api.domain.EstadoIncidencia;
 import com.gestionap.api.domain.Gasto;
@@ -296,7 +296,7 @@ public class AsistenteService {
     private Resultado ok(Object datos) {
         try {
             return new Resultado(json.writeValueAsString(datos), false);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             return new Resultado("No se pudieron leer los datos", true);
         }
     }

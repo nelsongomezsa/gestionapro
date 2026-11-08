@@ -22,7 +22,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/158/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #3
@@ -33,7 +33,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/158/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #4
@@ -64,7 +64,7 @@ GET /api/contratos/{n}/actualizacion-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/158/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### acceso_inquiliNoVeLaPropuestaNiConfirma_peroSiElHistorial_yOtroPropietarioNada #7
@@ -75,7 +75,7 @@ GET /api/contratos/{n}/actualizaciones-renta
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/158/actualizaciones-renta"
+  "path": "/api/contratos/{n}/actualizaciones-renta"
 }
 
 ### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #1
@@ -146,7 +146,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 409,
   "codigo": "YA_ACTUALIZADA",
   "mensaje": "La renta de esa anualidad ya está actualizada",
-  "path": "/api/contratos/166/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### confirmar_cambiaLaRenta_quedaEnElHistorial_yNoSeRepite #5
@@ -207,7 +207,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "FECHA_ACTUALIZACION_NO_VALIDA",
   "mensaje": "La actualización es en un aniversario del contrato, como mucho dentro de 30 días",
-  "path": "/api/contratos/163/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #3
@@ -218,7 +218,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "FECHA_ACTUALIZACION_NO_VALIDA",
   "mensaje": "La actualización es en un aniversario del contrato, como mucho dentro de 30 días",
-  "path": "/api/contratos/163/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #4
@@ -229,7 +229,7 @@ POST /api/contratos/{n}/actualizacion-renta
   "status": 400,
   "codigo": "FALTA_PORCENTAJE",
   "mensaje": "Indica el porcentaje pactado",
-  "path": "/api/contratos/163/actualizacion-renta"
+  "path": "/api/contratos/{n}/actualizacion-renta"
 }
 
 ### confirmar_soloEnUnAniversarioCercano_yPactadoExigePorcentaje #5

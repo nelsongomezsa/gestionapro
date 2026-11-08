@@ -53,7 +53,7 @@ public final class JsonCanonico {
 
     /** Enmascara los números de una ruta (/api/pisos/123 → /api/pisos/{n}), que dependen del autonumérico. */
     public static String ruta(String uri) {
-        return uri.replaceAll("/\\d+(?=/|$|\\?)", "/{n}");
+        return uri.replaceAll("/\\d+(?=/|$|\\?|\")", "/{n}");
     }
 
     private void valor(int nivel, String clave) {
@@ -61,7 +61,7 @@ public final class JsonCanonico {
         switch (c) {
             case '{' -> objeto(nivel);
             case '[' -> lista(nivel, "errores".equals(clave));
-            case '"' -> out.append(mascaraTexto(cadena()));
+            case '"' -> out.append("path".equals(clave) ? ruta(cadena()) : mascaraTexto(cadena()));
             default -> {
                 int ini = i;
                 while (i < s.length() && ",}] \t\r\n".indexOf(s.charAt(i)) < 0) i++;

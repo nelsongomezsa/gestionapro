@@ -68,6 +68,8 @@ class AnalisisInversionIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.resultado.rentabilidadBrutaPct").isNumber())
                 .andReturn().getResponse().getContentAsString();
         int id = leer(cuerpo).get("id").asInt();
+        // DATETIME guarda segundos (MariaDB, y H2 2.4 en modo MySQL): el segundo análisis, en otro segundo.
+        Thread.sleep(1100);
         crear("ana@test.com", peticion("Piso nuevo", null, entrada(150000, 900))).andExpect(status().isCreated());
 
         mvc.perform(get("/api/analisis-inversion").header("Authorization", token("ana@test.com")))

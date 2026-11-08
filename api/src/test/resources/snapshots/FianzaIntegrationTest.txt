@@ -21,7 +21,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Fianza no encontrado",
-  "path": "/api/contratos/50/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### crear_depositar_yListarConElTotalPorDevolver #3
@@ -107,7 +107,7 @@ PUT /api/contratos/{n}/fianza
   "status": 400,
   "codigo": "FECHA_DEPOSITO_NO_VALIDA",
   "mensaje": "El depósito no puede ser anterior al cobro",
-  "path": "/api/contratos/50/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #1
@@ -172,7 +172,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "IMPORTE_DEVOLUCION_NO_VALIDO",
   "mensaje": "No se puede devolver más que la fianza",
-  "path": "/api/contratos/51/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #5
@@ -183,7 +183,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "MOTIVO_RETENCION_OBLIGATORIO",
   "mensaje": "Indica por qué no se devuelve entera",
-  "path": "/api/contratos/51/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #6
@@ -194,7 +194,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 400,
   "codigo": "FECHA_DEVOLUCION_NO_VALIDA",
   "mensaje": "La devolución no puede ser anterior al cobro",
-  "path": "/api/contratos/51/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #7
@@ -264,7 +264,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 409,
   "codigo": "FIANZA_YA_DEVUELTA",
   "mensaje": "La devolución ya está registrada",
-  "path": "/api/contratos/51/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #10
@@ -275,7 +275,7 @@ PUT /api/contratos/{n}/fianza
   "status": 409,
   "codigo": "FIANZA_YA_DEVUELTA",
   "mensaje": "La fianza ya está devuelta: su importe no se puede cambiar",
-  "path": "/api/contratos/51/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### devolucion_parcialExigeMotivo_yLoRetenidoNoQuedaPorDevolver #11
@@ -413,7 +413,7 @@ PUT /api/contratos/{n}/fianza
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/53/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### inquilino_veLaSuya_yNoPuedeModificarla #7
@@ -424,7 +424,7 @@ POST /api/contratos/{n}/fianza/devolucion
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/53/fianza/devolucion"
+  "path": "/api/contratos/{n}/fianza/devolucion"
 }
 
 ### propietarioAjeno_noLaVeNiLaToca #1
@@ -487,7 +487,7 @@ GET /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/52/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### propietarioAjeno_noLaVeNiLaToca #5
@@ -498,7 +498,7 @@ PUT /api/contratos/{n}/fianza
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/52/fianza"
+  "path": "/api/contratos/{n}/fianza"
 }
 
 ### propietarioAjeno_noLaVeNiLaToca #6

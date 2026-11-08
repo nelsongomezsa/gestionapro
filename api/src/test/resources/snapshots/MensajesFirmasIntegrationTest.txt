@@ -22,7 +22,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/61/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #3
@@ -48,7 +48,7 @@ GET /api/contratos/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/60/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### acceso_cadaUnoSoloLoSuyo_yInquilinoSinCuenta #5
@@ -74,7 +74,7 @@ POST /api/contratos/{n}/mensajes
   "status": 409,
   "codigo": "INQUILINO_SIN_CUENTA",
   "mensaje": "El inquilino aún no tiene cuenta en la app: invítale desde su ficha para poder escribirle",
-  "path": "/api/contratos/61/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 
 ### conversacion_propietarioEInquilino_conAvisoYLeidos #1
@@ -189,7 +189,7 @@ GET /api/contratos/{n}/mensajes
     "autor": "Usuario ana@test.com",
     "mio": false,
     "texto": "Hola, Lucía",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "leido": true
   },
   {
@@ -198,7 +198,7 @@ GET /api/contratos/{n}/mensajes
     "autor": "Usuario ana@test.com",
     "mio": false,
     "texto": "¿Todo bien?",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "leido": true
   }
 ]
@@ -212,7 +212,7 @@ GET /api/conversaciones
     "con": "Usuario ana@test.com",
     "asunto": "Habitación 1 · Calle de Ana 1",
     "ultimoMensaje": "¿Todo bien?",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "ultimoMio": false,
     "sinLeer": 0
   }
@@ -285,7 +285,7 @@ GET /api/contratos/{n}/pdf-firmado
   "status": 409,
   "codigo": "SIN_FIRMAS",
   "mensaje": "El contrato aún no tiene firmas",
-  "path": "/api/contratos/58/pdf-firmado"
+  "path": "/api/contratos/{n}/pdf-firmado"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #4
@@ -315,7 +315,7 @@ POST /api/contratos/{n}/firmas/ARRENDADOR
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/58/firmas/ARRENDADOR"
+  "path": "/api/contratos/{n}/firmas/ARRENDADOR"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #6
@@ -326,7 +326,7 @@ POST /api/contratos/{n}/firmas/ARRENDATARIO
   "status": 409,
   "codigo": "YA_FIRMADO",
   "mensaje": "Esta parte ya ha firmado el contrato",
-  "path": "/api/contratos/58/firmas/ARRENDATARIO"
+  "path": "/api/contratos/{n}/firmas/ARRENDATARIO"
 }
 
 ### firma_lasDosPartes_pdfFirmado_yCaducaSiCambiaElContrato #7
@@ -435,7 +435,7 @@ GET /api/contratos/{n}/firmas
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/58/firmas"
+  "path": "/api/contratos/{n}/firmas"
 }
 
 ### hiloDeIncidencia_separado_yValidado #1
@@ -484,7 +484,7 @@ GET /api/contratos/{n}/mensajes
     "autor": "Usuario lucia@test.com",
     "mio": true,
     "texto": "Sigue goteando",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "leido": false
   }
 ]
@@ -514,7 +514,7 @@ GET /api/conversaciones
     "con": "Ana García 1A",
     "asunto": "Incidencia: Gotera en el techo",
     "ultimoMensaje": "Sigue goteando",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "ultimoMio": false,
     "sinLeer": 1
   }
@@ -568,7 +568,7 @@ GET /api/notificaciones
     "tipo": "mensaje",
     "titulo": "Mensaje de Usuario lucia@test.com",
     "descripcion": "Sigue goteando",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "leida": false,
     "destino": {
       "pantalla": "MENSAJES_INCIDENCIA",
@@ -603,7 +603,7 @@ GET /api/incidencias/{n}/mensajes
     "autor": "Usuario lucia@test.com",
     "mio": false,
     "texto": "Sigue goteando",
-    "fecha": "<ahora dddd-dd-ddTdd:dd:dd.f+hh:mm>",
+    "fecha": "<ahora dddd-dd-ddTdd:dd:dd+hh:mm>",
     "leido": true
   }
 ]
@@ -631,7 +631,7 @@ GET /api/incidencias/{n}/mensajes
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/9/mensajes"
+  "path": "/api/incidencias/{n}/mensajes"
 }
 
 ### hiloDeIncidencia_separado_yValidado #13
@@ -657,6 +657,6 @@ POST /api/contratos/{n}/mensajes
   "status": 400,
   "codigo": "INCIDENCIA_NO_VALIDA",
   "mensaje": "La incidencia no es de este contrato",
-  "path": "/api/contratos/57/mensajes"
+  "path": "/api/contratos/{n}/mensajes"
 }
 

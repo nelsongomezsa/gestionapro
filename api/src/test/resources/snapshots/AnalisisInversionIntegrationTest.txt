@@ -91,7 +91,7 @@ PUT /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/4"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### cadaUnoSoloLosSuyos_tambienElAdmin #7
@@ -117,7 +117,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/4"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### cadaUnoSoloLosSuyos_tambienElAdmin #9
@@ -163,7 +163,7 @@ PUT /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/4"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### cadaUnoSoloLosSuyos_tambienElAdmin #13
@@ -189,7 +189,7 @@ DELETE /api/analisis-inversion/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Análisis no encontrado",
-  "path": "/api/analisis-inversion/4"
+  "path": "/api/analisis-inversion/{n}"
 }
 
 ### cadaUnoSoloLosSuyos_tambienElAdmin #15

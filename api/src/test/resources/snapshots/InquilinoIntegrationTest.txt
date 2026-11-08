@@ -21,7 +21,7 @@ DELETE /api/inquilinos/{n}
   "status": 409,
   "codigo": "INQUILINO_CON_HISTORIAL",
   "mensaje": "No se puede borrar un inquilino con contratos o incidencias registrados",
-  "path": "/api/inquilinos/68"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### crear_quedaComoSuyo_aunqueNoTengaContrato #1
@@ -103,7 +103,7 @@ GET /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/55"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### crear_quedaComoSuyo_aunqueNoTengaContrato #6
@@ -327,7 +327,7 @@ GET /api/inquilinos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inquilino no encontrado",
-  "path": "/api/inquilinos/73"
+  "path": "/api/inquilinos/{n}"
 }
 
 ### propietario_veLosDeSusContratos_noLosDeOtros #5
@@ -447,7 +447,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 409,
   "codigo": "SIN_CONTRATO_ACTIVO",
   "mensaje": "El inquilino no tiene contrato activo",
-  "path": "/api/inquilinos/63/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### qrPago_sinIban_409ConIndicacion #1
@@ -473,7 +473,7 @@ GET /api/inquilinos/{n}/qr-pago
   "status": 409,
   "codigo": "IBAN_NO_CONFIGURADO",
   "mensaje": "Añade tu IBAN en Perfil → Datos de cobro para generar el QR",
-  "path": "/api/inquilinos/56/qr-pago"
+  "path": "/api/inquilinos/{n}/qr-pago"
 }
 
 ### validacion_comoElEscritorio_masNie #1

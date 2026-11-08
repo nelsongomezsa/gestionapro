@@ -19,10 +19,12 @@ public interface InvitacionRepository extends JpaRepository<Invitacion, Integer>
     /** Al generar una invitación nueva, las pendientes del mismo inquilino dejan de valer. */
     // clearAutomatically: el UPDATE masivo no pasa por el contexto de persistencia; sin limpiarlo,
     // una invitación ya cargada en la misma transacción seguiría pareciendo vigente.
+    // Caduca un segundo antes de ahora: DATETIME sin fracción puede redondear hacia arriba (MySQL, H2)
+    // y la invitación anulada seguiría valiendo hasta un segundo más.
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query("""
-            update Invitacion i set i.fechaExpiracion = :ahora
+            update Invitacion i set i.fechaExpiracion = :caducada
             where i.inquilino.id = :idInquilino and i.fechaUso is null and i.fechaExpiracion > :ahora
             """)
-    int caducarPendientes(Integer idInquilino, LocalDateTime ahora);
+    int caducarPendientes(Integer idInquilino, LocalDateTime ahora, LocalDateTime caducada);
 }

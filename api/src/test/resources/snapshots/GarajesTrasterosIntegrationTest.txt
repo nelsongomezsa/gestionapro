@@ -106,7 +106,7 @@ PUT /api/pisos/{n}
   "status": 409,
   "codigo": "TIPO_INCOMPATIBLE",
   "mensaje": "No se puede cambiar el tipo: tiene unidades que no caben en un inmueble de tipo vivienda",
-  "path": "/api/pisos/30"
+  "path": "/api/pisos/{n}"
 }
 
 ### cambiarElTipo_soloSiSusUnidadesCaben #3
@@ -744,7 +744,7 @@ PUT /api/contratos/{n}/iva
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/32/iva"
+  "path": "/api/contratos/{n}/iva"
 }
 
 ### ivaEnUnaHabitacion_oPorcentajeFueraDeRango_400 #1
@@ -925,7 +925,7 @@ GET /api/pisos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/34"
+  "path": "/api/pisos/{n}"
 }
 
 ### otroPropietario_noVeNiTocaElGarajeAjeno #3
@@ -1005,7 +1005,7 @@ PUT /api/contratos/{n}/iva
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/28/iva"
+  "path": "/api/contratos/{n}/iva"
 }
 
 ### reciboConIva_desglosaBaseYCuota_yNoCambiaSiLuegoSeQuitaElIva #1

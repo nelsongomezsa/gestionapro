@@ -801,7 +801,7 @@ POST /api/contratos/{n}/finalizar
   "status": 409,
   "codigo": "CONTRATO_NO_ACTIVO",
   "mensaje": "El contrato ya está finalizado o aún no ha empezado",
-  "path": "/api/contratos/69/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### finalizar_liberaLaHabitacion_yNoSeRepite #4
@@ -827,7 +827,7 @@ POST /api/contratos/{n}/finalizar
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/68/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### inquilinoSinFichaEnlazada_noVeNada #1
@@ -906,7 +906,7 @@ GET /api/contratos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Contrato no encontrado",
-  "path": "/api/contratos/98"
+  "path": "/api/contratos/{n}"
 }
 
 ### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #4
@@ -943,7 +943,7 @@ POST /api/contratos/{n}/finalizar
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/contratos/96/finalizar"
+  "path": "/api/contratos/{n}/finalizar"
 }
 
 ### inquilino_soloVeLoSuyo_yNoPuedeCrearNiFinalizar #6
@@ -1386,7 +1386,7 @@ DELETE /api/pagos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Pago no encontrado",
-  "path": "/api/pagos/45"
+  "path": "/api/pagos/{n}"
 }
 
 ### registrarYBorrarPago #5

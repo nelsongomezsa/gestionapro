@@ -3,7 +3,7 @@ package com.gestionap.api.service;
 import com.gestionap.api.domain.Dispositivo;
 import com.gestionap.api.repository.DispositivoRepository;
 import com.gestionap.api.web.ApiException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -117,7 +117,7 @@ public class PushService {
     }
 
     /** Carga útil de APNs: título, texto y el número de la campana lo pone la app al abrirse. */
-    String cuerpo(String titulo, String cuerpo) throws com.fasterxml.jackson.core.JsonProcessingException {
+    String cuerpo(String titulo, String cuerpo) throws tools.jackson.core.JacksonException {
         return json.writeValueAsString(Map.of("aps", Map.of("alert", Map.of("title", titulo, "body", cuerpo), "sound", "default")));
     }
 

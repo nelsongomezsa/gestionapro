@@ -76,3 +76,12 @@
 - Una sola app: `Pisos.tipo` (vivienda, garajes, trasteros) y `Habitaciones.tipo` (habitación, plaza, trastero) con m², planta y vehículo; las tablas conservan su nombre por compatibilidad con el escritorio. Un garaje admite plazas y trasteros; una vivienda, solo habitaciones (máx. 50); garajes y trasteros, hasta 500 unidades.
 - IVA por contrato solo en plazas y trasteros (desactivado por defecto, 21 % editable). `precio_mensual` es lo que paga el inquilino, IVA incluido, para no tocar cobros ni estadísticas; el recibo guarda base, % y cuota al emitirse.
 - Contratos de plaza y trastero con plantilla propia (uso distinto de vivienda), duración libre y fianza opcional. Los PDF siguen en español.
+
+## Spring Boot 4 (2026-11-08)
+- API en Spring Boot 4.1.2 (Spring Framework 7.0.10, Security 7.1, Hibernate 7.4, Tomcat 11, Jackson 3.1, springdoc 3.2) para cerrar CVE-2026-47884 y CVE-2026-47890 de spring-webmvc 6.2.
+- Jackson 3 con `spring.jackson.use-jackson2-defaults: true`: mismo orden de campos, enums y tratamiento de nulos que con Jackson 2, así que el JSON de las apps no cambia. El SDK de Anthropic y jjwt siguen usando Jackson 2 por dentro.
+- `/actuator/health` sin las sondas liveness/readiness que Boot 4 activa por defecto: la respuesta sigue siendo solo `{"status":"UP"}`.
+- Red de seguridad: snapshots de todas las respuestas de los tests (`-Dsnapshots=comparar`) y captura de los 110 endpoints contra una copia de la base con los tres roles; idénticos antes y después.
+- H2 2.4 (tests) guarda DATETIME sin fracción, como MariaDB: los tests ya no dependen de microsegundos. Al anular una invitación se caduca un segundo antes de ahora (DATETIME puede redondear hacia arriba).
+- Peticiones no multipart en rutas de subida: 415/400 en vez de 500.
+- Hibernate 7 avisa de que MariaDB 10.4 (la de XAMPP) está por debajo de su mínimo; funciona y valida el esquema, pero conviene subir a MariaDB 10.6 o superior.

@@ -75,7 +75,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 409,
   "codigo": "INCIDENCIA_RESUELTA",
   "mensaje": "La incidencia ya está resuelta",
-  "path": "/api/incidencias/19/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### avanzarEstado_pendienteEnProcesoResuelta #5
@@ -155,7 +155,7 @@ PATCH /api/incidencias/{n}
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/incidencias/25",
+  "path": "/api/incidencias/{n}",
   "errores": [
     {
       "campo": "costeReparacion",
@@ -172,7 +172,7 @@ DELETE /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/26"
+  "path": "/api/incidencias/{n}"
 }
 
 ### costeDeReparacion_yBorrar #5
@@ -406,7 +406,7 @@ GET /api/pisos/{n}/pdf
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Piso no encontrado",
-  "path": "/api/pisos/213/pdf"
+  "path": "/api/pisos/{n}/pdf"
 }
 
 ### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #1
@@ -489,7 +489,7 @@ PATCH /api/incidencias/{n}/estado
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/incidencias/16/estado"
+  "path": "/api/incidencias/{n}/estado"
 }
 
 ### inquilino_veYComunicaLasSuyas_peroNoLasGestiona #5
@@ -500,7 +500,7 @@ DELETE /api/incidencias/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/incidencias/16"
+  "path": "/api/incidencias/{n}"
 }
 
 ### propietario_listaFiltraYNoVeLasDeOtros #1
@@ -560,6 +560,6 @@ GET /api/incidencias/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/22"
+  "path": "/api/incidencias/{n}"
 }
 

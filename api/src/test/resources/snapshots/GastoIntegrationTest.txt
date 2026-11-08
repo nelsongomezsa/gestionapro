@@ -119,7 +119,7 @@ POST /api/gastos/{n}/factura
   "status": 400,
   "codigo": "TIPO_NO_ADMITIDO",
   "mensaje": "Solo fotos (JPEG, PNG, HEIC) o PDF",
-  "path": "/api/gastos/4/factura"
+  "path": "/api/gastos/{n}/factura"
 }
 
 ### metricasUsanIbiReal #1
@@ -357,6 +357,6 @@ DELETE /api/gastos/{n}
   "status": 409,
   "codigo": "GASTO_DE_INCIDENCIA",
   "mensaje": "Cambia el coste en la incidencia",
-  "path": "/api/gastos/5"
+  "path": "/api/gastos/{n}"
 }
 

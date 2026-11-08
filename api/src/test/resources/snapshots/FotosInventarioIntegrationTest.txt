@@ -79,7 +79,7 @@ GET /api/incidencias/fotos/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Incidencia no encontrado",
-  "path": "/api/incidencias/fotos/1"
+  "path": "/api/incidencias/fotos/{n}"
 }
 
 ### inventario_crearConFotoYPdf_yElInquilinoLoVe #1
@@ -238,7 +238,7 @@ DELETE /api/inventarios/{n}
   "status": 403,
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
-  "path": "/api/inventarios/1"
+  "path": "/api/inventarios/{n}"
 }
 
 ### inventario_crearConFotoYPdf_yElInquilinoLoVe #9
@@ -264,7 +264,7 @@ GET /api/inventarios/{n}
   "status": 404,
   "codigo": "NO_ENCONTRADO",
   "mensaje": "Inventario no encontrado",
-  "path": "/api/inventarios/1"
+  "path": "/api/inventarios/{n}"
 }
 
 ### inventario_validaElContratoYLosElementos #1
@@ -290,7 +290,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 400,
   "codigo": "CONTRATO_NO_VALIDO",
   "mensaje": "El contrato no es de esta habitación",
-  "path": "/api/habitaciones/356/inventarios"
+  "path": "/api/habitaciones/{n}/inventarios"
 }
 
 ### inventario_validaElContratoYLosElementos #3
@@ -301,7 +301,7 @@ POST /api/habitaciones/{n}/inventarios
   "status": 400,
   "codigo": "VALIDACION",
   "mensaje": "Hay campos con valores no válidos",
-  "path": "/api/habitaciones/355/inventarios",
+  "path": "/api/habitaciones/{n}/inventarios",
   "errores": [
     {
       "campo": "elementos",
@@ -333,7 +333,7 @@ POST /api/incidencias/{n}/fotos
   "status": 400,
   "codigo": "TIPO_NO_ADMITIDO",
   "mensaje": "Solo fotos (JPEG, PNG, HEIC) o PDF",
-  "path": "/api/incidencias/28/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### soloSeAdmitenFotos_yConElTipoReal #3
@@ -344,7 +344,7 @@ POST /api/incidencias/{n}/fotos
   "status": 400,
   "codigo": "TIPO_NO_ADMITIDO",
   "mensaje": "Solo fotos (JPEG, PNG o HEIC)",
-  "path": "/api/incidencias/28/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 
 ### soloSeAdmitenFotos_yConElTipoReal #4
@@ -355,6 +355,6 @@ POST /api/incidencias/{n}/fotos
   "status": 400,
   "codigo": "ARCHIVO_DANADO",
   "mensaje": "El archivo está dañado o incompleto",
-  "path": "/api/incidencias/28/fotos"
+  "path": "/api/incidencias/{n}/fotos"
 }
 

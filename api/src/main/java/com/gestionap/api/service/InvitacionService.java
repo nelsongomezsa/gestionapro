@@ -69,7 +69,7 @@ public class InvitacionService {
         }
 
         LocalDateTime ahora = LocalDateTime.now();
-        invitaciones.caducarPendientes(idInquilino, ahora);
+        invitaciones.caducarPendientes(idInquilino, ahora, ahora.minusSeconds(1));
 
         String codigo = nuevoCodigo();
         Invitacion inv = new Invitacion();
