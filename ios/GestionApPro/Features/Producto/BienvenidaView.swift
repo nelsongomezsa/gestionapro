@@ -17,8 +17,8 @@ struct BienvenidaView: View {
                 .foregroundStyle(Tema.Color.texto)
                 .padding(.top, Tema.Espacio.l)
             punto("hand.tap", "Todo a mano", "Cobrar, comunicar una incidencia, apuntar un gasto o abrir Mensajes desde la barra de abajo, en cualquier pantalla.")
-            punto("sparkles", "Asistente que sabe dónde estás", "Si lo activas en el servidor, el botón flotante pregunta sobre el piso o contrato que tengas abierto. Puedes ocultarlo en Perfil.")
-            punto("hand.point.up.left", "Mantén pulsado", "En cobros, inquilinos y pisos: llamar, escribir por WhatsApp, registrar el pago o abrir en Mapas.")
+            punto("sparkles", "Asistente que sabe dónde estás", "Si lo activas en el servidor, el botón flotante pregunta sobre el inmueble o contrato que tengas abierto. Puedes ocultarlo en Perfil.")
+            punto("hand.point.up.left", "Mantén pulsado", "En cobros, inquilinos e inmuebles: llamar, escribir por WhatsApp, registrar el pago o abrir en Mapas.")
             Spacer()
             Button { cerrar() } label: {
                 Text("Empezar").font(.headline).frame(maxWidth: .infinity).frame(minHeight: 50)

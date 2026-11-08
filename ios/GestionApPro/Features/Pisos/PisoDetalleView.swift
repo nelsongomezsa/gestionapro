@@ -207,9 +207,9 @@ struct PisoDetalleView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
-                    Button("Editar piso", systemImage: "pencil") { editandoPiso = true }
+                    Button(piso.tipoInmueble == .vivienda ? String(localized: "Editar piso") : String(localized: "Editar inmueble"), systemImage: "pencil") { editandoPiso = true }
                         .accessibilityIdentifier("editarPiso")
-                    Button("Borrar piso", systemImage: "trash", role: .destructive) { pedirBorrado() }
+                    Button(piso.tipoInmueble == .vivienda ? String(localized: "Borrar piso") : String(localized: "Borrar inmueble"), systemImage: "trash", role: .destructive) { pedirBorrado() }
                         .accessibilityIdentifier("borrarPiso")
                 } label: {
                     Label("Más acciones", systemImage: "ellipsis")
@@ -218,7 +218,7 @@ struct PisoDetalleView: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button("Simular") { simulando = true }
-                    .accessibilityHint("Abre la calculadora con los datos reales de este piso")
+                    .accessibilityHint("Abre la calculadora con los datos reales de este inmueble")
                     .accessibilityIdentifier("simularPiso")
             }
             ToolbarItem(placement: .primaryAction) {
@@ -237,7 +237,7 @@ struct PisoDetalleView: View {
             EditarPisoView(piso: piso) { piso = $0 }
         }
         .confirmationDialog("¿Borrar «\(piso.direccion)»?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
-            Button("Borrar piso", role: .destructive) {
+            Button(piso.tipoInmueble == .vivienda ? String(localized: "Borrar piso") : String(localized: "Borrar inmueble"), role: .destructive) {
                 // Segunda confirmación, tras cerrar la primera.
                 Task { try? await Task.sleep(for: .milliseconds(350)); confirmarBorradoFinal = true }
             }
@@ -270,7 +270,7 @@ struct PisoDetalleView: View {
     }
 
     private func metricaTocable(_ metrica: MetricaRentabilidad, @ViewBuilder tarjeta: () -> some View) -> some View {
-        TarjetaTocable(pista: "Abre cómo se calcula, su evolución y la comparación con tus otros pisos",
+        TarjetaTocable(pista: "Abre cómo se calcula, su evolución y la comparación con tus otros inmuebles",
                        accion: { metricaAbierta = metrica }, contenido: tarjeta)
             .matchedTransitionSource(id: metrica, in: zoom)
             .accessibilityIdentifier("metrica-\(metrica.rawValue)")
@@ -294,8 +294,8 @@ struct PisoDetalleView: View {
     private func pedirBorrado() {
         if !contratos.isEmpty {
             motivoNoBorrable = contratos.count == 1
-                ? String(localized: "Tiene 1 contrato activo. Finalízalo antes de borrar el piso: los contratos y sus pagos se conservan.")
-                : String(localized: "Tiene \(contratos.count) contratos activos. Finalízalos antes de borrar el piso: los contratos y sus pagos se conservan.")
+                ? String(localized: "Tiene 1 contrato activo. Finalízalo antes de borrarlo: los contratos y sus pagos se conservan.")
+                : String(localized: "Tiene \(contratos.count) contratos activos. Finalízalos antes de borrarlo: los contratos y sus pagos se conservan.")
             Haptica.error()
             return
         }
@@ -343,7 +343,7 @@ struct PisoDetalleView: View {
         generandoPDF = true
         defer { generandoPDF = false }
         do {
-            documento = DocumentoPDF(titulo: "Piso \(piso.direccion)", datos: try await sesion.api.descargar(Rutas.pdfPiso(piso.id)))
+            documento = DocumentoPDF(titulo: "\(String(localized: "Ficha")) \(piso.direccion)", datos: try await sesion.api.descargar(Rutas.pdfPiso(piso.id)))
         } catch .noAutorizado {
         } catch {
             self.error = error.localizedDescription

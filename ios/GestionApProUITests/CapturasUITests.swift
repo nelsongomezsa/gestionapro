@@ -15,7 +15,7 @@ final class CapturasUITests: XCTestCase {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
         r.capturar("02-inicio")
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         // La lista se dibuja al desplazarse (LazyVStack): se comprueba el contador visible.
         r.esperar(r.app.staticTexts.matching(NSPredicate(format: "label ==[c] %@", "8 pisos")).firstMatch)
@@ -56,7 +56,7 @@ extension CapturasUITests {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Habitaciones de un piso
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.desplazarHasta(r.app.buttons["enlaceHabitaciones"]).tap()
@@ -205,6 +205,10 @@ struct Recorrido {
         var a = ["-reiniciarSesion"]
         if let idioma = ProcessInfo.processInfo.environment["CAPTURAS_IDIOMA"], !idioma.isEmpty {
             a += ["-AppleLanguages", "(\(idioma))", "-AppleLocale", idioma == "en" ? "en_US" : "es_ES"]
+        }
+        // CAPTURAS_TEXTO=AccessibilityL (o ExtraExtraExtraLarge...) abre la app con ese tamaño de letra.
+        if let texto = ProcessInfo.processInfo.environment["CAPTURAS_TEXTO"], !texto.isEmpty {
+            a += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategory\(texto)"]
         }
         return a
     }
@@ -433,7 +437,7 @@ extension CapturasUITests {
         r.app.buttons["Cancelar"].tap()
 
         // Detalle de piso
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
@@ -586,7 +590,7 @@ extension CapturasUITests {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.pausa(1)
         r.capturar("01-pisos")
@@ -672,7 +676,7 @@ extension CapturasUITests {
         r.capturar("08-inquilino-nuevo")
         r.app.buttons["Cancelar"].tap()
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
@@ -845,7 +849,7 @@ extension CapturasUITests {
         r.app.swipeDown()
         r.pausa(1)
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.pausa(2)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
@@ -1025,7 +1029,7 @@ extension CapturasUITests {
     func testFase5GastosFotos() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Avenida del Puerto")).firstMatch.tap()
         r.esperar(r.elemento(contiene: "Rentabilidad bruta"))
@@ -1148,7 +1152,7 @@ extension CapturasUITests {
         r.pausa(1)
         r.capturar("01-inicio")
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.app.buttons["botonCrear"].tap()
         r.esperar(r.app.buttons["crear-pago"])
         r.pausa(1)
@@ -1218,7 +1222,7 @@ extension CapturasUITests {
         r.pausa(1.5)
         XCTAssertFalse(r.app.navigationBars["Asistente"].exists, "El panel se cierra deslizando")
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.app.staticTexts["Rentabilidad bruta"].firstMatch)
         lengueta.tap()
@@ -1378,7 +1382,7 @@ extension CapturasUITests {
             }
         }
         auditar("Inicio")
-        r.pestana("Pisos"); auditar("Pisos")
+        r.pestana("Inmuebles"); auditar("Inmuebles")
         r.pestana("Cobros"); auditar("Cobros")
         r.pestana("Más"); auditar("Mas")
         r.pestana("Mensajes")
@@ -1431,7 +1435,7 @@ extension CapturasUITests {
             r.desplazarHasta(r.app.buttons[opcion].firstMatch).tap()
             r.pausa(1)
         }
-        agrupar("Por piso")
+        agrupar("Por inmueble")
         r.app.swipeUp()
         r.capturar("04-cobros-por-piso")
         r.app.buttons["cabeceraPiso"].firstMatch.tap()
@@ -1443,11 +1447,11 @@ extension CapturasUITests {
             r.pestana("Más")
             r.desplazarHasta(r.app.buttons[nombre]).tap()
             r.esperar(r.app.navigationBars[nombre])
-            agrupar("Por piso")
+            agrupar("Por inmueble")
             r.capturar(captura)
         }
         r.incidencias()
-        agrupar("Por piso")
+        agrupar("Por inmueble")
         r.capturar("08-incidencias-por-piso")
     }
 
@@ -1497,7 +1501,7 @@ extension CapturasUITests {
     func testFase4() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["analizarInversion"])
         r.capturar("01-pisos-analizar-inversion")
         r.app.buttons["analizarInversion"].tap()
@@ -1567,7 +1571,7 @@ extension CapturasUITests {
         r.esperar(r.app.navigationBars["Cobros"])
         r.pausa(2)
         r.capturar("03-cobros-mes-anterior")
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         for (i, piso) in ["Passeig de Gràcia", "Gran Vía 18"].enumerated() {
             let tarjeta = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", piso)).firstMatch
             r.desplazarHasta(tarjeta).tap()
@@ -1600,7 +1604,7 @@ extension CapturasUITests {
         let direccion = "Calle Prueba \(Int(Date().timeIntervalSince1970) % 100000), 2º"
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
         // Un piso con contratos activos no se deja borrar (se explica por qué).
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.app.buttons["accionesPiso"])
@@ -1685,7 +1689,7 @@ extension CapturasUITests {
         r.capturar("13-estadisticas-del-piso")
 
         // Borrar el creado, con doble confirmación (el buscador sigue filtrando por su dirección).
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         let tarjeta = r.app.buttons.matching(NSPredicate(format: "label CONTAINS %@", direccion)).firstMatch
         r.desplazarHasta(tarjeta).tap()
         r.esperar(r.app.buttons["accionesPiso"])
@@ -1709,7 +1713,7 @@ extension CapturasUITests {
     func testGarajes() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         let filtro = r.app.segmentedControls["selectorTipoInmueble"]
         r.esperar(filtro)
         r.pausa(1)
@@ -1769,7 +1773,7 @@ extension CapturasUITests {
         r.capturar("01-inicio")
 
         // Detalle de un piso con rentabilidad (el primero por cash flow).
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.app.buttons["metrica-bruta"])
@@ -1797,7 +1801,7 @@ extension CapturasUITests {
         r.pestana("Cobros")
         r.esperar(r.elemento(contiene: "Atrasados"))
         r.pausa(1)
-        r.desplazarHasta(r.app.buttons["Por piso"].firstMatch).tap()
+        r.desplazarHasta(r.app.buttons["Por inmueble"].firstMatch).tap()
         r.pausa(1)
         r.app.swipeUp(velocity: .slow)
         r.pausa(1.5)
@@ -1858,6 +1862,34 @@ extension CapturasUITests {
         ri.capturar("10-mi-alquiler")
     }
 
+    /// Comparar análisis (solo identificadores: sirve en inglés y con texto grande).
+    @MainActor
+    func testComparar() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.app.buttons["pestana:Inicio"])
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["mas-calculadora"]).tap()
+        r.esperar(r.app.buttons["guardarAnalisis"])
+        r.pausa(1)
+        if !r.app.buttons["analisisGuardados"].exists { r.app.navigationBars.buttons["OverflowBarButtonItem"].tap() }
+        let guardados = r.app.buttons.matching(NSPredicate(format: "identifier == %@ OR label IN %@", "analisisGuardados",
+                                                           ["Análisis guardados", "Saved analyses"])).firstMatch
+        r.esperar(guardados)
+        guardados.tap()
+        let casillas = r.app.buttons.matching(identifier: "elegirAnalisis")
+        r.esperar(casillas.firstMatch)
+        for i in 0..<min(3, casillas.count) { casillas.element(boundBy: i).tap() }
+        r.app.buttons["comparar"].tap()
+        r.pausa(2)
+        r.capturar("01-comparar")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-comparar-abajo")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("03-comparar-final")
+    }
+
     /// Resúmenes tocables: tarjetas y alertas de Inicio y métricas de rentabilidad del piso.
     @MainActor
     func testTarjetas() throws {
@@ -1908,7 +1940,7 @@ extension CapturasUITests {
             r.atras()
         }
 
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         r.esperar(r.app.buttons["metrica-bruta"])

@@ -15,13 +15,13 @@ struct PisosListaView: View {
                 contenido
             }
             .background(Tema.Color.fondo)
-            .navigationTitle("Pisos")
+            .navigationTitle("Inmuebles")
             .navigationDestination(for: Piso.self) { PisoDetalleView(piso: $0).navigationTransition(.zoom(sourceID: $0.id, in: zoom)) }
             .navigationDestination(for: DestinoPiso.self) { $0.vista }
             .searchable(text: $vm.busqueda, prompt: "Buscar por dirección o ciudad")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Nuevo piso", systemImage: "plus") { creando = true }
+                    Button("Nuevo inmueble", systemImage: "plus") { creando = true }
                         .accessibilityIdentifier("nuevoPiso")
                 }
                 menuFiltros
@@ -76,11 +76,11 @@ struct PisosListaView: View {
 
                 if pisos.isEmpty {
                     if vm.estado.valor?.isEmpty == true {
-                        EstadoVacio(icono: "building.2", titulo: "Sin pisos",
-                                    mensaje: "Todavía no tienes pisos dados de alta.")
+                        EstadoVacio(icono: "building.2", titulo: "Sin inmuebles",
+                                    mensaje: "Todavía no tienes inmuebles dados de alta.")
                     } else {
                         EstadoVacio(icono: "magnifyingglass", titulo: "Sin resultados",
-                                    mensaje: "Ningún piso coincide con la búsqueda o el filtro.",
+                                    mensaje: "Ningún inmueble coincide con la búsqueda o el filtro.",
                                     accionTitulo: "Quitar filtros") {
                             vm.busqueda = ""
                             vm.ciudad = nil
@@ -89,7 +89,7 @@ struct PisosListaView: View {
                     }
                 } else {
                     HStack(alignment: .firstTextBaseline) {
-                        Text(vm.ciudad.map { "\(pisos.count) en \($0)" } ?? "\(pisos.count) \(pisos.count == 1 ? "piso" : "pisos")")
+                        Text(vm.ciudad.map { "\(pisos.count) en \($0)" } ?? (pisos.count == 1 ? String(localized: "1 inmueble") : String(localized: "\(pisos.count) inmuebles")))
                             .font(Tema.Fuente.tituloSeccion)
                             .foregroundStyle(Tema.Color.texto)
                         Spacer()
@@ -173,7 +173,7 @@ private struct TarjetaAnalizarInversion: View {
             IconoEtiqueta(icono: "function", tono: .primario)
             VStack(alignment: .leading, spacing: Tema.Espacio.linea) {
                 Text("Analizar una inversión").font(Tema.Fuente.subtitulo).foregroundStyle(Tema.Color.texto)
-                Text("Rentabilidad, hipoteca y cash flow de un piso antes de comprarlo; guarda y compara.")
+                Text("Rentabilidad, hipoteca y cash flow de un inmueble antes de comprarlo; guarda y compara.")
                     .font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
                     .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.leading)

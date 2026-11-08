@@ -184,7 +184,7 @@ final class EstadisticasViewModel {
             ]),
         ]
         if a.pisos.count > 1 {
-            secciones.append((String(localized: "Ranking de pisos"), a.pisos.enumerated().map { i, p in
+            secciones.append((String(localized: "Ranking de inmuebles"), a.pisos.enumerated().map { i, p in
                 ("\(i + 1). \(p.piso.direccion)",
                  "\(Formato.euros(p.neto)) · \(Formato.porcentaje(p.ocupacionPct))")
             }))

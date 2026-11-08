@@ -29,7 +29,7 @@ struct MapaPisosView: View {
         .mapControls { MapCompass(); MapScaleView() }
         .overlay(alignment: .top) {
             if buscando {
-                Label("Situando \(pisos.count) pisos…", systemImage: "location.magnifyingglass")
+                Label("Situando \(pisos.count) inmuebles…", systemImage: "location.magnifyingglass")
                     .font(Tema.Fuente.detalle).padding(Tema.Espacio.s)
                     .background(.regularMaterial, in: .capsule).padding(Tema.Espacio.m)
             }
@@ -41,7 +41,7 @@ struct MapaPisosView: View {
                     .padding(Tema.Espacio.m)
             }
         }
-        .navigationTitle("Mapa de pisos")
+        .navigationTitle("Mapa de inmuebles")
         .navigationBarTitleDisplayMode(.inline)
         .task { await situar() }
     }

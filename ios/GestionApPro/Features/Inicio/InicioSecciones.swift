@@ -118,7 +118,7 @@ struct IndicadoresInicio: View {
         let abiertas = d.incidenciasPendientes + d.incidenciasEnProceso
         Grid(horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
             GridRow {
-                tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada piso") {
+                tocable("kpiOcupacion", .ocupacion, pista: "Abre la ocupación de cada inmueble") {
                     TarjetaKPI(titulo: "Ocupación", valor: Formato.porcentaje(d.ocupacion.porcentaje),
                                icono: "chart.pie", tono: d.ocupacion.tono,
                                detalle: String(localized: "\(d.ocupacion.alquiladas) de \(d.ocupacion.habitaciones) \(d.ocupacion.plural)"))

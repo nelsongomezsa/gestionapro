@@ -49,8 +49,8 @@ struct NuevoContratoView: View {
         NavigationStack {
             Form {
                 Section(unidad.nombre) {
-                    Picker("Piso", selection: $idPiso) {
-                        Text("Elige un piso").tag(Int?.none)
+                    Picker("Inmueble", selection: $idPiso) {
+                        Text("Elige un inmueble").tag(Int?.none)
                         ForEach(pisos) { Text($0.direccion).tag(Int?.some($0.id)) }
                     }
                     Picker(unidad.nombre, selection: $idHabitacion) {

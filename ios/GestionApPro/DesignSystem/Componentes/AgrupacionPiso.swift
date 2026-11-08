@@ -9,7 +9,7 @@ enum Agrupacion: String, CaseIterable, Identifiable, Sendable {
 
     var nombre: LocalizedStringKey {
         switch self {
-        case .porPiso: "Por piso"
+        case .porPiso: "Por inmueble"
         case .todos: "Todos"
         }
     }
@@ -69,12 +69,12 @@ struct SeccionesPorPiso<Elemento: Identifiable, Fila: View>: View {
     /// Resumen de cada piso ("3 contratos · 1.350 €/mes").
     let resumen: (GrupoPiso<Elemento>) -> String
     /// Título del grupo sin piso ("Sin contrato activo").
-    var sinPiso: String = "Sin piso"
+    var sinPiso: String = "Sin inmueble"
     @ViewBuilder let fila: (Elemento) -> Fila
 
     @AppStorage private var plegadosTexto: String
 
-    init(grupos: [GrupoPiso<Elemento>], pantalla: String, sinPiso: String = "Sin piso",
+    init(grupos: [GrupoPiso<Elemento>], pantalla: String, sinPiso: String = "Sin inmueble",
          resumen: @escaping (GrupoPiso<Elemento>) -> String, @ViewBuilder fila: @escaping (Elemento) -> Fila) {
         self.grupos = grupos
         self.resumen = resumen

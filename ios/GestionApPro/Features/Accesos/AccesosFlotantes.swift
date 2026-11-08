@@ -13,8 +13,8 @@ enum AccesoRapido: String, Identifiable {
         case .mensajeNuevo: "Mensaje nuevo"
         case .mensajes: "Mensajes"
         case .asistente: "Asistente"
-        case .piso: "Nuevo piso"
-        case .analisis: "Analizar un piso nuevo"
+        case .piso: "Nuevo inmueble"
+        case .analisis: "Analizar una inversión"
         }
     }
 
@@ -144,7 +144,7 @@ struct NuevoGastoRapidoView: View {
                     }
                 }
             }
-            .navigationTitle("¿De qué piso?")
+            .navigationTitle("¿De qué inmueble?")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: PisoBreve.self) { piso in
                 GastoFormView(piso: piso, gasto: nil) {

@@ -177,7 +177,7 @@ extension Pestana {
     var nombre: LocalizedStringKey {
         switch self {
         case .inicio: "Inicio"
-        case .pisos: "Pisos"
+        case .pisos: "Inmuebles"
         case .cobros: "Cobros"
         case .mensajes: "Mensajes"
         case .mas: "Más"
@@ -329,7 +329,7 @@ struct ExportarDatosView: View {
                         .accessibilityIdentifier("compartirExportacion")
                 }
             } footer: {
-                Text("Pisos, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers.")
+                Text("Inmuebles, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers.")
             }
             .filaLista()
         }

@@ -137,12 +137,12 @@ struct HabitacionFichaView: View {
                     }
                 }
 
-                SeccionTarjeta(titulo: "Piso") {
+                SeccionTarjeta(titulo: "Inmueble") {
                     NavigationLink(value: DestinoInicio.piso(h.piso.id)) {
                         FilaMetrica(titulo: h.piso.direccion, valor: "", nota: h.piso.ciudad, icono: "building.2")
                     }
                     .buttonStyle(.plain)
-                    .accessibilityHint("Abre el detalle del piso")
+                    .accessibilityHint("Abre el detalle del inmueble")
                     .accessibilityIdentifier("enlacePisoFicha")
                     Divider().overlay(Tema.Color.borde)
                     Button { inventarios = true } label: {

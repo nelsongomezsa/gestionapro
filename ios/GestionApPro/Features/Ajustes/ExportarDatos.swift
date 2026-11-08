@@ -9,13 +9,13 @@ enum ExportarDatos {
     }
 
     static func csvCobros(_ pagos: [Pago]) -> String {
-        filas(["Fecha", "Inquilino", "Piso", "Unidad", "Importe", "Método", "Recibo"],
+        filas(["Fecha", "Inquilino", "Inmueble", "Unidad", "Importe", "Método", "Recibo"],
               pagos.map { [FechaAPI.texto($0.fechaPago), $0.inquilino.nombre, $0.piso.direccion, $0.etiquetaUnidad,
                            importe($0.cantidad), $0.metodoPago.nombre, $0.recibo ?? ""] })
     }
 
     static func csvGastos(_ gastos: [Gasto]) -> String {
-        filas(["Fecha", "Piso", "Categoría", "Concepto", "Importe", "Deducible"],
+        filas(["Fecha", "Inmueble", "Categoría", "Concepto", "Importe", "Deducible"],
               gastos.map { [FechaAPI.texto($0.fecha), $0.direccionPiso, $0.categoria.nombre, $0.concepto,
                             importe($0.importe), $0.deducible ? "Sí" : "No"] })
     }
@@ -25,7 +25,7 @@ enum ExportarDatos {
         let carpeta = FileManager.default.temporaryDirectory.appendingPathComponent("GestionAp-exportacion", isDirectory: true)
         try? FileManager.default.removeItem(at: carpeta)
         try FileManager.default.createDirectory(at: carpeta, withIntermediateDirectories: true)
-        let archivos = [("pisos.csv", csvPisos(pisos)), ("cobros.csv", csvCobros(pagos)), ("gastos.csv", csvGastos(gastos))]
+        let archivos = [("inmuebles.csv", csvPisos(pisos)), ("cobros.csv", csvCobros(pagos)), ("gastos.csv", csvGastos(gastos))]
         return try archivos.map { nombre, texto in
             let url = carpeta.appendingPathComponent(nombre)
             // BOM: Excel reconoce así los acentos.

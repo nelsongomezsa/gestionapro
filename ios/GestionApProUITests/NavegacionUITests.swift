@@ -80,7 +80,7 @@ final class NavegacionUITests: XCTestCase {
     func testEnlacesDelPisoYSusHojas() throws {
         let r = try Recorrido.iniciar(capturarLogin: false)
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         r.esperar(r.app.buttons["tarjetaPiso"].firstMatch)
         r.app.buttons["tarjetaPiso"].firstMatch.tap()
         detallePiso(r)
@@ -206,7 +206,7 @@ final class NavegacionUITests: XCTestCase {
         r.esperar(r.elemento(contiene: "Cobrado este mes"))
 
         // Pisos: filtro por tipo → el garaje → sus plazas (con planta y vehículo en la fila).
-        r.pestana("Pisos")
+        r.pestana("Inmuebles")
         let filtro = r.app.segmentedControls["selectorTipoInmueble"]
         r.esperar(filtro)
         filtro.buttons["Garaje"].tap()
@@ -222,11 +222,11 @@ final class NavegacionUITests: XCTestCase {
 
         // Alta: lo primero es el tipo; en trasteros se piden m² de cada uno.
         r.app.buttons["nuevoPiso"].tap()
-        esperarBarra(r, "Nuevo piso")
+        esperarBarra(r, "Nuevo inmueble")
         r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Trasteros")).firstMatch.tap()
         esperarBarra(r, "Nuevo inmueble")
         XCTAssertTrue(r.desplazarHasta(r.app.textFields["metrosUnidades"]).exists || r.app.otherElements["metrosUnidades"].exists
-                      || r.elemento(contiene: "Superficie de cada una").exists)
+                      || r.elemento(contiene: "Superficie").exists)
         r.app.buttons["Cancelar"].tap()
         r.pausa(1)
 

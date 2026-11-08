@@ -28,7 +28,7 @@ enum MetricaRentabilidad: String, CaseIterable, Identifiable, Hashable, Sendable
     var explicacion: String {
         switch self {
         case .bruta: String(localized: "Lo que rinde el piso sin descontar gastos ni la hipoteca.")
-        case .neta: String(localized: "Lo que rinde tras los gastos del piso, antes de la financiación.")
+        case .neta: String(localized: "Lo que rinde tras los gastos del inmueble, antes de la financiación.")
         case .cashOnCash: String(localized: "Lo que te devuelve al año el dinero que pusiste de tu bolsillo, ya pagada la hipoteca.")
         case .per: String(localized: "Los años de alquiler que hacen falta para recuperar lo invertido.")
         }
@@ -64,7 +64,7 @@ enum MetricaRentabilidad: String, CaseIterable, Identifiable, Hashable, Sendable
         case .neta:
             let gastos = PasoCalculo(titulo: String(localized: "Gastos anuales"), valor: "− " + Formato.euros(m.gastosAnuales),
                                      nota: m.gastosReales == true ? String(localized: "Gastos reales de los últimos 12 meses")
-                                                                   : String(localized: "Estimados con los datos del piso"))
+                                                                   : String(localized: "Estimados con los datos del inmueble"))
             let neto = PasoCalculo(titulo: String(localized: "Alquiler neto"), valor: Formato.euros(anual - m.gastosAnuales))
             return [alquiler, gastos, neto, inversion.operando("÷"), resultado(m)]
         case .cashOnCash:
@@ -112,7 +112,7 @@ enum RankingRentabilidad {
     }
 
     static func texto(_ p: Posicion) -> String {
-        if p.de == 1 { return String(localized: "Es el único piso con este dato") }
+        if p.de == 1 { return String(localized: "Es el único inmueble con este dato") }
         return p.puesto == 1 ? String(localized: "El más rentable de \(p.de)")
                              : String(localized: "\(p.puesto).º más rentable de \(p.de)")
     }

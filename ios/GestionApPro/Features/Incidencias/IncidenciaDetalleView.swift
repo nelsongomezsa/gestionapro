@@ -67,7 +67,7 @@ struct IncidenciaDetalleView: View {
 
                 Section("Detalles") {
                     LabeledContent(i.habitacion.unidad.nombre, value: "\(i.habitacion.etiqueta)")
-                    LabeledContent("Piso", value: "\(i.piso.direccion), \(i.piso.ciudad)")
+                    LabeledContent("Inmueble", value: "\(i.piso.direccion), \(i.piso.ciudad)")
                     LabeledContent("Inquilino", value: i.inquilino.nombre)
                 }
                 .filaLista()

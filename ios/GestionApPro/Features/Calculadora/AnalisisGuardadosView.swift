@@ -149,39 +149,37 @@ private struct FilaAnalisis: View {
 /// 2 o 3 análisis lado a lado; en cada fila, el mejor valor resaltado.
 struct ComparacionAnalisisView: View {
     let analisis: [AnalisisGuardado]
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Tema.Espacio.l) {
+                // Leyenda: cada análisis con su número; las columnas llevan solo el número,
+                // así ningún nombre se parte por estrecho que sea el hueco.
+                SeccionTarjeta(titulo: String(localized: "Análisis")) {
+                    ForEach(Array(analisis.enumerated()), id: \.element.id) { i, a in
+                        HStack(alignment: .firstTextBaseline, spacing: Tema.Espacio.s) {
+                            NumeroAnalisis(numero: i + 1)
+                            Text(a.nombre).font(Tema.Fuente.detalle.weight(.semibold)).foregroundStyle(Tema.Color.texto)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .accessibilityElement(children: .combine)
+                    }
+                }
                 ForEach(ComparacionAnalisis.grupos, id: \.titulo) { grupo in
                     SeccionTarjeta(titulo: grupo.titulo) {
-                        Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: Tema.Espacio.s, verticalSpacing: Tema.Espacio.s) {
-                            GridRow {
-                                Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
-                                ForEach(analisis) { a in
-                                    Text(a.nombre).font(Tema.Fuente.nota.weight(.semibold)).foregroundStyle(Tema.Color.primario)
-                                        .lineLimit(3).frame(maxWidth: .infinity, alignment: .trailing)
-                                        .multilineTextAlignment(.trailing)
+                        VStack(alignment: .leading, spacing: Tema.Espacio.s) {
+                            if !tamanoTexto.isAccessibilitySize {
+                                HStack(spacing: Tema.Espacio.s) {
+                                    ForEach(analisis.indices, id: \.self) { i in
+                                        NumeroAnalisis(numero: i + 1).frame(maxWidth: .infinity, alignment: .trailing)
+                                    }
                                 }
+                                .accessibilityHidden(true)
                             }
                             ForEach(grupo.filas, id: \.titulo) { fila in
                                 Divider().overlay(Tema.Color.borde)
-                                let valores = analisis.map { fila.valor($0) }
-                                let mejor = ComparacionAnalisis.mejor(valores, mayorEsMejor: fila.mayorEsMejor)
-                                GridRow {
-                                    Text(fila.titulo).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.texto)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                    ForEach(Array(valores.enumerated()), id: \.offset) { i, v in
-                                        Text(v.map(fila.formato) ?? "—")
-                                            .font(Tema.Fuente.cifraPequena)
-                                            .foregroundStyle(i == mejor ? Tema.Color.positivo : Tema.Color.texto)
-                                            .minimumScaleFactor(0.6).lineLimit(1)
-                                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                            .accessibilityLabel("\(analisis[i].nombre), \(fila.titulo): "
-                                                + (v.map(fila.formato) ?? String(localized: "sin dato"))
-                                                + (i == mejor ? String(localized: ", el mejor") : ""))
-                                    }
-                                }
+                                filaComparada(fila)
                             }
                         }
                     }
@@ -194,6 +192,63 @@ struct ComparacionAnalisisView: View {
         .background(Tema.Color.fondo)
         .navigationTitle("Comparar análisis")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    /// Nombre de la fila a todo el ancho y, debajo, los valores: en columnas o, con texto muy grande, uno por línea.
+    @ViewBuilder
+    private func filaComparada(_ fila: ComparacionAnalisis.Fila) -> some View {
+        let valores = analisis.map { fila.valor($0) }
+        let mejor = ComparacionAnalisis.mejor(valores, mayorEsMejor: fila.mayorEsMejor)
+        VStack(alignment: .leading, spacing: Tema.Espacio.xxs) {
+            Text(fila.titulo).font(Tema.Fuente.detalle).foregroundStyle(Tema.Color.textoSecundario)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            if tamanoTexto.isAccessibilitySize {
+                ForEach(Array(valores.enumerated()), id: \.offset) { i, v in
+                    HStack(spacing: Tema.Espacio.s) {
+                        NumeroAnalisis(numero: i + 1)
+                        Spacer(minLength: Tema.Espacio.xs)
+                        valor(v, fila: fila, mejor: i == mejor)
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(etiqueta(i, v, fila: fila, mejor: i == mejor))
+                }
+            } else {
+                HStack(spacing: Tema.Espacio.s) {
+                    ForEach(Array(valores.enumerated()), id: \.offset) { i, v in
+                        valor(v, fila: fila, mejor: i == mejor)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .accessibilityLabel(etiqueta(i, v, fila: fila, mejor: i == mejor))
+                    }
+                }
+            }
+        }
+    }
+
+    private func valor(_ v: Double?, fila: ComparacionAnalisis.Fila, mejor: Bool) -> some View {
+        Text(v.map(fila.formato) ?? "—")
+            .font(Tema.Fuente.cifraPequena)
+            .foregroundStyle(mejor ? Tema.Color.positivo : Tema.Color.texto)
+            .minimumScaleFactor(0.6).lineLimit(1)
+    }
+
+    private func etiqueta(_ i: Int, _ v: Double?, fila: ComparacionAnalisis.Fila, mejor: Bool) -> String {
+        "\(analisis[i].nombre), \(fila.titulo): " + (v.map(fila.formato) ?? String(localized: "sin dato"))
+            + (mejor ? String(localized: ", el mejor") : "")
+    }
+}
+
+/// Número de un análisis en la comparación (un círculo con la cifra).
+private struct NumeroAnalisis: View {
+    let numero: Int
+
+    var body: some View {
+        Text("\(numero)")
+            .font(Tema.Fuente.nota.weight(.bold))
+            .foregroundStyle(Tema.Color.primario)
+            .frame(minWidth: 22, minHeight: 22)
+            .background(Tema.Color.primario.opacity(0.14), in: .circle)
+            .accessibilityLabel(String(localized: "Análisis \(numero)"))
     }
 }
 

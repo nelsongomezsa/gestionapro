@@ -38,7 +38,7 @@ struct NuevoPisoView: View {
             }
             .estiloLista()
             .environment(\.locale, Formato.localeFechas)
-            .navigationTitle(vm.tipo == .vivienda ? String(localized: "Nuevo piso") : String(localized: "Nuevo inmueble"))
+            .navigationTitle("Nuevo inmueble")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -53,7 +53,7 @@ struct NuevoPisoView: View {
                     if vm.guardando {
                         ProgressView()
                     } else if vm.paso == .financieros {
-                        Button(vm.tipo == .vivienda ? String(localized: "Crear piso") : String(localized: "Crear")) { Task { await crear() } }
+                        Button("Crear") { Task { await crear() } }
                             .disabled(!vm.puedeGuardar)
                             .accessibilityIdentifier("crearPiso")
                     } else {
@@ -199,7 +199,7 @@ struct NuevoPisoView: View {
                 .tint(Tema.Color.primario)
                 .accessibilityIdentifier("conDatosFinancieros")
         } footer: {
-            Text("Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el piso.")
+            Text("Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el inmueble.")
         }
         .filaLista()
         if vm.conDatosFinancieros {

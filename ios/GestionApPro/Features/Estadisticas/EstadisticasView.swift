@@ -71,7 +71,7 @@ private struct FiltrosEstadisticas: View {
                         }
                     }
                 }
-                Section("Pisos") {
+                Section("Inmuebles") {
                     ForEach(vm.pisos) { p in
                         Button { vm.ambito = .piso(p.breve) } label: { etiqueta(p.direccion, elegido: vm.ambito == .piso(p.breve)) }
                     }
@@ -202,8 +202,8 @@ private struct ContenidoAnalisis: View {
             }
 
             if a.pisos.count > 1 {
-                SeccionTarjeta(titulo: "Ingresos frente a gastos por piso") { GraficoPisos(pisos: a.pisos) }
-                SeccionTarjeta(titulo: "Ranking de pisos") {
+                SeccionTarjeta(titulo: "Ingresos frente a gastos por inmueble") { GraficoPisos(pisos: a.pisos) }
+                SeccionTarjeta(titulo: "Ranking de inmuebles") {
                     ForEach(Array(a.pisos.enumerated()), id: \.element.id) { i, p in
                         FilaRanking(puesto: i + 1, piso: p)
                         if i < a.pisos.count - 1 { Divider().overlay(Tema.Color.borde) }
@@ -339,12 +339,12 @@ private struct GraficoPisos: View {
     var body: some View {
         Chart {
             ForEach(pisos) { p in
-                BarMark(x: .value("Importe", p.ingresos.double), y: .value("Piso", p.piso.direccion))
+                BarMark(x: .value("Importe", p.ingresos.double), y: .value("Inmueble", p.piso.direccion))
                     .foregroundStyle(by: .value("Tipo", "Ingresos"))
                     .position(by: .value("Tipo", "Ingresos"))
                     .accessibilityLabel("\(p.piso.direccion), ingresos")
                     .accessibilityValue(Formato.euros(p.ingresos))
-                BarMark(x: .value("Importe", p.gastos.double), y: .value("Piso", p.piso.direccion))
+                BarMark(x: .value("Importe", p.gastos.double), y: .value("Inmueble", p.piso.direccion))
                     .foregroundStyle(by: .value("Tipo", "Gastos"))
                     .position(by: .value("Tipo", "Gastos"))
                     .accessibilityLabel("\(p.piso.direccion), gastos")
@@ -367,7 +367,7 @@ private struct GraficoPisos: View {
             AxisMarks { _ in AxisValueLabel().font(Tema.Fuente.nota).foregroundStyle(Tema.Color.texto) }
         }
         .frame(height: CGFloat(pisos.count) * 52 + 40)
-        .accessibilityLabel("Ingresos frente a gastos por piso")
+        .accessibilityLabel("Ingresos frente a gastos por inmueble")
     }
 }
 

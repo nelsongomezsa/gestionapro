@@ -99,7 +99,7 @@ struct Actividad: Decodable, Identifiable, Hashable, Sendable {
 
     private static let titulos: [String: String] = [
         "LOGIN": "Inicio de sesión", "LOGIN_API": "Inicio de sesión en la app",
-        "CREAR_PISO": "Piso creado", "EDITAR_PISO": "Piso editado", "BORRAR_PISO": "Piso borrado",
+        "CREAR_PISO": "Inmueble creado", "EDITAR_PISO": "Inmueble editado", "BORRAR_PISO": "Inmueble borrado",
         "CREAR_HABITACION": "Habitación creada", "EDITAR_HABITACION": "Habitación editada",
         "BORRAR_HABITACION": "Habitación borrada", "CAMBIAR_ESTADO_HABITACION": "Estado de habitación cambiado",
         "CREAR_INQUILINO": "Inquilino dado de alta", "EDITAR_INQUILINO": "Inquilino editado",

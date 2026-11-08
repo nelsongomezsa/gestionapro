@@ -23,7 +23,7 @@ struct HabitacionFormView: View {
         NavigationStack {
             Form {
                 Section {
-                    LabeledContent("Piso", value: piso.direccion)
+                    LabeledContent("Inmueble", value: piso.direccion)
                     Stepper(value: $numero, in: 1...999) {
                         LabeledContent("Número", value: "\(numero)")
                     }

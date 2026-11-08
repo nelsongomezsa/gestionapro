@@ -87,6 +87,16 @@
       }
     },
     "%@ análisis" : {},
+    "%@ años" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ yrs"
+          }
+        }
+      }
+    },
     "%@ de %@ alquiladas" : {
       "localizations" : {
         "es" : {
@@ -675,6 +685,16 @@
         }
       }
     },
+    "%lld inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld properties"
+          }
+        }
+      }
+    },
     "%lld inquilinos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -898,6 +918,16 @@
         }
       }
     },
+    "1 inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 property"
+          }
+        }
+      }
+    },
     "1 inquilino" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -993,6 +1023,16 @@
         }
       }
     },
+    "Abre cómo se calcula, su evolución y la comparación con tus otros inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens how it is calculated, its trend and how it compares with your other properties"
+          }
+        }
+      }
+    },
     "Abre cómo se calcula, su evolución y la comparación con tus otros pisos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1032,6 +1072,16 @@
         }
       }
     },
+    "Abre el detalle del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the property details"
+          }
+        }
+      }
+    },
     "Abre el detalle del piso" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1054,6 +1104,16 @@
         }
       }
     },
+    "Abre la calculadora con los datos de este inmueble para probar cambios" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
     "Abre la calculadora con los datos de este piso para probar cambios" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1061,6 +1121,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens the calculator with this property's data to try changes"
+          }
+        }
+      }
+    },
+    "Abre la calculadora con los datos reales de este inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the calculator with this property's real data"
           }
         }
       }
@@ -1136,6 +1206,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens the filtered list"
+          }
+        }
+      }
+    },
+    "Abre la ocupación de cada inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the occupancy of each property"
           }
         }
       }
@@ -1459,6 +1539,16 @@
         }
       }
     },
+    "Amortización del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property depreciation"
+          }
+        }
+      }
+    },
     "Analizando el extracto…" : {
       "localizations" : {
         "en" : {
@@ -1497,6 +1587,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analyse an investment"
+          }
+        }
+      }
+    },
+    "Análisis" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyses"
+          }
+        }
+      }
+    },
+    "Análisis %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analysis %lld"
           }
         }
       }
@@ -1738,6 +1848,16 @@
         }
       }
     },
+    "Añade un inmueble para ver su ocupación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a property to see its occupancy."
+          }
+        }
+      }
+    },
     "Añade un piso para ver su ocupación." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1922,6 +2042,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete issue"
+          }
+        }
+      }
+    },
+    "Borrar inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete property"
           }
         }
       }
@@ -3530,6 +3660,16 @@
         }
       }
     },
+    "Elige un inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a property"
+          }
+        }
+      }
+    },
     "Elige un inquilino" : {
       "localizations" : {
         "en" : {
@@ -3693,6 +3833,16 @@
         }
       }
     },
+    "En cobros, inquilinos e inmuebles: llamar, escribir por WhatsApp, registrar el pago o abrir en Mapas." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In payments, tenants and properties: call, message on WhatsApp, record the payment or open in Maps."
+          }
+        }
+      }
+    },
     "En el siguiente paso se crean solas, con su precio." : {
       "localizations" : {
         "en" : {
@@ -3806,6 +3956,16 @@
       }
     },
     "Es de un solo uso y caduca en 7 días. Solo se muestra ahora: compártelo con el inquilino." : {},
+    "Es el único inmueble con este dato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It is the only property with this figure"
+          }
+        }
+      }
+    },
     "Es el único piso con este dato" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3999,6 +4159,16 @@
         }
       }
     },
+    "Estimados con los datos del inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated from the property's data"
+          }
+        }
+      }
+    },
     "Estimados con los datos del piso" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4072,6 +4242,16 @@
     },
     "Fianza" : {},
     "Fianza de %@." : {},
+    "Ficha" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        }
+      }
+    },
     "Filtrar y ordenar" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4165,6 +4345,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Photo of the invoice"
+          }
+        }
+      }
+    },
+    "Frente a tus inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compared with your properties"
           }
         }
       }
@@ -4939,6 +5129,16 @@
         }
       }
     },
+    "Ingresos frente a gastos por inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Income vs. expenses by property"
+          }
+        }
+      }
+    },
     "Ingresos frente a gastos por piso" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4996,6 +5196,76 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inicio"
+          }
+        }
+      }
+    },
+    "Inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property"
+          }
+        }
+      }
+    },
+    "Inmueble borrado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property deleted"
+          }
+        }
+      }
+    },
+    "Inmueble creado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property created"
+          }
+        }
+      }
+    },
+    "Inmueble editado" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property edited"
+          }
+        }
+      }
+    },
+    "Inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties"
+          }
+        }
+      }
+    },
+    "Inmuebles, cobros y gastos, separados por punto y coma; se abren en Excel o Numbers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties, payments and expenses, separated by semicolons; they open in Excel or Numbers."
+          }
+        }
+      }
+    },
+    "Inmuebles, inquilinos, contratos…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Properties, tenants, contracts…"
           }
         }
       }
@@ -5419,6 +5689,16 @@
         }
       }
     },
+    "Lo que rinde tras los gastos del inmueble, antes de la financiación." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What it yields after the property's costs, before financing."
+          }
+        }
+      }
+    },
     "Lo que rinde tras los gastos del piso, antes de la financiación." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5560,6 +5840,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Map"
+          }
+        }
+      }
+    },
+    "Mapa de inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property map"
           }
         }
       }
@@ -5924,6 +6214,16 @@
         }
       }
     },
+    "Ningún inmueble coincide con la búsqueda o el filtro." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No property matches the search or filter."
+          }
+        }
+      }
+    },
     "No hay habitaciones libres ni en mantenimiento." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6015,6 +6315,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Can't be deleted"
+          }
+        }
+      }
+    },
+    "No se puede comparar: faltan datos en este inmueble o en los demás." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cannot compare: data is missing for this property or the others."
           }
         }
       }
@@ -6675,7 +6985,16 @@
         }
       }
     },
-    "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {},
+    "Para la amortización del inmueble (3 % de la construcción, sin el suelo)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For the property depreciation (3% of the building value, excluding the land)."
+          }
+        }
+      }
+    },
     "Paredes" : {
       "localizations" : {
         "en" : {
@@ -7128,6 +7447,26 @@
         }
       }
     },
+    "Por inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property"
+          }
+        }
+      }
+    },
+    "Por inmueble · de menor a mayor" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By property · lowest first"
+          }
+        }
+      }
+    },
     "Por mes" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -7461,6 +7800,16 @@
         }
       }
     },
+    "Ranking de inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property ranking"
+          }
+        }
+      }
+    },
     "Ranking de pisos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -7684,6 +8033,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Net yield"
+          }
+        }
+      }
+    },
+    "Rentabilidad, hipoteca y cash flow de un inmueble antes de comprarlo; guarda y compara." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yield, mortgage and cash flow of a property before buying it; save and compare."
           }
         }
       }
@@ -7941,6 +8300,16 @@
         }
       }
     },
+    "Si lo activas en el servidor, el botón flotante pregunta sobre el inmueble o contrato que tengas abierto. Puedes ocultarlo en Perfil." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you enable it on the server, the floating button asks about the property or contract you have open. You can hide it in Profile."
+          }
+        }
+      }
+    },
     "Siguiente" : {
       "localizations" : {
         "en" : {
@@ -8133,6 +8502,26 @@
         }
       }
     },
+    "Sin inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No property"
+          }
+        }
+      }
+    },
+    "Sin inmuebles" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No properties"
+          }
+        }
+      }
+    },
     "Sin leer (%@)" : {},
     "Sin meses vencidos en este periodo." : {
       "localizations" : {
@@ -8246,6 +8635,16 @@
         }
       }
     },
+    "Situando %lld inmuebles…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Placing %lld properties…"
+          }
+        }
+      }
+    },
     "Solo cambia el texto de GestionAp; el resto del iPhone sigue igual." : {
       "localizations" : {
         "en" : {
@@ -8329,6 +8728,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Only storage units without contracts or issues can be deleted."
+          }
+        }
+      }
+    },
+    "Son opcionales: con ellos se calculan la rentabilidad y el cash flow. Puedes completarlos después desde el inmueble." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They are optional: they are used to calculate yield and cash flow. You can complete them later from the property."
           }
         }
       }
@@ -8514,12 +8923,32 @@
         }
       }
     },
+    "Tiene %lld contratos activos. Finalízalos antes de borrarlo: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has %lld active contracts. End them before deleting: contracts and their payments are kept."
+          }
+        }
+      }
+    },
     "Tiene 1 contrato activo. Finalízalo antes de borrar el piso: los contratos y sus pagos se conservan." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "It has 1 active lease. End it before deleting the property: leases and their payments are kept."
+          }
+        }
+      }
+    },
+    "Tiene 1 contrato activo. Finalízalo antes de borrarlo: los contratos y sus pagos se conservan." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It has 1 active contract. End it before deleting: contracts and their payments are kept."
           }
         }
       }
@@ -8658,6 +9087,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All cities"
+          }
+        }
+      }
+    },
+    "Todavía no tienes inmuebles dados de alta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You haven't added any properties yet."
           }
         }
       }
@@ -9319,6 +9758,16 @@
         }
       }
     },
+    "este inmueble" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "this property"
+          }
+        }
+      }
+    },
     "este inquilino" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -9553,6 +10002,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Cerrar sesión?"
+          }
+        }
+      }
+    },
+    "¿De qué inmueble?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which property?"
           }
         }
       }
