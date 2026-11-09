@@ -104,3 +104,30 @@ SELECT 'trim_impagado' AS cifra, COALESCE(SUM(c.precio_mensual), 0) AS valor
 SELECT 'trim_contratos_iniciados' AS cifra, COUNT(*) AS valor FROM Contratos WHERE fecha_inicio BETWEEN @tini AND @tfin
 UNION ALL
 SELECT 'trim_contratos_finalizados', COUNT(*) FROM Contratos WHERE fecha_fin BETWEEN @tini AND LEAST(@tfin, @hoy);
+
+-- 5) Ocupación y unidades libres (Inicio). Un contrato finalizado hoy sigue vigente hasta medianoche
+--    (su fecha de fin es hoy) pero su unidad ya está libre: por eso activos puede superar a alquiladas.
+SELECT COUNT(*) AS unidades, SUM(estado = 'alquilada') AS alquiladas, SUM(estado = 'disponible') AS libres,
+       SUM(estado = 'mantenimiento') AS mantenimiento,
+       ROUND(SUM(estado = 'alquilada') * 100 / COUNT(*), 2) AS ocupacion_pct
+  FROM Habitaciones;
+
+-- 6) Contratos activos y por vencer en 30 días, y cuántos de ellos ya se finalizaron hoy
+SELECT COUNT(*) AS activos, SUM(c.fecha_fin <= @hoy + INTERVAL 30 DAY) AS por_vencer,
+       SUM(c.fecha_fin = @hoy AND h.estado <> 'alquilada') AS finalizados_hoy
+  FROM Contratos c JOIN Habitaciones h USING (id_habitacion)
+ WHERE @hoy BETWEEN c.fecha_inicio AND c.fecha_fin;
+
+-- 7) IVA de los recibos: la renta guardada es el total; base = total / (1 + %), cuota = total - base
+SELECT COUNT(*) AS recibos_con_iva, ROUND(SUM(p.cantidad), 2) AS total, ROUND(SUM(r.base_imponible), 2) AS base,
+       ROUND(SUM(r.cuota_iva), 2) AS cuota, SUM(r.base_imponible + r.cuota_iva <> p.cantidad) AS descuadrados
+  FROM Recibos r JOIN Pagos p USING (id_pago) WHERE r.base_imponible IS NOT NULL;
+
+-- 8) Gastos por incidencias: cada incidencia resuelta con coste tiene su gasto, por el mismo importe y fecha
+SELECT COUNT(*) AS gastos, ROUND(SUM(g.importe), 2) AS importe,
+       SUM(g.importe <> i.coste_reparacion OR g.fecha <> i.fecha) AS descuadrados,
+       SUM(i.estado <> 'resuelta') AS de_no_resueltas
+  FROM Gastos g JOIN Incidencias i ON i.id_incidencia = g.id_incidencia;
+SELECT COUNT(*) AS resueltas_con_coste_sin_gasto
+  FROM Incidencias i LEFT JOIN Gastos g ON g.id_incidencia = i.id_incidencia
+ WHERE i.estado = 'resuelta' AND i.coste_reparacion > 0 AND g.id_gasto IS NULL;

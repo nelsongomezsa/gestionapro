@@ -22,7 +22,7 @@ struct NuevoPisoView: View {
         NavigationStack {
             Form {
                 Section {
-                    IndicadorPasos(paso: vm.paso, tipo: vm.tipo)
+                    IndicadorPasos(pasos: vm.pasos, paso: vm.paso, tipo: vm.tipo)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                 }
@@ -94,6 +94,35 @@ struct NuevoPisoView: View {
         }
         .filaLista()
 
+        if vm.tipo != .vivienda {
+            Section {
+                Picker("Modo de alta", selection: Binding(get: { vm.modo }, set: { if let m = $0 { vm.elegirModo(m) } })) {
+                    ForEach(NuevoPisoViewModel.Modo.allCases, id: \.self) { m in
+                        VStack(alignment: .leading) {
+                            Text(m.nombre)
+                            Text(m.descripcion(vm.tipo)).font(Tema.Fuente.nota).foregroundStyle(Tema.Color.textoSecundario)
+                        }
+                        .tag(NuevoPisoViewModel.Modo?.some(m))
+                    }
+                }
+                .pickerStyle(.inline)
+                .labelsHidden()
+                .accessibilityIdentifier("modoAlta")
+            } header: {
+                Text("¿Una unidad suelta o un edificio con varias?")
+            } footer: {
+                if vm.modo == nil, mostrar { ErrorCampo(texto: String(localized: "Elige una opción")) }
+            }
+            .filaLista()
+        }
+
+        if vm.tipo == .vivienda || vm.modo != nil {
+            datosDelInmueble(mostrar: mostrar)
+        }
+    }
+
+    @ViewBuilder private func datosDelInmueble(mostrar: Bool) -> some View {
+        @Bindable var vm = vm
         Section {
             TextField("Calle, número y piso", text: $vm.direccion, axis: .vertical)
                 .textContentType(.fullStreetAddress)
@@ -131,6 +160,9 @@ struct NuevoPisoView: View {
         }
         .filaLista()
 
+        if vm.esSuelta {
+            seccionUnidadSuelta(mostrar: mostrar)
+        } else {
         Section {
             Stepper(value: Binding(get: { vm.numeroHabitaciones }, set: { vm.cambiarNumero($0) }),
                     in: 1...vm.tipo.maximoUnidades, step: 1) {
@@ -157,6 +189,42 @@ struct NuevoPisoView: View {
             }
         }
         .filaLista()
+        }
+    }
+
+    /// La plaza o el trastero directamente, sin paso de unidades.
+    @ViewBuilder private func seccionUnidadSuelta(mostrar: Bool) -> some View {
+        @Bindable var vm = vm
+        if let h = vm.habitaciones.first {
+            Section {
+                LabeledContent(vm.tipo.unidad.numeroDe) {
+                    TextField("Nº", value: Binding(get: { h.numero }, set: { vm.cambiarNumeroHabitacion(h.id, $0) }), format: .number)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.trailing)
+                        .monospacedDigit()
+                        .accessibilityIdentifier("numeroUnidadSuelta")
+                }
+                CampoNumerico("Superficie", valor: $vm.metros, sufijo: "m²")
+                    .accessibilityIdentifier("metrosUnidades")
+                TextField("Planta (p. ej. -1)", text: $vm.planta)
+                if vm.tipo == .garajes {
+                    Picker("Para", selection: $vm.vehiculo) {
+                        Text("Sin indicar").tag(Vehiculo?.none)
+                        ForEach(Vehiculo.allCases) { Text($0.nombre).tag(Vehiculo?.some($0)) }
+                    }
+                }
+                CampoNumerico("Precio al mes", valor: Binding(get: { h.precio }, set: { vm.cambiarPrecio(h.id, $0) }), sufijo: "€")
+                    .accessibilityIdentifier("precioUnidadSuelta")
+            } header: {
+                Text(vm.tipo.unidad.nombre)
+            } footer: {
+                VStack(alignment: .leading) {
+                    if let e = vm.errorNumero(h) ?? (mostrar || h.precio != 0 ? vm.errorPrecio(h) : nil) { ErrorCampo(texto: e) }
+                    if let e = vm.errorMetros ?? vm.errorPlanta { ErrorCampo(texto: e) }
+                }
+            }
+            .filaLista()
+        }
     }
 
     @ViewBuilder private var pasoHabitaciones: some View {
@@ -209,7 +277,11 @@ struct NuevoPisoView: View {
             LabeledContent("Dirección", value: vm.direccion.trimmingCharacters(in: .whitespacesAndNewlines))
             LabeledContent("Ciudad", value: vm.otraCiudad ? vm.nuevaCiudad : (vm.ciudades.first { $0.id == vm.idCiudad }?.nombre ?? ""))
             LabeledContent("Tipo", value: vm.tipo.nombre)
-            LabeledContent(vm.tipo.unidad.plural, value: "\(vm.habitaciones.count)")
+            if vm.esSuelta, let h = vm.habitaciones.first {
+                LabeledContent(vm.tipo.unidad.nombre, value: "\(h.numero)")
+            } else {
+                LabeledContent(vm.tipo.unidad.plural, value: "\(vm.habitaciones.count)")
+            }
             LabeledContent("Rentas al mes", value: Formato.euros(vm.habitaciones.reduce(0) { $0 + $1.precio }))
         }
         .filaLista()
@@ -228,7 +300,7 @@ struct NuevoPisoView: View {
     }
 
     private func ir(_ delta: Int) {
-        guard let nuevo = NuevoPisoViewModel.Paso(rawValue: vm.paso.rawValue + delta) else { return }
+        guard let nuevo = vm.pasoVecino(delta) else { return }
         if reducirMovimiento { vm.paso = nuevo } else { withAnimation(Tema.Movimiento.suave) { vm.paso = nuevo } }
     }
 
@@ -242,26 +314,28 @@ struct NuevoPisoView: View {
 
 /// "Paso 2 de 3 · Habitaciones" con tres segmentos.
 private struct IndicadorPasos: View {
+    let pasos: [NuevoPisoViewModel.Paso]
     let paso: NuevoPisoViewModel.Paso
     let tipo: TipoInmueble
 
     var body: some View {
-        let total = NuevoPisoViewModel.Paso.allCases.count
+        let total = pasos.count
+        let actual = (pasos.firstIndex(of: paso) ?? 0)
         VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
             HStack(spacing: Tema.Espacio.xxs) {
-                ForEach(NuevoPisoViewModel.Paso.allCases, id: \.self) { p in
+                ForEach(pasos, id: \.self) { p in
                     Capsule()
                         .fill(p.rawValue <= paso.rawValue ? Tema.Color.primario : Tema.Color.superficieElevada)
                         .frame(height: Tema.Tamano.alturaBarraProgreso)
                 }
             }
-            Text("Paso \(paso.rawValue + 1) de \(total) · \(paso.titulo(tipo))")
+            Text("Paso \(actual + 1) de \(total) · \(paso.titulo(tipo))")
                 .font(Tema.Fuente.detalle.weight(.semibold))
                 .foregroundStyle(Tema.Color.textoSecundario)
         }
         .padding(.horizontal, Tema.Espacio.xxs)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Paso \(paso.rawValue + 1) de \(total): \(paso.titulo(tipo))")
+        .accessibilityLabel("Paso \(actual + 1) de \(total): \(paso.titulo(tipo))")
     }
 }
 

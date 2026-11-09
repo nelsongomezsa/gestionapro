@@ -1965,3 +1965,147 @@ private extension XCUIElement {
         if exists && isHittable { tap() }
     }
 }
+
+extension CapturasUITests {
+
+    /// Datos de prueba: las pantallas con las que se comprueba que todo cuadra, y las de las unidades sueltas.
+    @MainActor
+    func testDatosPrueba() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.esperar(r.elemento(contiene: "Cobrado este mes"))
+        r.pausa(2)
+        r.capturar("01-inicio")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("02-inicio-abajo")
+
+        r.pestana("Inmuebles")
+        let filtro = r.app.segmentedControls["selectorTipoInmueble"]
+        r.esperar(filtro)
+        r.pausa(2)
+        r.capturar("03-inmuebles")
+
+        func tarjeta(_ texto: String) -> XCUIElement {
+            r.app.buttons.matching(NSPredicate(format: "identifier == %@ AND label CONTAINS %@", "tarjetaPiso", texto)).firstMatch
+        }
+        func abrir(_ texto: String, _ nombre: String) {
+            r.desplazarHasta(tarjeta(texto)).tap()
+            r.pausa(2.5)
+            r.capturar(nombre)
+            r.atras()
+            r.pausa(1)
+            // Los filtros están al principio de la lista: se vuelve arriba para poder tocarlos.
+            for _ in 0..<3 { r.app.swipeDown(velocity: .fast) }
+            r.pausa(1)
+        }
+
+        filtro.buttons["Vivienda"].tap()
+        r.pausa(1)
+        abrir("Ponzano", "04-piso")
+        r.desplazarHasta(tarjeta("Ponzano")).tap()
+        r.desplazarHasta(r.app.buttons["enlaceGastos"]).tap()
+        r.pausa(2)
+        r.capturar("04b-gastos-del-piso")
+        r.atras()
+        r.pausa(1)
+        r.atras()
+        r.pausa(1)
+        for _ in 0..<3 { r.app.swipeDown(velocity: .fast) }
+        r.pausa(1)
+        filtro.buttons["Garaje"].tap()
+        r.pausa(1)
+        abrir("Bravo Murillo", "05-garaje")
+        r.desplazarHasta(tarjeta("Bravo Murillo")).tap()
+        r.pausa(2)
+        let contratoIva = r.app.buttons.matching(NSPredicate(format: "identifier == %@ AND label CONTAINS %@", "filaContratoPiso", "Plaza 1")).firstMatch
+        r.desplazarHasta(contratoIva).tap()
+        r.esperar(r.app.navigationBars["Contrato"])
+        r.desplazarHasta(r.elemento(contiene: "Base imponible"))
+        r.pausa(1)
+        r.capturar("05b-contrato-iva")
+        r.atras()
+        r.pausa(1)
+        r.atras()
+        r.pausa(1)
+        for _ in 0..<3 { r.app.swipeDown(velocity: .fast) }
+        r.pausa(1)
+        filtro.buttons["Trasteros"].tap()
+        r.pausa(1)
+        abrir("Peris", "06-trastero")
+        filtro.buttons["Todos"].tap()
+        r.pausa(1)
+
+        let plazas = r.app.buttons["filtroSueltas-plazas"]
+        r.esperar(plazas)
+        plazas.tap()
+        r.pausa(1.5)
+        r.capturar("07-plazas-sueltas")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("07b-plazas-sueltas-libre")
+        for _ in 0..<3 { r.app.swipeDown(velocity: .fast) }
+        r.pausa(1)
+        abrir("Serrano", "08-ficha-plaza-suelta")
+        r.app.buttons["filtroSueltas-trasteros"].tap()
+        r.pausa(1.5)
+        r.capturar("09-trasteros-sueltos")
+        r.app.buttons["filtroSueltas-trasteros"].tap()
+        r.pausa(1)
+
+        r.app.buttons["nuevoPiso"].tap()
+        r.pausa(1.5)
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Garaje")).firstMatch.tap()
+        r.pausa(1)
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("10-alta-pregunta")
+        r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Una unidad suelta")).firstMatch.tap()
+        r.pausa(1)
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("11-alta-suelta")
+        r.app.buttons["Cancelar"].tap()
+        r.pausa(1)
+        // Cancelar con datos a medias no pide confirmación: el alta aún no tiene dirección.
+
+        r.pestana("Cobros")
+        r.esperar(r.elemento(contiene: "Atrasados"))
+        r.pausa(2)
+        r.capturar("12-cobros")
+        r.pestana("Inicio")
+        r.pausa(1)
+        let alerta = r.app.buttons["alerta-COBROS_ATRASADOS"]
+        r.desplazarHasta(alerta).tap()
+        r.esperar(r.app.navigationBars["Cobros atrasados"])
+        r.pausa(1.5)
+        r.capturar("13-cobros-atrasados")
+        r.atras()
+        r.pausa(1)
+
+        r.pestana("Más")
+        r.desplazarHasta(r.app.buttons["Estadísticas"]).tap()
+        r.pausa(3)
+        r.capturar("14-estadisticas")
+        r.app.buttons["compararSueltas"].tap()
+        r.pausa(1.5)
+        r.capturar("15-estadisticas-ranking")
+        r.app.buttons["Cerrar"].tap()
+        r.pausa(1)
+        r.app.segmentedControls.buttons["Trimestre"].tap()
+        r.pausa(1)
+        r.app.buttons["Periodo anterior"].tap()
+        r.pausa(3)
+        r.capturar("18-estadisticas-t3")
+    }
+
+    /// La vista del inquilino, con su propia sesión.
+    @MainActor
+    func testDatosPruebaInquilino() throws {
+        let r = try Recorrido.iniciar(capturarLogin: false)
+        r.pausa(4)
+        r.capturar("16-inquilino")
+        r.app.swipeUp()
+        r.pausa(1)
+        r.capturar("17-inquilino-abajo")
+    }
+}
