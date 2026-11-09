@@ -7,8 +7,6 @@ import com.gestionap.api.domain.Incidencia;
 import com.gestionap.api.domain.Piso;
 import com.gestionap.api.repository.GastoRepository;
 import com.gestionap.api.repository.HabitacionRepository;
-import com.gestionap.api.repository.IncidenciaRepository;
-import com.gestionap.api.repository.PisoRepository;
 import com.gestionap.api.security.UsuarioAutenticado;
 import com.gestionap.api.web.ApiException;
 import com.gestionap.api.web.dto.GastoDtos.GastoRequest;
@@ -31,33 +29,24 @@ import java.util.Map;
 public class GastoService {
 
     private final GastoRepository gastos;
-    private final PisoRepository pisos;
     private final HabitacionRepository habitaciones;
-    private final IncidenciaRepository incidencias;
     private final ControlAcceso acceso;
     private final ArchivoService archivos;
     private final ActividadService actividad;
 
-    public GastoService(GastoRepository gastos, PisoRepository pisos, HabitacionRepository habitaciones,
-                        IncidenciaRepository incidencias, ControlAcceso acceso, ArchivoService archivos,
+    public GastoService(GastoRepository gastos, HabitacionRepository habitaciones, ControlAcceso acceso, ArchivoService archivos,
                         ActividadService actividad) {
         this.gastos = gastos;
-        this.pisos = pisos;
         this.habitaciones = habitaciones;
-        this.incidencias = incidencias;
         this.acceso = acceso;
         this.archivos = archivos;
         this.actividad = actividad;
     }
 
-    /** Lista gastos visibles y sincroniza los costes de incidencias resueltas. */
-    @Transactional
+    /** Lista gastos visibles. Solo lectura: el coste de una incidencia se apunta al resolverla. */
+    @Transactional(readOnly = true)
     public ResumenGastos listar(Integer idPiso, Integer anio, UsuarioAutenticado actor) {
-        List<Piso> visibles = idPiso != null ? List.of(acceso.pisoVisible(idPiso, actor))
-                : actor.esAdmin() ? pisos.findAllByOrderByDireccionAsc()
-                : pisos.findByPropietarioIdOrderByDireccionAsc(actor.id());
-        List<Integer> ids = visibles.stream().map(Piso::getId).toList();
-        sincronizar(ids);
+        if (idPiso != null) acceso.pisoVisible(idPiso, actor);
         LocalDate desde = anio == null ? null : LocalDate.of(anio, 1, 1);
         LocalDate hasta = anio == null ? null : LocalDate.of(anio, 12, 31);
         List<GastoResponse> lista = gastos.buscar(acceso.filtroPropietario(actor), idPiso, desde, hasta)
@@ -144,26 +133,31 @@ public class GastoService {
         return resultado;
     }
 
-    private void sincronizar(List<Integer> idsPiso) {
-        if (idsPiso.isEmpty()) {
+    /**
+     * Apunta (o actualiza) el gasto de reparación de una incidencia resuelta con coste. Un gasto por
+     * incidencia (id_incidencia es único): volver a llamarlo no duplica nada. Si la incidencia no está
+     * resuelta o no tiene coste, no hace nada (un gasto ya apuntado se conserva, como hasta ahora).
+     */
+    @Transactional
+    public void apuntarCosteDeIncidencia(Incidencia incidencia) {
+        if (incidencia.getEstado() != EstadoIncidencia.resuelta || incidencia.getCosteReparacion() == null
+                || incidencia.getCosteReparacion().signum() <= 0) {
             return;
         }
-        for (Incidencia incidencia : incidencias.resueltasConCoste(idsPiso, EstadoIncidencia.resuelta)) {
-            Gasto gasto = gastos.findByIdIncidencia(incidencia.getId()).orElseGet(() -> {
-                Gasto nuevo = new Gasto();
-                nuevo.setPiso(incidencia.getHabitacion().getPiso());
-                nuevo.setIdIncidencia(incidencia.getId());
-                nuevo.setCategoria(Gasto.Categoria.REPARACION);
-                nuevo.setFecha(incidencia.getFecha());
-                nuevo.setDeducible(true);
-                return nuevo;
-            });
-            gasto.setImporte(incidencia.getCosteReparacion());
-            gasto.setHabitacion(incidencia.getHabitacion());
-            String concepto = "Incidencia: " + incidencia.getDescripcion();
-            gasto.setConcepto(concepto.substring(0, Math.min(150, concepto.length())));
-            gastos.save(gasto);
-        }
+        Gasto gasto = gastos.findByIdIncidencia(incidencia.getId()).orElseGet(() -> {
+            Gasto nuevo = new Gasto();
+            nuevo.setPiso(incidencia.getHabitacion().getPiso());
+            nuevo.setIdIncidencia(incidencia.getId());
+            nuevo.setCategoria(Gasto.Categoria.REPARACION);
+            nuevo.setFecha(incidencia.getFecha());
+            nuevo.setDeducible(true);
+            return nuevo;
+        });
+        gasto.setImporte(incidencia.getCosteReparacion());
+        gasto.setHabitacion(incidencia.getHabitacion());
+        String concepto = "Incidencia: " + incidencia.getDescripcion();
+        gasto.setConcepto(concepto.substring(0, Math.min(150, concepto.length())));
+        gastos.save(gasto);
     }
 
     private Gasto cargarVisible(Integer id, UsuarioAutenticado actor) {

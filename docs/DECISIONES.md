@@ -85,3 +85,9 @@
 - H2 2.4 (tests) guarda DATETIME sin fracción, como MariaDB: los tests ya no dependen de microsegundos. Al anular una invitación se caduca un segundo antes de ahora (DATETIME puede redondear hacia arriba).
 - Peticiones no multipart en rutas de subida: 415/400 en vez de 500.
 - Hibernate 7 avisa de que MariaDB 10.4 (la de XAMPP) está por debajo de su mínimo; funciona y valida el esquema, pero conviene subir a MariaDB 10.6 o superior.
+
+## Gastos de incidencias (2026-11-09)
+- El coste de reparación pasa a Gastos al marcar la incidencia como resuelta con coste (o al ponerle coste ya resuelta), en `IncidenciaService`; un gasto por incidencia (`id_incidencia` único), que sigue al coste si cambia. Antes lo apuntaba la consulta de gastos o del resumen fiscal.
+- Los informes y listados (gastos, resumen fiscal en JSON/PDF/CSV, informe mensual) son de solo lectura (`@Transactional(readOnly = true)`).
+- Las incidencias que ya estaban resueltas con coste y sin gasto se apuntan una vez con `api/sql/V13__gastos_de_incidencias_resueltas.sql` (idempotente, sin duplicados). Las que se resuelvan en el escritorio no pasan solas a Gastos: se puede volver a ejecutar V13.
+- Un gasto ya apuntado se conserva aunque la incidencia se reabra o se le quite el coste, como hasta ahora.
