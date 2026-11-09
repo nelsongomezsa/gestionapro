@@ -220,11 +220,12 @@ final class NavegacionUITests: XCTestCase {
         volver(r)
         filtro.buttons["Todos"].tap()
 
-        // Alta: lo primero es el tipo; en trasteros se piden m² de cada uno.
+        // Alta: lo primero es el tipo y, en garajes y trasteros, si es una unidad suelta o un edificio.
         r.app.buttons["nuevoPiso"].tap()
         esperarBarra(r, "Nuevo inmueble")
         r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Trasteros")).firstMatch.tap()
         esperarBarra(r, "Nuevo inmueble")
+        r.desplazarHasta(r.app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Un edificio con varias")).firstMatch).tap()
         XCTAssertTrue(r.desplazarHasta(r.app.textFields["metrosUnidades"]).exists || r.app.otherElements["metrosUnidades"].exists
                       || r.elemento(contiene: "Superficie").exists)
         r.app.buttons["Cancelar"].tap()
