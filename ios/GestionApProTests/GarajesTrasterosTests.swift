@@ -98,6 +98,7 @@ struct GarajesTrasterosTests {
         vm.direccion = "Calle de Alcalá 120"
         vm.idCiudad = 1
         vm.cambiarTipo(.trasteros)
+        vm.elegirModo(.edificio)
         vm.planta = "<script>"
         #expect(vm.errorPlanta != nil)
         #expect(!vm.puedeAvanzar(desde: .basicos))

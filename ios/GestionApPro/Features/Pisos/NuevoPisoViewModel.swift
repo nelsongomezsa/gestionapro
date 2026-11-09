@@ -3,6 +3,7 @@ import Observation
 
 /// Alta de un inmueble en tres pasos: tipo y datos básicos, unidades con precio (habitaciones, plazas o
 /// trasteros, con m² y planta en los dos últimos) y datos financieros (opcional).
+/// Un garaje o trastero suelto va en dos: sus datos están ya en el primero y no hay paso de unidades.
 /// Toda la validación está aquí (sin vista) para mostrarla en directo y probarla.
 @MainActor
 @Observable
@@ -25,12 +26,35 @@ final class NuevoPisoViewModel {
         var precio: Double
     }
 
+    /// En garajes y trasteros: una unidad comprada por separado o un edificio entero.
+    enum Modo: CaseIterable, Sendable {
+        case suelta, edificio
+
+        var nombre: String {
+            switch self {
+            case .suelta: String(localized: "Una unidad suelta")
+            case .edificio: String(localized: "Un edificio con varias")
+            }
+        }
+
+        func descripcion(_ tipo: TipoInmueble) -> String {
+            switch (self, tipo) {
+            case (.suelta, .trasteros): String(localized: "Un solo trastero, con su compra y sus gastos")
+            case (.suelta, _): String(localized: "Una sola plaza, con su compra y sus gastos")
+            case (.edificio, .trasteros): String(localized: "Varios trasteros en el mismo inmueble")
+            case (.edificio, _): String(localized: "Varias plazas en el mismo inmueble")
+            }
+        }
+    }
+
     static let maxHabitaciones = TipoInmueble.vivienda.maximoUnidades
     static let maxPrecio = 99_999.99
 
     var paso: Paso = .basicos
     /// Lo primero que se pregunta: qué se da de alta.
     private(set) var tipo: TipoInmueble = .vivienda
+    /// Respuesta a "¿Una unidad suelta o un edificio con varias?"; nil hasta contestarla (y en viviendas).
+    private(set) var modo: Modo?
     /// Garajes y trasteros: m² y planta de todas las unidades (opcionales) y, en plazas, para qué vehículo.
     var metros = 0.0
     var planta = ""
@@ -63,7 +87,32 @@ final class NuevoPisoViewModel {
     func cambiarTipo(_ nuevo: TipoInmueble) {
         guard nuevo != tipo else { return }
         tipo = nuevo
+        if nuevo == .vivienda { modo = nil }
+        guard !esSuelta else { return }
         cambiarNumero(nuevo == .vivienda ? min(numeroHabitaciones, nuevo.maximoUnidades) : max(numeroHabitaciones, 10))
+    }
+
+    /// Suelta: una sola unidad y los datos financieros a la vista, que es para lo que se da de alta.
+    func elegirModo(_ nuevo: Modo) {
+        guard nuevo != modo else { return }
+        modo = nuevo
+        if nuevo == .suelta {
+            cambiarNumero(1)
+            conDatosFinancieros = true
+        } else {
+            cambiarNumero(max(numeroHabitaciones, 10))
+        }
+    }
+
+    var esSuelta: Bool { tipo != .vivienda && modo == .suelta }
+
+    /// Pasos de este alta: la unidad suelta no tiene paso de unidades.
+    var pasos: [Paso] { esSuelta ? [.basicos, .financieros] : Paso.allCases }
+
+    /// El paso anterior o siguiente, si existe.
+    func pasoVecino(_ delta: Int) -> Paso? {
+        guard let i = pasos.firstIndex(of: paso), pasos.indices.contains(i + delta) else { return nil }
+        return pasos[i + delta]
     }
 
     var errorMetros: String? {
@@ -142,13 +191,16 @@ final class NuevoPisoViewModel {
 
     func puedeAvanzar(desde paso: Paso) -> Bool {
         switch paso {
-        case .basicos: errorDireccion == nil && errorCiudad == nil && (tipo == .vivienda || (errorMetros == nil && errorPlanta == nil))
+        case .basicos:
+            errorDireccion == nil && errorCiudad == nil
+                && (tipo == .vivienda || (modo != nil && errorMetros == nil && errorPlanta == nil))
+                && (!esSuelta || habitacionesValidas)
         case .habitaciones: habitacionesValidas
         case .financieros: true
         }
     }
 
-    var puedeGuardar: Bool { Paso.allCases.allSatisfy { puedeAvanzar(desde: $0) } }
+    var puedeGuardar: Bool { pasos.allSatisfy { puedeAvanzar(desde: $0) } }
 
     // MARK: Datos
 

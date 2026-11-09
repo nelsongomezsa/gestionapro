@@ -65,7 +65,10 @@ struct PisosListaView: View {
                 if vm.tiposPresentes.count > 1 {
                     SelectorTipoInmueble(tipo: $vm.tipo)
                 }
-                ResumenCarteraView(resumen: vm.resumen)
+                if !vm.gruposPresentes.isEmpty {
+                    filtroSueltas
+                }
+                ResumenCarteraView(resumen: vm.resumen, grupo: vm.grupo)
                     .padding(.bottom, Tema.Espacio.xs)
 
                 // La calculadora sin pestaña propia: aquí, en el «+» y en cada piso (Simular).
@@ -85,6 +88,7 @@ struct PisosListaView: View {
                             vm.busqueda = ""
                             vm.ciudad = nil
                             vm.tipo = nil
+                            vm.grupo = nil
                         }
                     }
                 } else {
@@ -102,7 +106,9 @@ struct PisosListaView: View {
                     .padding(.top, Tema.Espacio.xs)
 
                     ForEach(pisos) { piso in
-                        NavigationLink(value: piso) { TarjetaPiso(piso: piso) }
+                        NavigationLink(value: piso) {
+                            TarjetaPiso(piso: piso, situacionSuelta: vm.unidadesSueltas[piso.id]?.situacionSuelta)
+                        }
                             .matchedTransitionSource(id: piso.id, in: zoom)
                             .contextMenu {
                                 if let url = URL(string: "maps://?q=" + "\(piso.direccion), \(piso.ciudad.nombre)"
@@ -122,6 +128,32 @@ struct PisosListaView: View {
             .padding(.bottom, Tema.Espacio.l)
         }
         .background(Tema.Color.fondo)
+    }
+
+    /// "Plazas sueltas" y "Trasteros sueltos": un toque filtra, otro lo quita.
+    private var filtroSueltas: some View {
+        HStack(spacing: Tema.Espacio.xs) {
+            ForEach(vm.gruposPresentes) { g in
+                let elegido = vm.grupo == g
+                Button {
+                    withAnimation(Tema.Movimiento.suave) { vm.grupo = elegido ? nil : g }
+                } label: {
+                    Label("\(g.nombre) · \(vm.cuantas(g))", systemImage: g.icono)
+                        .font(Tema.Fuente.detalle.weight(.semibold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .foregroundStyle(elegido ? Tema.Color.fondo : Tema.Color.texto)
+                        .padding(.horizontal, Tema.Espacio.s)
+                        .padding(.vertical, Tema.Espacio.xs)
+                        .frame(maxWidth: .infinity)
+                        .background(elegido ? Tema.Color.primario : Tema.Color.superficieElevada, in: .capsule)
+                }
+                .buttonStyle(EstiloPulsable())
+                .accessibilityAddTraits(elegido ? .isSelected : [])
+                .accessibilityIdentifier("filtroSueltas-\(g.rawValue)")
+            }
+        }
+        .sensoryFeedback(.selection, trigger: vm.grupo)
     }
 
     private var menuFiltros: some ToolbarContent {
@@ -145,17 +177,34 @@ struct PisosListaView: View {
 /// Cabecera con los totales previstos de la cartera (contratos activos y datos financieros).
 struct ResumenCarteraView: View {
     let resumen: ResumenCartera
+    /// Con un grupo de unidades sueltas elegido, los totales son los de ese grupo.
+    var grupo: GrupoSueltas? = nil
+
+    private var textoLibres: String {
+        if resumen.disponibles == 1, let grupo {
+            return grupo == .trasteros ? String(localized: "1 trastero libre") : String(localized: "1 plaza libre")
+        }
+        return "\(resumen.disponibles) \(resumen.unidades) \(String(localized: "libres"))"
+    }
 
     var body: some View {
-        TarjetaHero(titulo: "Cash flow previsto de la cartera", valor: Formato.euros(resumen.cashFlowMensual),
+        TarjetaHero(titulo: grupo.map { String(localized: "Cash flow total · \($0.nombre)") } ?? String(localized: "Cash flow previsto de la cartera"), valor: Formato.euros(resumen.cashFlowMensual),
                     tonoValor: resumen.cashFlowMensual < 0 ? .negativo : nil) {
             VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
                 BarraProgreso(valor: resumen.ocupacion, tono: Tono.ocupacion(resumen.ocupacion * 100))
-                Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(resumen.disponibles) \(resumen.unidades) libres")
+                Text("\(Formato.porcentaje(resumen.ocupacion * 100)) de ocupación · \(textoLibres)")
                     .font(Tema.Fuente.nota)
                     .foregroundStyle(Tema.Color.textoSecundario)
             }
-            DatoCompacto(titulo: "Ingresos previstos al mes", valor: Formato.euros(resumen.ingresosMensuales))
+            if grupo != nil {
+                ParDatos {
+                    DatoCompacto(titulo: "Ingresos previstos al mes", valor: Formato.euros(resumen.ingresosMensuales))
+                } derecha: {
+                    DatoCompacto(titulo: "Rentabilidad total", valor: Formato.porcentaje(resumen.totales.rentabilidadBrutaPct))
+                }
+            } else {
+                DatoCompacto(titulo: "Ingresos previstos al mes", valor: Formato.euros(resumen.ingresosMensuales))
+            }
         }
     }
 }

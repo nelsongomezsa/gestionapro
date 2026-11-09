@@ -11,6 +11,8 @@ struct ResumenCartera: Equatable {
     let pisosSinDatos: Int
     /// "habitaciones", "plazas", "trasteros" o, si se mezclan, "unidades".
     let unidades: String
+    /// Cash flow y rentabilidad del conjunto (la tarjeta de unidades sueltas).
+    let totales: TotalesSueltas
 
     var ocupacion: Double { habitaciones > 0 ? Double(alquiladas) / Double(habitaciones) : 0 }
 
@@ -21,6 +23,7 @@ struct ResumenCartera: Equatable {
         alquiladas = pisos.reduce(0) { $0 + $1.ocupacion.alquiladas }
         disponibles = pisos.reduce(0) { $0 + $1.ocupacion.disponibles }
         pisosSinDatos = pisos.filter { $0.metricas == nil }.count
+        totales = TotalesSueltas(pisos)
         let tipos = Set(pisos.map(\.tipoInmueble))
         unidades = tipos.count == 1 ? tipos.first!.unidad.pluralMinusculas
             : Unidades.plural(conOtrosTipos: tipos.contains { $0 != .vivienda })
@@ -43,8 +46,22 @@ final class PisosViewModel {
     var busqueda = ""
     var ciudad: String?
     /// Filtro por tipo de inmueble (nil: todos).
-    var tipo: TipoInmueble?
+    var tipo: TipoInmueble? { didSet { if tipo != nil { grupo = nil } } }
+    /// "Plazas sueltas" o "Trasteros sueltos" (excluye al filtro por tipo).
+    var grupo: GrupoSueltas? { didSet { if grupo != nil { tipo = nil } } }
     var orden: Orden = .cashFlow
+    /// La unidad de cada inmueble suelto, por id de inmueble: inquilino o "libre desde".
+    private(set) var unidadesSueltas: [Int: Habitacion] = [:]
+
+    /// Grupos con unidades sueltas: el filtro solo se muestra si hay alguno.
+    var gruposPresentes: [GrupoSueltas] {
+        let presentes = Set((estado.valor ?? []).compactMap(\.grupoSueltas))
+        return GrupoSueltas.allCases.filter(presentes.contains)
+    }
+
+    func cuantas(_ grupo: GrupoSueltas) -> Int {
+        (estado.valor ?? []).filter { $0.grupoSueltas == grupo }.count
+    }
 
     /// Tipos presentes en la cartera: el filtro solo se muestra si hay más de uno.
     var tiposPresentes: [TipoInmueble] {
@@ -56,14 +73,18 @@ final class PisosViewModel {
         Array(Set((estado.valor ?? []).map(\.ciudad.nombre))).sorted()
     }
 
-    var resumen: ResumenCartera { ResumenCartera((estado.valor ?? []).filter { tipo == nil || $0.tipoInmueble == tipo }) }
+    var resumen: ResumenCartera { ResumenCartera((estado.valor ?? []).filter(pasaFiltroTipo)) }
+
+    private func pasaFiltroTipo(_ p: Piso) -> Bool {
+        (tipo == nil || p.tipoInmueble == tipo) && (grupo == nil || p.grupoSueltas == grupo)
+    }
 
     /// Pisos tras buscar (dirección o ciudad, sin tildes ni mayúsculas), filtrar y ordenar.
     var pisosVisibles: [Piso] {
         let texto = busqueda.trimmingCharacters(in: .whitespaces)
         return (estado.valor ?? [])
             .filter { ciudad == nil || $0.ciudad.nombre == ciudad }
-            .filter { tipo == nil || $0.tipoInmueble == tipo }
+            .filter(pasaFiltroTipo)
             .filter {
                 texto.isEmpty
                     || $0.direccion.localizedStandardContains(texto)
@@ -92,11 +113,25 @@ final class PisosViewModel {
     func cargar(con api: APIClient) async {
         if estado.valor == nil { estado = .cargando }
         do {
-            estado = .cargado(try await api.enviar(.pisos))
+            let pisos = try await api.enviar(.pisos)
+            estado = .cargado(pisos)
+            await cargarUnidadesSueltas(de: pisos, con: api)
         } catch .noAutorizado {
             // La sesión ya vuelve al login.
         } catch {
             if estado.valor == nil { estado = .error(error.localizedDescription) }
         }
+    }
+
+    /// Solo para enriquecer las tarjetas: si falla, se muestran con el texto breve.
+    private func cargarUnidadesSueltas(de pisos: [Piso], con api: APIClient) async {
+        let sueltas = Set(pisos.filter(\.esUnidadSuelta).map(\.id))
+        guard !sueltas.isEmpty else {
+            unidadesSueltas = [:]
+            return
+        }
+        guard let lista = try? await api.enviar(.habitaciones()) else { return }
+        unidadesSueltas = Dictionary(lista.filter { sueltas.contains($0.piso.id) }.map { ($0.piso.id, $0) },
+                                     uniquingKeysWith: { a, _ in a })
     }
 }

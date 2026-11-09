@@ -4,6 +4,8 @@ import SwiftUI
 struct TarjetaPiso: View {
     @Environment(\.dynamicTypeSize) private var tamanoTexto
     let piso: Piso
+    /// Unidad suelta: "Alquilada a <nombre>" o "Libre desde <fecha>", si ya se conoce.
+    var situacionSuelta: String? = nil
 
     private var ocupacion: Double {
         piso.ocupacion.total > 0 ? Double(piso.ocupacion.alquiladas) / Double(piso.ocupacion.total) : 0
@@ -60,11 +62,19 @@ struct TarjetaPiso: View {
                 }
             }
 
-            VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
-                BarraProgreso(valor: ocupacion, tono: Tono.ocupacion(ocupacion * 100))
-                Text(piso.tipoInmueble.unidad.alquiladas(piso.ocupacion.alquiladas, de: piso.ocupacion.total))
-                    .font(Tema.Fuente.nota)
-                    .foregroundStyle(Tema.Color.textoSecundario)
+            if piso.esUnidadSuelta {
+                Label(situacionSuelta ?? piso.situacionSueltaBreve,
+                      systemImage: piso.ocupacion.alquiladas > 0 ? "person.fill" : "key")
+                    .font(Tema.Fuente.detalle)
+                    .foregroundStyle(piso.ocupacion.alquiladas > 0 ? Tema.Color.texto : Tema.Color.textoSecundario)
+                    .accessibilityIdentifier("situacionSuelta")
+            } else {
+                VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
+                    BarraProgreso(valor: ocupacion, tono: Tono.ocupacion(ocupacion * 100))
+                    Text(piso.tipoInmueble.unidad.alquiladas(piso.ocupacion.alquiladas, de: piso.ocupacion.total))
+                        .font(Tema.Fuente.nota)
+                        .foregroundStyle(Tema.Color.textoSecundario)
+                }
             }
         }
         .tarjeta()

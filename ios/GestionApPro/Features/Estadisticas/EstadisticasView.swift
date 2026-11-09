@@ -8,6 +8,7 @@ struct EstadisticasView: View {
     @Environment(SesionStore.self) private var sesion
     @State private var vm = EstadisticasViewModel()
     @State private var documento: DocumentoPDF?
+    @State private var viendoSueltas = false
 
     private struct Clave: Equatable {
         let periodo: PeriodoEstadisticas
@@ -19,6 +20,11 @@ struct EstadisticasView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Tema.Espacio.l) {
                 FiltrosEstadisticas(vm: vm)
+                if vm.sueltas.count > 1 {
+                    Button { viendoSueltas = true } label: { AccesoRankingSueltas(cuantas: vm.sueltas.count) }
+                        .buttonStyle(EstiloPulsable())
+                        .accessibilityIdentifier("compararSueltas")
+                }
                 switch vm.analisis {
                 case .cargando:
                     ProgressView().frame(maxWidth: .infinity, minHeight: 240)
@@ -53,6 +59,19 @@ struct EstadisticasView: View {
         .task(id: Clave(periodo: vm.periodo, ambito: vm.ambito)) { await vm.cargar(con: sesion.api) }
         .visorPDF($documento)
         .alertaError($vm.error)
+        .sheet(isPresented: $viendoSueltas) {
+            NavigationStack {
+                ScrollView {
+                    RankingSueltasView(pisos: vm.sueltas)
+                        .padding(.horizontal, Tema.Espacio.m)
+                        .padding(.bottom, Tema.Espacio.l)
+                }
+                .background(Tema.Color.fondo)
+                .navigationTitle("Comparar unidades sueltas")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { viendoSueltas = false } } }
+            }
+        }
     }
 }
 

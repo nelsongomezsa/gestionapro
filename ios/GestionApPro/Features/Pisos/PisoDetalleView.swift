@@ -24,6 +24,11 @@ struct PisoDetalleView: View {
     @State private var confirmarBorradoFinal = false
     @State private var motivoNoBorrable: String?
     @State private var borrando = false
+    /// Unidad suelta: la plaza o el trastero, con su ficha aquí mismo.
+    @State private var unidad: Habitacion?
+    @State private var editandoUnidad: Habitacion?
+    @State private var alquilando: Habitacion?
+    @State private var inventariosDe: Habitacion?
     @Namespace private var zoom
 
     init(piso: Piso) {
@@ -34,6 +39,8 @@ struct PisoDetalleView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Tema.Espacio.l) {
                 cabecera
+
+                if piso.esUnidadSuelta { fichaUnidadSuelta }
 
                 if let m = piso.metricas {
                     TarjetaHero(titulo: "Cash flow previsto al mes", valor: Formato.euros(m.cashFlowMensual),
@@ -133,6 +140,7 @@ struct PisoDetalleView: View {
                     }
                 }
 
+                if !piso.esUnidadSuelta {
                 SeccionTarjeta(titulo: piso.tipoInmueble.unidad.plural) {
                     let o = piso.ocupacion
                     VStack(alignment: .leading, spacing: Tema.Espacio.xs) {
@@ -169,6 +177,7 @@ struct PisoDetalleView: View {
                         if c != contratos.last { Divider().overlay(Tema.Color.borde) }
                     }
                 }
+                }
 
                 SeccionTarjeta(titulo: "Últimos pagos") {
                     if pagos.isEmpty { Text("Sin pagos registrados").foregroundStyle(Tema.Color.textoSecundario) }
@@ -201,7 +210,8 @@ struct PisoDetalleView: View {
             .padding(.bottom, Tema.Espacio.l)
         }
         .background(Tema.Color.fondo)
-        .navigationTitle(piso.tipoInmueble == .vivienda ? String(localized: "Piso") : piso.tipoInmueble.nombre)
+        .navigationTitle(piso.tipoInmueble == .vivienda ? String(localized: "Piso")
+                         : piso.esUnidadSuelta ? piso.tipoInmueble.unidad.nombre : piso.tipoInmueble.nombre)
         .navigationBarTitleDisplayMode(.inline)
         .contextoAsistente(.piso(piso.id))
         .toolbar {
@@ -235,6 +245,25 @@ struct PisoDetalleView: View {
         }
         .sheet(isPresented: $editandoPiso) {
             EditarPisoView(piso: piso) { piso = $0 }
+        }
+        .sheet(item: $editandoUnidad) { h in
+            HabitacionFormView(piso: piso.breve, habitacion: h) { nueva in
+                unidad = nueva
+                Task { await recargar() }
+            }
+        }
+        .sheet(item: $alquilando) { h in
+            NuevoContratoView(habitacionInicial: h) { _ in Task { await recargar() } }
+        }
+        .sheet(item: $inventariosDe) { h in
+            NavigationStack {
+                InventariosView(idHabitacion: h.id, titulo: "\(String(localized: "Inventarios")) · \(h.etiqueta)", unidad: h.unidad)
+                    .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cerrar") { inventariosDe = nil } } }
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .datosCambiados)) { _ in
+            // La ficha de una unidad suelta muestra el contrato: al crearlo o finalizarlo, se actualiza.
+            if piso.esUnidadSuelta { Task { await recargar() } }
         }
         .confirmationDialog("¿Borrar «\(piso.direccion)»?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
             Button(piso.tipoInmueble == .vivienda ? String(localized: "Borrar piso") : String(localized: "Borrar inmueble"), role: .destructive) {
@@ -274,6 +303,62 @@ struct PisoDetalleView: View {
                        accion: { metricaAbierta = metrica }, contenido: tarjeta)
             .matchedTransitionSource(id: metrica, in: zoom)
             .accessibilityIdentifier("metrica-\(metrica.rawValue)")
+    }
+
+    /// Unidad suelta: sus datos y su contrato, sin pantalla intermedia de unidades.
+    @ViewBuilder private var fichaUnidadSuelta: some View {
+        SeccionTarjeta(titulo: unidad?.titulo ?? piso.tipoInmueble.unidad.nombre) {
+            FilaMetrica(titulo: unidad?.situacionSuelta ?? piso.situacionSueltaBreve, valor: "",
+                        icono: piso.ocupacion.alquiladas > 0 ? "person.fill" : "key")
+                .accessibilityIdentifier("situacionFicha")
+            if let h = unidad {
+                Divider().overlay(Tema.Color.borde)
+                FilaMetrica(titulo: "Precio al mes", valor: Formato.euros(h.precio))
+                if let metros = h.metros {
+                    Divider().overlay(Tema.Color.borde)
+                    FilaMetrica(titulo: "Superficie", valor: "\(Formato.numero(NSDecimalNumber(decimal: metros).doubleValue)) m²")
+                }
+                if let planta = h.planta, !planta.isEmpty {
+                    Divider().overlay(Tema.Color.borde)
+                    FilaMetrica(titulo: "Planta", valor: planta)
+                }
+                if let vehiculo = h.vehiculo {
+                    Divider().overlay(Tema.Color.borde)
+                    FilaMetrica(titulo: "Para", valor: vehiculo.nombre)
+                }
+            }
+            ForEach(contratos) { c in
+                Divider().overlay(Tema.Color.borde)
+                NavigationLink(value: DestinoPiso.contrato(c.id)) { FilaContratoCompleto(contrato: c, mostrarPiso: false).contentShape(.rect) }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("filaContratoPiso")
+            }
+            if let h = unidad {
+                if h.estado == .disponible {
+                    BotonSecundario(titulo: h.unidad == .trastero ? String(localized: "Alquilar este trastero") : String(localized: "Alquilar esta plaza"),
+                                    icono: "doc.badge.plus") { alquilando = h }
+                        .accessibilityIdentifier("alquilarUnidadSuelta")
+                }
+                Divider().overlay(Tema.Color.borde)
+                Button { editandoUnidad = h } label: {
+                    FilaMetrica(titulo: h.unidad == .trastero ? String(localized: "Editar trastero") : String(localized: "Editar plaza"),
+                                valor: "", icono: "pencil").contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("editarUnidadSuelta")
+                Divider().overlay(Tema.Color.borde)
+                Button { inventariosDe = h } label: {
+                    FilaMetrica(titulo: h.unidad.inventarios, valor: "", icono: "checklist").contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+            }
+            Divider().overlay(Tema.Color.borde)
+            NavigationLink(value: DestinoPiso.mapa(piso.breve)) {
+                FilaMetrica(titulo: "Ver en el mapa", valor: "", icono: "map").contentShape(.rect)
+            }
+            .buttonStyle(.plain)
+        }
+        .accessibilityIdentifier("fichaUnidadSuelta")
     }
 
     private var cabecera: some View {
@@ -330,6 +415,9 @@ struct PisoDetalleView: View {
             ingresosCargados = false
         }
         contratos = (try? await c) ?? []
+        if piso.esUnidadSuelta {
+            unidad = (try? await sesion.api.enviar(.habitaciones(piso: piso.id)))?.first
+        }
         pagos = (try? await p) ?? []
         incidencias = ((try? await inc) ?? []).filter { $0.estado != .resuelta }
     }

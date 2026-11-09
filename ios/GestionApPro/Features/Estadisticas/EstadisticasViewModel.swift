@@ -105,6 +105,8 @@ final class EstadisticasViewModel {
     /// Situación de hoy (habitaciones por estado e incidencias): no depende del filtro.
     private(set) var situacion: Estadisticas?
     private(set) var pisos: [Piso] = []
+    /// Plazas y trasteros sueltos, para compararlos entre sí.
+    var sueltas: [Piso] { pisos.filter(\.esUnidadSuelta) }
     private(set) var habitaciones: [Habitacion] = []
     var error: String?
 
