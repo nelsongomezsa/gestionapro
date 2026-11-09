@@ -33,15 +33,6 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Integer>
             """)
     List<Incidencia> buscar(Integer idPropietario, Integer idInquilino, Integer idPiso, Collection<EstadoIncidencia> estados);
 
-    /** Incidencias resueltas con coste positivo de los pisos indicados. */
-    @Query("""
-            select i from Incidencia i
-            join fetch i.habitacion h
-            join fetch h.piso p
-            where p.id in :idsPiso and i.estado = :estado and i.costeReparacion > 0
-            """)
-    List<Incidencia> resueltasConCoste(Collection<Integer> idsPiso, EstadoIncidencia estado);
-
     /** Bloquea la incidencia hasta el final de la transacción (cupo de fotos). */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select i from Incidencia i where i.id = :id")

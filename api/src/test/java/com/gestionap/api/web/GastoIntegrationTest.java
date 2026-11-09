@@ -88,12 +88,15 @@ class GastoIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    void sincronizaIncidenciaUnaVezYNoPermiteBorrarla() throws Exception {
-        incidencia.setEstado(EstadoIncidencia.resuelta);
-        incidencia.setCosteReparacion(new BigDecimal("75.00"));
+    void gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano() throws Exception {
+        mvc.perform(patch("/api/incidencias/" + incidencia.getId()).header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"costeReparacion\":75.00}")).andExpect(status().isOk());
+        mvc.perform(patch("/api/incidencias/" + incidencia.getId() + "/estado").header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"estado\":\"resuelta\"}")).andExpect(status().isOk());
         String url = "/api/gastos?piso=" + piso.getId();
         mvc.perform(get(url).header("Authorization", token)).andExpect(jsonPath("$.lista.length()").value(1));
-        incidencia.setCosteReparacion(new BigDecimal("90.00"));
+        mvc.perform(patch("/api/incidencias/" + incidencia.getId()).header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"costeReparacion\":90.00}")).andExpect(status().isOk());
         mvc.perform(get(url).header("Authorization", token))
                 .andExpect(jsonPath("$.lista.length()").value(1))
                 .andExpect(jsonPath("$.lista[0].importe").value(90));

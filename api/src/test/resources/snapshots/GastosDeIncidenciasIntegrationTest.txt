@@ -1,0 +1,560 @@
+### alResolverlaConCoste_seApuntaUnaVez_yNoSeDuplica #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana-incidencias@test.com",
+    "email": "ana-incidencias@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### alResolverlaConCoste_seApuntaUnaVez_yNoSeDuplica #2
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "pendiente",
+  "fecha": "2026-11-09",
+  "costeReparacion": 320.50,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### alResolverlaConCoste_seApuntaUnaVez_yNoSeDuplica #3
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 320.50,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### alResolverlaConCoste_seApuntaUnaVez_yNoSeDuplica #4
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 320.50,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### alResolverlaConCoste_seApuntaUnaVez_yNoSeDuplica #5
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 300.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### gastoYaExistente_alResolver_noSeDuplica #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana-incidencias@test.com",
+    "email": "ana-incidencias@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### gastoYaExistente_alResolver_noSeDuplica #2
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "pendiente",
+  "fecha": "2026-11-09",
+  "costeReparacion": 150.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### gastoYaExistente_alResolver_noSeDuplica #3
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 150.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### informes_soloLectura_noModificanNada #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana-incidencias@test.com",
+    "email": "ana-incidencias@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### informes_soloLectura_noModificanNada #2
+GET /api/gastos
+200 application/json
+{
+  "lista": [],
+  "total": 0,
+  "totalDeducible": 0
+}
+
+### informes_soloLectura_noModificanNada #3
+GET /api/gastos?piso={n}&anio={n}
+200 application/json
+{
+  "lista": [],
+  "total": 0,
+  "totalDeducible": 0
+}
+
+### informes_soloLectura_noModificanNada #4
+GET /api/pisos/{n}/resumen-fiscal?anio={n}
+200 application/json
+{
+  "anio": 2026,
+  "idPiso": "<id>",
+  "piso": "Calle Reparaciones 3, Madrid",
+  "ingresos": 0,
+  "numeroPagos": 0,
+  "gastosConLimite": [],
+  "gastosConLimiteAplicables": 0,
+  "excesoParaAniosSiguientes": 0,
+  "otrosGastos": [],
+  "baseAmortizacion": "Faltan los datos de compra del piso.",
+  "amortizacionMobiliario": 0.00,
+  "rendimientoNeto": 0.00,
+  "notas": [
+    "Orientativo: no sustituye a la declaración de la renta ni al consejo de un asesor fiscal.",
+    "Ingresos: pagos registrados en el año. Hacienda usa las rentas devengadas: revisa los pagos atrasados o adelantados.",
+    "Reducción por alquiler de vivienda (art. 23.2 LIRPF): si es vivienda habitual del inquilino, el rendimiento neto positivo puede reducirse (60 % en contratos anteriores al 26-05-2023; desde entonces, 50 % con carácter general y más en algunos casos). No se aplica aquí: depende de cada contrato.",
+    "Fuente: Agencia Tributaria, Manual práctico de Renta 2025, capítulo 4 (rendimientos del capital inmobiliario)."
+  ]
+}
+
+### informes_soloLectura_noModificanNada #5
+GET /api/pisos/{n}/resumen-fiscal/pdf?anio={n}
+200 application/pdf
+<pdf>
+
+### informes_soloLectura_noModificanNada #6
+GET /api/pisos/{n}/resumen-fiscal/csv?anio={n}
+200 text/csv;charset=UTF-8
+﻿Concepto;Importe
+"Ingresos íntegros (0 pagos)";0,00
+"Amortización del mobiliario";0,00
+"Rendimiento neto (orientativo)";0,00
+
+
+### informes_soloLectura_noModificanNada #7
+GET /api/informes/mensual?mes=2026-11
+200 application/pdf
+<pdf>
+
+### informes_soloLectura_noModificanNada #8
+GET /api/informes/mensual
+200 application/pdf
+<pdf>
+
+### informes_soloLectura_noModificanNada #9
+GET /api/estadisticas/analisis?desde=2026-01-01&hasta=2026-12-31
+200 application/json
+{
+  "desde": "2026-01-01",
+  "hasta": "2026-12-31",
+  "ambito": "CARTERA",
+  "actual": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 100.0,
+    "diasMediosVacia": 0.0,
+    "habitaciones": 1,
+    "contratosIniciados": 1,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 5000.00
+  },
+  "anterior": {
+    "ingresos": 0.00,
+    "gastos": 0.00,
+    "neto": 0.00,
+    "ocupacionPct": 0.0,
+    "diasMediosVacia": 365.0,
+    "habitaciones": 1,
+    "contratosIniciados": 0,
+    "contratosFinalizados": 0,
+    "rotacionPct": 0.0,
+    "impagado": 0.00
+  },
+  "pisos": [
+    {
+      "piso": {
+        "id": "<id>",
+        "direccion": "Calle Reparaciones 3",
+        "ciudad": "Madrid",
+        "tipo": "vivienda"
+      },
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "neto": 0.00,
+      "ocupacionPct": 100.0,
+      "diasMediosVacia": 0.0,
+      "habitaciones": 1
+    }
+  ],
+  "meses": [
+    {
+      "mes": "2026-01",
+      "etiqueta": "ene",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-02",
+      "etiqueta": "feb",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-03",
+      "etiqueta": "mar",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-04",
+      "etiqueta": "abr",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-05",
+      "etiqueta": "may",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "ingresos": 0.00,
+      "gastos": 0.00,
+      "ocupacionPct": 100.0
+    },
+    {
+      "mes": "2026-12",
+      "etiqueta": "dic",
+      "ingresos": 0.00,
+      "gastos": 0.00
+    }
+  ],
+  "morosidad": [
+    {
+      "idInquilino": "<id>",
+      "nombre": "Ana García 3P",
+      "mesesDebidos": 10,
+      "mesesImpagados": 10,
+      "pagosFueraDePlazo": 0,
+      "importeImpagado": 5000.00,
+      "puntualidadPct": 0.0
+    }
+  ]
+}
+
+### informes_soloLectura_noModificanNada #10
+GET /api/dashboard
+200 application/json
+{
+  "ocupacion": {
+    "habitaciones": 1,
+    "alquiladas": 1,
+    "disponibles": 0,
+    "mantenimiento": 0,
+    "porcentaje": 100.0,
+    "salud": "Sistema saludable",
+    "conOtrosTipos": false
+  },
+  "inquilinos": 1,
+  "contratosActivos": 1,
+  "incidenciasPendientes": 0,
+  "incidenciasEnProceso": 0,
+  "cobradoMes": 0,
+  "cobradoMesAnterior": 0,
+  "cobradoMesAnteriorMismoDia": 0,
+  "diaComparado": 9,
+  "mesComparado": "oct",
+  "esperadoMes": 500.00,
+  "cashFlowMensual": 0,
+  "ingresosUltimos6Meses": [
+    {
+      "mes": "2026-06",
+      "etiqueta": "jun",
+      "importe": 0
+    },
+    {
+      "mes": "2026-07",
+      "etiqueta": "jul",
+      "importe": 0
+    },
+    {
+      "mes": "2026-08",
+      "etiqueta": "ago",
+      "importe": 0
+    },
+    {
+      "mes": "2026-09",
+      "etiqueta": "sept",
+      "importe": 0
+    },
+    {
+      "mes": "2026-10",
+      "etiqueta": "oct",
+      "importe": 0
+    },
+    {
+      "mes": "2026-11",
+      "etiqueta": "nov",
+      "importe": 0
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "COBROS_ATRASADOS",
+      "titulo": "10 cobros atrasados · 5.000,00 €",
+      "mensaje": "De meses anteriores; el más antiguo, de enero 2026",
+      "tono": "negativo"
+    }
+  ],
+  "proximosVencimientos": [],
+  "actividadReciente": []
+}
+
+### informes_soloLectura_noModificanNada #11
+GET /api/pisos/{n}/pdf
+200 application/pdf
+<pdf>
+
+### resueltaSinCoste_noEsGasto_hastaQueSeLePone #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana-incidencias@test.com",
+    "email": "ana-incidencias@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### resueltaSinCoste_noEsGasto_hastaQueSeLePone #2
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 0,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+
+### resueltaSinCoste_noEsGasto_hastaQueSeLePone #3
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Caldera averiada",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 80.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle Reparaciones 3",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 3P"
+  },
+  "dias": 0
+}
+

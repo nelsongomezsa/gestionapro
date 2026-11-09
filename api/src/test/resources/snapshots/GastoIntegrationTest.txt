@@ -26,7 +26,7 @@ POST /api/gastos
   "categoria": "IBI",
   "concepto": "Arreglo general",
   "importe": 120.00,
-  "fecha": "2026-11-08",
+  "fecha": "2026-11-09",
   "deducible": true,
   "tieneFactura": false
 }
@@ -46,7 +46,7 @@ GET /api/gastos?piso={n}
       "categoria": "IBI",
       "concepto": "Arreglo general",
       "importe": 120.00,
-      "fecha": "2026-11-08",
+      "fecha": "2026-11-09",
       "deducible": true,
       "tieneFactura": false
     }
@@ -83,7 +83,7 @@ POST /api/gastos
   "categoria": "IBI",
   "concepto": "Arreglo general",
   "importe": 50,
-  "fecha": "2026-11-08",
+  "fecha": "2026-11-09",
   "deducible": true,
   "tieneFactura": false
 }
@@ -101,7 +101,7 @@ POST /api/gastos/{n}/factura
   "categoria": "IBI",
   "concepto": "Arreglo general",
   "importe": 50,
-  "fecha": "2026-11-08",
+  "fecha": "2026-11-09",
   "deducible": true,
   "tieneFactura": true
 }
@@ -120,6 +120,163 @@ POST /api/gastos/{n}/factura
   "codigo": "TIPO_NO_ADMITIDO",
   "mensaje": "Solo fotos (JPEG, PNG, HEIC) o PDF",
   "path": "/api/gastos/{n}/factura"
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #1
+POST /api/auth/login
+200 application/json
+{
+  "token": "<jwt>",
+  "tipo": "Bearer",
+  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "usuario": {
+    "id": "<id>",
+    "nombre": "Usuario ana-gastos@test.com",
+    "email": "ana-gastos@test.com",
+    "rol": "PROPIETARIO"
+  }
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #2
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo roto",
+  "estado": "pendiente",
+  "fecha": "2026-11-09",
+  "costeReparacion": 75.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle gastos 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 2A"
+  },
+  "dias": 0
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #3
+PATCH /api/incidencias/{n}/estado
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo roto",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 75.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle gastos 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 2A"
+  },
+  "dias": 0
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #4
+GET /api/gastos?piso={n}
+200 application/json
+{
+  "lista": [
+    {
+      "id": "<id>",
+      "idPiso": "<id>",
+      "direccionPiso": "Calle gastos 1",
+      "idHabitacion": "<id>",
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "idIncidencia": "<id>",
+      "categoria": "REPARACION",
+      "concepto": "Incidencia: Grifo roto",
+      "importe": 75.00,
+      "fecha": "2026-11-09",
+      "deducible": true,
+      "tieneFactura": false
+    }
+  ],
+  "total": 75.00,
+  "totalDeducible": 75.00
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #5
+PATCH /api/incidencias/{n}
+200 application/json
+{
+  "id": "<id>",
+  "descripcion": "Grifo roto",
+  "estado": "resuelta",
+  "fecha": "2026-11-09",
+  "costeReparacion": 90.00,
+  "habitacion": {
+    "id": "<id>",
+    "numero": 1,
+    "tipo": "habitacion"
+  },
+  "piso": {
+    "id": "<id>",
+    "direccion": "Calle gastos 1",
+    "ciudad": "Madrid",
+    "tipo": "vivienda"
+  },
+  "inquilino": {
+    "id": "<id>",
+    "nombre": "Ana García 2A"
+  },
+  "dias": 0
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #6
+GET /api/gastos?piso={n}
+200 application/json
+{
+  "lista": [
+    {
+      "id": "<id>",
+      "idPiso": "<id>",
+      "direccionPiso": "Calle gastos 1",
+      "idHabitacion": "<id>",
+      "numeroHabitacion": 1,
+      "tipoUnidad": "habitacion",
+      "idIncidencia": "<id>",
+      "categoria": "REPARACION",
+      "concepto": "Incidencia: Grifo roto",
+      "importe": 90.00,
+      "fecha": "2026-11-09",
+      "deducible": true,
+      "tieneFactura": false
+    }
+  ],
+  "total": 90.00,
+  "totalDeducible": 90.00
+}
+
+### gastoDeIncidencia_seApuntaAlResolverla_sigueAlCoste_yNoSeBorraAMano #7
+DELETE /api/gastos/{n}
+409 application/json
+{
+  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
+  "status": 409,
+  "codigo": "GASTO_DE_INCIDENCIA",
+  "mensaje": "Cambia el coste en la incidencia",
+  "path": "/api/gastos/{n}"
 }
 
 ### metricasUsanIbiReal #1
@@ -150,7 +307,7 @@ POST /api/gastos
   "categoria": "IBI",
   "concepto": "Arreglo general",
   "importe": 120.00,
-  "fecha": "2026-11-08",
+  "fecha": "2026-11-09",
   "deducible": true,
   "tieneFactura": false
 }
@@ -282,81 +439,5 @@ GET /api/gastos
   "codigo": "ACCESO_DENEGADO",
   "mensaje": "No tienes permiso para esta operación",
   "path": "/api/gastos"
-}
-
-### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #1
-POST /api/auth/login
-200 application/json
-{
-  "token": "<jwt>",
-  "tipo": "Bearer",
-  "expira": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
-  "usuario": {
-    "id": "<id>",
-    "nombre": "Usuario ana-gastos@test.com",
-    "email": "ana-gastos@test.com",
-    "rol": "PROPIETARIO"
-  }
-}
-
-### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #2
-GET /api/gastos?piso={n}
-200 application/json
-{
-  "lista": [
-    {
-      "id": "<id>",
-      "idPiso": "<id>",
-      "direccionPiso": "Calle gastos 1",
-      "idHabitacion": "<id>",
-      "numeroHabitacion": 1,
-      "tipoUnidad": "habitacion",
-      "idIncidencia": "<id>",
-      "categoria": "REPARACION",
-      "concepto": "Incidencia: Grifo roto",
-      "importe": 75.00,
-      "fecha": "2026-11-08",
-      "deducible": true,
-      "tieneFactura": false
-    }
-  ],
-  "total": 75.00,
-  "totalDeducible": 75.00
-}
-
-### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #3
-GET /api/gastos?piso={n}
-200 application/json
-{
-  "lista": [
-    {
-      "id": "<id>",
-      "idPiso": "<id>",
-      "direccionPiso": "Calle gastos 1",
-      "idHabitacion": "<id>",
-      "numeroHabitacion": 1,
-      "tipoUnidad": "habitacion",
-      "idIncidencia": "<id>",
-      "categoria": "REPARACION",
-      "concepto": "Incidencia: Grifo roto",
-      "importe": 90.00,
-      "fecha": "2026-11-08",
-      "deducible": true,
-      "tieneFactura": false
-    }
-  ],
-  "total": 90.00,
-  "totalDeducible": 90.00
-}
-
-### sincronizaIncidenciaUnaVezYNoPermiteBorrarla #4
-DELETE /api/gastos/{n}
-409 application/json
-{
-  "timestamp": "<ahora dddd-dd-ddTdd:dd:dd.fZ>",
-  "status": 409,
-  "codigo": "GASTO_DE_INCIDENCIA",
-  "mensaje": "Cambia el coste en la incidencia",
-  "path": "/api/gastos/{n}"
 }
 

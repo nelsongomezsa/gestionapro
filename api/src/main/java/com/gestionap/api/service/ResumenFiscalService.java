@@ -88,7 +88,7 @@ public class ResumenFiscalService {
     }
 
     /** valorCatastral y valorCatastralConstruccion vienen del recibo del IBI (opcionales). */
-    @Transactional
+    @Transactional(readOnly = true)
     public Resumen calcular(Integer idPiso, int anio, BigDecimal valorCatastral, BigDecimal valorCatastralConstruccion,
                             UsuarioAutenticado actor) {
         Piso piso = acceso.pisoVisible(idPiso, actor);
@@ -98,7 +98,7 @@ public class ResumenFiscalService {
                 .filter(p -> p.getContrato().getHabitacion().getPiso().getId().equals(idPiso)).toList();
         BigDecimal ingresos = suma(delAnio.stream().map(Pago::getCantidad).toList());
 
-        // Sincroniza las incidencias resueltas con coste y trae los gastos del año.
+        // Gastos deducibles del año (solo lectura: el resumen no modifica datos).
         List<GastoResponse> delAnioGastos = gastos.listar(idPiso, anio, actor).lista().stream().filter(GastoResponse::deducible).toList();
         List<Linea> conLimite = porCategoria(delAnioGastos, CON_LIMITE);
         Set<Categoria> resto = EnumSet.complementOf(EnumSet.copyOf(CON_LIMITE));

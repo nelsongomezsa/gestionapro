@@ -29,16 +29,18 @@ public class IncidenciaService {
     private final ContratoRepository contratos;
     private final ControlAcceso acceso;
     private final ActividadService actividad;
+    private final GastoService gastos;
 
     public IncidenciaService(IncidenciaRepository incidencias, HabitacionRepository habitaciones,
                              InquilinoRepository inquilinos, ContratoRepository contratos, ControlAcceso acceso,
-                             ActividadService actividad) {
+                             ActividadService actividad, GastoService gastos) {
         this.incidencias = incidencias;
         this.habitaciones = habitaciones;
         this.inquilinos = inquilinos;
         this.contratos = contratos;
         this.acceso = acceso;
         this.actividad = actividad;
+        this.gastos = gastos;
     }
 
     @Transactional(readOnly = true)
@@ -111,6 +113,8 @@ public class IncidenciaService {
         EstadoIncidencia nuevo = estado != null ? estado : i.getEstado().siguiente();
         if (nuevo == null) throw ApiException.conflicto("INCIDENCIA_RESUELTA", "La incidencia ya está resuelta");
         i.setEstado(nuevo);
+        // El coste de reparación pasa a Gastos al resolverla (los informes no escriben nada).
+        gastos.apuntarCosteDeIncidencia(i);
         actividad.registrar(actor.id(), "CAMBIAR_ESTADO_INCIDENCIA", "#" + id + " → " + nuevo);
         return IncidenciaResponse.de(i, LocalDate.now());
     }
@@ -120,6 +124,8 @@ public class IncidenciaService {
         Incidencia i = cargarGestionable(id, actor);
         if (req.descripcion() != null) i.setDescripcion(req.descripcion().trim());
         if (req.costeReparacion() != null) i.setCosteReparacion(req.costeReparacion());
+        // Ya resuelta: el gasto sigue al coste (y se apunta si se le pone coste después de resolverla).
+        gastos.apuntarCosteDeIncidencia(i);
         actividad.registrar(actor.id(), "EDITAR_INCIDENCIA", "#" + id);
         return IncidenciaResponse.de(i, LocalDate.now());
     }
